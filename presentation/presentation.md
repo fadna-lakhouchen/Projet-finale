@@ -134,7 +134,7 @@ style: |
 
 
 <div class="img-container">
-  <img src="../images/designThinking.png" class="img-methodo" alt="Design Thinking">
+  <img src="images/designThinking.png" class="img-methodo" alt="Design Thinking">
 </div>
 
 ---
@@ -144,7 +144,7 @@ style: |
 
 
 <div class="img-container">
-  <img src="../images/scrum.jpg" class="img-methodo" alt="Scrum">
+  <img src="images/scrum.jpg" class="img-methodo" alt="Scrum">
 </div>
 
 ---
@@ -154,23 +154,30 @@ style: |
 
 
 <div class="img-container">
-  <img src="../images/2TUP.PNG" class="img-methodo" alt="2TUP">
+  <img src="images/2TUP.PNG" class="img-methodo" alt="2TUP">
 </div>
 
 ---
 
-## 3. Branche Fonctionnelle : Design Thinking
-### 1. EMPATHIE
+## Branche Fonctionnelle : Design Thinking
+### 2. DÉFINITION
 
 <div class="img-container">
   <div class="dt-card" style="border-top-color: #f39c12;">
-    <h4>Comprendre l'utilisateur</h4>
+    <h4>Cadrage du problème</h4>
     <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px;">
-      
+     <p> - Comment pouvons-nous créer une solution digitale qui améliore la transparence et encourage les résidents à payer leurs charges à temps ? </p>
     </blockquote>
   </div>
 </div>
 
+---
+## 3. Branche Fonctionnelle : Design Thinking
+### 1. EMPATHIE
+
+<div class="img-container">
+  <img src="images/carte-d-empathie.PNG" class="img-methodo" alt="Carte d'Empathie">
+</div>
 ---
 
 ## Branche Fonctionnelle : Design Thinking
