@@ -1,7 +1,10 @@
 # Pandoc Build Script for QCM Project (DOCX Only)
 # This script converts modular Markdown files into a professional DOCX report.
 
-$outputDocx = "QCM_Report.docx"
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+Set-Location $scriptDir
+
+$outputDocx = "syndic_Report.docx"
 
 $inputFiles = "00_title_page.md",
 "01_toc.md",
