@@ -59,7 +59,7 @@ Enfin, je remercie mes camarades de promotion pour leur esprit d’entraide, leu
 
 Dans le cadre de notre formation à Solicode, le projet « Digitalisation de la gestion du Syndic » a été réalisé pour répondre à un besoin réel dans la gestion des immeubles résidentiels. Actuellement, le suivi des charges et des paiements se fait souvent de manière manuelle, ce qui rend l’organisation difficile et peu transparente.  
 
-L’objectif principal de ce projet est de concevoir une plateforme web permettant de centraliser les informations de l’immeuble et d’assurer un meilleur suivi des paiements. La solution proposée vise à améliorer la communication entre les acteurs et à garantir une gestion plus structurée et efficace.  
+L’objectif principal de ce projet est de concevoir une plateforme web  et mobile permettant de centraliser les informations de l’immeuble et d’assurer un meilleur suivi des paiements. La solution proposée vise à améliorer la communication entre les acteurs et à garantir une gestion plus structurée et efficace.  
 
 Pour atteindre ces objectifs, une démarche agile a été adoptée, combinant l’approche **Design Thinking** pour analyser les besoins des utilisateurs et la méthode **Scrum** pour organiser le développement par itérations successives.
 
@@ -67,18 +67,21 @@ Pour atteindre ces objectifs, une démarche agile a été adoptée, combinant l�
 
 ## Contexte de projet
 
-Le projet de digitalisation de la gestion du Syndic vise à améliorer l’organisation et le suivi des immeubles résidentiels. Il facilite la gestion des charges et des paiements ainsi que la communication entre le syndic et les résidents. Actuellement, la gestion se fait de manière manuelle à l’aide de documents papier. Cette méthode limite l’accès aux informations et complique la mise à jour des données. La mise en place d’une plateforme web permettra d’assurer une gestion plus efficace et transparente.
+Le projet de digitalisation de la gestion du Syndic vise à améliorer l’organisation et le suivi des immeubles résidentiels. Il facilite la gestion des charges et des paiements ainsi que la communication entre le syndic et les résidents. Actuellement, la gestion se fait de manière manuelle à l’aide de documents papier. Cette méthode limite l’accès aux informations et complique la mise à jour des données. La mise en place d’une plateforme web et mobile permettra d’assurer une gestion plus efficace et transparente.
 
 ---
 
 ## Objectif de projet
 
-- Proposer une solution digitale simple pour améliorer la gestion du syndic et faciliter le suivi des charges au sein de l’immeuble.  
-- Mettre en place un système centralisé de gestion.  
-- Faciliter le suivi des paiements des résidents.  
-- Améliorer la transparence des opérations financières.  
-- Réduire les conflits entre résidents et syndic.  
-- Organiser les données de manière claire et structurée.
+Dans le cadre de ce projet, nous cherchons à développer une solution digitale qui simplifie la gestion des immeubles et facilite les interactions entre le syndic et les résidents. Cette solution doit permettre un suivi efficace des charges, améliorer la transparence des opérations financières et réduire les conflits tout en organisant les informations de manière claire et structurée.
+
+Le projet a pour objectifs principaux :  
+- proposer une solution digitale simple pour améliorer la gestion du syndic et faciliter le suivi des charges,  
+- mettre en place un système centralisé de gestion,  
+- faciliter le suivi des paiements des résidents,  
+- améliorer la transparence des opérations financières,  
+- réduire les conflits entre résidents et syndic,  
+- organiser les données de manière claire et structurée.
 
 ---
 
