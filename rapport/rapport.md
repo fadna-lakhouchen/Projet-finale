@@ -134,7 +134,7 @@ Une solution digitale centralisée est donc indispensable pour améliorer le sui
 
 ## 5. Fonctionnalités
 
-### Phase 1 : Fonctions essentielles (MVP)
+### sprint 1 : Fonctions essentielles (MVP)
 
 **Pour les résidents :**  
 - Création de compte et connexion sécurisée.  
@@ -155,7 +155,7 @@ Une solution digitale centralisée est donc indispensable pour améliorer le sui
 - Gestion des droits et sécurité de la plateforme.
 
 
-### Phase 2 : Fonctions avancées
+### sprint 2 : Fonctions avancées
 
 **Pour les résidents :**  
 - Historique complet des paiements et interventions.  

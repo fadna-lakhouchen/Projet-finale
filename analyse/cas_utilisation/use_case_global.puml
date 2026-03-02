@@ -1,0 +1,40 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor "Syndic" as Syndic
+actor "Résident / Copropriétaire" as Resident
+actor "Administrateur" as Admin
+
+rectangle "Système de Gestion du Syndic" {
+
+  package "Fonctions Syndic" {
+    Syndic -- (Créer un compte Syndic)
+    Syndic -- (Ajouter un paiement)
+    Syndic -- (Valider un paiement)
+    Syndic -- (Envoyer un reçu)
+    Syndic -- (Gérer les informations de l’immeuble)
+    Syndic -- (Consulter l’état des paiements)
+  }
+
+  package "Fonctions Résident" {
+    Resident -- (Créer un compte Résident)
+    Resident -- (Consulter ses paiements)
+    Resident -- (Payer ses charges)
+    Resident -- (Signaler un problème)
+  }
+
+  package "Fonctions Administrateur" {
+    Admin -- (Valider le remplacement d’un Syndic)
+    Admin -- (Superviser les paiements)
+    Admin -- (Mettre à jour la liste des Syndics)
+  }
+
+  ' Relations Include
+  (Valider un paiement) .> (Envoyer un reçu) : <<include>>
+  (Payer ses charges) .> (Envoyer un reçu) : <<include>>
+  (Créer un compte Syndic) .> (Envoyer un reçu) : <<include>>
+  (Créer un compte Résident) .> (Envoyer un reçu) : <<include>>
+}
+@enduml

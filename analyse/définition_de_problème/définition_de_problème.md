@@ -4,4 +4,4 @@
 - Ces dysfonctionnements compliquent la gestion quotidienne et affaiblissent la confiance au sein de l’immeuble.
 
 ## Problématique centrale 
- - Comment pouvons-nous créer une solution digitale qui améliore la transparence et encourage les résidents à payer leurs charges à temps ?
+ - Comment pouvons-nous améliorer la gestion des immeubles et des paiements tout en garantissant la transparence, la communication efficace et la réduction des conflits entre résidents et syndic à travers une solution digitale centralisée ? 
