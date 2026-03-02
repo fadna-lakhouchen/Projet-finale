@@ -1,0 +1,36 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor "Résident" as Resident
+actor "Syndic" as Syndic
+actor "Administrateur" as Admin
+
+rectangle "Sprint 1 - Fonctions essentielles (MVP)" {
+
+  package "Résident" {
+    Resident -- (Créer compte et se connecter)
+    Resident -- (Consulter charges et paiements)
+    Resident -- (Signaler problème ou intervention)
+    Resident -- (Recevoir notifications paiements/échéances)
+  }
+
+  package "Syndic" {
+    Syndic -- (Gérer informations immeubles)
+    Syndic -- (Suivre paiements)
+    Syndic -- (Générer reçus)
+    Syndic -- (Planifier et suivre interventions)
+    Syndic -- (Historique actions et notifications)
+  }
+
+  package "Administrateur" {
+    Admin -- (Gérer comptes utilisateurs)
+    Admin -- (Superviser immeubles et paiements)
+    Admin -- (Valider les données)
+    Admin -- (Générer rapports globaux)
+    Admin -- (Gérer droits et sécurité plateforme)
+  }
+
+}
+@enduml
