@@ -8,35 +8,27 @@ actor "Résident" as Resident
 actor "Syndic" as Syndic
 actor "Administrateur" as Admin
 
-rectangle "Système ImmoSyndic - Évolutions Sprint 2 (Fonctions Avancées)" {
+rectangle "ImmoSyndic (Solution Web & Mobile) - Évolutions Sprint 2" {
 
-  ' --- Espace RESIDENT (Incrément) ---
-  package "Nouveautés Résident" {
-    Resident -- (Consulter l'historique complet des actions)
-    Resident -- (Télécharger les quittances et documents PDF)
-    Resident -- (Gérer les alertes et notifications personnalisées)
+  package "Extensions Résident" {
+    Resident -- (Consulter archives)
+    Resident -- (Exporter PDF)
+    Resident -- (Personnaliser alertes)
   }
 
-  ' --- Espace SYNDIC (Incrément) ---
-  package "Nouveautés Syndic" {
-    Syndic -- (Planifier les interventions via Calendrier)
-    Syndic -- (Consulter les tableaux de bord analytiques)
-    Syndic -- (Gérer l'archivage des documents AG/Contrats)
-    Syndic -- (Diffuser des messages groupés aux résidents)
+  package "Extensions Syndic" {
+    Syndic -- (Gérer planning)
+    Syndic -- (Analyser statistiques)
+    Syndic -- (Gérer archivage)
+    Syndic -- (Envoyer annonces)
   }
 
-  ' --- Espace ADMINISTRATEUR (Incrément) ---
-  package "Nouveautés Administrateur" {
-    Admin -- (Générer des rapports financiers consolidés)
-    Admin -- (Consulter le journal d'audit du système)
-    Admin -- (Gérer les droits d'accès avancés)
-    Admin -- (Superviser les flux de communication)
+  package "Extensions Administrateur" {
+    Admin -- (Générer rapports)
+    Admin -- (Consulter audit)
+    Admin -- (Surveiller activités)
   }
 
 }
-
-note right of (Planifier les interventions via Calendrier)
-  Évolution du "Suivi simple" du Sprint 1
-end note
 
 @enduml

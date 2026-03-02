@@ -104,7 +104,7 @@ style: |
 </div>
 
 # **Projet de Fin de Formation**
-### Système de QCM Interactif
+### ImmoSyndic : Digitalisation de la Gestion du Syndic et des Immeubles
 
 **Réalisé par :** <span class="highlight">FADNA LAKHOUCHEN</span>  
 **Encadré par :** <span class="highlight">M. ESSARRAJ Fouad</span>  

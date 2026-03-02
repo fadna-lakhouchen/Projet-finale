@@ -69,6 +69,7 @@ Une solution digitale centralisée est donc indispensable pour améliorer le sui
 - Gestion des comptes utilisateurs.  
 - Supervision des immeubles et des paiements.  
 - Validation des données du système.
+- Gestion des droits et de la sécurité.
 
 ---
 
@@ -87,7 +88,6 @@ Une solution digitale centralisée est donc indispensable pour améliorer le sui
 
 **Pour les administrateurs :**  
 - Génération de rapports financiers globaux et statistiques consolidées.  
-- Gestion avancée des droits, des rôles et de la sécurité de la plateforme.  
 - Journal d'audit (suivi des actions effectuées sur le système).  
 - Contrôle complet des flux de communication et des notifications.
 

@@ -7,11 +7,11 @@ actor "Résident" as Resident
 actor "Syndic" as Syndic
 actor "Administrateur" as Admin
 
-rectangle "Système ImmoSyndic - Sprint 1 (MVP)" {
+rectangle "Système ImmoSyndic (Solution Web & Mobile) - Sprint 1 (MVP)" {
 
   ' Authentification commune
   usecase "S'authentifier" as Auth
-  usecase "Gérer son profil" as Profile
+  usecase "Gérer profil" as Profile
 
   Resident -- Auth
   Syndic -- Auth
@@ -22,24 +22,25 @@ rectangle "Système ImmoSyndic - Sprint 1 (MVP)" {
   Admin -- Profile
 
   package "Espace Résident" {
-    Resident -- (Créer un compte)
-    Resident -- (Consulter les charges et paiements)
-    Resident -- (Signaler un problème ou une intervention)
-    Resident -- (Recevoir des notifications de paiement)
+    Resident -- (Créer compte)
+    Resident -- (Consulter charges)
+    Resident -- (Signaler problème)
+    Resident -- (Recevoir notifications)
   }
 
   package "Espace Syndic" {
-    Syndic -- (Gérer les informations des immeubles)
-    Syndic -- (Suivre les paiements des résidents)
-    Syndic -- (Générer des reçus de paiement)
-    Syndic -- (suivre les interventions)
-    Syndic -- (Consulter l'historique des actions)
+    Syndic -- (Gérer immeubles)
+    Syndic -- (Suivre paiements)
+    Syndic -- (Générer reçus)
+    Syndic -- (Suivre interventions)
+    Syndic -- (Consulter historique)
   }
 
   package "Espace Administrateur" {
-    Admin -- (Gérer les comptes utilisateurs)
-    Admin -- (Superviser les immeubles et paiements)
-    Admin -- (Valider les données du système)
+    Admin -- (Gérer comptes)
+    Admin -- (Superviser immeubles)
+    Admin -- (Valider données)
+    Admin -- (Gérer droits)
   }
 
 }

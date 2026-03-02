@@ -1,5 +1,5 @@
 # Rapport de Fin de Formation
-## Digitalisation de la Gestion de Copropriété : Développement d’une Solution Web Intégrée pour le Suivi des Immeubles et des Syndics
+## ImmoSyndic : Digitalisation de la Gestion du Syndic et des Immeubles
 ### Formation de développement Mobile – Mode Bootcamp
 
 **Réalisée par :** Fadna Lakhouchen  

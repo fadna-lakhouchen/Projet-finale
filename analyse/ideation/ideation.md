@@ -5,7 +5,7 @@
 L'objectif est de passer d'une gestion "opaque et manuelle" (papier, cash, conflits) à une gestion "digitale et transparente" (traçabilité, confiance, réactivité).
 
 ---
-# Idéation – ImmoSyndic
+# Idéation – ImmoSyndic (Solution Web & Mobile)
 
 ## 1. Gestion des immeubles et comptes
 

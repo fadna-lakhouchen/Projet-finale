@@ -3,38 +3,56 @@ left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
 
+actor "Résident" as Resident
 actor "Syndic" as Syndic
-actor "Résident / Copropriétaire" as Resident
 actor "Administrateur" as Admin
 
-rectangle "Système de Gestion du Syndic" {
+rectangle "Système ImmoSyndic (Solution Web & Mobile) - Global" {
 
-  package "Fonctions Syndic" {
-    Syndic -- (Créer un compte Syndic)
-    Syndic -- (Ajouter un paiement)
-    Syndic -- (Valider un paiement)
-    Syndic -- (Envoyer un reçu)
-    Syndic -- (Gérer les informations de l’immeuble)
-    Syndic -- (Consulter l’état des paiements)
+  ' --- Authentification & Profil ---
+  usecase "S'authentifier" as Auth
+  usecase "Gérer profil" as Profile
+  Resident -- Auth
+  Syndic -- Auth
+  Admin -- Auth
+  Resident -- Profile
+  Syndic -- Profile
+  Admin -- Profile
+
+  ' --- Espace RESIDENT ---
+  package "Espace Résident" {
+    Resident -- (Créer compte)
+    Resident -- (Consulter charges)
+    Resident -- (Signaler problème)
+    Resident -- (Recevoir notifications)
+    Resident -- (Consulter archives)
+    Resident -- (Exporter PDF)
+    Resident -- (Personnaliser alertes)
   }
 
-  package "Fonctions Résident" {
-    Resident -- (Créer un compte Résident)
-    Resident -- (Consulter ses paiements)
-    Resident -- (Payer ses charges)
-    Resident -- (Signaler un problème)
+  ' --- Espace SYNDIC ---
+  package "Espace Syndic" {
+    Syndic -- (Gérer immeubles)
+    Syndic -- (Suivre paiements)
+    Syndic -- (Générer reçus)
+    Syndic -- (Suivre interventions)
+    Syndic -- (Consulter historique)
+    Syndic -- (Gérer planning)
+    Syndic -- (Analyser statistiques)
+    Syndic -- (Gérer archivage)
+    Syndic -- (Envoyer annonces)
   }
 
-  package "Fonctions Administrateur" {
-    Admin -- (Valider le remplacement d’un Syndic)
-    Admin -- (Superviser les paiements)
-    Admin -- (Mettre à jour la liste des Syndics)
+  ' --- Espace ADMINISTRATEUR ---
+  package "Espace Administrateur" {
+    Admin -- (Gérer comptes)
+    Admin -- (Superviser immeubles)
+    Admin -- (Valider données)
+    Admin -- (Gérer droits)
+    Admin -- (Générer rapports)
+    Admin -- (Consulter audit)
+    Admin -- (Surveiller activités)
   }
 
-  ' Relations Include
-  (Valider un paiement) .> (Envoyer un reçu) : <<include>>
-  (Payer ses charges) .> (Envoyer un reçu) : <<include>>
-  (Créer un compte Syndic) .> (Envoyer un reçu) : <<include>>
-  (Créer un compte Résident) .> (Envoyer un reçu) : <<include>>
 }
 @enduml
