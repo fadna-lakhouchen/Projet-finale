@@ -3,8 +3,8 @@
 **Date de l’entretien : 28/02/2026**  
 **Lieu : Immeuble “Résidence Al Amal”, Tanger**  
 **Participants :**
-- Hassan Afaiz – résident, appartement 3B  
-- Hassnae Charifi – copropriétaire, appartement 2A  
+- Hassan Afaiz – résident,  
+- Hassnae Charifi – copropriétaire,  
 
 ---
 

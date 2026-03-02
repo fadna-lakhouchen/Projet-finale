@@ -99,8 +99,8 @@ style: |
 ---
 
 <div class="logo-header">
-  <img src="../images/ofppt-logo.png" alt="Logo Left">
-  <img src="../images/logo-solicode.png" alt="Logo Right">
+  <img src="images/ofppt-logo.png" alt="Logo Left">
+  <img src="images/logo-solicode.png" alt="Logo Right">
 </div>
 
 # **Projet de Fin de Formation**
@@ -125,7 +125,10 @@ style: |
 </div>
 
 ---
+
 ## 1. Contexte du projet
+
+Le projet vise à digitaliser la gestion du Syndic pour améliorer l’organisation et le suivi des immeubles résidentiels. Il permet de centraliser les informations, faciliter la gestion des charges et des paiements, et renforcer la communication entre le syndic et les résidents, remplaçant ainsi la gestion manuelle et les documents papier.
 
 ---
 
@@ -158,8 +161,16 @@ style: |
 </div>
 
 ---
+## 3. Branche Fonctionnelle : Design Thinking
+### 1. EMPATHIE
 
-## Branche Fonctionnelle : Design Thinking
+<div class="img-container">
+  <img src="images/carte-d-empathie.PNG" class="img-methodo" alt="Carte d'Empathie">
+</div>
+
+---
+
+## 3. Branche Fonctionnelle : Design Thinking
 ### 2. DÉFINITION
 
 <div class="img-container">
@@ -172,29 +183,8 @@ style: |
 </div>
 
 ---
+
 ## 3. Branche Fonctionnelle : Design Thinking
-### 1. EMPATHIE
-
-<div class="img-container">
-  <img src="images/carte-d-empathie.PNG" class="img-methodo" alt="Carte d'Empathie">
-</div>
----
-
-## Branche Fonctionnelle : Design Thinking
-### 2. DÉFINITION
-
-<div class="img-container">
-  <div class="dt-card" style="border-top-color: #f39c12;">
-    <h4>Cadrage du problème</h4>
-    <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px;">
-    
-    </blockquote>
-  </div>
-</div>
-
----
-
-## Branche Fonctionnelle : Design Thinking
 ### 3. IDÉATION
 
 <div class="img-container">
@@ -206,7 +196,7 @@ style: |
 
 ---
 
-## Branche Fonctionnelle : Cas d'utilisation
+## 3. Branche Fonctionnelle : Cas d'utilisation
 
 
 
@@ -216,7 +206,7 @@ style: |
 </div>
 
 ---
-## Branche Fonctionnelle : Maquettes (UI/UX)
+## 3. Branche Fonctionnelle : Maquettes (UI/UX)
 
 
 
