@@ -7,29 +7,39 @@ actor "Résident" as Resident
 actor "Syndic" as Syndic
 actor "Administrateur" as Admin
 
-rectangle "Sprint 1 - Fonctions essentielles (MVP)" {
+rectangle "Système ImmoSyndic - Sprint 1 (MVP)" {
 
-  package "Résident" {
-    Resident -- (Créer compte et se connecter)
-    Resident -- (Consulter charges et paiements)
-    Resident -- (Signaler problème ou intervention)
-    Resident -- (Recevoir notifications paiements/échéances)
+  ' Authentification commune
+  usecase "S'authentifier" as Auth
+  usecase "Gérer son profil" as Profile
+
+  Resident -- Auth
+  Syndic -- Auth
+  Admin -- Auth
+  
+  Resident -- Profile
+  Syndic -- Profile
+  Admin -- Profile
+
+  package "Espace Résident" {
+    Resident -- (Créer un compte)
+    Resident -- (Consulter les charges et paiements)
+    Resident -- (Signaler un problème ou une intervention)
+    Resident -- (Recevoir des notifications de paiement)
   }
 
-  package "Syndic" {
-    Syndic -- (Gérer informations immeubles)
-    Syndic -- (Suivre paiements)
-    Syndic -- (Générer reçus)
-    Syndic -- (Planifier et suivre interventions)
-    Syndic -- (Historique actions et notifications)
+  package "Espace Syndic" {
+    Syndic -- (Gérer les informations des immeubles)
+    Syndic -- (Suivre les paiements des résidents)
+    Syndic -- (Générer des reçus de paiement)
+    Syndic -- (suivre les interventions)
+    Syndic -- (Consulter l'historique des actions)
   }
 
-  package "Administrateur" {
-    Admin -- (Gérer comptes utilisateurs)
-    Admin -- (Superviser immeubles et paiements)
-    Admin -- (Valider les données)
-    Admin -- (Générer rapports globaux)
-    Admin -- (Gérer droits et sécurité plateforme)
+  package "Espace Administrateur" {
+    Admin -- (Gérer les comptes utilisateurs)
+    Admin -- (Superviser les immeubles et paiements)
+    Admin -- (Valider les données du système)
   }
 
 }

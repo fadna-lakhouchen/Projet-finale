@@ -54,41 +54,42 @@ Une solution digitale centralisée est donc indispensable pour améliorer le sui
 ### sprint 1 : Fonctions essentielles (MVP)
 
 **Pour les résidents :**  
-- Création de compte et connexion sécurisée.  
-- Consultation des charges et paiements.  
-- Signalement d’interventions ou problèmes.  
-- Notifications pour paiements en retard et échéances à venir.
+- Création de compte et authentification.  
+- Consultation des charges et des paiements.  
+- Signalement d’interventions ou de problèmes.  
+- Réception de notifications de paiement.
 
 **Pour les syndics :**  
-- Gestion des informations propres à leurs immeubles.  
-- Suivi des paiements et génération automatique de reçus.  
-- Planification et suivi des interventions.  
-- Historique des actions et notifications ciblées.
+- Gestion des informations des immeubles.  
+- Suivi des paiements et génération des reçus.  
+- Suivi simple des interventions (consultation des signalements).  
+- Consultation de l'historique des actions.
 
 **Pour les administrateurs :**  
-- Gestion et contrôle des comptes de tous les utilisateurs.  
+- Gestion des comptes utilisateurs.  
 - Supervision des immeubles et des paiements.  
-- Validation des données et rapports globaux.  
-- Gestion des droits et sécurité de la plateforme.
+- Validation des données du système.
 
 ---
 
 ### sprint 2 : Fonctions avancées
 
 **Pour les résidents :**  
-- Historique complet des paiements et interventions.  
-- Alertes personnalisées pour nouvelles informations ou décisions prises.
+- Historique complet des paiements et des interventions passées.  
+- Alertes personnalisées pour les nouvelles informations ou décisions du syndic.
+- Téléchargement des quittances et documents administratifs en PDF.
 
 **Pour les syndics :**  
-- Statistiques détaillées par immeuble et par résident.  
-- Gestion centralisée des communications pour leurs immeubles.  
-- Tableau de bord amélioré pour une navigation efficace.
+- Planification avancée et gestion du calendrier d'interventions.
+- Statistiques détaillées et tableaux de bord analytiques par immeuble.  
+- Gestion centralisée des communications (emails groupés, annonces).  
+- Archivage et gestion documentaire (PV d'assemblée générale, contrats).
 
 **Pour les administrateurs :**  
-- Statistiques consolidées sur l’ensemble de la plateforme.  
-- Contrôle complet des communications et notifications.  
-- Visualisation globale de tous les immeubles et paiements.  
-- Amélioration de l’interface pour faciliter la supervision.
+- Génération de rapports financiers globaux et statistiques consolidées.  
+- Gestion avancée des droits, des rôles et de la sécurité de la plateforme.  
+- Journal d'audit (suivi des actions effectuées sur le système).  
+- Contrôle complet des flux de communication et des notifications.
 
 ---
 
