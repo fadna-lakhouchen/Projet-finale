@@ -41,13 +41,17 @@
 
 ## Liste des figures
 
-*(à compléter selon le contenu du rapport)*
+
 
 ---
 
 ## Remerciement
 
-*(à compléter selon le contenu du rapport)*
+Je souhaite exprimer ma profonde gratitude à toutes les personnes qui ont contribué au succès de mon projet de fin de formation. Un merci tout particulier à **M. Essarraj Fouad** pour son encadrement attentif, ses conseils pertinents et son soutien constant tout au long du projet.  
+
+Je tiens également à remercier l’équipe de **Solicode** pour leur patience, leur accompagnement quotidien et pour avoir créé un environnement d’apprentissage agréable et stimulant.  
+
+Enfin, je remercie mes camarades de promotion pour leur esprit d’entraide, leur bonne humeur et les moments partagés qui ont rendu cette expérience mémorable. Votre soutien et vos échanges ont été précieux pour la réussite de ce projet et de mon stage.
 
 ---
 
@@ -80,7 +84,7 @@ Le projet de digitalisation de la gestion du Syndic vise à améliorer l’organ
 
 ## Cahier de charge
 
-*(à compléter selon le contenu du rapport)*
+
 
 ---
 
