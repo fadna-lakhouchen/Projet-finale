@@ -102,6 +102,8 @@ La méthodologie Scrum est une méthodologie agile qui permet de gérer un proje
 - **Inspection :** Chaque sprint est évalué pour détecter les améliorations possibles.  
 - **Adaptation :** L’équipe ajuste le plan de travail selon les résultats des sprints précédents.  
 
+ <img src="images/scrum.jpg" class="img-methodo" alt="Scrum">
+
 **Sprints du projet :**  
 - **Sprint 1 :** Planification et conception  
 - **Sprint 2 :** Développement et tests  
@@ -110,7 +112,7 @@ La méthodologie Scrum est une méthodologie agile qui permet de gérer un proje
 ---
 
 ### La méthodologie 2TUP
-
+<img src="images/2TUP.PNG" class="img-methodo" alt="2TUP">
 La méthodologie **2TUP (Two-Tracks Unified Process)** est un processus de développement logiciel structuré en Y. Elle sépare puis réunit deux dimensions essentielles :  
 
 - Analyse fonctionnelle (ce que doit faire le système)  
@@ -132,7 +134,7 @@ La méthodologie **2TUP (Two-Tracks Unified Process)** est un processus de déve
 ---
 
 ### Design Thinking
-
+<img src="images/designThinking.png" class="img-methodo" alt="Design Thinking">
 **Définition :** Approche centrée sur l’humain visant à créer des solutions innovantes adaptées aux besoins réels des utilisateurs.  
 
 **Objectifs :**  
@@ -154,12 +156,12 @@ La méthodologie **2TUP (Two-Tracks Unified Process)** est un processus de déve
 
 ### Carte d’empathie
 
-*(à compléter selon le contenu du rapport)*
+<img src="images/carte-d-empathie.PNG" class="img-methodo" alt="Carte d'Empathie">
 
 ### Définition de problème
 
 **Problématique centrale :**  
-- Comment créer une solution digitale qui améliore la transparence et encourage les résidents à payer leurs charges à temps ?
+- Comment pouvons-nous améliorer la gestion des immeubles et des paiements tout en garantissant la transparence, la communication efficace et la réduction des conflits entre résidents et syndic à travers une solution digitale centralisée ?
 
 ### Diagrammes de cas d’utilisation
 
