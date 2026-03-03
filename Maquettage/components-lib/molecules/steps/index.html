@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Molecule: Steps </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 max-w-lg dark:bg-neutral-900">
+
+    <h2 class="text-xl font-bold text-gray-800 mb-6 border-b pb-4 dark:text-white">Steps / Stepper </h2>
+
+    <ul class="relative flex flex-row gap-x-2">
+        <!-- Item -->
+        <li class="flex items-center gap-x-2 shrink basis-0 flex-1 group">
+            <div class="min-w-7 min-h-7 inline-flex justify-center items-center text-xs align-middle">
+                <span
+                    class="size-7 flex justify-center items-center shrink-0 bg-blue-600 font-medium text-white rounded-full dark:bg-blue-500">
+                    1
+                </span>
+                <span class="ms-2 block text-sm font-medium text-gray-800 dark:text-white">Détails</span>
+            </div>
+            <div class="w-full h-px flex-1 bg-gray-200 group-last:hidden dark:bg-neutral-700"></div>
+        </li>
+        <!-- Item -->
+        <li class="flex items-center gap-x-2 shrink basis-0 flex-1 group">
+            <div class="min-w-7 min-h-7 inline-flex justify-center items-center text-xs align-middle">
+                <span
+                    class="size-7 flex justify-center items-center shrink-0 bg-gray-100 font-medium text-gray-800 rounded-full dark:bg-neutral-700 dark:text-white">
+                    2
+                </span>
+                <span class="ms-2 block text-sm font-medium text-gray-500 dark:text-neutral-500">Photos</span>
+            </div>
+            <div class="w-full h-px flex-1 bg-gray-200 group-last:hidden dark:bg-neutral-700"></div>
+        </li>
+        <!-- Item -->
+        <li class="flex items-center gap-x-2 shrink basis-0 flex-1 group">
+            <div class="min-w-7 min-h-7 inline-flex justify-center items-center text-xs align-middle">
+                <span
+                    class="size-7 flex justify-center items-center shrink-0 bg-gray-100 font-medium text-gray-800 rounded-full dark:bg-neutral-700 dark:text-white">
+                    3
+                </span>
+                <span class="ms-2 block text-sm font-medium text-gray-500 dark:text-neutral-500">Validation</span>
+            </div>
+            <div class="w-full h-px flex-1 bg-gray-200 group-last:hidden dark:bg-neutral-700"></div>
+        </li>
+    </ul>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

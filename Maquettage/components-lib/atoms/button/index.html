@@ -1,75 +1,46 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="light">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atom: Button</title>
+    <title>Atom: Button </title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: {
-                        syndic: {
-                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa',
-                            500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
-<body class="p-8 bg-gray-50 flex flex-col gap-8 items-start">
+<body class="p-8 bg-gray-50 flex flex-col gap-6 items-start dark:bg-neutral-900">
 
-    <h2 class="text-xl font-semibold text-gray-900 border-b pb-2 w-full">Atom: Buttons</h2>
+    <h2 class="text-xl font-bold text-gray-800 border-b pb-4 w-full dark:text-white">Bouton</h2>
 
-    <!-- Primary Button -->
-    <button
-        class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-syndic-600 border border-transparent rounded-lg shadow-sm hover:bg-syndic-700 focus:outline-none focus:ring-2 focus:ring-syndic-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none">
-        <i data-lucide="plus" class="w-4 h-4"></i>
-        Primary Button
+    <!-- Solid -->
+    <button type="button"
+        class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+        <i data-lucide="plus" class="size-4"></i>
+        Primary Solid
     </button>
 
-    <!-- Secondary Button -->
-    <button
-        class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-syndic-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none">
-        Secondary Button
+    <!-- Outline -->
+    <button type="button"
+        class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800">
+        Secondary Outline
     </button>
 
-    <!-- Outline Button -->
-    <button
-        class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-syndic-600 transition-colors bg-transparent border border-syndic-600 rounded-lg hover:bg-syndic-50 focus:outline-none focus:ring-2 focus:ring-syndic-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none">
-        Outline Button
+    <!-- Soft -->
+    <button type="button"
+        class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400">
+        Soft Blue
     </button>
 
-    <!-- Text / Ghost Button -->
-    <button
-        class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-syndic-600 transition-colors bg-transparent border border-transparent rounded-lg hover:bg-syndic-50 focus:outline-none focus:ring-2 focus:ring-syndic-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none">
-        Ghost Action
+    <!-- Destructive -->
+    <button type="button"
+        class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-600 disabled:opacity-50 disabled:pointer-events-none">
+        <i data-lucide="trash-2" class="size-4"></i>
+        Supprimer
     </button>
 
-    <!-- Danger Button -->
-    <button
-        class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-red-600 border border-transparent rounded-lg shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none">
-        <i data-lucide="trash-2" class="w-4 h-4"></i>
-        Delete
-    </button>
-
-    <!-- FAB Mobile (Floating Action Button) -->
-    <button
-        class="inline-flex items-center justify-center w-14 h-14 text-white transition-colors bg-syndic-600 rounded-full shadow-lg hover:bg-syndic-700 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-syndic-500 focus:ring-offset-2">
-        <i data-lucide="plus" class="w-6 h-6"></i>
-    </button>
-
-    <script>
-        lucide.createIcons();
-    </script>
+    <script>lucide.createIcons();</script>
 </body>
 
 </html>

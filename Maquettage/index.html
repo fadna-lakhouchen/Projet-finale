@@ -1,290 +1,172 @@
 <!DOCTYPE html>
-<html lang="fr" class="bg-gray-50 text-gray-900 font-sans antialiased">
+<html lang="fr" class="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galerie UI - ImmoSyndic</title>
+    <title>ImmoSyndic - Design System & Mockups</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: { syndic: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' } }
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
                 }
             }
         }
     </script>
 </head>
 
-<body class="p-4 md:p-8 max-w-6xl mx-auto space-y-12">
+<body class="bg-gray-50 dark:bg-neutral-900 min-h-screen">
 
-    <!-- Entête du Hub -->
     <header
-        class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div>
-            <div
-                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-syndic-50 text-syndic-700 text-sm font-medium mb-4">
-                <i data-lucide="blocks" class="w-4 h-4"></i> Atomic Design System
+        class="sticky top-0 z-50 flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white border-b border-gray-200 text-sm py-3 px-4 sm:px-6 lg:px-8 dark:bg-neutral-800 dark:border-neutral-700">
+        <nav class="max-w-[85rem] w-full mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-x-2">
+                <div class="flex-shrink-0 size-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+                    <i data-lucide="building-2" class="size-5"></i>
+                </div>
+                <span class="text-xl font-bold text-gray-800 dark:text-white">ImmoSyndic <span class="text-blue-600">UI
+                        Portal</span></span>
             </div>
-            <h1 class="text-3xl font-bold tracking-tight text-gray-900 mb-2">ImmoSyndic - Galerie UI</h1>
-            <p class="text-gray-500 max-w-2xl">Catalogue des composants de l'application de gestion de syndic, organisés
-                selon la méthodologie Atomic Design.</p>
-        </div>
-        <div class="flex-shrink-0">
-            <a href="charte-graphique/index.html"
-                class="inline-flex items-center justify-center px-5 py-3 text-sm font-medium text-white transition-colors bg-syndic-600 rounded-xl shadow-sm hover:bg-syndic-700 focus:outline-none focus:ring-4 focus:ring-syndic-100">
-                <i data-lucide="palette" class="w-5 h-5 mr-2"></i> Voir la Charte Graphique
-            </a>
-        </div>
+            <div class="flex items-center gap-x-3">
+                <a class="font-medium text-gray-600 hover:text-blue-600 dark:text-neutral-400 dark:hover:text-neutral-500"
+                    href="charte-graphique/index.html">Charte Graphique</a>
+                <div class="border-s border-gray-200 dark:border-neutral-700 ps-3">
+                    <button type="button"
+                        class="hs-dark-mode-active:hidden block hs-dark-mode group flex items-center text-gray-600 hover:text-blue-600 font-medium dark:text-neutral-400 dark:hover:text-neutral-500"
+                        data-hs-theme-click-value="dark">
+                        <i data-lucide="moon" class="size-4"></i>
+                    </button>
+                    <button type="button"
+                        class="hs-dark-mode-active:block hidden hs-dark-mode group flex items-center text-gray-600 hover:text-blue-600 font-medium dark:text-neutral-400 dark:hover:text-neutral-500"
+                        data-hs-theme-click-value="light">
+                        <i data-lucide="sun" class="size-4"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <!-- Section Mockups -->
-    <section class="space-y-4">
-        <div class="flex items-center gap-2 border-b border-gray-200 pb-2">
-            <i data-lucide="layout-template" class="w-6 h-6 text-gray-400"></i>
-            <h2 class="text-xl font-semibold text-gray-900">Mockups Complets</h2>
+    <main class="max-w-[85rem] mx-auto py-10 px-4 sm:px-6 lg:px-8">
+
+        <!-- Hero -->
+        <div class="max-w-2xl mb-12">
+            <h1 class="text-3xl font-bold text-gray-800 sm:text-4xl dark:text-white">Maquettage Professionnel</h1>
+            <p class="mt-3 text-lg text-gray-600 dark:text-neutral-400">Système de design fondé sur l'Atomic Design et
+                propulsé par Preline UI. Tous les composants sont réutilisables et supportent le mode sombre.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <a href="mockups/dashboard-resident.html"
-                class="flex items-center justify-between bg-white p-5 rounded-xl border border-gray-200 hover:border-syndic-400 hover:shadow-md transition-all group">
-                <div>
-                    <h3 class="font-semibold text-gray-900 group-hover:text-syndic-600 transition-colors">Dashboard
-                        Résident</h3>
-                    <p class="text-sm text-gray-500 mt-1">Vue principale des résidents (Mobile & Web)</p>
-                </div>
-                <i data-lucide="chevron-right"
-                    class="w-5 h-5 text-gray-400 group-hover:text-syndic-600 transition-colors"></i>
-            </a>
-        </div>
-    </section>
 
-    <!-- Grille Atoms & Molecules -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- Section: Mockups -->
+        <section class="mb-16">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
+                <i data-lucide="layout" class="size-5 text-blue-600"></i> Mockups Interactifs par Rôle
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Resident Space -->
+                <a href="mockups/resident/index.html"
+                    class="group flex flex-col bg-white border border-blue-100 shadow-sm rounded-xl hover:shadow-md transition dark:bg-neutral-800 dark:border-neutral-700">
+                    <div class="h-32 bg-blue-50 rounded-t-xl flex items-center justify-center dark:bg-blue-900/10">
+                        <i data-lucide="user" class="size-12 text-blue-600 group-hover:scale-110 transition"></i>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Espace Résident</h3>
+                        <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">Dashboard (Propriétaire /
+                            Locataire), charges et incidents.</p>
+                    </div>
+                </a>
 
-        <!-- Colonne Atoms -->
-        <section class="space-y-4">
-            <div class="flex items-center gap-2 border-b border-gray-200 pb-2">
-                <i data-lucide="circle-dot" class="w-6 h-6 text-emerald-500"></i>
-                <h2 class="text-xl font-semibold text-gray-900">Atoms (20)</h2>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <!-- Syndic Space -->
+                <a href="mockups/syndic/index.html"
+                    class="group flex flex-col bg-white border border-indigo-100 shadow-sm rounded-xl hover:shadow-md transition dark:bg-neutral-800 dark:border-neutral-700">
+                    <div class="h-32 bg-indigo-50 rounded-t-xl flex items-center justify-center dark:bg-indigo-900/10">
+                        <i data-lucide="shield-check"
+                            class="size-12 text-indigo-600 group-hover:scale-110 transition"></i>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Espace Syndic</h3>
+                        <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">Gestion de copropriété, finances et
+                            interventions.</p>
+                    </div>
+                </a>
 
-                <!-- Elements Fondamentaux -->
-                <a href="components-lib/atoms/button/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Boutons</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/typography/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Typographie</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/icon/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Icônes (Lucide)</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/badge/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Badges</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/avatar/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Avatars</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/divider/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Séparateurs</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/spinner/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Spinners</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/progress-bar/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Barres Progression</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/tooltip/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Infobulles</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-
-                <!-- Formulaire -->
-                <a href="components-lib/atoms/input-text/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Input (Texte)</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/input-email/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Input (Email)</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/input-password/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Input (Mot P.)</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/input-number/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Input (Nombre)</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/input-date/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Input (Date)</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/input-file/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Input (Fichier)</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/select/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Select (Liste)</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/textarea/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Zone de texte</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/checkbox/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Cases à cocher</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/radio/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Boutons Radio</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-                <a href="components-lib/atoms/toggle-switch/index.html"
-                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                        class="text-sm font-medium">Switchs (Toggle)</span><i data-lucide="arrow-right"
-                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
-
+                <!-- Administrateur Space -->
+                <a href="mockups/administrateur/index.html"
+                    class="group flex flex-col bg-white border border-red-100 shadow-sm rounded-xl hover:shadow-md transition dark:bg-neutral-800 dark:border-neutral-700">
+                    <div class="h-32 bg-red-50 rounded-t-xl flex items-center justify-center dark:bg-red-900/10">
+                        <i data-lucide="settings" class="size-12 text-red-600 group-hover:scale-110 transition"></i>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Espace Administrateur</h3>
+                        <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">Configuration système, gestion des
+                            rôles et logs globaux.</p>
+                    </div>
+                </a>
             </div>
         </section>
 
-        <!-- Colonne Molecules -->
-        <section class="space-y-4">
-            <div class="flex items-center gap-2 border-b border-gray-200 pb-2">
-                <i data-lucide="boxes" class="w-6 h-6 text-indigo-500"></i>
-                <h2 class="text-xl font-semibold text-gray-900">Molecules (19)</h2>
-            </div>
-            <div class="grid grid-cols-1 gap-3">
-
-                <!-- Cartes & Blocks -->
-                <a href="components-lib/molecules/card-stat/index.html"
-                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
-                    <div>
-                        <p class="font-medium text-gray-900">Carte Statistique</p>
-                        <p class="text-xs text-gray-500 mt-0.5">Pour le tableau de bord KPI</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
-                </a>
-                <a href="components-lib/molecules/card-charge/index.html"
-                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
-                    <div>
-                        <p class="font-medium text-gray-900">Carte Charge (Facture)</p>
-                        <p class="text-xs text-gray-500 mt-0.5">Info financière avec actions</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
-                </a>
-                <a href="components-lib/molecules/card-intervention/index.html"
-                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
-                    <div>
-                        <p class="font-medium text-gray-900">Carte Intervention</p>
-                        <p class="text-xs text-gray-500 mt-0.5">Suivi de problème technique</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
-                </a>
-                <a href="components-lib/molecules/card-document/index.html"
-                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
-                    <div>
-                        <p class="font-medium text-gray-900">Carte Fichier / Document</p>
-                        <p class="text-xs text-gray-500 mt-0.5">Pour le téléchargement de PDF/Images</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
-                </a>
-                <a href="components-lib/molecules/card-building/index.html"
-                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
-                    <div>
-                        <p class="font-medium text-gray-900">Carte Immeuble</p>
-                        <p class="text-xs text-gray-500 mt-0.5">Vue globale d'une résidence (Admin)</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
-                </a>
-
-                <!-- Listes -->
-                <a href="components-lib/molecules/list-item-payment/index.html"
-                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
-                    <div>
-                        <p class="font-medium text-gray-900">Ligne d'historique (Paiement)</p>
-                    </div><i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
-                </a>
-                <a href="components-lib/molecules/list-item-notification/index.html"
-                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
-                    <div>
-                        <p class="font-medium text-gray-900">Ligne de Centre de Notifications</p>
-                    </div><i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
-                </a>
-                <a href="components-lib/molecules/table-row/index.html"
-                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
-                    <div>
-                        <p class="font-medium text-gray-900">Ligne de Tableau Données</p>
-                    </div><i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
-                </a>
-
-                <!-- Autres -->
-                <div class="grid grid-cols-2 gap-3 mt-2">
-                    <a href="components-lib/molecules/form-group/index.html"
-                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                            class="text-sm font-medium">Groupe Formulaire</span><i data-lucide="arrow-right"
-                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
-                    <a href="components-lib/molecules/search-bar/index.html"
-                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                            class="text-sm font-medium">Barre Recherche</span><i data-lucide="arrow-right"
-                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
-                    <a href="components-lib/molecules/nav-item/index.html"
-                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                            class="text-sm font-medium">Item Navigation</span><i data-lucide="arrow-right"
-                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
-                    <a href="components-lib/molecules/user-profile-badge/index.html"
-                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                            class="text-sm font-medium">Badge Profil</span><i data-lucide="arrow-right"
-                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
-                    <a href="components-lib/molecules/alert-message/index.html"
-                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                            class="text-sm font-medium">Alerte In-Page</span><i data-lucide="arrow-right"
-                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
-                    <a href="components-lib/molecules/toast-notification/index.html"
-                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                            class="text-sm font-medium">Toast Notification</span><i data-lucide="arrow-right"
-                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
-                    <a href="components-lib/molecules/modal-dialog/index.html"
-                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                            class="text-sm font-medium">Modale Dialogue</span><i data-lucide="arrow-right"
-                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
-                    <a href="components-lib/molecules/empty-state/index.html"
-                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                            class="text-sm font-medium">État Vide (Empty)</span><i data-lucide="arrow-right"
-                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
-                    <a href="components-lib/molecules/pagination/index.html"
-                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                            class="text-sm font-medium">Pagination Listes</span><i data-lucide="arrow-right"
-                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
-                    <a href="components-lib/molecules/tabs/index.html"
-                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                            class="text-sm font-medium">Onglets Navigation</span><i data-lucide="arrow-right"
-                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
-                    <a href="components-lib/molecules/breadcrumb/index.html"
-                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
-                            class="text-sm font-medium">Fil d'Ariane</span><i data-lucide="arrow-right"
-                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
+        <!-- Components Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Column: Atoms -->
+            <div>
+                <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
+                    <i data-lucide="atom" class="size-5 text-blue-600"></i> Atoms (Visual Tokens)
+                </h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <script>
+                        const atoms = [
+                            'avatar', 'badge', 'button', 'checkbox', 'divider', 'icon',
+                            'input-date', 'input-email', 'input-file', 'input-number',
+                            'input-password', 'input-text', 'progress-bar', 'radio',
+                            'select', 'spinner', 'textarea', 'toggle-switch', 'tooltip', 'typography'
+                        ];
+                        atoms.forEach(item => {
+                            document.write(`
+                                <a href="components-lib/atoms/${item}/index.html" class="flex items-center gap-x-3 py-2 px-3 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 hover:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700 transition">
+                                    <span class="size-2 rounded-full bg-blue-500"></span>
+                                    ${item.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+                                </a>
+                            `);
+                        });
+                    </script>
                 </div>
-
             </div>
-        </section>
 
-    </div>
+            <!-- Column: Molecules -->
+            <div>
+                <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
+                    <i data-lucide="component" class="size-5 text-blue-600"></i> Molecules (Complex UI)
+                </h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <script>
+                        const molecules = [
+                            'accordion', 'alert-message', 'breadcrumb', 'card-building',
+                            'card-charge', 'card-document', 'card-intervention', 'card-stat',
+                            'empty-state', 'form-group', 'list-item-notification',
+                            'list-item-payment', 'modal-dialog', 'nav-item', 'pagination',
+                            'search-bar', 'steps', 'table-row', 'tabs', 'timeline',
+                            'toast-notification', 'user-profile-badge'
+                        ];
+                        molecules.forEach(item => {
+                            document.write(`
+                                <a href="components-lib/molecules/${item}/index.html" class="flex items-center gap-x-3 py-2 px-3 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 hover:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700 transition">
+                                    <span class="size-2 rounded-full bg-teal-500"></span>
+                                    ${item.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+                                </a>
+                            `);
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <footer class="text-center py-8 text-sm text-gray-400 border-t border-gray-200 mt-12">
-        Généré avec méthode Atomic Design - UI First
+    <footer class="mt-20 py-10 border-t border-gray-200 dark:border-neutral-700">
+        <p class="text-center text-sm text-gray-500">© 2026 ImmoSyndic - Mockups & Design System.</p>
     </footer>
 
     <script>lucide.createIcons();</script>

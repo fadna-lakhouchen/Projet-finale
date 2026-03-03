@@ -1,33 +1,31 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="light">
 
 <head>
     <meta charset="UTF-8">
-    <title>Atom: Divider</title>
+    <title>Atom: Divider </title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
 </head>
 
-<body class="p-8 bg-gray-50 flex flex-col gap-8 max-w-xl mx-auto">
+<body class="p-8 bg-gray-50 flex flex-col gap-8 max-w-xl mx-auto dark:bg-neutral-900">
 
-    <h2 class="text-xl font-semibold mb-4 border-b pb-2">Atom: Divider</h2>
+    <h2 class="text-xl font-bold text-gray-800 mb-4 border-b pb-4 dark:text-white">Divider </h2>
 
     <!-- Standard Horizontal -->
     <div>
-        <p class="text-sm text-gray-500 mb-2">Ligne simple</p>
-        <hr class="border-gray-200">
+        <p class="text-sm text-gray-500 mb-4 dark:text-neutral-400">Ligne simple</p>
+        <div
+            class="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-neutral-500 dark:before:border-neutral-700 dark:after:border-neutral-700">
+        </div>
     </div>
 
     <!-- Avec Texte au milieu -->
     <div>
-        <p class="text-sm text-gray-500 mb-2">Avec label</p>
-        <div class="relative py-4">
-            <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                <div class="w-full border-t border-gray-300"></div>
-            </div>
-            <div class="relative flex justify-center">
-                <span class="bg-gray-50 px-3 text-sm font-medium text-gray-500">ou</span>
-            </div>
-        </div>
+        <p class="text-sm text-gray-500 mb-4 dark:text-neutral-400">Avec label</p>
+        <div
+            class="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-neutral-500 dark:before:border-neutral-700 dark:after:border-neutral-700">
+            ou</div>
     </div>
 
 </body>

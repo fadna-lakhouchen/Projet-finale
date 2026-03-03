@@ -1,174 +1,208 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charte Graphique - ImmoSyndic</title>
+    <title>Charte Graphique - ImmoSyndic </title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                     },
-                    colors: {
-                        syndic: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            200: '#bfdbfe',
-                            300: '#93c5fd',
-                            400: '#60a5fa',
-                            500: '#3b82f6',
-                            600: '#2563eb', // Primary
-                            700: '#1d4ed8', // Hover
-                            800: '#1e40af',
-                            900: '#1e3a8a',
-                        }
-                    }
                 }
             }
         }
     </script>
-    <style type="text/tailwindcss">
-        @layer base {
-      body {
-        @apply font-sans antialiased text-gray-900 bg-gray-50;
-      }
-    }
-  </style>
-    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
-<body class="p-8">
-    <div class="max-w-4xl mx-auto space-y-12 bg-white p-10 rounded-xl shadow-sm border border-gray-100">
-        <!-- En-tête -->
-        <div>
-            <h1 class="text-3xl font-bold tracking-tight text-gray-900">Charte Graphique ImmoSyndic</h1>
-            <p class="mt-2 text-gray-500">Aperçu visuel des tokens (Couleurs, Typographie, Espacements) pour la
-                plateforme de gestion de syndic.</p>
+<body class="bg-gray-50 dark:bg-neutral-900 min-h-screen">
+    <header
+        class="sticky top-0 z-50 flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white border-b border-gray-200 text-sm py-3 px-4 sm:px-6 lg:px-8 dark:bg-neutral-800 dark:border-neutral-700">
+        <nav class="max-w-[85rem] w-full mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-x-2">
+                <div class="flex-shrink-0 size-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+                    <i data-lucide="building-2" class="size-5"></i>
+                </div>
+                <span class="text-xl font-bold text-gray-800 dark:text-white">ImmoSyndic <span
+                        class="text-blue-600">Design</span></span>
+            </div>
+            <div class="flex items-center gap-x-2">
+                <button type="button"
+                    class="hs-dark-mode-active:hidden block hs-dark-mode group flex items-center text-gray-600 hover:text-blue-600 font-medium dark:text-neutral-400 dark:hover:text-neutral-500"
+                    data-hs-theme-click-value="dark">
+                    <i data-lucide="moon" class="size-4"></i>
+                </button>
+                <button type="button"
+                    class="hs-dark-mode-active:block hidden hs-dark-mode group flex items-center text-gray-600 hover:text-blue-600 font-medium dark:text-neutral-400 dark:hover:text-neutral-500"
+                    data-hs-theme-click-value="light">
+                    <i data-lucide="sun" class="size-4"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-[85rem] mx-auto py-10 px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Sidebar Navigation -->
+            <aside class="md:col-span-1">
+                <nav class="space-y-1 sticky top-24">
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:bg-neutral-700 dark:text-white"
+                        href="#tokens">
+                        <i data-lucide="layout-grid" class="size-4"></i>
+                        Design Tokens
+                    </a>
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:text-neutral-300 dark:hover:bg-neutral-800"
+                        href="#atoms">
+                        <i data-lucide="atom" class="size-4"></i>
+                        Atoms (20)
+                    </a>
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:text-neutral-300 dark:hover:bg-neutral-800"
+                        href="#molecules">
+                        <i data-lucide="component" class="size-4"></i>
+                        Molecules (22)
+                    </a>
+                    <hr class="my-4 dark:border-neutral-700">
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-blue-600 font-semibold rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                        href="../index.html">
+                        <i data-lucide="arrow-left" class="size-4"></i>
+                        Retour aux Mockups
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Content Area -->
+            <div class="md:col-span-3 space-y-16">
+                <!-- Section: Tokens -->
+                <section id="tokens">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Design Tokens</h2>
+                        <p class="text-gray-600 dark:text-neutral-400">Le fondement de notre interface basée sur Preline
+                            UI.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Couleurs -->
+                        <div
+                            class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+                            <div class="p-4 md:p-5">
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4">Palette</h3>
+                                <div class="grid grid-cols-4 gap-2">
+                                    <div class="space-y-1">
+                                        <div class="h-10 rounded-md bg-blue-600"></div>
+                                        <span class="text-[10px] block text-center dark:text-neutral-500">Brand</span>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <div class="h-10 rounded-md bg-teal-500"></div>
+                                        <span class="text-[10px] block text-center dark:text-neutral-500">Success</span>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <div class="h-10 rounded-md bg-red-500"></div>
+                                        <span class="text-[10px] block text-center dark:text-neutral-500">Danger</span>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <div class="h-10 rounded-md bg-amber-500"></div>
+                                        <span class="text-[10px] block text-center dark:text-neutral-500">Warning</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Typography -->
+                        <div
+                            class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+                            <div class="p-4 md:p-5">
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4">Typographie</h3>
+                                <div class="space-y-2">
+                                    <p class="text-xl font-bold text-gray-800 dark:text-white tracking-tight">Inter Font
+                                    </p>
+                                    <p class="text-sm text-gray-600 dark:text-neutral-400">Lisible, moderne et
+                                        professionnelle.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Atoms -->
+                <section id="atoms">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Atoms Library</h2>
+                        <span
+                            class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">20/20
+                            Refactorisés</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <script>
+                            const atoms = [
+                                'avatar', 'badge', 'button', 'checkbox', 'divider', 'icon',
+                                'input-date', 'input-email', 'input-file', 'input-number',
+                                'input-password', 'input-text', 'progress-bar', 'radio',
+                                'select', 'spinner', 'textarea', 'toggle-switch', 'tooltip', 'typography'
+                            ];
+                            atoms.forEach(atom => {
+                                document.write(`
+                                    <a href="../components-lib/atoms/${atom}/index.html" class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition dark:bg-neutral-800 dark:border-neutral-700">
+                                        <div class="p-4 md:p-5 flex items-center justify-between">
+                                            <span class="text-sm font-semibold text-gray-800 dark:text-neutral-200 capitalize">${atom.replace('-', ' ')}</span>
+                                            <i data-lucide="external-link" class="size-3 text-gray-400 group-hover:text-blue-600"></i>
+                                        </div>
+                                    </a>
+                                `);
+                            });
+                        </script>
+                    </div>
+                </section>
+
+                <!-- Section: Molecules -->
+                <section id="molecules">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Molecules Library</h2>
+                        <span
+                            class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">22/22
+                            Refactorisés</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <script>
+                            const molecules = [
+                                'accordion', 'alert-message', 'breadcrumb', 'card-building',
+                                'card-charge', 'card-document', 'card-intervention', 'card-stat',
+                                'empty-state', 'form-group', 'list-item-notification',
+                                'list-item-payment', 'modal-dialog', 'nav-item', 'pagination',
+                                'search-bar', 'steps', 'table-row', 'tabs', 'timeline',
+                                'toast-notification', 'user-profile-badge'
+                            ];
+                            molecules.forEach(mol => {
+                                document.write(`
+                                    <a href="../components-lib/molecules/${mol}/index.html" class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition dark:bg-neutral-800 dark:border-neutral-700">
+                                        <div class="p-4 md:p-5 flex items-center justify-between">
+                                            <span class="text-sm font-semibold text-gray-800 dark:text-neutral-200 capitalize">${mol.replace('-', ' ')}</span>
+                                            <i data-lucide="external-link" class="size-3 text-gray-400 group-hover:text-blue-600"></i>
+                                        </div>
+                                    </a>
+                                `);
+                            });
+                        </script>
+                    </div>
+                </section>
+            </div>
         </div>
+    </main>
 
-        <hr class="border-gray-200">
+    <footer class="mt-20 py-10 border-t border-gray-200 dark:border-neutral-700">
+        <p class="text-center text-sm text-gray-500">© 2026 ImmoSyndic - Système de Design Preline UI.</p>
+    </footer>
 
-        <!-- Couleurs -->
-        <section>
-            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
-                <i data-lucide="palette" class="w-5 h-5 text-syndic-600"></i> Palette de Couleurs
-            </h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <!-- Primary -->
-                <div class="space-y-2">
-                    <div class="h-24 rounded-lg bg-syndic-600 shadow-sm"></div>
-                    <div>
-                        <p class="font-medium text-sm">Primary (syndic-600)</p>
-                        <p class="text-xs text-gray-500 text-syndic-600">Actions principales</p>
-                    </div>
-                </div>
-                <!-- Success -->
-                <div class="space-y-2">
-                    <div class="h-24 rounded-lg bg-green-600 shadow-sm"></div>
-                    <div>
-                        <p class="font-medium text-sm">Success (green-600)</p>
-                        <p class="text-xs text-gray-500 text-green-600">Paiements validés</p>
-                    </div>
-                </div>
-                <!-- Danger -->
-                <div class="space-y-2">
-                    <div class="h-24 rounded-lg bg-red-600 shadow-sm"></div>
-                    <div>
-                        <p class="font-medium text-sm">Danger (red-600)</p>
-                        <p class="text-xs text-gray-500 text-red-600">Impayés / Erreurs</p>
-                    </div>
-                </div>
-                <!-- Warning -->
-                <div class="space-y-2">
-                    <div class="h-24 rounded-lg bg-yellow-500 shadow-sm"></div>
-                    <div>
-                        <p class="font-medium text-sm">Warning (yellow-500)</p>
-                        <p class="text-xs text-gray-500 text-yellow-600">En attente / Retards</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Neutrals -->
-            <div class="mt-6">
-                <p class="text-sm font-medium mb-3">Tons neutres (Bordures, Textes, Fonds)</p>
-                <div class="flex h-12 rounded-lg overflow-hidden shadow-sm">
-                    <div class="flex-1 bg-gray-900 border-r border-gray-700"></div>
-                    <div class="flex-1 bg-gray-700 border-r border-gray-500"></div>
-                    <div class="flex-1 bg-gray-500 border-r border-gray-300"></div>
-                    <div class="flex-1 bg-gray-300 border-r border-gray-200"></div>
-                    <div class="flex-1 bg-gray-200 border-r border-gray-100"></div>
-                    <div class="flex-1 bg-gray-100 border-r border-gray-50"></div>
-                    <div class="flex-1 bg-gray-50"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Typographie -->
-        <section>
-            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
-                <i data-lucide="type" class="w-5 h-5 text-syndic-600"></i> Typographie (Inter)
-            </h2>
-            <div class="space-y-6 bg-gray-50 p-6 rounded-lg border border-gray-200">
-                <div>
-                    <h1 class="text-3xl font-bold tracking-tight text-gray-900">Titre Principal H1</h1>
-                    <p class="text-sm text-gray-500 mt-1">text-3xl font-bold tracking-tight</p>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-semibold text-gray-900">Titre Secondaire H2</h2>
-                    <p class="text-sm text-gray-500 mt-1">text-2xl font-semibold</p>
-                </div>
-                <div>
-                    <h3 class="text-xl font-medium text-gray-900">Titre de Section H3</h3>
-                    <p class="text-sm text-gray-500 mt-1">text-xl font-medium</p>
-                </div>
-                <div>
-                    <p class="text-base text-gray-700"><strong>Corps de texte:</strong> Ceci est un paragraphe standard
-                        utilisé pour les descriptions longues ou le contenu textuel des cartes et modales. Il offre une
-                        excellente lisibilité.</p>
-                    <p class="text-sm text-gray-500 mt-1">text-base text-gray-700</p>
-                </div>
-                <div>
-                    <p class="text-sm text-gray-600"><strong>Petit texte:</strong> Utilisé pour les légendes, les
-                        métadonnées de dates ou les labels de formulaires.</p>
-                    <p class="text-sm text-gray-500 mt-1">text-sm text-gray-600</p>
-                </div>
-                <div>
-                    <p class="text-xs text-gray-500">Texte miniature (Avertissements, notes de bas de page)</p>
-                    <p class="text-xs text-gray-400 mt-1">text-xs text-gray-500</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Boutons (Aperçu Rapide) -->
-        <section>
-            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
-                <i data-lucide="mouse-pointer-click" class="w-5 h-5 text-syndic-600"></i> Éléments d'interface : Boutons
-            </h2>
-            <div class="flex flex-wrap gap-4">
-                <button
-                    class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-syndic-600 border border-transparent rounded-lg shadow-sm hover:bg-syndic-700 focus:outline-none focus:ring-2 focus:ring-syndic-500 focus:ring-offset-2">
-                    Bouton Primaire
-                </button>
-                <button
-                    class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-syndic-500 focus:ring-offset-2">
-                    Bouton Secondaire
-                </button>
-                <button
-                    class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-red-700 transition-colors bg-red-100 border border-transparent rounded-lg hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                    Action Destructive
-                </button>
-            </div>
-        </section>
-    </div>
-
-    <script>
-        lucide.createIcons();
-    </script>
+    <script>lucide.createIcons();</script>
 </body>
 
 </html>

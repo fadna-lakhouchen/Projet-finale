@@ -177,7 +177,7 @@ Le projet vise à digitaliser la gestion du Syndic pour améliorer l’organisat
   <div class="dt-card" style="border-top-color: #f39c12;">
     <h4>Cadrage du problème</h4>
     <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px;">
-     <p> - Comment pouvons-nous améliorer la gestion des immeubles et des paiements tout en garantissant la transparence, la communication efficace et la réduction des conflits entre résidents et syndic à travers une solution digitale centralisée ? </p>
+     <p> - Comment pouvons-nous améliorer la gestion des immeubles et des paiements tout en garantissant la transparence, la communication efficace et la réduction des conflits entre résidents et syndic ? </p>
     </blockquote>
   </div>
 </div>

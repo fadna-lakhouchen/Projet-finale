@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImmoSyndic - Signaler un Incident</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-neutral-900">
+    <!-- ========== HEADER ========== -->
+    <header
+        class="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 sm:py-4 lg:ps-64 dark:bg-neutral-800 dark:border-neutral-700">
+        <nav class="flex basis-full items-center w-full mx-auto px-4 sm:px-6" aria-label="Global">
+            <div class="me-5 lg:me-0 lg:hidden">
+                <a class="flex-none text-xl font-semibold dark:text-white" href="../../index.html"
+                    aria-label="Brand">ImmoSyndic</a>
+            </div>
+            <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3">
+                <div class="flex items-center gap-x-2">
+                    <ol class="flex items-center whitespace-nowrap" aria-label="Breadcrumb">
+                        <li class="inline-flex items-center">
+                            <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500"
+                                href="index.html">
+                                Accueil
+                            </a>
+                            <i data-lucide="chevron-right"
+                                class="shrink-0 size-4 mx-2 text-gray-400 dark:text-neutral-600"></i>
+                        </li>
+                        <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate dark:text-neutral-200"
+                            aria-current="page">
+                            Incidents
+                        </li>
+                    </ol>
+                </div>
+                <div class="flex flex-row items-center justify-end gap-2">
+                    <img class="inline-block size-[38px] rounded-full"
+                        src="https://ui-avatars.com/api/?name=Ahmed+Benali&background=0D8ABC&color=fff" alt="Avatar">
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========== SIDEBAR ========== -->
+    <div
+        class="sticky top-0 start-0 lg:fixed lg:bottom-0 lg:z-[60] size-full w-64 bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 dark:bg-neutral-800 dark:border-neutral-700 hidden">
+        <div class="px-6 flex items-center gap-x-3 mb-8">
+            <div class="size-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+                <i data-lucide="building-2" class="size-5"></i>
+            </div>
+            <a class="flex-none text-xl font-bold dark:text-white" href="../../index.html">ImmoSyndic</a>
+        </div>
+        <nav class="p-6 w-full flex flex-col flex-wrap">
+            <ul class="space-y-1.5">
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                        href="index.html"><i data-lucide="home" class="size-4"></i> Tableau de bord</a>
+                </li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                        href="charges.html"><i data-lucide="credit-card" class="size-4"></i> Mes Charges</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-700 rounded-lg dark:bg-neutral-700 dark:text-white"
+                        href="incidents.html"><i data-lucide="alert-triangle" class="size-4"></i> Incidents</a>
+                </li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                        href="documents.html"><i data-lucide="files" class="size-4"></i> Documents</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <div class="w-full pt-10 px-4 sm:px-6 md:px-8 lg:ps-72 pb-16">
+        <div class="mb-8">
+            <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Signaler un Problème</h1>
+            <p class="text-gray-600 dark:text-neutral-400">Aidez-nous à maintenir votre résidence en parfait état.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Form Column -->
+            <div class="lg:col-span-2 space-y-6">
+                <div
+                    class="bg-white border border-gray-200 rounded-xl shadow-sm p-4 sm:p-7 dark:bg-neutral-800 dark:border-neutral-700">
+                    <form>
+                        <div class="grid gap-y-4">
+                            <!-- Category -->
+                            <div>
+                                <label for="category" class="block text-sm font-medium mb-2 dark:text-white">Nature du
+                                    problème</label>
+                                <select id="category"
+                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
+                                    <option selected>Sélectionner une catégorie</option>
+                                    <option>Plomberie</option>
+                                    <option>Électricité</option>
+                                    <option>Ascenseur</option>
+                                    <option>Propreté</option>
+                                    <option>Sécurité</option>
+                                    <option>Autre</option>
+                                </select>
+                            </div>
+
+                            <!-- Title -->
+                            <div>
+                                <label for="title" class="block text-sm font-medium mb-2 dark:text-white">Titre du
+                                    signalement</label>
+                                <input type="text" id="title"
+                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                    placeholder="Ex: Fuite d'eau au 3ème étage">
+                            </div>
+
+                            <!-- Description -->
+                            <div>
+                                <label for="description"
+                                    class="block text-sm font-medium mb-2 dark:text-white">Description détaillée</label>
+                                <textarea id="description"
+                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                    rows="4"
+                                    placeholder="Décrivez le problème le plus précisément possible..."></textarea>
+                            </div>
+
+                            <!-- File Upload -->
+                            <div>
+                                <label class="block text-sm font-medium mb-2 dark:text-white">Photos (optionnel)</label>
+                                <div
+                                    class="p-12 mt-1 flex justify-center border-2 border-gray-300 border-dashed rounded-xl dark:border-neutral-600">
+                                    <div class="text-center">
+                                        <i data-lucide="image" class="mx-auto size-12 text-gray-400"></i>
+                                        <div class="mt-4 flex text-sm text-gray-600 dark:text-neutral-400">
+                                            <label for="file-upload"
+                                                class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500 dark:bg-neutral-800">
+                                                <span>Télécharger un fichier</span>
+                                                <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                                            </label>
+                                            <p class="pl-1">ou glisser-déposer</p>
+                                        </div>
+                                        <p class="text-xs text-gray-500 dark:text-neutral-500">PNG, JPG, GIF jusqu'à
+                                            10MB</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit"
+                                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                                Envoyer le signalement
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Active List Column -->
+            <div class="space-y-6">
+                <h2 class="text-lg font-bold text-gray-800 dark:text-white">Vos signalements récents</h2>
+
+                <div
+                    class="bg-white border border-gray-200 rounded-xl shadow-sm p-4 dark:bg-neutral-800 dark:border-neutral-700">
+                    <div class="space-y-4">
+                        <!-- Active Incident -->
+                        <div
+                            class="p-3 bg-amber-50 rounded-lg border border-amber-200 dark:bg-amber-900/20 dark:border-amber-700/50">
+                            <div class="flex justify-between items-start mb-2">
+                                <span
+                                    class="text-[10px] font-bold uppercase tracking-wide text-amber-600 dark:text-amber-500">En
+                                    cours d'examen</span>
+                                <span class="text-[10px] text-gray-400 dark:text-neutral-500">12 Feb</span>
+                            </div>
+                            <h3 class="text-sm font-semibold text-gray-800 dark:text-neutral-200">Panne de lumière
+                                couloir</h3>
+                            <p class="text-xs text-gray-600 mt-1 dark:text-neutral-400">Bloc B, 2ème étage.</p>
+                        </div>
+
+                        <!-- Resolved Incident -->
+                        <div
+                            class="p-3 bg-gray-50 rounded-lg border border-gray-200 dark:bg-neutral-700/50 dark:border-neutral-600">
+                            <div class="flex justify-between items-start mb-2">
+                                <span
+                                    class="text-[10px] font-bold uppercase tracking-wide text-teal-600 dark:text-teal-500">Résolu</span>
+                                <span class="text-[10px] text-gray-400 dark:text-neutral-500">05 Feb</span>
+                            </div>
+                            <h3 class="text-sm font-semibold text-gray-800 dark:text-neutral-200">Problème interphone
+                            </h3>
+                            <p class="text-xs text-gray-600 mt-1 dark:text-neutral-400">L'interphone ne sonnait plus.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabbar (Mobile) -->
+    <nav
+        class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around p-2 z-[60] pb-safe dark:bg-neutral-800 dark:border-neutral-700">
+        <a href="index.html" class="flex flex-col items-center justify-center py-2 text-gray-500 dark:text-neutral-400">
+            <i data-lucide="home" class="size-6 mb-1"></i>
+            <span class="text-[10px] font-medium">Accueil</span>
+        </a>
+        <a href="charges.html"
+            class="flex flex-col items-center justify-center py-2 text-gray-500 dark:text-neutral-400">
+            <i data-lucide="credit-card" class="size-6 mb-1"></i>
+            <span class="text-[10px] font-medium">Charges</span>
+        </a>
+        <a href="incidents.html"
+            class="flex flex-col items-center justify-center py-2 text-blue-600 dark:text-blue-500">
+            <i data-lucide="alert-triangle" class="size-6 mb-1"></i>
+            <span class="text-[10px] font-medium">Incidents</span>
+        </a>
+    </nav>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

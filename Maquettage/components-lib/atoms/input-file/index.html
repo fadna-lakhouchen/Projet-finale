@@ -1,31 +1,26 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="light">
 
 <head>
     <meta charset="UTF-8">
-    <title>Atom: Input File</title>
+    <title>Atom: Input File </title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
 </head>
 
-<body class="p-8 bg-gray-50 flex flex-col gap-6 max-w-sm">
+<body class="p-8 bg-gray-50 flex flex-col gap-6 max-w-sm dark:bg-neutral-900">
 
-    <h2 class="text-xl font-semibold mb-4 border-b pb-2">Atom: Input File (Upload)</h2>
+    <h2 class="text-xl font-bold text-gray-800 mb-4 border-b pb-4 dark:text-white">File Input </h2>
 
-    <label
-        class="flex flex-col items-center justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-blue-400 hover:bg-blue-50 focus:outline-none">
-        <span class="flex items-center space-x-2">
-            <i data-lucide="upload-cloud" class="w-6 h-6 text-gray-400"></i>
-            <span class="font-medium text-gray-600">
-                Cliquez pour uploader
-                <span class="text-xs text-gray-400 block mt-1">PNG, JPG, PDF (Max: 5MB)</span>
-            </span>
-        </span>
-        <input type="file" name="file_upload" class="hidden">
-    </label>
+    <form>
+        <label for="file-input" class="sr-only">Choose file</label>
+        <input type="file" name="file-input" id="file-input" class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400
+        file:bg-gray-50 file:border-0
+        file:me-4
+        file:py-3 file:px-4
+        dark:file:bg-neutral-700 dark:file:text-neutral-400">
+    </form>
 
-    <script>lucide.createIcons();</script>
 </body>
 
 </html>

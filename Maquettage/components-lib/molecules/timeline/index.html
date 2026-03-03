@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Molecule: Timeline </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 max-w-lg dark:bg-neutral-900">
+
+    <h2 class="text-xl font-bold text-gray-800 mb-6 border-b pb-4 dark:text-white">Timeline </h2>
+
+    <div class="space-y-4">
+        <!-- Item -->
+        <div class="flex gap-x-3">
+            <div
+                class="relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200 dark:after:bg-neutral-700">
+                <div
+                    class="relative z-10 size-7 flex justify-center items-center font-semibold text-white bg-blue-600 rounded-full dark:bg-blue-500 text-[10px]">
+                    1</div>
+            </div>
+            <div class="grow pt-0.5 pb-8">
+                <h3 class="flex gap-x-1.5 font-semibold text-gray-800 dark:text-white">Incident Signalé</h3>
+                <p class="mt-1 text-sm text-gray-600 dark:text-neutral-400">Le résident a signalé une fuite d'eau.</p>
+                <span class="block mt-1 text-xs text-gray-500 dark:text-neutral-500">10:45 AM</span>
+            </div>
+        </div>
+
+        <!-- Item -->
+        <div class="flex gap-x-3">
+            <div
+                class="relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200 dark:after:bg-neutral-700">
+                <div
+                    class="relative z-10 size-7 flex justify-center items-center font-semibold text-gray-800 bg-gray-200 rounded-full dark:bg-neutral-700 dark:text-neutral-400 text-[10px]">
+                    2</div>
+            </div>
+            <div class="grow pt-0.5 pb-8">
+                <h3 class="flex gap-x-1.5 font-semibold text-gray-800 dark:text-white">En cours d'examen</h3>
+                <p class="mt-1 text-sm text-gray-600 dark:text-neutral-400">Le syndic a visualisé l'incident et contacté
+                    un plombier.</p>
+                <span class="block mt-1 text-xs text-gray-500 dark:text-neutral-500">02:30 PM</span>
+            </div>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

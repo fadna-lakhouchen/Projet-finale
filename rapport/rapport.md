@@ -106,7 +106,7 @@ Aujourd’hui, la gestion des immeubles est souvent réalisée manuellement ou v
 - Risque d’erreurs et doublons dans les informations financières.  
 - Manque de transparence et de traçabilité des opérations.  
 
-Une solution digitale centralisée est donc indispensable pour améliorer le suivi, sécuriser les informations et faciliter la collaboration entre les différents acteurs.
+- Comment pouvons-nous améliorer la gestion des immeubles et des paiements tout en garantissant la transparence, la communication efficace et la réduction des conflits entre résidents et syndic ? 
 
 
 ## 3. Objectifs du projet
@@ -336,11 +336,7 @@ La méthodologie **2TUP (Two-Tracks Unified Process)** est un processus de déve
 - Interface adaptée au mobile  
 
 **Classes principales :**  
-- `User {id, name, email, password, role}`  
-- `Article {id, title, slug, excerpt, content, statut, user_id, category_id}`  
-- `Category {id, name, slug}`  
-- `ArticleCategory {id, article_id, category_id}`
-
+- 
 ---
 
 ## Conception
