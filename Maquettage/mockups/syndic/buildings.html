@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImmoSyndic - Gestion des Immeubles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-neutral-900">
+    <!-- ========== HEADER ========== -->
+    <header
+        class="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 sm:py-4 lg:ps-64 dark:bg-neutral-800 dark:border-neutral-700">
+        <nav class="flex basis-full items-center w-full mx-auto px-4 sm:px-6" aria-label="Global">
+            <div class="me-5 lg:me-0 lg:hidden">
+                <a class="flex-none text-xl font-semibold dark:text-white" href="../../index.html">ImmoSyndic</a>
+            </div>
+            <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3">
+                <div class="hidden sm:block">
+                    <h2 class="text-sm font-semibold text-gray-800 dark:text-neutral-200">Gestion du Parc Immobilier
+                    </h2>
+                </div>
+                <div class="flex flex-row items-center justify-end gap-2">
+                    <button type="button"
+                        class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-neutral-700">
+                        <i data-lucide="bell" class="size-5"></i>
+                    </button>
+                    <img class="inline-block size-[38px] rounded-full ring-2 ring-white dark:ring-neutral-800"
+                        src="https://ui-avatars.com/api/?name=Youssef+El+Khadir&background=2563eb&color=fff"
+                        alt="Avatar">
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========== SIDEBAR ========== -->
+    <aside
+        class="fixed top-0 start-0 bottom-0 z-[60] w-64 bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block dark:bg-neutral-800 dark:border-neutral-700 hidden">
+        <div class="px-6 mb-8 flex items-center gap-x-3">
+            <div class="size-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+                <i data-lucide="building-2" class="size-5"></i>
+            </div>
+            <span class="text-xl font-bold dark:text-white">ImmoSyndic</span>
+        </div>
+        <nav class="p-6 w-full flex flex-col flex-wrap">
+            <ul class="space-y-1.5">
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700"
+                        href="index.html"><i data-lucide="layout-dashboard" class="size-4"></i> Dashboard</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-blue-600 rounded-lg dark:bg-neutral-700 dark:text-white"
+                        href="buildings.html"><i data-lucide="building" class="size-4"></i> Gérer Immeubles</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700"
+                        href="finances.html"><i data-lucide="wallet" class="size-4"></i> Suivre Paiements</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700"
+                        href="interventions.html"><i data-lucide="wrench" class="size-4"></i> Interventions</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700"
+                        href="#"><i data-lucide="history" class="size-4"></i> Historique</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="w-full lg:ps-64">
+        <div class="p-4 sm:p-6 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Immeubles gérés</h1>
+                    <p class="text-sm text-gray-600 dark:text-neutral-400">Gérez les unités, les propriétaires et les
+                        informations de chaque copropriété.</p>
+                </div>
+                <button
+                    class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700">
+                    <i data-lucide="plus-circle" class="size-4"></i> Ajouter un immeuble
+                </button>
+            </div>
+
+            <!-- Search & Filters -->
+            <div
+                class="bg-white border rounded-xl p-4 dark:bg-neutral-800 dark:border-neutral-700 flex flex-wrap gap-4">
+                <div class="grow relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
+                        <i data-lucide="search" class="size-4 text-gray-400"></i>
+                    </div>
+                    <input type="text"
+                        class="py-2.5 px-11 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400"
+                        placeholder="Rechercher par nom ou adresse...">
+                </div>
+                <select
+                    class="py-2.5 px-4 block border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                    <option>Tous les statuts</option>
+                    <option>En règle</option>
+                    <option>Litiges actifs</option>
+                </select>
+            </div>
+
+            <!-- Buildings Grid -->
+            <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Building Card 1 (Pattern card-building) -->
+                <div
+                    class="flex flex-col bg-white border shadow-sm rounded-xl overflow-hidden dark:bg-neutral-800 dark:border-neutral-700">
+                    <img class="w-full h-40 object-cover"
+                        src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=400" alt="Building">
+                    <div class="p-4 md:p-5">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-white">Résidence Al-Amal</h3>
+                                <p class="text-xs text-gray-500 flex items-center gap-x-1"><i data-lucide="map-pin"
+                                        class="size-3"></i> Tanger, Centre-Ville</p>
+                            </div>
+                            <span
+                                class="py-1 px-2 rounded-full text-[10px] font-bold bg-teal-100 text-teal-800 uppercase">En
+                                règle</span>
+                        </div>
+                        <div class="mt-4 grid grid-cols-2 gap-4 border-t pt-4 dark:border-neutral-700">
+                            <div>
+                                <span class="block text-[10px] uppercase font-bold text-gray-400">Unités</span>
+                                <span class="text-sm font-semibold text-gray-800 dark:text-neutral-200">120 Appts</span>
+                            </div>
+                            <div>
+                                <span class="block text-[10px] uppercase font-bold text-gray-400">Occupation</span>
+                                <span class="text-sm font-semibold text-gray-800 dark:text-neutral-200">95%</span>
+                            </div>
+                        </div>
+                        <div class="mt-5 flex gap-2">
+                            <button
+                                class="grow py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700">Détails</button>
+                            <button
+                                class="py-2 px-3 inline-flex justify-center items-center rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-300">
+                                <i data-lucide="settings" class="size-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Building Card 2 -->
+                <div
+                    class="flex flex-col bg-white border shadow-sm rounded-xl overflow-hidden dark:bg-neutral-800 dark:border-neutral-700">
+                    <img class="w-full h-40 object-cover"
+                        src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=400" alt="Building">
+                    <div class="p-4 md:p-5">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-white">Résidence Les Lilas</h3>
+                                <p class="text-xs text-gray-500 flex items-center gap-x-1"><i data-lucide="map-pin"
+                                        class="size-3"></i> Tanger, Malabata</p>
+                            </div>
+                            <span
+                                class="py-1 px-2 rounded-full text-[10px] font-bold bg-red-100 text-red-800 uppercase">Litige</span>
+                        </div>
+                        <div class="mt-4 grid grid-cols-2 gap-4 border-t pt-4 dark:border-neutral-700">
+                            <div>
+                                <span class="block text-[10px] uppercase font-bold text-gray-400">Unités</span>
+                                <span class="text-sm font-semibold text-gray-800 dark:text-neutral-200">45 Appts</span>
+                            </div>
+                            <div>
+                                <span class="block text-[10px] uppercase font-bold text-gray-400">Occupation</span>
+                                <span class="text-sm font-semibold text-gray-800 dark:text-neutral-200">100%</span>
+                            </div>
+                        </div>
+                        <div class="mt-5 flex gap-2">
+                            <button
+                                class="grow py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700">Détails</button>
+                            <button
+                                class="py-2 px-3 inline-flex justify-center items-center rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-300">
+                                <i data-lucide="settings" class="size-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

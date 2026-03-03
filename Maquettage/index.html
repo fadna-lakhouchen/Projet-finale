@@ -22,7 +22,6 @@
 </head>
 
 <body class="bg-gray-50 dark:bg-neutral-900 min-h-screen">
-
     <header
         class="sticky top-0 z-50 flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white border-b border-gray-200 text-sm py-3 px-4 sm:px-6 lg:px-8 dark:bg-neutral-800 dark:border-neutral-700">
         <nav class="max-w-[85rem] w-full mx-auto flex items-center justify-between">
@@ -36,139 +35,220 @@
             <div class="flex items-center gap-x-3">
                 <a class="font-medium text-gray-600 hover:text-blue-600 dark:text-neutral-400 dark:hover:text-neutral-500"
                     href="charte-graphique/index.html">Charte Graphique</a>
-                <div class="border-s border-gray-200 dark:border-neutral-700 ps-3">
-                    <button type="button"
-                        class="hs-dark-mode-active:hidden block hs-dark-mode group flex items-center text-gray-600 hover:text-blue-600 font-medium dark:text-neutral-400 dark:hover:text-neutral-500"
-                        data-hs-theme-click-value="dark">
-                        <i data-lucide="moon" class="size-4"></i>
-                    </button>
-                    <button type="button"
-                        class="hs-dark-mode-active:block hidden hs-dark-mode group flex items-center text-gray-600 hover:text-blue-600 font-medium dark:text-neutral-400 dark:hover:text-neutral-500"
-                        data-hs-theme-click-value="light">
-                        <i data-lucide="sun" class="size-4"></i>
-                    </button>
-                </div>
             </div>
         </nav>
     </header>
 
-    <main class="max-w-[85rem] mx-auto py-10 px-4 sm:px-6 lg:px-8">
+    <div class="flex h-[calc(100vh-64px)] overflow-hidden">
+        <!-- Sidebar: Explorer (Static) -->
+        <aside
+            class="w-80 flex-shrink-0 border-e border-gray-200 bg-white overflow-y-auto dark:bg-neutral-800 dark:border-neutral-700">
+            <div class="p-4 space-y-8">
+                <!-- Navigation -->
+                <section>
+                    <nav class="space-y-1">
+                        <a href="index.html"
+                            class="flex items-center gap-x-3 py-2 px-3 text-sm font-medium text-blue-600 rounded-lg bg-blue-50 dark:bg-blue-900/10 dark:text-blue-400">
+                            <i data-lucide="home" class="size-4"></i> Accueil Portal
+                        </a>
+                    </nav>
+                </section>
 
-        <!-- Hero -->
-        <div class="max-w-2xl mb-12">
-            <h1 class="text-3xl font-bold text-gray-800 sm:text-4xl dark:text-white">Maquettage Professionnel</h1>
-            <p class="mt-3 text-lg text-gray-600 dark:text-neutral-400">Système de design fondé sur l'Atomic Design et
-                propulsé par Preline UI. Tous les composants sont réutilisables et supportent le mode sombre.</p>
-        </div>
+                <!-- Mockups Section -->
+                <section>
+                    <h2
+                        class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3 flex items-center gap-2">
+                        <i data-lucide="layout" class="size-3"></i> Mockups
+                    </h2>
+                    <nav class="space-y-1">
+                        <!-- Resident -->
+                        <div>
+                            <a href="mockups/resident/index.html" target="viewer"
+                                class="flex items-center gap-x-3 py-2 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">
+                                <i data-lucide="user" class="size-4"></i> Resident Space
+                            </a>
+                            <div class="ps-8 space-y-1 mt-1">
+                                <a href="mockups/resident/charges.html" target="viewer"
+                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Charges
+                                    & Paiements</a>
+                                <a href="mockups/resident/incidents.html" target="viewer"
+                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Incidents</a>
+                                <a href="mockups/resident/documents.html" target="viewer"
+                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Documents</a>
+                            </div>
+                        </div>
+                        <!-- Syndic -->
+                        <div class="mt-2">
+                            <a href="mockups/syndic/index.html" target="viewer"
+                                class="flex items-center gap-x-3 py-2 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">
+                                <i data-lucide="shield-check" class="size-4"></i> Syndic Space
+                            </a>
+                            <div class="ps-8 space-y-1 mt-1">
+                                <a href="mockups/syndic/buildings.html" target="viewer"
+                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Gestion
+                                    Immeubles</a>
+                                <a href="mockups/syndic/finances.html" target="viewer"
+                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Finances</a>
+                                <a href="mockups/syndic/interventions.html" target="viewer"
+                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Interventions</a>
+                                <a href="mockups/syndic/annonces.html" target="viewer"
+                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Annonces</a>
+                            </div>
+                        </div>
+                        <!-- Admin -->
+                        <div class="mt-2">
+                            <a href="mockups/administrateur/index.html" target="viewer"
+                                class="flex items-center gap-x-3 py-2 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">
+                                <i data-lucide="settings" class="size-4"></i> Admin Panel
+                            </a>
+                            <div class="ps-8 space-y-1 mt-1">
+                                <a href="mockups/administrateur/users.html" target="viewer"
+                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Utilisateurs</a>
+                                <a href="mockups/administrateur/logs.html" target="viewer"
+                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Logs
+                                    Système</a>
+                            </div>
+                        </div>
+                    </nav>
+                </section>
 
-        <!-- Section: Mockups -->
-        <section class="mb-16">
-            <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
-                <i data-lucide="layout" class="size-5 text-blue-600"></i> Mockups Interactifs par Rôle
-            </h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Resident Space -->
-                <a href="mockups/resident/index.html"
-                    class="group flex flex-col bg-white border border-blue-100 shadow-sm rounded-xl hover:shadow-md transition dark:bg-neutral-800 dark:border-neutral-700">
-                    <div class="h-32 bg-blue-50 rounded-t-xl flex items-center justify-center dark:bg-blue-900/10">
-                        <i data-lucide="user" class="size-12 text-blue-600 group-hover:scale-110 transition"></i>
+                <!-- Atoms Section (Hardcoded) -->
+                <section>
+                    <h2
+                        class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3 flex items-center gap-2">
+                        <i data-lucide="atom" class="size-3"></i> Atoms
+                    </h2>
+                    <div class="grid grid-cols-1 gap-1">
+                        <a href="components-lib/atoms/avatar/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Avatar</a>
+                        <a href="components-lib/atoms/badge/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Badge</a>
+                        <a href="components-lib/atoms/button/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Button</a>
+                        <a href="components-lib/atoms/checkbox/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Checkbox</a>
+                        <a href="components-lib/atoms/divider/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Divider</a>
+                        <a href="components-lib/atoms/icon/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Icon</a>
+                        <a href="components-lib/atoms/input-date/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Input
+                            Date</a>
+                        <a href="components-lib/atoms/input-email/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Input
+                            Email</a>
+                        <a href="components-lib/atoms/input-file/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Input
+                            File</a>
+                        <a href="components-lib/atoms/input-number/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Input
+                            Number</a>
+                        <a href="components-lib/atoms/input-password/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Input
+                            Password</a>
+                        <a href="components-lib/atoms/input-text/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Input
+                            Text</a>
+                        <a href="components-lib/atoms/progress-bar/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Progress
+                            Bar</a>
+                        <a href="components-lib/atoms/radio/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Radio</a>
+                        <a href="components-lib/atoms/select/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Select</a>
+                        <a href="components-lib/atoms/spinner/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Spinner</a>
+                        <a href="components-lib/atoms/textarea/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Textarea</a>
+                        <a href="components-lib/atoms/toggle-switch/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Toggle
+                            Switch</a>
+                        <a href="components-lib/atoms/tooltip/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Tooltip</a>
+                        <a href="components-lib/atoms/typography/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Typography</a>
                     </div>
-                    <div class="p-4 md:p-5">
-                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Espace Résident</h3>
-                        <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">Dashboard (Propriétaire /
-                            Locataire), charges et incidents.</p>
-                    </div>
-                </a>
+                </section>
 
-                <!-- Syndic Space -->
-                <a href="mockups/syndic/index.html"
-                    class="group flex flex-col bg-white border border-indigo-100 shadow-sm rounded-xl hover:shadow-md transition dark:bg-neutral-800 dark:border-neutral-700">
-                    <div class="h-32 bg-indigo-50 rounded-t-xl flex items-center justify-center dark:bg-indigo-900/10">
-                        <i data-lucide="shield-check"
-                            class="size-12 text-indigo-600 group-hover:scale-110 transition"></i>
+                <!-- Molecules Section (Hardcoded) -->
+                <section>
+                    <h2
+                        class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3 flex items-center gap-2">
+                        <i data-lucide="component" class="size-3"></i> Molecules
+                    </h2>
+                    <div class="grid grid-cols-1 gap-1">
+                        <a href="components-lib/molecules/accordion/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Accordion</a>
+                        <a href="components-lib/molecules/alert-message/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Alert
+                            Message</a>
+                        <a href="components-lib/molecules/breadcrumb/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Breadcrumb</a>
+                        <a href="components-lib/molecules/card-building/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Card
+                            Building</a>
+                        <a href="components-lib/molecules/card-charge/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Card
+                            Charge</a>
+                        <a href="components-lib/molecules/card-document/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Card
+                            Document</a>
+                        <a href="components-lib/molecules/card-intervention/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Card
+                            Intervention</a>
+                        <a href="components-lib/molecules/card-stat/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Card
+                            Stat</a>
+                        <a href="components-lib/molecules/empty-state/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Empty
+                            State</a>
+                        <a href="components-lib/molecules/form-group/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Form
+                            Group</a>
+                        <a href="components-lib/molecules/list-item-notification/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">List
+                            Item Notification</a>
+                        <a href="components-lib/molecules/list-item-payment/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">List
+                            Item Payment</a>
+                        <a href="components-lib/molecules/modal-dialog/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Modal
+                            Dialog</a>
+                        <a href="components-lib/molecules/nav-item/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Nav
+                            Item</a>
+                        <a href="components-lib/molecules/pagination/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Pagination</a>
+                        <a href="components-lib/molecules/search-bar/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Search
+                            Bar</a>
+                        <a href="components-lib/molecules/steps/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Steps</a>
+                        <a href="components-lib/molecules/table-row/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Table
+                            Row</a>
+                        <a href="components-lib/molecules/tabs/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Tabs</a>
+                        <a href="components-lib/molecules/timeline/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Timeline</a>
+                        <a href="components-lib/molecules/toast-notification/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Toast
+                            Notification</a>
+                        <a href="components-lib/molecules/user-profile-badge/index.html" target="viewer"
+                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">User
+                            Profile Badge</a>
                     </div>
-                    <div class="p-4 md:p-5">
-                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Espace Syndic</h3>
-                        <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">Gestion de copropriété, finances et
-                            interventions.</p>
-                    </div>
-                </a>
-
-                <!-- Administrateur Space -->
-                <a href="mockups/administrateur/index.html"
-                    class="group flex flex-col bg-white border border-red-100 shadow-sm rounded-xl hover:shadow-md transition dark:bg-neutral-800 dark:border-neutral-700">
-                    <div class="h-32 bg-red-50 rounded-t-xl flex items-center justify-center dark:bg-red-900/10">
-                        <i data-lucide="settings" class="size-12 text-red-600 group-hover:scale-110 transition"></i>
-                    </div>
-                    <div class="p-4 md:p-5">
-                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Espace Administrateur</h3>
-                        <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">Configuration système, gestion des
-                            rôles et logs globaux.</p>
-                    </div>
-                </a>
+                </section>
             </div>
-        </section>
+        </aside>
 
-        <!-- Components Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <!-- Column: Atoms -->
-            <div>
-                <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
-                    <i data-lucide="atom" class="size-5 text-blue-600"></i> Atoms (Visual Tokens)
-                </h2>
-                <div class="grid grid-cols-2 gap-4">
-                    <script>
-                        const atoms = [
-                            'avatar', 'badge', 'button', 'checkbox', 'divider', 'icon',
-                            'input-date', 'input-email', 'input-file', 'input-number',
-                            'input-password', 'input-text', 'progress-bar', 'radio',
-                            'select', 'spinner', 'textarea', 'toggle-switch', 'tooltip', 'typography'
-                        ];
-                        atoms.forEach(item => {
-                            document.write(`
-                                <a href="components-lib/atoms/${item}/index.html" class="flex items-center gap-x-3 py-2 px-3 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 hover:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700 transition">
-                                    <span class="size-2 rounded-full bg-blue-500"></span>
-                                    ${item.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
-                                </a>
-                            `);
-                        });
-                    </script>
-                </div>
-            </div>
+        <!-- Main Content (Pure Iframe) -->
+        <main class="flex-grow bg-gray-100 dark:bg-black/20">
+            <iframe name="viewer" class="w-full h-full border-none" src="charte-graphique/index.html"></iframe>
+        </main>
+    </div>
 
-            <!-- Column: Molecules -->
-            <div>
-                <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
-                    <i data-lucide="component" class="size-5 text-blue-600"></i> Molecules (Complex UI)
-                </h2>
-                <div class="grid grid-cols-2 gap-4">
-                    <script>
-                        const molecules = [
-                            'accordion', 'alert-message', 'breadcrumb', 'card-building',
-                            'card-charge', 'card-document', 'card-intervention', 'card-stat',
-                            'empty-state', 'form-group', 'list-item-notification',
-                            'list-item-payment', 'modal-dialog', 'nav-item', 'pagination',
-                            'search-bar', 'steps', 'table-row', 'tabs', 'timeline',
-                            'toast-notification', 'user-profile-badge'
-                        ];
-                        molecules.forEach(item => {
-                            document.write(`
-                                <a href="components-lib/molecules/${item}/index.html" class="flex items-center gap-x-3 py-2 px-3 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 hover:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700 transition">
-                                    <span class="size-2 rounded-full bg-teal-500"></span>
-                                    ${item.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
-                                </a>
-                            `);
-                        });
-                    </script>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer class="mt-20 py-10 border-t border-gray-200 dark:border-neutral-700">
-        <p class="text-center text-sm text-gray-500">© 2026 ImmoSyndic - Mockups & Design System.</p>
-    </footer>
-
+    <!-- Lucide for icons -->
     <script>lucide.createIcons();</script>
 </body>
 

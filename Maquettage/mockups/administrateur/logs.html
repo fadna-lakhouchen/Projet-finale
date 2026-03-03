@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Logs Système</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .terminal {
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-neutral-900">
+    <!-- ========== SIDEBAR ========== -->
+    <aside
+        class="fixed top-0 start-0 bottom-0 z-[60] w-64 bg-slate-900 border-e border-slate-800 pt-7 pb-10 overflow-y-auto lg:block hidden">
+        <div class="px-6 mb-8 flex items-center gap-x-3">
+            <div class="size-8 bg-blue-500 rounded-lg flex items-center justify-center text-white"><i
+                    data-lucide="shield-check" class="size-5"></i></div>
+            <span class="text-xl font-bold text-white">AdminHub</span>
+        </div>
+        <nav class="p-6 w-full flex flex-col flex-wrap">
+            <ul class="space-y-1.5">
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-slate-400 rounded-lg hover:bg-slate-800 hover:text-white"
+                        href="index.html"><i data-lucide="layout-grid" class="size-4"></i> Vue d'ensemble</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-slate-400 rounded-lg hover:bg-slate-800 hover:text-white"
+                        href="users.html"><i data-lucide="users" class="size-4"></i> Utilisateurs</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-blue-600 text-sm text-white rounded-lg"
+                        href="logs.html"><i data-lucide="terminal" class="size-4"></i> Logs Système</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="w-full lg:ps-64">
+        <header class="sticky top-0 inset-x-0 bg-white border-b py-4 px-6 dark:bg-neutral-800 dark:border-neutral-700">
+            <h1 class="text-lg font-bold text-gray-800 dark:text-white">Journaux d'Evénements (Logs)</h1>
+        </header>
+
+        <div class="p-6">
+            <div
+                class="bg-slate-900 rounded-xl p-6 shadow-2xl terminal text-xs text-slate-300 leading-relaxed overflow-hidden">
+                <div class="flex gap-2 mb-4 border-b border-slate-800 pb-2">
+                    <span class="size-3 rounded-full bg-red-500"></span>
+                    <span class="size-3 rounded-full bg-yellow-500"></span>
+                    <span class="size-3 rounded-full bg-green-500"></span>
+                    <span
+                        class="ml-4 text-slate-500 uppercase tracking-widest text-[10px]">Production-Environment-Logs</span>
+                </div>
+                <div class="space-y-1">
+                    <p><span class="text-slate-500">[2026-03-03 13:12:04]</span> <span
+                            class="text-teal-400">INFO:</span> User Ahmed Benali (ID: 104) logged in successfully.</p>
+                    <p><span class="text-slate-500">[2026-03-03 13:14:22]</span> <span
+                            class="text-teal-400">INFO:</span> Payment processed for Resident ID 44 (MAD 400.00).</p>
+                    <p><span class="text-slate-500">[2026-03-03 13:15:00]</span> <span
+                            class="text-blue-400">DEBUG:</span> CronJob: Generating quarterly invoices...</p>
+                    <p><span class="text-slate-500">[2026-03-03 13:15:30]</span> <span
+                            class="text-teal-400">INFO:</span> 420 invoices generated successfully.</p>
+                    <p><span class="text-slate-500">[2026-03-03 13:18:01]</span> <span
+                            class="text-amber-400">WARN:</span> Slow response from AWS S3 (Bucket: 'immo-docs').</p>
+                    <p><span class="text-slate-500">[2026-03-03 13:20:45]</span> <span
+                            class="text-red-400">ERROR:</span> Connection failed to database slave-01. Retrying...</p>
+                    <p><span class="text-slate-500">[2026-03-03 13:20:48]</span> <span
+                            class="text-teal-400">INFO:</span> Connection re-established to database slave-01.</p>
+                    <p><span class="text-slate-500">[2026-03-03 13:21:00]</span> <span
+                            class="text-teal-400">INFO:</span> New incident reported (#INC-504) by Resident ID 22.</p>
+                    <p class="animate-pulse text-white mt-4">_</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

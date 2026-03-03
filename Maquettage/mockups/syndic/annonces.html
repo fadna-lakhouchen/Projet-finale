@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImmoSyndic - Annonces & Messagerie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-neutral-900">
+    <!-- ========== HEADER ========== -->
+    <header
+        class="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 sm:py-4 lg:ps-64 dark:bg-neutral-800 dark:border-neutral-700">
+        <nav class="flex basis-full items-center w-full mx-auto px-4 sm:px-6" aria-label="Global">
+            <div class="me-5 lg:me-0 lg:hidden text-gray-800 dark:text-white font-bold">ImmoSyndic</div>
+            <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3">
+                <div class="hidden sm:block">
+                    <h2 class="text-sm font-semibold text-gray-800 dark:text-neutral-200">Centre de Communication</h2>
+                </div>
+                <div class="flex flex-row items-center justify-end gap-2">
+                    <img class="inline-block size-[38px] rounded-full ring-2 ring-white dark:ring-neutral-800"
+                        src="https://ui-avatars.com/api/?name=Youssef+El+Khadir&background=2563eb&color=fff"
+                        alt="Avatar">
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========== SIDEBAR ========== -->
+    <aside
+        class="fixed top-0 start-0 bottom-0 z-[60] w-64 bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block dark:bg-neutral-800 dark:border-neutral-700 hidden">
+        <div class="px-6 mb-8 flex items-center gap-x-3">
+            <div class="size-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
+                <i data-lucide="building-2" class="size-5"></i>
+            </div>
+            <span class="text-xl font-bold dark:text-white">ImmoSyndic</span>
+        </div>
+        <nav class="p-6 w-full flex flex-col flex-wrap">
+            <ul class="space-y-1.5">
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700"
+                        href="index.html"><i data-lucide="layout-dashboard" class="size-4"></i> Dashboard</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700"
+                        href="buildings.html"><i data-lucide="building" class="size-4"></i> Gérer Immeubles</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700"
+                        href="finances.html"><i data-lucide="wallet" class="size-4"></i> Suivre Paiements</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700"
+                        href="interventions.html"><i data-lucide="wrench" class="size-4"></i> Interventions</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-blue-600 rounded-lg dark:bg-neutral-700 dark:text-white"
+                        href="annonces.html"><i data-lucide="megaphone" class="size-4"></i> Annonces</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="w-full lg:ps-64">
+        <div class="p-4 sm:p-6 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Annonces & Communications</h1>
+                    <p class="text-sm text-gray-600 dark:text-neutral-400">Envoyez des notifications et des messages
+                        groupés à vos résidences.</p>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-6">
+                <!-- Compose Column -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+                        <div class="p-4 md:p-5 border-b dark:border-neutral-700">
+                            <h3 class="font-bold text-gray-800 dark:text-white italic">Diffuser une nouvelle annonce
+                            </h3>
+                        </div>
+                        <div class="p-4 md:p-5">
+                            <form class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 dark:text-white">Destinataires</label>
+                                    <select
+                                        class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm dark:bg-neutral-900 dark:border-neutral-700">
+                                        <option>Tous les immeubles</option>
+                                        <option>Résidence Al-Amal</option>
+                                        <option>Résidence Les Lilas</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 dark:text-white">Type d'annonce</label>
+                                    <div class="flex gap-4">
+                                        <label
+                                            class="flex items-center gap-2 text-sm text-gray-600 dark:text-neutral-400">
+                                            <input type="radio" name="anon" checked class="form-radio text-blue-600">
+                                            Information
+                                        </label>
+                                        <label
+                                            class="flex items-center gap-2 text-sm text-gray-600 dark:text-neutral-400">
+                                            <input type="radio" name="anon" class="form-radio text-red-600"> Urgence
+                                        </label>
+                                        <label
+                                            class="flex items-center gap-2 text-sm text-gray-600 dark:text-neutral-400">
+                                            <input type="radio" name="anon" class="form-radio text-teal-600"> Réunion /
+                                            AG
+                                        </label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 dark:text-white">Objet</label>
+                                    <input type="text"
+                                        class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm dark:bg-neutral-900 dark:border-neutral-700"
+                                        placeholder="Titre du message...">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 dark:text-white">Message</label>
+                                    <textarea
+                                        class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm dark:bg-neutral-900 dark:border-neutral-700"
+                                        rows="5" placeholder="Contenu de l'annonce..."></textarea>
+                                </div>
+                                <div class="flex justify-end gap-3">
+                                    <button type="button"
+                                        class="py-2.5 px-4 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700">Aperçu</button>
+                                    <button type="button"
+                                        class="py-2.5 px-4 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-2">
+                                        <i data-lucide="send" class="size-4"></i> Publier l'annonce
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History Column -->
+                <div class="space-y-6">
+                    <div class="bg-white border rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+                        <div class="p-4 md:p-5 border-b dark:border-neutral-700 flex justify-between">
+                            <h3 class="font-bold text-gray-800 dark:text-white">Historique (Derniers 30j)</h3>
+                        </div>
+                        <div class="p-4 md:p-5">
+                            <ul class="space-y-4">
+                                <li
+                                    class="p-3 bg-gray-50 rounded-lg border dark:bg-neutral-900 dark:border-neutral-700">
+                                    <span class="text-[10px] text-gray-400 block mb-1">28 Fév 2026 • Al-Amal</span>
+                                    <h4 class="text-sm font-bold text-gray-800 dark:text-white">Travaux Étanchéité</h4>
+                                    <p class="text-xs text-gray-500 mt-1 line-clamp-2">Les travaux prévus en toiture
+                                        commenceront ce lundi...</p>
+                                </li>
+                                <li
+                                    class="p-3 bg-gray-50 rounded-lg border dark:bg-neutral-900 dark:border-neutral-700">
+                                    <span class="text-[10px] text-gray-400 block mb-1">15 Fév 2026 • Tous</span>
+                                    <h4 class="text-sm font-bold text-gray-800 dark:text-white">Convocation AG Annuelle
+                                    </h4>
+                                    <p class="text-xs text-gray-500 mt-1 line-clamp-2">Veuillez trouver ci-joint l'ordre
+                                        du jour pour la prochaine AG...</p>
+                                </li>
+                            </ul>
+                            <button class="w-full mt-4 text-sm text-blue-600 font-medium">Voir tout
+                                l'historique</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

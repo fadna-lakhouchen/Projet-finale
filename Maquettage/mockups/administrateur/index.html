@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ImmoSyndic - Administration Système</title>
+    <title>ImmoSyndic - Panel Administrateur</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -22,182 +22,144 @@
 </head>
 
 <body class="bg-gray-50 dark:bg-neutral-900">
-    <!-- ========== HEADER ========== -->
-    <header
-        class="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 sm:py-4 lg:ps-64 dark:bg-neutral-800 dark:border-neutral-700">
-        <nav class="flex basis-full items-center w-full mx-auto px-4 sm:px-6" aria-label="Global">
-            <div class="me-5 lg:me-0 lg:hidden">
-                <a class="flex-none text-xl font-semibold dark:text-white" href="../../index.html"
-                    aria-label="Brand">ImmoSyndic</a>
-            </div>
-            <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3">
-                <div class="hidden md:block">
-                    <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">Panel d'administration</h2>
-                </div>
-                <div class="flex flex-row items-center justify-end gap-2">
-                    <button type="button"
-                        class="size-[38px] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700">
-                        <i data-lucide="settings" class="size-4"></i>
-                    </button>
-                    <img class="inline-block size-[38px] rounded-full"
-                        src="https://ui-avatars.com/api/?name=Admin+Root&background=000&color=fff" alt="Avatar">
-                </div>
-            </div>
-        </nav>
-    </header>
-
     <!-- ========== SIDEBAR ========== -->
-    <div
-        class="sticky top-0 start-0 lg:fixed lg:bottom-0 lg:z-[60] size-full w-64 bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 dark:bg-neutral-800 dark:border-neutral-700 hidden">
-        <div class="px-6 flex items-center gap-x-3 mb-8">
-            <div class="size-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+    <aside
+        class="fixed top-0 start-0 bottom-0 z-[60] w-64 bg-slate-900 border-e border-slate-800 pt-7 pb-10 overflow-y-auto lg:block hidden">
+        <div class="px-6 mb-8 flex items-center gap-x-3">
+            <div class="size-8 bg-blue-500 rounded-lg flex items-center justify-center text-white">
                 <i data-lucide="shield-check" class="size-5"></i>
             </div>
-            <a class="flex-none text-xl font-bold dark:text-white" href="../../index.html">ImmoSyndic</a>
+            <span class="text-xl font-bold text-white">AdminHub</span>
         </div>
         <nav class="p-6 w-full flex flex-col flex-wrap">
             <ul class="space-y-1.5">
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-700 rounded-lg dark:bg-neutral-700 dark:text-white"
-                        href="index.html"><i data-lucide="layout-dashboard" class="size-4"></i> Aperçu</a></li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                        href="#"><i data-lucide="users" class="size-4"></i> Comptes Utilisateurs</a></li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                        href="#"><i data-lucide="key" class="size-4"></i> Rôles & Permissions</a></li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                        href="#"><i data-lucide="server" class="size-4"></i> Logs du système</a></li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-blue-600 text-sm text-white rounded-lg"
+                        href="index.html"><i data-lucide="layout-grid" class="size-4"></i> Vue d'ensemble</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-400 rounded-lg hover:bg-slate-800 hover:text-white"
+                        href="users.html"><i data-lucide="users" class="size-4"></i> Utilisateurs</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-400 rounded-lg hover:bg-slate-800 hover:text-white"
+                        href="#"><i data-lucide="building" class="size-4"></i> Tous les Immeubles</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-400 rounded-lg hover:bg-slate-800 hover:text-white"
+                        href="logs.html"><i data-lucide="terminal" class="size-4"></i> Logs Système</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-400 rounded-lg hover:bg-slate-800 hover:text-white"
                         href="#"><i data-lucide="settings" class="size-4"></i> Configuration</a></li>
             </ul>
         </nav>
-    </div>
+    </aside>
 
     <!-- ========== MAIN CONTENT ========== -->
-    <div class="w-full pt-10 px-4 sm:px-6 md:px-8 lg:ps-72 pb-16">
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
-            <!-- Stat Card -->
-            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-                <div class="p-4 md:p-5">
-                    <div class="flex items-center gap-x-2">
-                        <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">Total Utilisateurs</p>
-                    </div>
-                    <div class="mt-1 flex items-center gap-x-2">
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-neutral-200">1,240</h3>
+    <main class="w-full lg:ps-64">
+        <!-- Header -->
+        <header
+            class="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b py-2.5 sm:py-4 dark:bg-neutral-800 dark:border-neutral-700">
+            <nav class="flex basis-full items-center w-full mx-auto px-4 sm:px-6">
+                <div class="w-full flex items-center justify-between">
+                    <h1
+                        class="text-lg font-semibold text-gray-800 dark:text-neutral-200 uppercase tracking-widest text-xs">
+                        Platform Administrator</h1>
+                    <div class="flex items-center gap-4">
                         <span
-                            class="inline-flex items-center gap-x-1 py-1 px-2 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
-                            +12%
-                        </span>
+                            class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-red-100 text-red-800">System
+                            Live</span>
+                        <img class="size-8 rounded-full border-2 border-slate-200"
+                            src="https://ui-avatars.com/api/?name=Admin&background=1e293b&color=fff" alt="Admin">
                     </div>
                 </div>
-            </div>
-            <!-- Stat Card -->
-            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-                <div class="p-4 md:p-5">
-                    <div class="flex items-center gap-x-2">
-                        <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">Instances ImmoSyndic</p>
-                    </div>
-                    <div class="mt-1 flex items-center gap-x-2">
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-neutral-200">124</h3>
-                        <p class="text-xs text-gray-500">(Résidences actives)</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Stat Card -->
-            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-                <div class="p-4 md:p-5">
-                    <div class="flex items-center gap-x-2">
-                        <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">Alertes Serveur</p>
-                    </div>
-                    <div class="mt-1 flex items-center gap-x-2">
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-neutral-200">0</h3>
-                        <span
-                            class="inline-flex items-center gap-x-1 py-1 px-2 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
-                            Santé: OK
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <!-- Stat Card -->
-            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-                <div class="p-4 md:p-5">
-                    <div class="flex items-center gap-x-2">
-                        <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">Tickets Support</p>
-                    </div>
-                    <div class="mt-1 flex items-center gap-x-2">
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-neutral-200">5</h3>
-                        <p class="text-xs text-red-500">2 critiques</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </nav>
+        </header>
 
-        <div class="grid lg:grid-cols-2 gap-8 mb-8">
-            <!-- Recent Users Table -->
-            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-                <div
-                    class="p-4 md:p-5 border-b border-gray-200 dark:border-neutral-700 flex justify-between items-center">
-                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">Nouveaux Comptes</h3>
-                    <button class="text-sm font-medium text-blue-600 hover:text-blue-500">Gérer</button>
+        <div class="p-4 sm:p-6 space-y-6">
+            <!-- Stats -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white border rounded-xl p-5 dark:bg-neutral-800">
+                    <p class="text-xs text-gray-400 uppercase font-bold">Total Résidences</p>
+                    <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">1,240</h3>
+                    <p class="text-xs text-teal-600 mt-2 flex items-center gap-1"><i data-lucide="trending-up"
+                            class="size-3"></i> +12 cette semaine</p>
                 </div>
-                <div class="p-4 md:p-5 overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
-                        <thead>
-                            <tr>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Utilisateur
-                                </th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Rôle</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Statut</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
-                            <tr>
-                                <td class="px-3 py-4 text-sm font-medium text-gray-800 dark:text-neutral-200">Fadna
-                                    Imane</td>
-                                <td class="px-3 py-4 text-sm text-gray-500">Syndic</td>
-                                <td class="px-3 py-4 text-sm"><span
-                                        class="py-1 px-2 rounded-full text-xs bg-teal-100 text-teal-800">Actif</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-3 py-4 text-sm font-medium text-gray-800 dark:text-neutral-200">Youssef
-                                    Amine</td>
-                                <td class="px-3 py-4 text-sm text-gray-500">Résident</td>
-                                <td class="px-3 py-4 text-sm"><span
-                                        class="py-1 px-2 rounded-full text-xs bg-gray-100 text-gray-600">En
-                                        attente</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="bg-white border rounded-xl p-5 dark:bg-neutral-800">
+                    <p class="text-xs text-gray-400 uppercase font-bold">Utilisateurs Actifs</p>
+                    <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">18,500</h3>
+                </div>
+                <div class="bg-white border rounded-xl p-5 dark:bg-neutral-800">
+                    <p class="text-xs text-gray-400 uppercase font-bold">Revenue (Plateforme)</p>
+                    <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">450k <span
+                            class="text-sm">MAD</span></h3>
+                </div>
+                <div class="bg-white border rounded-xl p-5 dark:bg-neutral-800">
+                    <p class="text-xs text-gray-400 uppercase font-bold">Incidents Critiques</p>
+                    <h3 class="text-2xl font-bold mt-1 text-red-600">03</h3>
                 </div>
             </div>
 
-            <!-- System Logs Summary -->
-            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-                <div class="p-4 md:p-5 border-b border-gray-200 dark:border-neutral-700">
-                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">Journal d'activités</h3>
+            <div class="grid lg:grid-cols-3 gap-6">
+                <!-- Recent Activities -->
+                <div class="lg:col-span-2 bg-white border rounded-xl dark:bg-neutral-800">
+                    <div class="p-4 border-b">
+                        <h3 class="font-bold text-gray-800 dark:text-white text-sm">Approbations en attente (Syndics)
+                        </h3>
+                    </div>
+                    <div class="p-0 overflow-hidden">
+                        <ul class="divide-y">
+                            <li class="p-4 hover:bg-gray-50 flex justify-between items-center transition">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="size-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-600">
+                                        SM</div>
+                                    <div>
+                                        <p class="text-sm font-bold text-gray-800">Syndic Management SARL</p>
+                                        <p class="text-xs text-gray-500 italic">Demande d'inscription • Il y a 2h</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button
+                                        class="py-1 px-3 text-xs font-bold text-blue-600 bg-blue-50 rounded border border-blue-200">Examiner</button>
+                                </div>
+                            </li>
+                            <li class="p-4 hover:bg-gray-50 flex justify-between items-center transition">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="size-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-600">
+                                        IM</div>
+                                    <div>
+                                        <p class="text-sm font-bold text-gray-800">ImmoGestion Pro</p>
+                                        <p class="text-xs text-gray-500 italic">Demande d'inscription • Hier</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button
+                                        class="py-1 px-3 text-xs font-bold text-blue-600 bg-blue-50 rounded border border-blue-200">Examiner</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="p-4 md:p-5">
+
+                <!-- System Health -->
+                <div class="bg-white border rounded-xl p-5 dark:bg-neutral-800">
+                    <h3 class="font-bold text-gray-800 dark:text-white text-sm mb-4">État du Système</h3>
                     <div class="space-y-4">
-                        <div class="flex gap-x-3">
-                            <i data-lucide="info" class="size-4 text-blue-600 mt-1"></i>
-                            <div>
-                                <p class="text-sm font-medium text-gray-800 dark:text-neutral-200">Mise à jour v2.4
-                                    déployée</p>
-                                <p class="text-xs text-gray-500">Il y a 2 heures</p>
-                            </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-gray-600">Base de données</span>
+                            <span class="size-2 bg-teal-500 rounded-full"></span>
                         </div>
-                        <div class="flex gap-x-3">
-                            <i data-lucide="alert-triangle" class="size-4 text-amber-500 mt-1"></i>
-                            <div>
-                                <p class="text-sm font-medium text-gray-800 dark:text-neutral-200">Échec de login répété
-                                    - IP 192.168.1.1</p>
-                                <p class="text-xs text-gray-500">Il y a 5 heures</p>
-                            </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-gray-600">Serveur API</span>
+                            <span class="size-2 bg-teal-500 rounded-full"></span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-gray-600">Stockage (S3)</span>
+                            <span class="size-2 bg-teal-500 rounded-full"></span>
+                        </div>
+                        <div class="mt-6 p-3 bg-slate-50 rounded-lg">
+                            <p class="text-[10px] text-gray-400 uppercase font-bold mb-1">Backup status</p>
+                            <p class="text-xs font-bold text-slate-700">Dernier backup: 03:00 aujourd'hui (Réussi)</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <script>lucide.createIcons();</script>
 </body>
