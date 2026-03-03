@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Atom: Progress Bar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 flex flex-col gap-6 max-w-sm">
+
+    <h2 class="text-xl font-semibold mb-4 border-b pb-2">Atom: Progress Bar</h2>
+
+    <!-- Standard Progress -->
+    <div>
+        <div class="flex justify-between mb-1">
+            <span class="text-sm font-medium text-gray-700">Budget consommé</span>
+            <span class="text-sm font-medium text-gray-700">45%</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="bg-blue-600 h-2 rounded-full" style="width: 45%"></div>
+        </div>
+    </div>
+
+    <!-- Danger Progress -->
+    <div>
+        <div class="flex justify-between mb-1">
+            <span class="text-sm font-medium text-red-700">Impayés du trimestre</span>
+            <span class="text-sm font-medium text-red-700">85%</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="bg-red-600 h-2 rounded-full" style="width: 85%"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>

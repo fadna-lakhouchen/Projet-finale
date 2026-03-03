@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Molecule: Form Group</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 max-w-sm">
+
+    <h2 class="text-xl font-semibold mb-6 border-b pb-2">Molecule: Form Group</h2>
+
+    <!-- Standard State -->
+    <div class="mb-4">
+        <label for="email" class="block mb-1 text-sm font-medium text-gray-900">Adresse Email</label>
+        <div class="relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <i data-lucide="mail" class="w-4 h-4 text-gray-400"></i>
+            </div>
+            <input type="email" id="email"
+                class="block w-full pl-10 px-4 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                placeholder="exemple@domaine.com">
+        </div>
+        <p class="mt-1 text-xs text-gray-500">Nous ne partagerons jamais votre email.</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="mb-4">
+        <label for="password" class="block mb-1 text-sm font-medium text-red-700">Mot de passe</label>
+        <div class="relative">
+            <input type="password" id="password"
+                class="block w-full px-4 py-2 pr-10 text-sm text-red-900 placeholder-red-300 bg-red-50 border border-red-500 rounded-lg focus:ring-red-500 focus:border-red-500"
+                value="mdp">
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <i data-lucide="alert-circle" class="w-4 h-4 text-red-500"></i>
+            </div>
+        </div>
+        <p class="mt-1 text-xs text-red-600">Le mot de passe doit contenir au moins 8 caractères.</p>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

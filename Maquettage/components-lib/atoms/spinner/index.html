@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Atom: Spinner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="p-8 bg-gray-50 flex flex-col gap-6 items-start">
+
+    <h2 class="text-xl font-semibold mb-4 border-b pb-2 w-full">Atom: Spinner / Loader</h2>
+
+    <div class="flex gap-8 items-center">
+        <!-- Base Spinner -->
+        <div class="flex items-center justify-center">
+            <div class="w-6 h-6 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+        </div>
+
+        <!-- Small Spinner (in button) -->
+        <button
+            class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 border border-transparent rounded-lg shadow-sm hover:bg-blue-700 disabled:opacity-75 cursor-wait">
+            <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            Chargement...
+        </button>
+    </div>
+
+</body>
+
+</html>

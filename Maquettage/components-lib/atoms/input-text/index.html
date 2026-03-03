@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Atom: Input Text</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 flex flex-col gap-4 max-w-sm">
+
+    <h2 class="text-xl font-semibold mb-4 border-b pb-2">Atom: Input Text</h2>
+
+    <input type="text"
+        class="block w-full px-4 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 transition-colors bg-white disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
+        placeholder="Saisissez votre texte">
+
+    <h3 class="text-sm text-gray-500 mt-4">État : Disabled</h3>
+    <input type="text" disabled value="Texte non modifiable"
+        class="block w-full px-4 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 transition-colors bg-white disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed">
+
+</body>
+
+</html>

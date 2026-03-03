@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Atom: Radio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 flex flex-col gap-4 max-w-sm">
+
+    <h2 class="text-xl font-semibold mb-4 border-b pb-2">Atom: Radio Button</h2>
+
+    <div class="flex items-center">
+        <input type="radio" id="radio-1" name="groupe1" checked
+            class="w-4 h-4 text-blue-600 bg-white border-gray-300 focus:ring-blue-500 focus:ring-2 cursor-pointer transition-colors accent-blue-600">
+        <label for="radio-1" class="ml-2 text-sm font-medium text-gray-900 cursor-pointer">
+            Payer par carte
+        </label>
+    </div>
+
+    <div class="flex items-center mt-2">
+        <input type="radio" id="radio-2" name="groupe1"
+            class="w-4 h-4 text-blue-600 bg-white border-gray-300 focus:ring-blue-500 focus:ring-2 cursor-pointer transition-colors accent-blue-600">
+        <label for="radio-2" class="ml-2 text-sm font-medium text-gray-900 cursor-pointer">
+            Payer par virement
+        </label>
+    </div>
+
+    <div class="flex items-center mt-2">
+        <input type="radio" id="radio-3" name="groupe1" disabled
+            class="w-4 h-4 text-gray-400 bg-gray-100 border-gray-300 cursor-not-allowed hidden-accent">
+        <label for="radio-3" class="ml-2 text-sm font-medium text-gray-400 cursor-not-allowed">
+            Prélèvement automatique (Indisponible)
+        </label>
+    </div>
+
+</body>
+
+</html>

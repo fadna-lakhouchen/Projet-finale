@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Atom: Tooltip</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-16 bg-gray-50 flex items-center justify-center">
+
+    <h2 class="text-xl font-semibold absolute top-8 left-8 border-b pb-2">Atom: Tooltip</h2>
+
+    <!-- Tooltip Wrapper (Group) -->
+    <div class="relative group inline-block">
+        <button
+            class="inline-flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-600 transition-colors bg-white border border-gray-200 rounded-full shadow-sm focus:outline-none">
+            <i data-lucide="info" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Tooltip Content -->
+        <div
+            class="absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-900 px-2.5 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none">
+            Plus d'informations
+            <!-- Flèche -->
+            <span class="absolute top-full left-1/2 -ml-1 border-4 border-transparent border-t-gray-900"></span>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

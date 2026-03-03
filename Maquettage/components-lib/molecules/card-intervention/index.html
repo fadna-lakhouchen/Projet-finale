@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Molecule: Card Intervention</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 max-w-sm">
+
+    <h2 class="text-xl font-semibold mb-6 border-b pb-2">Molecule: Card Intervention</h2>
+
+    <!-- Ticket/Intervention Card -->
+    <a href="#"
+        class="block bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all group">
+
+        <div class="flex justify-between items-start mb-3">
+            <!-- Badge + Id -->
+            <div class="flex items-center gap-2">
+                <span
+                    class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-yellow-100 text-yellow-800 uppercase tracking-wider">
+                    En attente
+                </span>
+                <span class="text-xs font-medium text-gray-400">#INT-202</span>
+            </div>
+            <!-- Date relative -->
+            <span class="text-xs text-gray-500 flex items-center">
+                <i data-lucide="clock" class="w-3 h-3 mr-1"></i> il y a 2h
+            </span>
+        </div>
+
+        <!-- Contenu -->
+        <h3 class="text-base font-semibold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">Fuite d'eau
+            garage sous-sol</h3>
+        <p class="text-sm text-gray-600 line-clamp-2 mb-3">Une flaque d'eau importante se forme près de la place 42. Il
+            semble que cela provienne du tuyau principal...</p>
+
+        <!-- Meta/Footer -->
+        <div class="flex items-center text-xs text-gray-500 pt-3 border-t border-gray-50">
+            <i data-lucide="map-pin" class="w-3 h-3 mr-1"></i> Résidence Les Lilas - Parking S1
+        </div>
+    </a>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

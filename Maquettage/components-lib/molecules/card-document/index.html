@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Molecule: Card Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 flex flex-col gap-4 max-w-sm">
+
+    <h2 class="text-xl font-semibold mb-6 border-b pb-2">Molecule: Card Document</h2>
+
+    <!-- Document Card (File Download) -->
+    <div
+        class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex items-center justify-between group hover:border-blue-300 transition-colors">
+        <div class="flex items-center gap-4 overflow-hidden">
+            <!-- File Icon -->
+            <div class="p-3 bg-red-50 text-red-600 rounded-lg flex-shrink-0">
+                <i data-lucide="file-text" class="w-6 h-6"></i>
+            </div>
+            <!-- Info Document -->
+            <div class="min-w-0">
+                <h4 class="text-sm font-semibold text-gray-900 truncate">PV_Assemblée_Generale_2025.pdf</h4>
+                <p class="text-xs text-gray-500 mt-0.5">Ajouté le 12 Fév 2026 • 2.4 MB</p>
+            </div>
+        </div>
+
+        <!-- Action Download -->
+        <a href="#"
+            class="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors flex-shrink-0 ml-2"
+            title="Télécharger">
+            <i data-lucide="download" class="w-5 h-5"></i>
+        </a>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

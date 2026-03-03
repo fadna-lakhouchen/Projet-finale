@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr" class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie UI - ImmoSyndic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { syndic: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' } }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="p-4 md:p-8 max-w-6xl mx-auto space-y-12">
+
+    <!-- Entête du Hub -->
+    <header
+        class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-syndic-50 text-syndic-700 text-sm font-medium mb-4">
+                <i data-lucide="blocks" class="w-4 h-4"></i> Atomic Design System
+            </div>
+            <h1 class="text-3xl font-bold tracking-tight text-gray-900 mb-2">ImmoSyndic - Galerie UI</h1>
+            <p class="text-gray-500 max-w-2xl">Catalogue des composants de l'application de gestion de syndic, organisés
+                selon la méthodologie Atomic Design.</p>
+        </div>
+        <div class="flex-shrink-0">
+            <a href="charte-graphique/index.html"
+                class="inline-flex items-center justify-center px-5 py-3 text-sm font-medium text-white transition-colors bg-syndic-600 rounded-xl shadow-sm hover:bg-syndic-700 focus:outline-none focus:ring-4 focus:ring-syndic-100">
+                <i data-lucide="palette" class="w-5 h-5 mr-2"></i> Voir la Charte Graphique
+            </a>
+        </div>
+    </header>
+
+    <!-- Section Mockups -->
+    <section class="space-y-4">
+        <div class="flex items-center gap-2 border-b border-gray-200 pb-2">
+            <i data-lucide="layout-template" class="w-6 h-6 text-gray-400"></i>
+            <h2 class="text-xl font-semibold text-gray-900">Mockups Complets</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <a href="mockups/dashboard-resident.html"
+                class="flex items-center justify-between bg-white p-5 rounded-xl border border-gray-200 hover:border-syndic-400 hover:shadow-md transition-all group">
+                <div>
+                    <h3 class="font-semibold text-gray-900 group-hover:text-syndic-600 transition-colors">Dashboard
+                        Résident</h3>
+                    <p class="text-sm text-gray-500 mt-1">Vue principale des résidents (Mobile & Web)</p>
+                </div>
+                <i data-lucide="chevron-right"
+                    class="w-5 h-5 text-gray-400 group-hover:text-syndic-600 transition-colors"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Grille Atoms & Molecules -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+        <!-- Colonne Atoms -->
+        <section class="space-y-4">
+            <div class="flex items-center gap-2 border-b border-gray-200 pb-2">
+                <i data-lucide="circle-dot" class="w-6 h-6 text-emerald-500"></i>
+                <h2 class="text-xl font-semibold text-gray-900">Atoms (20)</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+                <!-- Elements Fondamentaux -->
+                <a href="components-lib/atoms/button/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Boutons</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/typography/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Typographie</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/icon/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Icônes (Lucide)</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/badge/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Badges</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/avatar/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Avatars</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/divider/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Séparateurs</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/spinner/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Spinners</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/progress-bar/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Barres Progression</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/tooltip/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Infobulles</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+
+                <!-- Formulaire -->
+                <a href="components-lib/atoms/input-text/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Input (Texte)</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/input-email/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Input (Email)</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/input-password/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Input (Mot P.)</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/input-number/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Input (Nombre)</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/input-date/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Input (Date)</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/input-file/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Input (Fichier)</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/select/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Select (Liste)</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/textarea/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Zone de texte</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/checkbox/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Cases à cocher</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/radio/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Boutons Radio</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+                <a href="components-lib/atoms/toggle-switch/index.html"
+                    class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                        class="text-sm font-medium">Switchs (Toggle)</span><i data-lucide="arrow-right"
+                        class="w-4 h-4 text-gray-300 group-hover:text-syndic-500"></i></a>
+
+            </div>
+        </section>
+
+        <!-- Colonne Molecules -->
+        <section class="space-y-4">
+            <div class="flex items-center gap-2 border-b border-gray-200 pb-2">
+                <i data-lucide="boxes" class="w-6 h-6 text-indigo-500"></i>
+                <h2 class="text-xl font-semibold text-gray-900">Molecules (19)</h2>
+            </div>
+            <div class="grid grid-cols-1 gap-3">
+
+                <!-- Cartes & Blocks -->
+                <a href="components-lib/molecules/card-stat/index.html"
+                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
+                    <div>
+                        <p class="font-medium text-gray-900">Carte Statistique</p>
+                        <p class="text-xs text-gray-500 mt-0.5">Pour le tableau de bord KPI</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
+                </a>
+                <a href="components-lib/molecules/card-charge/index.html"
+                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
+                    <div>
+                        <p class="font-medium text-gray-900">Carte Charge (Facture)</p>
+                        <p class="text-xs text-gray-500 mt-0.5">Info financière avec actions</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
+                </a>
+                <a href="components-lib/molecules/card-intervention/index.html"
+                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
+                    <div>
+                        <p class="font-medium text-gray-900">Carte Intervention</p>
+                        <p class="text-xs text-gray-500 mt-0.5">Suivi de problème technique</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
+                </a>
+                <a href="components-lib/molecules/card-document/index.html"
+                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
+                    <div>
+                        <p class="font-medium text-gray-900">Carte Fichier / Document</p>
+                        <p class="text-xs text-gray-500 mt-0.5">Pour le téléchargement de PDF/Images</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
+                </a>
+                <a href="components-lib/molecules/card-building/index.html"
+                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
+                    <div>
+                        <p class="font-medium text-gray-900">Carte Immeuble</p>
+                        <p class="text-xs text-gray-500 mt-0.5">Vue globale d'une résidence (Admin)</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
+                </a>
+
+                <!-- Listes -->
+                <a href="components-lib/molecules/list-item-payment/index.html"
+                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
+                    <div>
+                        <p class="font-medium text-gray-900">Ligne d'historique (Paiement)</p>
+                    </div><i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
+                </a>
+                <a href="components-lib/molecules/list-item-notification/index.html"
+                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
+                    <div>
+                        <p class="font-medium text-gray-900">Ligne de Centre de Notifications</p>
+                    </div><i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
+                </a>
+                <a href="components-lib/molecules/table-row/index.html"
+                    class="p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 flex items-center justify-between group">
+                    <div>
+                        <p class="font-medium text-gray-900">Ligne de Tableau Données</p>
+                    </div><i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 group-hover:text-indigo-500"></i>
+                </a>
+
+                <!-- Autres -->
+                <div class="grid grid-cols-2 gap-3 mt-2">
+                    <a href="components-lib/molecules/form-group/index.html"
+                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                            class="text-sm font-medium">Groupe Formulaire</span><i data-lucide="arrow-right"
+                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
+                    <a href="components-lib/molecules/search-bar/index.html"
+                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                            class="text-sm font-medium">Barre Recherche</span><i data-lucide="arrow-right"
+                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
+                    <a href="components-lib/molecules/nav-item/index.html"
+                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                            class="text-sm font-medium">Item Navigation</span><i data-lucide="arrow-right"
+                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
+                    <a href="components-lib/molecules/user-profile-badge/index.html"
+                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                            class="text-sm font-medium">Badge Profil</span><i data-lucide="arrow-right"
+                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
+                    <a href="components-lib/molecules/alert-message/index.html"
+                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                            class="text-sm font-medium">Alerte In-Page</span><i data-lucide="arrow-right"
+                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
+                    <a href="components-lib/molecules/toast-notification/index.html"
+                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                            class="text-sm font-medium">Toast Notification</span><i data-lucide="arrow-right"
+                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
+                    <a href="components-lib/molecules/modal-dialog/index.html"
+                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                            class="text-sm font-medium">Modale Dialogue</span><i data-lucide="arrow-right"
+                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
+                    <a href="components-lib/molecules/empty-state/index.html"
+                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                            class="text-sm font-medium">État Vide (Empty)</span><i data-lucide="arrow-right"
+                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
+                    <a href="components-lib/molecules/pagination/index.html"
+                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                            class="text-sm font-medium">Pagination Listes</span><i data-lucide="arrow-right"
+                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
+                    <a href="components-lib/molecules/tabs/index.html"
+                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                            class="text-sm font-medium">Onglets Navigation</span><i data-lucide="arrow-right"
+                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
+                    <a href="components-lib/molecules/breadcrumb/index.html"
+                        class="p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between group"><span
+                            class="text-sm font-medium">Fil d'Ariane</span><i data-lucide="arrow-right"
+                            class="w-4 h-4 text-gray-300 group-hover:text-indigo-500"></i></a>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="text-center py-8 text-sm text-gray-400 border-t border-gray-200 mt-12">
+        Généré avec méthode Atomic Design - UI First
+    </footer>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

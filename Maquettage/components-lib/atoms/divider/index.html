@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Atom: Divider</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="p-8 bg-gray-50 flex flex-col gap-8 max-w-xl mx-auto">
+
+    <h2 class="text-xl font-semibold mb-4 border-b pb-2">Atom: Divider</h2>
+
+    <!-- Standard Horizontal -->
+    <div>
+        <p class="text-sm text-gray-500 mb-2">Ligne simple</p>
+        <hr class="border-gray-200">
+    </div>
+
+    <!-- Avec Texte au milieu -->
+    <div>
+        <p class="text-sm text-gray-500 mb-2">Avec label</p>
+        <div class="relative py-4">
+            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="w-full border-t border-gray-300"></div>
+            </div>
+            <div class="relative flex justify-center">
+                <span class="bg-gray-50 px-3 text-sm font-medium text-gray-500">ou</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

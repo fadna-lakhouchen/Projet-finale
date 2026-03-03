@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Molecule: Empty State</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 flex items-center justify-center">
+
+    <h2 class="text-xl font-semibold absolute top-8 left-8 border-b pb-2">Molecule: Empty State</h2>
+
+    <div
+        class="bg-white rounded-xl shadow-sm border border-gray-100 p-12 max-w-md w-full text-center flex flex-col items-center">
+
+        <!-- Illustration/Icon -->
+        <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4 text-blue-600">
+            <i data-lucide="check-circle-2" class="w-8 h-8"></i>
+        </div>
+
+        <!-- Title -->
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Tout est à jour !</h3>
+
+        <!-- Description -->
+        <p class="text-sm text-gray-500 mb-6 max-w-xs">
+            Vous n'avez aucune charge en attente de paiement pour le moment. Nous vous préviendrons lors de la prochaine
+            échéance.
+        </p>
+
+        <!-- CTA (Optionnel) -->
+        <button
+            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700 transition-colors focus:ring-4 focus:ring-blue-100">
+            <i data-lucide="history" class="w-4 h-4"></i>
+            Voir l'historique
+        </button>
+
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

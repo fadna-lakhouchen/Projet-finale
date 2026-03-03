@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charte Graphique - ImmoSyndic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        syndic: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb', // Primary
+                            700: '#1d4ed8', // Hover
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+      body {
+        @apply font-sans antialiased text-gray-900 bg-gray-50;
+      }
+    }
+  </style>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="p-8">
+    <div class="max-w-4xl mx-auto space-y-12 bg-white p-10 rounded-xl shadow-sm border border-gray-100">
+        <!-- En-tête -->
+        <div>
+            <h1 class="text-3xl font-bold tracking-tight text-gray-900">Charte Graphique ImmoSyndic</h1>
+            <p class="mt-2 text-gray-500">Aperçu visuel des tokens (Couleurs, Typographie, Espacements) pour la
+                plateforme de gestion de syndic.</p>
+        </div>
+
+        <hr class="border-gray-200">
+
+        <!-- Couleurs -->
+        <section>
+            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                <i data-lucide="palette" class="w-5 h-5 text-syndic-600"></i> Palette de Couleurs
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <!-- Primary -->
+                <div class="space-y-2">
+                    <div class="h-24 rounded-lg bg-syndic-600 shadow-sm"></div>
+                    <div>
+                        <p class="font-medium text-sm">Primary (syndic-600)</p>
+                        <p class="text-xs text-gray-500 text-syndic-600">Actions principales</p>
+                    </div>
+                </div>
+                <!-- Success -->
+                <div class="space-y-2">
+                    <div class="h-24 rounded-lg bg-green-600 shadow-sm"></div>
+                    <div>
+                        <p class="font-medium text-sm">Success (green-600)</p>
+                        <p class="text-xs text-gray-500 text-green-600">Paiements validés</p>
+                    </div>
+                </div>
+                <!-- Danger -->
+                <div class="space-y-2">
+                    <div class="h-24 rounded-lg bg-red-600 shadow-sm"></div>
+                    <div>
+                        <p class="font-medium text-sm">Danger (red-600)</p>
+                        <p class="text-xs text-gray-500 text-red-600">Impayés / Erreurs</p>
+                    </div>
+                </div>
+                <!-- Warning -->
+                <div class="space-y-2">
+                    <div class="h-24 rounded-lg bg-yellow-500 shadow-sm"></div>
+                    <div>
+                        <p class="font-medium text-sm">Warning (yellow-500)</p>
+                        <p class="text-xs text-gray-500 text-yellow-600">En attente / Retards</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Neutrals -->
+            <div class="mt-6">
+                <p class="text-sm font-medium mb-3">Tons neutres (Bordures, Textes, Fonds)</p>
+                <div class="flex h-12 rounded-lg overflow-hidden shadow-sm">
+                    <div class="flex-1 bg-gray-900 border-r border-gray-700"></div>
+                    <div class="flex-1 bg-gray-700 border-r border-gray-500"></div>
+                    <div class="flex-1 bg-gray-500 border-r border-gray-300"></div>
+                    <div class="flex-1 bg-gray-300 border-r border-gray-200"></div>
+                    <div class="flex-1 bg-gray-200 border-r border-gray-100"></div>
+                    <div class="flex-1 bg-gray-100 border-r border-gray-50"></div>
+                    <div class="flex-1 bg-gray-50"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Typographie -->
+        <section>
+            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                <i data-lucide="type" class="w-5 h-5 text-syndic-600"></i> Typographie (Inter)
+            </h2>
+            <div class="space-y-6 bg-gray-50 p-6 rounded-lg border border-gray-200">
+                <div>
+                    <h1 class="text-3xl font-bold tracking-tight text-gray-900">Titre Principal H1</h1>
+                    <p class="text-sm text-gray-500 mt-1">text-3xl font-bold tracking-tight</p>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-semibold text-gray-900">Titre Secondaire H2</h2>
+                    <p class="text-sm text-gray-500 mt-1">text-2xl font-semibold</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-gray-900">Titre de Section H3</h3>
+                    <p class="text-sm text-gray-500 mt-1">text-xl font-medium</p>
+                </div>
+                <div>
+                    <p class="text-base text-gray-700"><strong>Corps de texte:</strong> Ceci est un paragraphe standard
+                        utilisé pour les descriptions longues ou le contenu textuel des cartes et modales. Il offre une
+                        excellente lisibilité.</p>
+                    <p class="text-sm text-gray-500 mt-1">text-base text-gray-700</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600"><strong>Petit texte:</strong> Utilisé pour les légendes, les
+                        métadonnées de dates ou les labels de formulaires.</p>
+                    <p class="text-sm text-gray-500 mt-1">text-sm text-gray-600</p>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500">Texte miniature (Avertissements, notes de bas de page)</p>
+                    <p class="text-xs text-gray-400 mt-1">text-xs text-gray-500</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Boutons (Aperçu Rapide) -->
+        <section>
+            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                <i data-lucide="mouse-pointer-click" class="w-5 h-5 text-syndic-600"></i> Éléments d'interface : Boutons
+            </h2>
+            <div class="flex flex-wrap gap-4">
+                <button
+                    class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-syndic-600 border border-transparent rounded-lg shadow-sm hover:bg-syndic-700 focus:outline-none focus:ring-2 focus:ring-syndic-500 focus:ring-offset-2">
+                    Bouton Primaire
+                </button>
+                <button
+                    class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-syndic-500 focus:ring-offset-2">
+                    Bouton Secondaire
+                </button>
+                <button
+                    class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-red-700 transition-colors bg-red-100 border border-transparent rounded-lg hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                    Action Destructive
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

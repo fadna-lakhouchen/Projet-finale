@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Atom: Input Email</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 flex flex-col gap-4 max-w-sm">
+
+    <h2 class="text-xl font-semibold mb-4 border-b pb-2">Atom: Input Email</h2>
+
+    <div class="relative">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <i data-lucide="mail" class="w-4 h-4 text-gray-400"></i>
+        </div>
+        <input type="email"
+            class="block w-full pl-10 px-4 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 transition-colors bg-white"
+            placeholder="exemple@email.com">
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

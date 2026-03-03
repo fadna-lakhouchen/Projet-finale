@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Molecule: List Item Notification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 max-w-lg">
+
+    <h2 class="text-xl font-semibold mb-6 border-b pb-2">Molecule: List Item Notification</h2>
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <ul class="divide-y divide-gray-100">
+
+            <!-- Non lue -->
+            <li class="relative flex gap-4 p-4 hover:bg-blue-50/50 transition-colors cursor-pointer bg-blue-50/20">
+                <!-- Point indicateur non-lu -->
+                <span class="absolute top-4 left-2 w-2 h-2 bg-blue-600 rounded-full"></span>
+
+                <div
+                    class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0 mt-1 ml-2">
+                    <i data-lucide="info" class="w-5 h-5"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-gray-900 border-b pb-2">Molecule: List Item Notification</h2>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                        <ul class="divide-y divide-gray-100">
+
+                            <!-- Non lue -->
+                            <li
+                                class="relative flex gap-4 p-4 hover:bg-blue-50/50 transition-colors cursor-pointer bg-blue-50/20">
+                                <!-- Point indicateur non-lu -->
+                                <span class="absolute top-4 left-2 w-2 h-2 bg-blue-600 rounded-full"></span>
+
+                                <div
+                                    class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0 mt-1 ml-2">
+                                    <i data-lucide="info" class="w-5 h-5"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="text-sm font-semibold text-gray-900 truncate">Rappel de paiement</h4>
+                                    <p class="text-sm text-gray-600 mt-0.5 line-clamp-2">N'oubliez pas que l'échéance
+                                        pour les charges du Trimestre 2 approche. Vous avez jusqu'au 15 Avril.</p>
+                                    <p class="text-xs text-blue-600 font-medium mt-1.5 flex items-center gap-1">
+                                        <i data-lucide="clock" class="w-3 h-3"></i> Il y a 2 heures
+                                    </p>
+                                </div>
+                            </li>
+
+                            <!-- Lue -->
+                            <li class="relative flex gap-4 p-4 hover:bg-gray-50 transition-colors cursor-pointer">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 flex-shrink-0 mt-1 ml-2">
+                                    <i data-lucide="wrench" class="w-5 h-5"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="text-sm font-medium text-gray-900 truncate">Intervention terminée</h4>
+                                    <p class="text-sm text-gray-500 mt-0.5 line-clamp-2">Le plombier a réparé la fuite
+                                        signalée au sous-sol. Le dossier #INT-202 est clos.</p>
+                                    <p class="text-xs text-gray-400 mt-1.5">Hier, 14:30</p>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <script>lucide.createIcons();</script>
+</body>
+
+</html>

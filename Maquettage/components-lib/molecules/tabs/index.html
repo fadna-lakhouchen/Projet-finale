@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Molecule: Tabs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 max-w-2xl">
+
+    <h2 class="text-xl font-semibold mb-6 border-b pb-2">Molecule: Tabs (Onglets internes)</h2>
+
+    <div class="border-b border-gray-200">
+        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+
+            <!-- Actif -->
+            <a href="#"
+                class="border-blue-500 text-blue-600 flex whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium"
+                aria-current="page">
+                <i data-lucide="list" class="w-5 h-5 mr-2"></i>
+                Historique paiements
+            </a>
+
+            <!-- Inactif -->
+            <a href="#"
+                class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 flex whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium transition-colors">
+                <i data-lucide="file-text" class="w-5 h-5 mr-2"></i>
+                Quittances (PDF)
+            </a>
+
+            <!-- Inactif -->
+            <a href="#"
+                class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 flex whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium transition-colors">
+                <i data-lucide="trending-up" class="w-5 h-5 mr-2"></i>
+                Statistiques
+            </a>
+
+        </nav>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

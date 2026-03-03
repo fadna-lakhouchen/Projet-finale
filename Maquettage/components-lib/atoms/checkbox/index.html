@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Atom: Checkbox</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 flex flex-col gap-4 max-w-sm">
+
+    <h2 class="text-xl font-semibold mb-4 border-b pb-2">Atom: Checkbox</h2>
+
+    <!-- État Normal -->
+    <div class="flex items-center">
+        <input type="checkbox" id="checkbox-1"
+            class="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500 focus:ring-2 cursor-pointer transition-colors accent-blue-600">
+        <label for="checkbox-1" class="ml-2 text-sm font-medium text-gray-900 cursor-pointer">
+            Se souvenir de moi
+        </label>
+    </div>
+
+    <!-- État Coché -->
+    <div class="flex items-center">
+        <input type="checkbox" id="checkbox-2" checked
+            class="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500 focus:ring-2 cursor-pointer transition-colors accent-blue-600">
+        <label for="checkbox-2" class="ml-2 text-sm font-medium text-gray-900 cursor-pointer">
+            J'accepte les conditions
+        </label>
+    </div>
+
+    <!-- État Désactivé -->
+    <div class="flex items-center">
+        <input type="checkbox" id="checkbox-3" disabled
+            class="w-4 h-4 text-gray-400 bg-gray-100 border-gray-300 rounded cursor-not-allowed hidden-accent">
+        <label for="checkbox-3" class="ml-2 text-sm font-medium text-gray-400 cursor-not-allowed">
+            Option non disponible
+        </label>
+    </div>
+
+</body>
+
+</html>

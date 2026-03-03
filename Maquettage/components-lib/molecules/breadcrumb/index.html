@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Molecule: Breadcrumb</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 max-w-2xl">
+
+    <h2 class="text-xl font-semibold mb-6 border-b pb-2">Molecule: Breadcrumb (Fil d'Ariane)</h2>
+
+    <nav class="flex" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-3">
+
+            <li class="inline-flex items-center">
+                <a href="#" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+                    <i data-lucide="home" class="w-4 h-4 mr-2"></i>
+                    Accueil
+                </a>
+            </li>
+
+            <li>
+                <div class="flex items-center">
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+                    <a href="#" class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2">Mes
+                        Immeubles</a>
+                </div>
+            </li>
+
+            <li aria-current="page">
+                <div class="flex items-center">
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+                    <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">Résidence Les Lilas</span>
+                </div>
+            </li>
+
+        </ol>
+    </nav>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

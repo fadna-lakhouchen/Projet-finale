@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Molecule: Nav Item</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 flex flex-col gap-12 max-w-sm">
+
+    <!-- Desktop Sidebar Item -->
+    <div>
+        <h2 class="text-xl font-semibold mb-6 border-b pb-2">Nav Item (Sidebar Web)</h2>
+        <nav class="space-y-2 bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+
+            <!-- Actif -->
+            <a href="#"
+                class="flex items-center px-3 py-2 text-sm font-medium text-blue-700 bg-blue-50 rounded-lg group">
+                <i data-lucide="home" class="w-5 h-5 mr-3 text-blue-700 flex-shrink-0"></i>
+                Tableau de bord
+            </a>
+
+            <!-- Inactif (Hoverable) -->
+            <a href="#"
+                class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-900 group transition-colors">
+                <i data-lucide="credit-card"
+                    class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-500 flex-shrink-0 transition-colors"></i>
+                Paiements
+                <!-- Badge optionnel -->
+                <span
+                    class="inline-flex items-center justify-center w-5 h-5 ml-auto text-xs font-semibold text-red-800 bg-red-100 rounded-full">3</span>
+            </a>
+
+        </nav>
+    </div>
+
+    <!-- Mobile Tabbar Item -->
+    <div>
+        <h2 class="text-xl font-semibold mb-6 border-b pb-2">Nav Item (Tabbar Mobile)</h2>
+        <div
+            class="flex justify-around bg-white p-2 rounded-t-xl shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] border-t border-gray-100">
+
+            <!-- Actif -->
+            <a href="#" class="flex flex-col items-center justify-center px-4 py-2 text-blue-600 group">
+                <div class="relative">
+                    <i data-lucide="home" class="w-6 h-6 mb-1"></i>
+                </div>
+                <span class="text-[10px] font-medium">Accueil</span>
+            </a>
+
+            <!-- Inactif -->
+            <a href="#"
+                class="flex flex-col items-center justify-center px-4 py-2 text-gray-500 hover:text-blue-600 group transition-colors">
+                <div class="relative">
+                    <i data-lucide="alert-triangle" class="w-6 h-6 mb-1"></i>
+                    <!-- Point de notification -->
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
+                </div>
+                <span class="text-[10px] font-medium">Incidents</span>
+            </a>
+
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>
