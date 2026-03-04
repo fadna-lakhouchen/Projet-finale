@@ -53,39 +53,38 @@
         <nav class="hs-accordion-group p-6 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
             <ul class="space-y-1.5">
                 <li>
-                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-blue-50 text-sm text-blue-600 rounded-lg dark:bg-blue-900/10 dark:text-blue-400"
-                        href="#">
-                        <i data-lucide="layout-dashboard" class="size-4"></i> Dashboard
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-800 rounded-lg focus:outline-none focus:bg-gray-100 dark:bg-neutral-700 dark:text-white"
+                        href="index.html">
+                        <i data-lucide="layout-dashboard" class="shrink-0 size-4"></i>
+                        Dashboard
                     </a>
                 </li>
                 <li>
-                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                        href="#">
-                        <i data-lucide="building" class="size-4"></i> Gérer Immeubles
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:text-neutral-300 dark:hover:bg-neutral-800"
+                        href="buildings.html">
+                        <i data-lucide="building" class="shrink-0 size-4"></i>
+                        Gérer Immeubles
                     </a>
                 </li>
                 <li>
-                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                        href="#">
-                        <i data-lucide="wallet" class="size-4"></i> Suivre Paiements
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:text-neutral-300 dark:hover:bg-neutral-800"
+                        href="finances.html">
+                        <i data-lucide="wallet" class="shrink-0 size-4"></i>
+                        Suivre Paiements
                     </a>
                 </li>
                 <li>
-                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                        href="#">
-                        <i data-lucide="wrench" class="size-4"></i> Interventions
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:text-neutral-300 dark:hover:bg-neutral-800"
+                        href="interventions.html">
+                        <i data-lucide="wrench" class="shrink-0 size-4"></i>
+                        Interventions
                     </a>
                 </li>
                 <li>
-                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                        href="#">
-                        <i data-lucide="history" class="size-4"></i> Historique
-                    </a>
-                </li>
-                <li>
-                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                        href="#">
-                        <i data-lucide="megaphone" class="size-4"></i> Envoyer Annonces
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:text-neutral-300 dark:hover:bg-neutral-800"
+                        href="annonces.html">
+                        <i data-lucide="megaphone" class="shrink-0 size-4"></i>
+                        Envoyer Annonces
                     </a>
                 </li>
             </ul>
@@ -119,31 +118,59 @@
 
                 <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3">
                     <div class="hidden md:block">
-                        <h1 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">Tableau de Bord
-                            Gestionnaire</h1>
+                        <!-- Search Bar Molecule -->
+                        <div class="relative max-w-sm">
+                            <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
+                                <i data-lucide="search" class="shrink-0 size-4 text-gray-400 dark:text-neutral-500"></i>
+                            </div>
+                            <input type="text"
+                                class="py-2 px-4 ps-11 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                placeholder="Rechercher...">
+                        </div>
                     </div>
 
                     <div class="flex flex-row items-center justify-end gap-2">
-                        <!-- Notifications -->
-                        <div class="hs-dropdown relative inline-flex">
-                            <button id="hs-dropdown-notifications" type="button"
-                                class="size-[38px] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-neutral-700">
-                                <i data-lucide="bell" class="size-4"></i>
-                                <span
-                                    class="absolute top-2 right-2 size-2 bg-red-500 rounded-full ring-2 ring-white dark:ring-neutral-800"></span>
-                            </button>
-                        </div>
+                        <!-- Notifications (Simplified version of icon button) -->
+                        <button type="button"
+                            class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700">
+                            <i data-lucide="bell" class="size-5"></i>
+                            <span
+                                class="absolute top-0 end-0 inline-flex items-center size-2 rounded-full bg-red-600 text-white border-2 border-white dark:border-neutral-800"></span>
+                        </button>
 
-                        <!-- User Profile -->
-                        <div class="flex items-center gap-x-3 ps-3 border-s border-gray-200 dark:border-neutral-700">
-                            <div class="text-end hidden sm:block">
-                                <p class="text-sm font-semibold text-gray-800 dark:text-neutral-200">Youssef El Khadir
-                                </p>
-                                <p class="text-[10px] text-gray-500 dark:text-neutral-500 uppercase">Syndic Al-Amal</p>
+                        <!-- User Profile Badge Molecule -->
+                        <div class="hs-dropdown [--placement:bottom-right] relative inline-flex">
+                            <button id="hs-dropdown-with-header" type="button"
+                                class="w-full text-start flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-300 dark:focus:bg-neutral-800">
+                                <img class="shrink-0 size-10 rounded-full"
+                                    src="https://ui-avatars.com/api/?name=Youssef+El+Khadir&background=2563eb&color=fff"
+                                    alt="Avatar">
+                                <div class="grow hidden sm:block">
+                                    <span
+                                        class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">Youssef
+                                        El Khadir</span>
+                                    <span class="block text-xs text-gray-500 dark:text-neutral-500">Syndic
+                                        Al-Amal</span>
+                                </div>
+                                <i data-lucide="chevron-down" class="shrink-0 size-4 text-gray-400"></i>
+                            </button>
+
+                            <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg p-2 mt-2 dark:bg-neutral-800 dark:border dark:border-neutral-700"
+                                aria-labelledby="hs-dropdown-with-header">
+                                <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                                    href="#">
+                                    <i data-lucide="user" class="size-4"></i> Mon Profil
+                                </a>
+                                <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                                    href="#">
+                                    <i data-lucide="settings" class="size-4"></i> Paramètres
+                                </a>
+                                <hr class="my-2 dark:border-neutral-700">
+                                <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-gray-100 dark:text-red-500 dark:hover:bg-neutral-700"
+                                    href="#">
+                                    <i data-lucide="log-out" class="size-4"></i> Déconnexion
+                                </a>
                             </div>
-                            <img class="inline-block size-[38px] rounded-full ring-2 ring-white dark:ring-neutral-800"
-                                src="https://ui-avatars.com/api/?name=Youssef+El+Khadir&background=2563eb&color=fff"
-                                alt="Avatar">
                         </div>
                     </div>
                 </div>
@@ -153,72 +180,91 @@
         <div class="p-4 sm:p-6 space-y-4 sm:space-y-6">
             <!-- Stats Grid -->
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                <!-- Stat: Recouvrement (Card Stat) -->
+                <!-- Card Stat Molecule: Recouvrement -->
                 <div
-                    class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-                    <div class="p-4 md:p-5">
-                        <div class="flex items-center gap-x-2">
-                            <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">Recouvrement Global
-                            </p>
-                            <div class="hs-tooltip inline-block">
-                                <i data-lucide="info" class="size-3 text-gray-400"></i>
+                    class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                    <div class="p-4 md:p-5 flex justify-between items-start">
+                        <div>
+                            <p
+                                class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-neutral-500 mb-1">
+                                Recouvrement Global</p>
+                            <div class="flex items-center gap-x-2">
+                                <h3 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-neutral-200">82.5%</h3>
+                            </div>
+                            <div class="mt-1 flex items-center gap-x-2">
+                                <span
+                                    class="inline-flex items-center gap-x-1 py-0.5 px-2 rounded-md text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/10 dark:text-teal-500">
+                                    <i data-lucide="arrow-up-right" class="size-3"></i> 3.2%
+                                </span>
                             </div>
                         </div>
-                        <div class="mt-1 flex items-center gap-x-2">
-                            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-neutral-200">82.5%</h3>
-                            <span class="flex items-center gap-x-1 text-teal-600">
-                                <i data-lucide="trending-up" class="size-4"></i>
-                                <span class="inline-block text-sm">+3.2%</span>
-                            </span>
-                        </div>
-                        <div class="mt-3 w-full bg-gray-200 rounded-full h-1.5 dark:bg-neutral-700">
-                            <div class="bg-blue-600 h-1.5 rounded-full" style="width: 82.5%"></div>
+                        <div
+                            class="size-11 flex justify-center items-center bg-blue-100 text-blue-600 rounded-lg dark:bg-blue-800/20 dark:text-blue-500">
+                            <i data-lucide="percent" class="size-6"></i>
                         </div>
                     </div>
                 </div>
 
-                <!-- Stat: Immeubles -->
+                <!-- Card Stat Molecule: Immeubles -->
                 <div
-                    class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-                    <div class="p-4 md:p-5">
-                        <div class="flex items-center gap-x-2">
-                            <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">Parc Immobilier</p>
+                    class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                    <div class="p-4 md:p-5 flex justify-between items-start">
+                        <div>
+                            <p
+                                class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-neutral-500 mb-1">
+                                Immeubles gérés</p>
+                            <div class="flex items-center gap-x-2">
+                                <h3 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-neutral-200">08</h3>
+                            </div>
                         </div>
-                        <div class="mt-1 flex items-center gap-x-2">
-                            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-neutral-200">08</h3>
-                            <p class="text-sm text-gray-500 dark:text-neutral-500">Immeubles gérés</p>
+                        <div
+                            class="size-11 flex justify-center items-center bg-blue-100 text-blue-600 rounded-lg dark:bg-blue-800/20 dark:text-blue-500">
+                            <i data-lucide="building" class="size-6"></i>
                         </div>
                     </div>
                 </div>
 
-                <!-- Stat: Incidents -->
+                <!-- Card Stat Molecule: Incidents -->
                 <div
-                    class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-                    <div class="p-4 md:p-5">
-                        <div class="flex items-center gap-x-2">
-                            <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">Signalements Actifs
-                            </p>
+                    class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                    <div class="p-4 md:p-5 flex justify-between items-start">
+                        <div>
+                            <p
+                                class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-neutral-500 mb-1">
+                                Signalements Actifs</p>
+                            <div class="flex items-center gap-x-2">
+                                <h3 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-neutral-200">14</h3>
+                            </div>
+                            <div class="mt-1 flex items-center gap-x-2">
+                                <span
+                                    class="inline-flex items-center gap-x-1 py-0.5 px-2 rounded-md text-xs font-medium bg-red-100 text-red-800 dark:bg-red-800/10 dark:text-red-500">
+                                    4 Urgents
+                                </span>
+                            </div>
                         </div>
-                        <div class="mt-1 flex items-center gap-x-2">
-                            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-neutral-200">14</h3>
-                            <span
-                                class="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-red-100 text-red-800 rounded-full dark:bg-red-900/30 dark:text-red-500">
-                                4 Urgents
-                            </span>
+                        <div
+                            class="size-11 flex justify-center items-center bg-blue-100 text-blue-600 rounded-lg dark:bg-blue-800/20 dark:text-blue-500">
+                            <i data-lucide="alert-circle" class="size-6"></i>
                         </div>
                     </div>
                 </div>
 
-                <!-- Stat: Revenus -->
+                <!-- Card Stat Molecule: Collecte -->
                 <div
-                    class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-                    <div class="p-4 md:p-5">
-                        <div class="flex items-center gap-x-2">
-                            <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">Collecte (Mois)</p>
+                    class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                    <div class="p-4 md:p-5 flex justify-between items-start">
+                        <div>
+                            <p
+                                class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-neutral-500 mb-1">
+                                Collecte (Mois)</p>
+                            <div class="flex items-center gap-x-2">
+                                <h3 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-neutral-200">24.5k MAD
+                                </h3>
+                            </div>
                         </div>
-                        <div class="mt-1 flex items-center gap-x-2">
-                            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-neutral-200">24.5k</h3>
-                            <p class="text-sm text-gray-500 dark:text-neutral-500">MAD</p>
+                        <div
+                            class="size-11 flex justify-center items-center bg-blue-100 text-blue-600 rounded-lg dark:bg-blue-800/20 dark:text-blue-500">
+                            <i data-lucide="wallet" class="size-6"></i>
                         </div>
                     </div>
                 </div>
@@ -227,223 +273,316 @@
             <div class="grid lg:grid-cols-3 gap-4 sm:gap-6">
                 <!-- Main Column (Payments & Buildings) -->
                 <div class="lg:col-span-2 space-y-4 sm:space-y-6">
-                    <!-- Section: Immeubles (Using Card Building style) -->
+                    <!-- Section: Immeubles -->
                     <div
-                        class="flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+                        class="flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700 shadow-sm">
                         <div
                             class="p-4 md:p-5 border-b border-gray-200 dark:border-neutral-700 flex justify-between items-center">
                             <h2 class="text-lg font-bold text-gray-800 dark:text-white">Immeubles Sous Gestion</h2>
-                            <button
-                                class="py-1.5 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700">
-                                <i data-lucide="plus" class="size-4"></i> Ajouter
+                            <button type="button" data-hs-overlay="#hs-add-building-modal"
+                                class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                                <i data-lucide="plus" class="size-4"></i>
+                                Ajouter
                             </button>
                         </div>
                         <div class="p-4 md:p-5 grid sm:grid-cols-2 gap-4">
-                            <!-- Building 1 -->
+                            <!-- Card Building Molecule 1 -->
                             <div
-                                class="flex flex-col bg-gray-50 border border-gray-200 rounded-xl overflow-hidden dark:bg-neutral-900 dark:border-neutral-700">
+                                class="flex flex-col bg-white border shadow-sm rounded-xl overflow-hidden hover:shadow-md transition dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
                                 <img class="w-full h-32 object-cover"
                                     src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=400&auto=format&fit=crop"
                                     alt="Building">
                                 <div class="p-4">
-                                    <h3 class="font-bold text-gray-800 dark:text-white text-sm">Résidence Al-Amal</h3>
+                                    <h3 class="text-sm font-bold text-gray-800 dark:text-white">Résidence Al-Amal</h3>
                                     <p
-                                        class="text-[11px] text-gray-500 dark:text-neutral-500 flex items-center gap-x-1 mt-1">
+                                        class="mt-1 text-[10px] text-gray-500 flex items-center gap-x-1 dark:text-neutral-500">
                                         <i data-lucide="map-pin" class="size-3"></i> Tanger, Centre-Ville
                                     </p>
                                     <div
-                                        class="mt-3 pt-3 border-t border-gray-200 dark:border-neutral-800 flex justify-between items-end">
+                                        class="mt-4 pt-4 border-t border-gray-100 grid grid-cols-2 gap-x-4 dark:border-neutral-800">
                                         <div>
                                             <span
-                                                class="block text-[9px] uppercase font-bold text-gray-400">Solde</span>
-                                            <span class="text-xs font-bold text-teal-600">14,200 MAD</span>
+                                                class="block text-[9px] uppercase font-bold text-gray-400 dark:text-neutral-500">Fonds
+                                                Dispo</span>
+                                            <span
+                                                class="block text-xs font-semibold text-gray-800 dark:text-neutral-200">14,200
+                                                MAD</span>
                                         </div>
-                                        <a href="#"
-                                            class="text-blue-600 hover:text-blue-700 text-xs font-medium">Gérer</a>
+                                        <div>
+                                            <span
+                                                class="block text-[9px] uppercase font-bold text-gray-400 dark:text-neutral-500">Statut</span>
+                                            <span
+                                                class="block text-xs font-semibold text-teal-600 dark:text-teal-500">Sain</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <a class="py-1.5 px-2.5 inline-flex justify-center items-center gap-x-2 text-[10px] font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                                            href="#">Gérer</a>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Building 2 -->
+                            <!-- Card Building Molecule 2 -->
                             <div
-                                class="flex flex-col bg-gray-50 border border-gray-200 rounded-xl overflow-hidden dark:bg-neutral-900 dark:border-neutral-700">
+                                class="flex flex-col bg-white border shadow-sm rounded-xl overflow-hidden hover:shadow-md transition dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
                                 <img class="w-full h-32 object-cover"
                                     src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=400&auto=format&fit=crop"
                                     alt="Building">
                                 <div class="p-4">
-                                    <h3 class="font-bold text-gray-800 dark:text-white text-sm">Résidence Les Lilas</h3>
+                                    <h3 class="text-sm font-bold text-gray-800 dark:text-white">Résidence Les Lilas</h3>
                                     <p
-                                        class="text-[11px] text-gray-500 dark:text-neutral-500 flex items-center gap-x-1 mt-1">
+                                        class="mt-1 text-[10px] text-gray-500 flex items-center gap-x-1 dark:text-neutral-500">
                                         <i data-lucide="map-pin" class="size-3"></i> Tanger, Malabata
                                     </p>
                                     <div
-                                        class="mt-3 pt-3 border-t border-gray-200 dark:border-neutral-800 flex justify-between items-end">
+                                        class="mt-4 pt-4 border-t border-gray-100 grid grid-cols-2 gap-x-4 dark:border-neutral-800">
                                         <div>
                                             <span
-                                                class="block text-[9px] uppercase font-bold text-gray-400">Solde</span>
-                                            <span class="text-xs font-bold text-red-600">-2,300 MAD</span>
+                                                class="block text-[9px] uppercase font-bold text-gray-400 dark:text-neutral-500">Fonds
+                                                Dispo</span>
+                                            <span
+                                                class="block text-xs font-semibold text-gray-800 dark:text-neutral-200">-2,300
+                                                MAD</span>
                                         </div>
-                                        <a href="#"
-                                            class="text-blue-600 hover:text-blue-700 text-xs font-medium">Gérer</a>
+                                        <div>
+                                            <span
+                                                class="block text-[9px] uppercase font-bold text-gray-400 dark:text-neutral-500">Statut</span>
+                                            <span
+                                                class="block text-xs font-semibold text-red-600 dark:text-red-500">Déficit</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <a class="py-1.5 px-2.5 inline-flex justify-center items-center gap-x-2 text-[10px] font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                                            href="#">Gérer</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Section: Derniers Paiements (Using Table Row / List Item Payment style) -->
+                    <!-- Section: Paiements (Table Row Molecule) -->
                     <div
-                        class="flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+                        class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl overflow-hidden dark:bg-neutral-900 dark:border-neutral-700">
                         <div
                             class="p-4 md:p-5 border-b border-gray-200 dark:border-neutral-700 flex justify-between items-center">
                             <h2 class="text-lg font-bold text-gray-800 dark:text-white">Paiements Récents</h2>
-                            <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-700">Voir tout</a>
+                            <a href="finances.html" class="text-sm font-medium text-blue-600 hover:text-blue-700">Voir
+                                tout</a>
                         </div>
-                        <div class="p-4 md:p-5 overflow-hidden">
-                            <ul class="flex flex-col divide-y divide-gray-200 dark:divide-neutral-700">
-                                <!-- Payment Item 1 (Approved Plan: Table Row Style) -->
-                                <li class="py-3 px-4 transition hover:bg-gray-50 dark:hover:bg-neutral-700/30">
-                                    <div class="flex justify-between items-center">
-                                        <div class="flex items-center gap-x-3">
-                                            <span
-                                                class="size-9 flex justify-center items-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-500 font-bold text-xs uppercase">
-                                                AL
-                                            </span>
-                                            <div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                                <thead class="bg-gray-50 dark:bg-neutral-800">
+                                    <tr>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                                            Résident</th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                                            Montant</th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                                            Statut</th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                                            Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
+                                    <!-- Table Row Molecule 1 -->
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-neutral-800 transition">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center gap-x-3">
                                                 <span
-                                                    class="block font-semibold text-gray-800 dark:text-neutral-200 text-sm">Amine
-                                                    Lahrichi</span>
-                                                <span class="block text-[10px] text-gray-500 dark:text-neutral-500">Appt
-                                                    12 • Al-Amal</span>
+                                                    class="size-8 flex justify-center items-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-500 font-bold text-xs uppercase">AL</span>
+                                                <div class="grow">
+                                                    <span
+                                                        class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">Amine
+                                                        Lahrichi</span>
+                                                    <span class="block text-xs text-gray-500 dark:text-neutral-500">Appt
+                                                        12 • Al-Amal</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="text-end">
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-bold text-gray-800 dark:text-neutral-200">400 MAD
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
                                             <span
-                                                class="block font-bold text-gray-800 dark:text-neutral-200 text-sm">400
-                                                MAD</span>
-                                            <span
-                                                class="inline-flex items-center gap-x-1.5 py-0.5 px-2 rounded-full text-[10px] font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/20 dark:text-teal-500">Payé</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <!-- Payment Item 2 -->
-                                <li class="py-3 px-4 transition hover:bg-gray-50 dark:hover:bg-neutral-700/30">
-                                    <div class="flex justify-between items-center">
-                                        <div class="flex items-center gap-x-3">
-                                            <span
-                                                class="size-9 flex justify-center items-center rounded-full bg-gray-100 text-gray-600 dark:bg-neutral-700 dark:text-neutral-400 font-bold text-xs uppercase">
-                                                SB
+                                                class="py-1 px-2.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                                                <i data-lucide="check" class="size-3"></i> Payé
                                             </span>
-                                            <div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                            <button type="button"
+                                                class="text-blue-600 hover:text-blue-800 dark:text-blue-500">Détails</button>
+                                        </td>
+                                    </tr>
+                                    <!-- Table Row Molecule 2 -->
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-neutral-800 transition">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center gap-x-3">
                                                 <span
-                                                    class="block font-semibold text-gray-800 dark:text-neutral-200 text-sm">Sara
-                                                    Bennani</span>
-                                                <span class="block text-[10px] text-gray-500 dark:text-neutral-500">Appt
-                                                    05 • Les Lilas</span>
+                                                    class="size-8 flex justify-center items-center rounded-full bg-gray-100 text-gray-600 dark:bg-neutral-700 dark:text-neutral-400 font-bold text-xs uppercase">SB</span>
+                                                <div class="grow">
+                                                    <span
+                                                        class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">Sara
+                                                        Bennani</span>
+                                                    <span class="block text-xs text-gray-500 dark:text-neutral-500">Appt
+                                                        05 • Les Lilas</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="text-end">
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-bold text-gray-800 dark:text-neutral-200">350 MAD
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
                                             <span
-                                                class="block font-bold text-gray-800 dark:text-neutral-200 text-sm">350
-                                                MAD</span>
-                                            <span
-                                                class="inline-flex items-center gap-x-1.5 py-0.5 px-2 rounded-full text-[10px] font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-800/20 dark:text-yellow-500">À
-                                                payer</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <!-- Payment Item 3 -->
-                                <li class="py-3 px-4 transition hover:bg-gray-50 dark:hover:bg-neutral-700/30">
-                                    <div class="flex justify-between items-center">
-                                        <div class="flex items-center gap-x-3">
-                                            <span
-                                                class="size-9 flex justify-center items-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-500 font-bold text-xs uppercase">
-                                                KM
+                                                class="py-1 px-2.5 inline-flex items-center gap-x-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full dark:bg-yellow-500/10 dark:text-yellow-500">
+                                                <i data-lucide="clock" class="size-3"></i> En attente
                                             </span>
-                                            <div>
-                                                <span
-                                                    class="block font-semibold text-gray-800 dark:text-neutral-200 text-sm">Kamal
-                                                    Mansouri</span>
-                                                <span class="block text-[10px] text-gray-500 dark:text-neutral-500">Appt
-                                                    24 • Al-Amal</span>
-                                            </div>
-                                        </div>
-                                        <div class="text-end">
-                                            <span
-                                                class="block font-bold text-gray-800 dark:text-neutral-200 text-sm">800
-                                                MAD</span>
-                                            <span
-                                                class="inline-flex items-center gap-x-1.5 py-0.5 px-2 rounded-full text-[10px] font-medium bg-red-100 text-red-800 dark:bg-red-800/20 dark:text-red-500">En
-                                                retard</span>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                            <button type="button"
+                                                class="text-blue-600 hover:text-blue-800 dark:text-blue-500">Détails</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Column (Incidents & Actions) -->
+                <!-- Right Column (Activity & Interventions) -->
                 <div class="space-y-4 sm:space-y-6">
-                    <!-- Quick Actions -->
+                    <!-- Quick Actions Buttons (Atom Button) -->
                     <div
-                        class="flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-                        <div class="p-4 md:p-5 space-y-3">
-                            <button type="button"
-                                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700">
-                                <i data-lucide="plus-circle" class="size-4"></i> Enregistrer Paiement
-                            </button>
-                            <button type="button"
-                                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700">
-                                <i data-lucide="wrench" class="size-4"></i> Signaler Intervention
-                            </button>
-                        </div>
+                        class="flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700 p-4 space-y-3 shadow-sm">
+                        <button type="button"
+                            class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none w-full">
+                            <i data-lucide="plus-circle" class="size-4"></i>
+                            Paiement
+                        </button>
+                        <button type="button"
+                            class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 w-full">
+                            <i data-lucide="wrench" class="size-4"></i>
+                            Intervention
+                        </button>
                     </div>
 
-                    <!-- Section: Interventions (Card Intervention style) -->
+                    <!-- Recent Activity (List Item Notification Molecule) -->
                     <div
-                        class="flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-                        <div
-                            class="p-4 md:p-5 border-b border-gray-200 dark:border-neutral-700 flex justify-between items-center">
-                            <h2 class="text-lg font-bold text-gray-800 dark:text-white">Interventions</h2>
-                            <i data-lucide="alert-circle" class="size-4 text-gray-400"></i>
+                        class="flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700 shadow-sm overflow-hidden">
+                        <div class="p-4 border-b border-gray-200 dark:border-neutral-700">
+                            <h2 class="text-lg font-bold text-gray-800 dark:text-white">Activité Récente</h2>
                         </div>
-                        <div class="p-4 md:p-5 space-y-4">
-                            <!-- Intervention 1 -->
-                            <div
-                                class="p-4 bg-gray-50 border border-gray-200 rounded-xl dark:bg-neutral-900 dark:border-neutral-700 relative overflow-hidden">
-                                <div class="absolute top-0 right-0 p-2">
-                                    <span
-                                        class="inline-flex items-center gap-x-1.5 py-0.5 px-2 rounded-full text-[10px] font-bold bg-red-100 text-red-800 dark:bg-red-800/20 dark:text-red-500 uppercase">Urgent</span>
+                        <ul class="flex flex-col divide-y divide-gray-200 dark:divide-neutral-700">
+                            <!-- List Item Notification Molecule 1 -->
+                            <li
+                                class="inline-flex flex-col gap-2 py-3 px-4 hover:bg-gray-50 transition dark:hover:bg-neutral-800">
+                                <div class="flex justify-between">
+                                    <div class="flex gap-x-3">
+                                        <span
+                                            class="size-8 flex justify-center items-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-500">
+                                            <i data-lucide="info" class="size-4"></i>
+                                        </span>
+                                        <div class="grow">
+                                            <span
+                                                class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">Facture
+                                                Générée</span>
+                                            <span class="block text-[11px] text-gray-500 dark:text-neutral-500">Les
+                                                charges du T2 ont été générées pour Al-Amal.</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] text-gray-400 dark:text-neutral-600">2h</span>
                                 </div>
-                                <h4 class="font-bold text-gray-800 dark:text-white text-sm">Panne Ascenseur</h4>
-                                <p class="text-[11px] text-gray-500 dark:text-neutral-500 mt-1">Résidence Al-Amal • Bloc
-                                    B</p>
-                                <div class="mt-3 flex items-center justify-between">
-                                    <span class="text-[10px] text-gray-400">#INT-202 • il y a 2h</span>
-                                    <button class="text-xs font-bold text-blue-600">Détails</button>
+                            </li>
+                            <!-- List Item Notification Molecule 2 -->
+                            <li
+                                class="inline-flex flex-col gap-2 py-3 px-4 hover:bg-gray-50 transition dark:hover:bg-neutral-800">
+                                <div class="flex justify-between">
+                                    <div class="flex gap-x-3">
+                                        <span
+                                            class="size-8 flex justify-center items-center rounded-full bg-yellow-100 text-yellow-600 dark:bg-yellow-900 dark:text-yellow-500">
+                                            <i data-lucide="wrench" class="size-4"></i>
+                                        </span>
+                                        <div class="grow">
+                                            <span
+                                                class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">Intervention
+                                                Signalée</span>
+                                            <span class="block text-[11px] text-gray-500 dark:text-neutral-500">Nouveau
+                                                signalement : Panne ascenseur Bloc B.</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] text-gray-400 dark:text-neutral-600">3j</span>
                                 </div>
-                            </div>
-                            <!-- Intervention 2 -->
-                            <div
-                                class="p-4 bg-gray-50 border border-gray-200 rounded-xl dark:bg-neutral-900 dark:border-neutral-700 relative overflow-hidden">
-                                <div class="absolute top-0 right-0 p-2">
-                                    <span
-                                        class="inline-flex items-center gap-x-1.5 py-0.5 px-2 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-800/20 dark:text-amber-500 uppercase">En
-                                        cours</span>
-                                </div>
-                                <h4 class="font-bold text-gray-800 dark:text-white text-sm">Éclairage Parking</h4>
-                                <p class="text-[11px] text-gray-500 dark:text-neutral-500 mt-1">Résidence Les Lilas • S1
-                                </p>
-                                <div class="mt-3 flex items-center justify-between">
-                                    <span class="text-[10px] text-gray-400">#INT-198 • Hier</span>
-                                    <button class="text-xs font-bold text-blue-600">Détails</button>
-                                </div>
-                            </div>
-                        </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+    </main>
+
+    <!-- Modal Dialog Molecule: Ajouter Immeuble -->
+    <div id="hs-add-building-modal"
+        class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none">
+        <div
+            class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
+            <div
+                class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70 w-full">
+                <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
+                    <h3 class="font-bold text-gray-800 dark:text-white">
+                        Ajouter un nouvel immeuble
+                    </h3>
+                    <button type="button"
+                        class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700"
+                        data-hs-overlay="#hs-add-building-modal">
+                        <span class="sr-only">Fermer</span>
+                        <i data-lucide="x" class="size-4"></i>
+                    </button>
+                </div>
+                <div class="p-4 overflow-y-auto">
+                    <!-- Form Group Molecule -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2 dark:text-white">Nom de la résidence</label>
+                            <input type="text"
+                                class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400"
+                                placeholder="ex: Résidence Al-Amal">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2 dark:text-white">Ville</label>
+                            <select
+                                class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                <option>Tanger</option>
+                                <option>Casablanca</option>
+                                <option>Rabat</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2 dark:text-white">Nombre d'appartements</label>
+                            <input type="number"
+                                class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400"
+                                placeholder="24">
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
+                    <button type="button"
+                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800"
+                        data-hs-overlay="#hs-add-building-modal">
+                        Annuler
+                    </button>
+                    <button type="button"
+                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                        Ajouter l'immeuble
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
     </main>
 
     <script>lucide.createIcons();</script>
