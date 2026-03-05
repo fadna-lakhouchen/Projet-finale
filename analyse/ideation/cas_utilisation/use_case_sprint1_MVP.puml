@@ -1,47 +1,90 @@
-@startuml
+@startuml ImmoSyndic_Sprint_1_MVP
 left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
 
+' Actors
 actor "Résident" as Resident
 actor "Syndic" as Syndic
 actor "Administrateur" as Admin
 
-rectangle "Système ImmoSyndic (Solution Web & Mobile) - Sprint 1 (MVP)" {
+' Hierarchy
+Resident <|-- Syndic
+Syndic <|-- Admin
 
-  ' Authentification commune
-  usecase "S'authentifier" as Auth
-  usecase "Gérer profil" as Profile
+rectangle "Système ImmoSyndic - Sprint 1 (MVP) - Web & Mobile" {
 
-  Resident -- Auth
-  Syndic -- Auth
-  Admin -- Auth
+  package "Authentification" {
+    usecase "S'authentifier" as Auth
+  }
+
+  package "Interface Web (Gestion)" {
+    package "Espace Résident" {
+      usecase "Consulter charges" as ViewCharges
+      usecase "Signaler problème" as ReportIssue
+    }
+    package "Espace Syndic" {
+      usecase "Créer compte" as Register
+      usecase "Gérer Résidents" as ManageResidents
+      usecase "Gérer immeubles" as ManageBuildings
+      usecase "Suivre paiements" as TrackPayments
+      usecase "Générer reçus" as GenReceipts
+      usecase "Suivre interventions" as TrackInterventions
+      usecase "Consulter historique" as ViewHistory
+    }
+    package "Espace Admin" {
+      usecase "Gérer comptes" as ManageUsers
+      usecase "Superviser immeubles" as Supervise
+      usecase "Valider données" as ValidateData
+      usecase "Gérer droits" as ManageRoles
+    }
+  }
+
+  package "Application Mobile (Viewer)" {
+    usecase "Consulter charges (Viewer)" as MobileViewCharges
+    usecase "Recevoir notifications" as MobileNotifs
+  }
+
+  ' Includes Logic (Linking functional use cases to Auth)
+  ViewCharges ..> Auth : <<include>>
+  ReportIssue ..> Auth : <<include>>
   
-  Resident -- Profile
-  Syndic -- Profile
-  Admin -- Profile
+  ManageResidents ..> Auth : <<include>>
+  ManageBuildings ..> Auth : <<include>>
+  TrackPayments ..> Auth : <<include>>
+  GenReceipts ..> Auth : <<include>>
+  TrackInterventions ..> Auth : <<include>>
+  ViewHistory ..> Auth : <<include>>
 
-  package "Espace Résident" {
-    Resident -- (Créer compte)
-    Resident -- (Consulter charges)
-    Resident -- (Signaler problème)
-    Resident -- (Recevoir notifications)
-  }
-
-  package "Espace Syndic" {
-    Syndic -- (Gérer immeubles)
-    Syndic -- (Suivre paiements)
-    Syndic -- (Générer reçus)
-    Syndic -- (Suivre interventions)
-    Syndic -- (Consulter historique)
-  }
-
-  package "Espace Administrateur" {
-    Admin -- (Gérer comptes)
-    Admin -- (Superviser immeubles)
-    Admin -- (Valider données)
-    Admin -- (Gérer droits)
-  }
-
+  ManageUsers ..> Auth : <<include>>
+  Supervise ..> Auth : <<include>>
+  ValidateData ..> Auth : <<include>>
+  ManageRoles ..> Auth : <<include>>
 }
+
+' Connections Web
+Resident -- Auth
+Resident -- ViewCharges
+Resident -- ReportIssue
+
+Syndic -- Auth
+Syndic -- Register
+Syndic -- ManageResidents
+Syndic -- ManageBuildings
+Syndic -- TrackPayments
+Syndic -- GenReceipts
+Syndic -- TrackInterventions
+Syndic -- ViewHistory
+
+Admin -- Auth
+Admin -- ManageUsers
+Admin -- Supervise
+Admin -- ValidateData
+Admin -- ManageRoles
+
+' Connections Mobile (Public/Private split usually happens at Auth)
+Resident -- MobileViewCharges
+Resident -- MobileNotifs
+Syndic -- MobileViewCharges
+
 @enduml

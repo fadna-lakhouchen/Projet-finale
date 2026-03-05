@@ -1,34 +1,88 @@
-@startuml
+@startuml ImmoSyndic_Sprint_2_Avance
 left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-' Define actors
+' Actors
 actor "Résident" as Resident
 actor "Syndic" as Syndic
 actor "Administrateur" as Admin
 
-rectangle "ImmoSyndic (Solution Web & Mobile) - Évolutions Sprint 2" {
+' Hierarchy
+Resident <|-- Syndic
+Syndic <|-- Admin
 
-  package "Extensions Résident" {
-    Resident -- (Consulter archives)
-    Resident -- (Exporter PDF)
-    Resident -- (Personnaliser alertes)
+rectangle "ImmoSyndic - Évolutions Sprint 2 (Avancé) - Web & Mobile" {
+
+  package "Authentification" {
+    usecase "S'authentifier" as Auth
   }
 
-  package "Extensions Syndic" {
-    Syndic -- (Gérer planning)
-    Syndic -- (Analyser statistiques)
-    Syndic -- (Gérer archivage)
-    Syndic -- (Envoyer annonces)
+  package "Interface Web (Extensions & Analyse)" {
+    
+    package "Extensions Résident" {
+      usecase "Consulter archives" as ViewArchives
+      usecase "Exporter PDF" as ExportPDF
+      usecase "Personnaliser alertes" as SetAlerts
+
+      ViewArchives ..> Auth : <<include>>
+      SetAlerts ..> Auth : <<include>>
+    }
+
+    package "Extensions Syndic" {
+      usecase "Gérer planning" as ManagePlanning
+      usecase "Analyser statistiques" as ViewStats
+      usecase "Gérer archivage" as ArchiveDocs
+      usecase "Envoyer annonces" as SendNews
+
+      ManagePlanning ..> Auth : <<include>>
+      ViewStats ..> Auth : <<include>>
+      ArchiveDocs ..> Auth : <<include>>
+      SendNews ..> Auth : <<include>>
+    }
+
+    package "Extensions Admin" {
+      usecase "Générer rapports globaux" as GlobalReports
+      usecase "Consulter audit" as AuditLogs
+      usecase "Surveiller activités" as MonitorActivity
+
+      GlobalReports ..> Auth : <<include>>
+      AuditLogs ..> Auth : <<include>>
+      MonitorActivity ..> Auth : <<include>>
+    }
   }
 
-  package "Extensions Administrateur" {
-    Admin -- (Générer rapports)
-    Admin -- (Consulter audit)
-    Admin -- (Surveiller activités)
-  }
+  package "Application Mobile (Viewer Avancé)" {
+    usecase "Consulter archives (Mobile)" as MobileViewArchives
+    usecase "Visualiser stats simplifiées" as MobileViewStats
+    usecase "Voir logs activités" as MobileViewLogs
 
+    MobileViewArchives ..> Auth : <<include>>
+    MobileViewStats ..> Auth : <<include>>
+    MobileViewLogs ..> Auth : <<include>>
+  }
 }
+
+' Connections Web
+Resident -- Auth
+Resident -- ViewArchives
+Resident -- ExportPDF
+Resident -- SetAlerts
+
+Syndic -- Auth
+Syndic -- ManagePlanning
+Syndic -- ViewStats
+Syndic -- ArchiveDocs
+Syndic -- SendNews
+
+Admin -- Auth
+Admin -- GlobalReports
+Admin -- AuditLogs
+Admin -- MonitorActivity
+
+' Connections Mobile (Consultation Only)
+Resident -- MobileViewArchives
+Syndic -- MobileViewStats
+Admin -- MobileViewLogs
 
 @enduml
