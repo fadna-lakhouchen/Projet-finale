@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ImmoSyndic - Mes Charges</title>
+    <!-- Tailwind & Preline -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -13,36 +14,76 @@
         tailwind.config = {
             darkMode: 'class',
             theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] }
-                }
+                extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { primary: { 50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81' } } }
             }
         }
     </script>
+    <style>
+        .hide-for-locataire {
+            display: none;
+        }
+
+        body[data-role="proprietaire"] .hide-for-locataire {
+            display: block;
+        }
+
+        body[data-role="proprietaire"] .hide-for-locataire-flex {
+            display: flex;
+        }
+    </style>
 </head>
 
-<body class="bg-gray-50 dark:bg-neutral-900">
+<body class="bg-gray-50 dark:bg-neutral-900" data-role="locataire">
+
     <!-- ========== HEADER ========== -->
     <header
-        class="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 sm:py-4 lg:ps-64 dark:bg-neutral-800 dark:border-neutral-700">
+        class="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b border-gray-200 text-sm py-2.5 sm:py-4 lg:ps-64 dark:bg-neutral-800 dark:border-neutral-700 shadow-sm">
         <nav class="flex basis-full items-center w-full mx-auto px-4 sm:px-6" aria-label="Global">
             <div class="me-5 lg:me-0 lg:hidden">
-                <a class="flex-none text-xl font-semibold dark:text-white" href="../../index.html"
-                    aria-label="Brand">ImmoSyndic</a>
+                <a class="flex-none text-xl font-semibold dark:text-white" href="index.html">ImmoSyndic</a>
             </div>
-
             <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3">
-                <div class="hidden sm:block">
-                    <h2 class="text-sm font-semibold text-gray-800 dark:text-neutral-200">Mes Charges & Paiements</h2>
+                <div class="hidden sm:flex items-center gap-x-3">
+                    <h1 class="text-lg font-semibold text-gray-800 dark:text-white">Bonjour Hassan</h1>
+                    <span id="role-badge"
+                        class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200">Locataire</span>
+                    <div class="ml-4 flex items-center bg-gray-100 rounded-lg p-1 dark:bg-neutral-700">
+                        <button onclick="switchRole('locataire')" id="btn-locataire"
+                            class="px-2 py-1 text-xs font-medium bg-white shadow-sm rounded-md text-gray-700 dark:bg-neutral-800 dark:text-white transition-colors">Vue
+                            Locataire</button>
+                        <button onclick="switchRole('proprietaire')" id="btn-proprietaire"
+                            class="px-2 py-1 text-xs font-medium rounded-md text-gray-500 hover:text-gray-700 dark:text-neutral-400 dark:hover:text-white transition-colors">Vue
+                            Propriétaire</button>
+                    </div>
                 </div>
-
+                <!-- Controls -->
                 <div class="flex flex-row items-center justify-end gap-2">
-                    <button type="button"
+                    <a href="notifications.html"
                         class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-neutral-700">
                         <i data-lucide="bell" class="size-5"></i>
-                    </button>
-                    <img class="inline-block size-[38px] rounded-full ring-2 ring-white dark:ring-neutral-800"
-                        src="https://ui-avatars.com/api/?name=Ahmed+Benali&background=0D8ABC&color=fff" alt="Avatar">
+                        <span
+                            class="absolute top-0 end-0 inline-flex items-center size-2 rounded-full bg-red-600 border-2 border-white dark:border-neutral-800"></span>
+                    </a>
+                    <div class="hs-dropdown [--placement:bottom-right] relative inline-flex">
+                        <button id="hs-dropdown-profile" type="button"
+                            class="w-[38px] h-[38px] inline-flex justify-center items-center rounded-full border border-transparent hover:bg-gray-100 dark:hover:bg-neutral-700">
+                            <img class="inline-block size-[38px] rounded-full ring-2 ring-white"
+                                src="https://ui-avatars.com/api/?name=Hassan+Afaiz&background=4f46e5&color=fff"
+                                alt="Avatar">
+                        </button>
+                        <div class="hs-dropdown-menu transition-[opacity,margin] duration opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg p-2 mt-2 dark:bg-neutral-800 dark:border dark:border-neutral-700"
+                            aria-labelledby="hs-dropdown-profile">
+                            <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg mb-2 dark:bg-neutral-700">
+                                <p class="text-sm text-gray-500 dark:text-neutral-400">Connecté en tant que</p>
+                                <p class="text-sm font-medium text-gray-800 dark:text-white">hassan.afaiz@email.com</p>
+                            </div>
+                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700"
+                                href="parametres.html"><i data-lucide="settings" class="size-4"></i> Paramètres</a>
+                            <hr class="my-2 border-gray-200 dark:border-neutral-700">
+                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/40"
+                                href="login.html"><i data-lucide="log-out" class="size-4"></i> Déconnexion</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -50,175 +91,140 @@
 
     <!-- ========== SIDEBAR ========== -->
     <div
-        class="sticky top-0 start-0 lg:fixed lg:bottom-0 lg:z-[60] size-full w-64 bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 dark:bg-neutral-800 dark:border-neutral-700 hidden">
+        class="sticky top-0 start-0 lg:fixed lg:bottom-0 lg:z-[60] size-full w-64 bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block hidden dark:bg-neutral-800 dark:border-neutral-700">
         <div class="px-6 flex items-center gap-x-3 mb-8">
-            <div class="size-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+            <div class="size-8 bg-primary-600 rounded-lg flex items-center justify-center text-white shadow-md">
                 <i data-lucide="building-2" class="size-5"></i>
             </div>
-            <a class="flex-none text-xl font-bold dark:text-white" href="../../index.html">ImmoSyndic</a>
+            <a class="flex-none text-xl font-bold dark:text-white" href="index.html">ImmoSyndic</a>
         </div>
 
         <nav class="hs-accordion-group p-6 w-full flex flex-col flex-wrap">
-            <ul class="space-y-1.5">
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
-                        href="index.html"><i data-lucide="home" class="size-4"></i> Tableau de bord</a></li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-700 rounded-lg dark:bg-neutral-700 dark:text-white"
-                        href="charges.html"><i data-lucide="credit-card" class="size-4"></i> Mes Charges <span
-                            class="ms-auto inline-flex items-center py-0.5 px-1.5 rounded-full text-[10px] font-medium bg-red-500 text-white">1</span></a>
+            <ul class="space-y-1.5" id="nav-menu">
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                        href="index.html"><i data-lucide="layout-dashboard" class="size-4"></i> Vue d'ensemble</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-primary-50 text-sm text-primary-700 font-medium rounded-lg dark:bg-primary-900/30 dark:text-primary-400"
+                        href="charges.html"><i data-lucide="file-invoice" class="size-4"></i> Mes Charges</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                        href="paiements.html"><i data-lucide="credit-card" class="size-4"></i> Paiements</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                        href="incidents.html"><i data-lucide="alert-triangle" class="size-4"></i> Signaler un
+                        problème</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                        href="notifications.html"><i data-lucide="bell" class="size-4"></i> Notifications <span
+                            class="ms-auto inline-flex items-center py-0.5 px-2 rounded-full text-xs font-medium bg-red-100 text-red-600">1</span></a>
                 </li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
-                        href="incidents.html"><i data-lucide="alert-triangle" class="size-4"></i> Incidents</a></li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
-                        href="documents.html"><i data-lucide="files" class="size-4"></i> Documents</a></li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
-                        href="residence.html"><i data-lucide="info" class="size-4"></i> Ma Résidence</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                        href="archives.html"><i data-lucide="folder-archive" class="size-4"></i> Archives</a></li>
+
+                <li class="hide-for-locataire mt-4 pt-4 border-t border-gray-200 dark:border-neutral-700"><span
+                        class="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Espace
+                        Propriétaire</span></li>
+                <li class="hide-for-locataire"><a
+                        class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                        href="documents.html"><i data-lucide="scale" class="size-4"></i> Documents juridiques</a></li>
+                <li class="hide-for-locataire"><a
+                        class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                        href="ag.html"><i data-lucide="users" class="size-4"></i> Assemblée Générale</a></li>
+
+                <li class="mt-4 pt-4 border-t border-gray-200 dark:border-neutral-700">
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                        href="parametres.html"><i data-lucide="settings" class="size-4"></i> Paramètres</a>
+                </li>
             </ul>
         </nav>
     </div>
 
     <!-- ========== MAIN CONTENT ========== -->
-    <div class="w-full pt-10 px-4 sm:px-6 md:px-8 lg:ps-72">
-        <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-                <h1 class="text-2xl font-bold text-gray-800 sm:text-3xl dark:text-white">Gestion des Charges</h1>
-                <p class="text-gray-600 dark:text-neutral-400">Consultez et réglez vos cotisations de copropriété.</p>
+    <main class="w-full pt-6 px-4 sm:px-6 md:px-8 lg:ps-72 pb-12">
+        <section class="space-y-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Mes Charges</h2>
+                <div class="relative">
+                    <select
+                        class="py-2 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm bg-white dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400">
+                        <option selected>Année 2026</option>
+                        <option>Année 2025</option>
+                    </select>
+                </div>
             </div>
-            <button
-                class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700">
-                <i data-lucide="download" class="size-4"></i> Relevé Annuel
-            </button>
-        </div>
 
-        <!-- Summary Cards -->
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
             <div
-                class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700 p-4 md:p-5">
-                <div class="flex items-center gap-x-2">
-                    <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">Solde Actuel</p>
+                class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-neutral-800 dark:border-neutral-700">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                        <thead class="bg-gray-50 dark:bg-neutral-700">
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">
+                                    Période</th>
+                                <th
+                                    class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">
+                                    Montant</th>
+                                <th
+                                    class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">
+                                    Statut</th>
+                                <th
+                                    class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">
+                                    Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
+                            <tr>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-neutral-200">T1 (Jan -
+                                    Mar 2026)</td>
+                                <td class="px-6 py-4 text-sm font-bold text-gray-800 dark:text-neutral-200">1,250 MAD
+                                </td>
+                                <td class="px-6 py-4"><span
+                                        class="inline-flex py-1 px-2 rounded-md text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-400">En
+                                        attente</span></td>
+                                <td class="px-6 py-4 text-end">
+                                    <button
+                                        class="py-1.5 px-3 bg-primary-600 text-white rounded-lg text-sm font-semibold hover:bg-primary-700 transition-colors">Payer</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-neutral-200">T4 (Oct -
+                                    Déc 2025)</td>
+                                <td class="px-6 py-4 text-sm font-bold text-gray-800 dark:text-neutral-200">1,250 MAD
+                                </td>
+                                <td class="px-6 py-4"><span
+                                        class="inline-flex py-1 px-2 rounded-md text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-400">Payé</span>
+                                </td>
+                                <td class="px-6 py-4 text-end">
+                                    <button
+                                        class="py-1.5 px-3 text-gray-700 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-800 transition-colors"><i
+                                            data-lucide="download" class="size-4 inline mr-1"></i> Reçu PDF</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="mt-1 flex items-center gap-x-2">
-                    <h3 class="text-2xl font-bold text-red-600 dark:text-red-500">1,250 MAD</h3>
-                </div>
-                <p class="mt-1 text-xs text-gray-500">1 facture impayée</p>
             </div>
-            <div
-                class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700 p-4 md:p-5">
-                <div class="flex items-center gap-x-2">
-                    <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">Total Payé (2026)</p>
-                </div>
-                <div class="mt-1 flex items-center gap-x-2">
-                    <h3 class="text-2xl font-bold text-gray-800 dark:text-neutral-200">2,400 MAD</h3>
-                </div>
-                <p class="mt-1 text-xs text-teal-600">À jour au 01 Mars</p>
-            </div>
-            <div class="flex flex-col bg-blue-600 rounded-xl p-4 md:p-5 text-white shadow-lg">
-                <div class="flex items-center gap-x-2">
-                    <p class="text-xs font-semibold uppercase tracking-wide text-blue-100">Prochaine Échéance</p>
-                </div>
-                <div class="mt-1 flex items-center gap-x-2">
-                    <h3 class="text-2xl font-bold">01 Avr 2026</h3>
-                </div>
-                <p class="mt-1 text-xs text-blue-100">400 MAD (Charges T2)</p>
-            </div>
-        </div>
+        </section>
+    </main>
+    <!-- ========== END MAIN CONTENT ========== -->
 
-        <!-- Tables -->
-        <div class="grid lg:grid-cols-3 gap-8 mb-8">
-            <div class="lg:col-span-2 space-y-6">
-                <!-- Transaction History -->
-                <div
-                    class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-                    <div class="p-4 md:p-5 border-b border-gray-200 dark:border-neutral-700">
-                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Historique des Paiements</h3>
-                    </div>
-                    <div class="p-4 md:p-5 overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
-                            <thead>
-                                <tr>
-                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">
-                                        Désignation</th>
-                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Période
-                                    </th>
-                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Montant
-                                    </th>
-                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Statut
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
-                                <tr>
-                                    <td class="px-3 py-4 text-sm font-medium text-gray-800 dark:text-neutral-200">
-                                        Charges Copropriété</td>
-                                    <td class="px-3 py-4 text-sm text-gray-500">Janvier 2026</td>
-                                    <td class="px-3 py-4 text-sm text-gray-800 dark:text-neutral-200 font-bold">400 MAD
-                                    </td>
-                                    <td class="px-3 py-4 text-sm"><span
-                                            class="py-1 px-2 rounded-full text-xs font-medium bg-teal-100 text-teal-800">Payé</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-3 py-4 text-sm font-medium text-gray-800 dark:text-neutral-200">
-                                        Charges Espace Vert</td>
-                                    <td class="px-3 py-4 text-sm text-gray-500">Janvier 2026</td>
-                                    <td class="px-3 py-4 text-sm text-gray-800 dark:text-neutral-200 font-bold">50 MAD
-                                    </td>
-                                    <td class="px-3 py-4 text-sm"><span
-                                            class="py-1 px-2 rounded-full text-xs font-medium bg-teal-100 text-teal-800">Payé</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+    <script>
+        lucide.createIcons();
+        function switchRole(role) {
+            document.body.setAttribute('data-role', role);
+            const roleBadge = document.getElementById('role-badge');
+            if (roleBadge) roleBadge.textContent = role === 'locataire' ? 'Locataire' : 'Propriétaire';
 
-            <!-- Pending Actions -->
-            <div class="space-y-6">
-                <div
-                    class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
-                    <div class="p-4 md:p-5 border-b border-gray-200 dark:border-neutral-700">
-                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Facture Actuelle</h3>
-                    </div>
-                    <div class="p-4 md:p-5">
-                        <div class="space-y-4">
-                            <div
-                                class="flex justify-between items-center bg-gray-50 p-3 rounded-lg dark:bg-neutral-900">
-                                <div>
-                                    <p class="text-sm font-bold text-gray-800 dark:text-white">Charges Trimestre 1</p>
-                                    <p class="text-[11px] text-gray-500">Jan - Mar 2026</p>
-                                </div>
-                                <span class="text-sm font-bold text-red-600">1,200 MAD</span>
-                            </div>
-                            <div
-                                class="flex justify-between items-center bg-gray-50 p-3 rounded-lg dark:bg-neutral-900">
-                                <div>
-                                    <p class="text-sm font-bold text-gray-800 dark:text-white">Fonds de réserve</p>
-                                    <p class="text-[11px] text-gray-500">Urgence Ascenseur</p>
-                                </div>
-                                <span class="text-sm font-bold text-red-600">50 MAD</span>
-                            </div>
-                            <button
-                                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700">
-                                <i data-lucide="credit-card" class="size-4"></i> Payer via CMI
-                            </button>
-                            <p class="text-center text-[10px] text-gray-400">Paiement sécurisé par 3D Secure</p>
-                        </div>
-                    </div>
-                </div>
+            const btnLocataire = document.getElementById('btn-locataire');
+            if (btnLocataire) btnLocataire.className = role === 'locataire' ? 'px-2 py-1 text-xs font-medium bg-white shadow-sm rounded-md text-gray-700 dark:bg-neutral-800 dark:text-white transition-colors' : 'px-2 py-1 text-xs font-medium rounded-md text-gray-500 hover:text-gray-700 dark:text-neutral-400 dark:hover:text-white transition-colors';
 
-                <!-- Quick Info -->
-                <div class="p-4 bg-teal-50 border border-teal-200 rounded-xl dark:bg-teal-900/10 dark:border-teal-800">
-                    <div class="flex gap-x-3">
-                        <i data-lucide="info" class="size-5 text-teal-600"></i>
-                        <p class="text-xs text-teal-700 dark:text-teal-400">Le saviez-vous ? Le paiement par prélèvement
-                            automatique vous évite les frais de retard de 5%.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            const btnProprietaire = document.getElementById('btn-proprietaire');
+            if (btnProprietaire) btnProprietaire.className = role === 'proprietaire' ? 'px-2 py-1 text-xs font-medium bg-white shadow-sm rounded-md text-gray-700 dark:bg-neutral-800 dark:text-white transition-colors' : 'px-2 py-1 text-xs font-medium rounded-md text-gray-500 hover:text-gray-700 dark:text-neutral-400 dark:hover:text-white transition-colors';
 
-    <script>lucide.createIcons();</script>
+            if (role === 'locataire') {
+                if (window.location.pathname.includes('documents.html') || window.location.pathname.includes('ag.html')) {
+                    window.location.href = 'index.html';
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>

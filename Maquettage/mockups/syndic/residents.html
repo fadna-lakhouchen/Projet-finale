@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImmoSyndic - Gestion Résidents</title>
+    <!-- Tailwind & Preline -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { primary: { 50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81' } } }
+            }
+        }
+    </script>
+    <style>
+        /* Fallback for Preline plugin variants when using Tailwind CDN */
+        .hs-overlay.open {
+            pointer-events: auto !important;
+        }
+
+        .hs-overlay.open>div {
+            opacity: 1 !important;
+            margin-top: 1.75rem !important;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-neutral-900">
+
+    <!-- ========== HEADER ========== -->
+    <header
+        class="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b border-gray-200 text-sm py-2.5 sm:py-4 lg:ps-64 dark:bg-neutral-800 dark:border-neutral-700 shadow-sm">
+        <nav class="flex basis-full items-center w-full mx-auto px-4 sm:px-6" aria-label="Global">
+            <div class="me-5 lg:me-0 lg:hidden">
+                <a class="flex-none text-xl font-semibold dark:text-white" href="index.html">ImmoSyndic</a>
+            </div>
+            <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3">
+                <div class="hidden sm:flex items-center gap-x-3">
+                    <h1 class="text-lg font-semibold text-gray-800 dark:text-white">Bonjour, Youssef El Khadir</h1>
+                    <span
+                        class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-800/30 dark:text-primary-500">
+                        <span class="size-1.5 inline-block bg-primary-800 rounded-full dark:bg-primary-500"></span>
+                        Syndic
+                    </span>
+                </div>
+                <!-- Controls -->
+                <div class="flex flex-row items-center justify-end gap-2">
+                    <a href="incidents.html"
+                        class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-neutral-700">
+                        <i data-lucide="bell" class="size-5"></i>
+                        <span
+                            class="absolute top-0 end-0 inline-flex items-center size-2 rounded-full bg-red-600 border-2 border-white dark:border-neutral-800"></span>
+                    </a>
+                    <div class="hs-dropdown [--placement:bottom-right] relative inline-flex">
+                        <button id="hs-dropdown-profile" type="button"
+                            class="w-[38px] h-[38px] inline-flex justify-center items-center rounded-full border border-transparent hover:bg-gray-100 dark:hover:bg-neutral-700">
+                            <img class="inline-block size-[38px] rounded-full ring-2 ring-white"
+                                src="https://ui-avatars.com/api/?name=Youssef+El+Khadir&background=4f46e5&color=fff"
+                                alt="Youssef El Khadir Avatar">
+                        </button>
+                        <div class="hs-dropdown-menu transition-[opacity,margin] duration opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg p-2 mt-2 dark:bg-neutral-800 dark:border dark:border-neutral-700"
+                            aria-labelledby="hs-dropdown-profile">
+                            <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg mb-2 dark:bg-neutral-700">
+                                <p class="text-sm text-gray-500 dark:text-neutral-400">Connecté en tant que</p>
+                                <p class="text-sm font-medium text-gray-800 dark:text-white">youssef.khadir@email.com
+                                </p>
+                            </div>
+                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700"
+                                href="parametres.html"><i data-lucide="settings" class="size-4"></i> Paramètres</a>
+                            <hr class="my-2 border-gray-200 dark:border-neutral-700">
+                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/40"
+                                href="login.html"><i data-lucide="log-out" class="size-4"></i> Déconnexion</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========== SIDEBAR ========== -->
+    <div
+        class="sticky top-0 start-0 lg:fixed lg:bottom-0 lg:z-[60] size-full w-64 bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block hidden dark:bg-neutral-800 dark:border-neutral-700">
+        <div class="px-6 flex items-center gap-x-3 mb-8">
+            <div class="size-8 bg-primary-600 rounded-lg flex items-center justify-center text-white shadow-md">
+                <i data-lucide="building-2" class="size-5"></i>
+            </div>
+            <a class="flex-none text-xl font-bold dark:text-white" href="index.html">ImmoSyndic</a>
+        </div>
+
+        <nav class="hs-accordion-group p-6 w-full flex flex-col flex-wrap">
+            <ul class="space-y-1.5" id="nav-menu">
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                        href="index.html"><i data-lucide="layout-dashboard" class="size-4"></i> Dashboard</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                        href="immeubles.html"><i data-lucide="building-2" class="size-4"></i> Mes Immeubles</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-primary-50 text-sm text-primary-700 font-medium rounded-lg dark:bg-primary-900/30 dark:text-primary-400"
+                        href="residents.html"><i data-lucide="users" class="size-4"></i> Gestion Résidents</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                        href="paiements.html"><i data-lucide="wallet" class="size-4"></i> Paiements Résidents</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                        href="incidents.html"><i data-lucide="alert-triangle" class="size-4"></i> Problèmes / Interv.
+                        <span
+                            class="ms-auto inline-flex items-center py-0.5 px-2 rounded-full text-xs font-medium bg-red-100 text-red-600">2</span></a>
+                </li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                        href="documents.html"><i data-lucide="folder-open" class="size-4"></i> Documents / Archives</a>
+                </li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                        href="rapports.html"><i data-lucide="bar-chart-3" class="size-4"></i> Rapports financiers</a>
+                </li>
+
+                <li class="mt-4 pt-4 border-t border-gray-200 dark:border-neutral-700">
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                        href="parametres.html"><i data-lucide="settings" class="size-4"></i> Paramètres</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="w-full pt-6 px-4 sm:px-6 md:px-8 lg:ps-72 pb-12">
+        <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Gestion des Résidents</h2>
+                <p class="text-sm text-gray-600 dark:text-neutral-400">Liste des copropriétaires et locataires associés
+                    à vos immeubles.</p>
+            </div>
+            <button type="button" data-hs-overlay="#hs-modal-add-resident"
+                class="py-2.5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-600 text-white hover:bg-primary-700 disabled:opacity-50 disabled:pointer-events-none shadow-sm">
+                <i data-lucide="user-plus" class="size-4"></i>
+                Ajouter un Résident
+            </button>
+        </div>
+
+        <!-- Table Section -->
+        <div class="flex flex-col">
+            <div class="-m-1.5 overflow-x-auto">
+                <div class="p-1.5 min-w-full inline-block align-middle">
+                    <div
+                        class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-neutral-800 dark:border-neutral-700">
+
+                        <!-- Header / Filters -->
+                        <div
+                            class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
+                            <!-- Input -->
+                            <div class="sm:col-span-1 max-w-sm w-full relative">
+                                <label for="search" class="sr-only">Rechercher</label>
+                                <input type="text" id="search" name="search"
+                                    class="py-2 px-3 ps-11 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500"
+                                    placeholder="Rechercher un nom...">
+                                <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
+                                    <i data-lucide="search" class="size-4 text-gray-400 dark:text-neutral-500"></i>
+                                </div>
+                            </div>
+
+                            <!-- Filter Immeuble Dropdown -->
+                            <div class="sm:col-span-2 md:grow flex justify-end gap-2">
+                                <select
+                                    class="py-2 px-3 pe-9 block w-full sm:w-auto border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                    <option selected>Tous les immeubles</option>
+                                    <option>Résidence Al Amal</option>
+                                    <option>Tour Hassan</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Table -->
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                            <thead class="bg-gray-50 dark:bg-neutral-800">
+                                <tr>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                                        Nom complet</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                                        Rôle</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                                        Immeuble & Appt</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                                        Statut Charges</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                                        Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
+                                <!-- Row 1 -->
+                                <tr
+                                    class="bg-white hover:bg-gray-50 dark:bg-neutral-900 dark:hover:bg-neutral-800 transition-colors">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-x-3">
+                                            <img class="inline-block size-[38px] rounded-full ring-2 ring-white dark:ring-neutral-800"
+                                                src="https://ui-avatars.com/api/?name=Hassan+Afaiz&background=f3f4f6&color=374151"
+                                                alt="Avatar">
+                                            <div class="grow">
+                                                <span
+                                                    class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">Hassan
+                                                    Afaiz</span>
+                                                <span
+                                                    class="block text-sm text-gray-500 dark:text-neutral-400">hassan.afaiz@email.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center gap-x-1.5 py-1 px-3 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">Propriétaire</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="block text-sm text-gray-800 dark:text-neutral-200">Résidence Les
+                                            Lilas</span>
+                                        <span class="block text-sm text-gray-500 dark:text-neutral-400">Appt 14</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                        <span
+                                            class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-500">À
+                                            jour</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                        <button type="button"
+                                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800">
+                                            Contacter
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Row 2 -->
+                                <tr
+                                    class="bg-white hover:bg-gray-50 dark:bg-neutral-900 dark:hover:bg-neutral-800 transition-colors">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-x-3">
+                                            <img class="inline-block size-[38px] rounded-full ring-2 ring-white dark:ring-neutral-800"
+                                                src="https://ui-avatars.com/api/?name=Hassnae+Charifi&background=f3f4f6&color=374151"
+                                                alt="Avatar">
+                                            <div class="grow">
+                                                <span
+                                                    class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">Hassnae
+                                                    Charifi</span>
+                                                <span
+                                                    class="block text-sm text-gray-500 dark:text-neutral-400">hassnae@email.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center gap-x-1.5 py-1 px-3 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-white/10 dark:text-white">Locataire</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="block text-sm text-gray-800 dark:text-neutral-200">Tour
+                                            Hassan</span>
+                                        <span class="block text-sm text-gray-500 dark:text-neutral-400">Appt 42</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                        <span
+                                            class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-500">2
+                                            mois de retard</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                        <button type="button" data-hs-overlay="#hs-modal-add-resident"
+                                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800">
+                                            Contacter
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- ========== END MAIN CONTENT ========== -->
+
+    <!-- ========== MODAL AJOUTER RESIDENT ========== -->
+    <div id="hs-modal-add-resident"
+        class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none"
+        role="dialog" tabindex="-1" aria-labelledby="hs-modal-add-resident-label">
+        <div
+            class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
+
+            <div
+                class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
+                    <h3 id="hs-modal-add-resident-label" class="font-bold text-gray-800 dark:text-white">
+                        Ajouter / Modifier un Résident
+                    </h3>
+                    <button type="button"
+                        class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600"
+                        aria-label="Close" data-hs-overlay="#hs-modal-add-resident">
+                        <span class="sr-only">Close</span>
+                        <i data-lucide="x" class="size-4"></i>
+                    </button>
+                </div>
+                <div class="p-4 overflow-y-auto">
+                    <form>
+                        <div class="grid sm:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label for="prenomResident"
+                                    class="block text-sm font-medium mb-2 dark:text-white">Prénom</label>
+                                <input type="text" id="prenomResident"
+                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                            </div>
+                            <div>
+                                <label for="nomResident"
+                                    class="block text-sm font-medium mb-2 dark:text-white">Nom</label>
+                                <input type="text" id="nomResident"
+                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="emailResident"
+                                class="block text-sm font-medium mb-2 dark:text-white">Email</label>
+                            <input type="email" id="emailResident"
+                                class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                        </div>
+                        <div class="grid sm:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label for="roleResident"
+                                    class="block text-sm font-medium mb-2 dark:text-white">Rôle</label>
+                                <select id="roleResident"
+                                    class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                    <option selected>Sélectionner le rôle</option>
+                                    <option value="proprietaire">Propriétaire</option>
+                                    <option value="locataire">Locataire</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="immeubleResident"
+                                    class="block text-sm font-medium mb-2 dark:text-white">Immeuble</label>
+                                <select id="immeubleResident"
+                                    class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                    <option selected>Sélectionner</option>
+                                    <option value="lilas">Résidence Al Amal</option>
+                                    <option value="hassan">Tour Hassan</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
+                    <button type="button"
+                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+                        data-hs-overlay="#hs-modal-add-resident">
+                        Annuler
+                    </button>
+                    <button type="button"
+                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-primary-600 text-white hover:bg-primary-700 focus:outline-none focus:bg-primary-700 disabled:opacity-50 disabled:pointer-events-none"
+                        data-hs-overlay="#hs-modal-add-resident">
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- ========== END MODAL ========== -->
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ImmoSyndic - Signaler un incident</title>
+    <title>ImmoSyndic - Archives</title>
     <!-- Tailwind & Preline -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
@@ -34,6 +34,7 @@
 </head>
 
 <body class="bg-gray-50 dark:bg-neutral-900" data-role="locataire">
+
     <!-- ========== HEADER ========== -->
     <header
         class="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b border-gray-200 text-sm py-2.5 sm:py-4 lg:ps-64 dark:bg-neutral-800 dark:border-neutral-700 shadow-sm">
@@ -87,6 +88,7 @@
             </div>
         </nav>
     </header>
+
     <!-- ========== SIDEBAR ========== -->
     <div
         class="sticky top-0 start-0 lg:fixed lg:bottom-0 lg:z-[60] size-full w-64 bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block hidden dark:bg-neutral-800 dark:border-neutral-700">
@@ -96,6 +98,7 @@
             </div>
             <a class="flex-none text-xl font-bold dark:text-white" href="index.html">ImmoSyndic</a>
         </div>
+
         <nav class="hs-accordion-group p-6 w-full flex flex-col flex-wrap">
             <ul class="space-y-1.5" id="nav-menu">
                 <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
@@ -104,14 +107,14 @@
                         href="charges.html"><i data-lucide="file-invoice" class="size-4"></i> Mes Charges</a></li>
                 <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
                         href="paiements.html"><i data-lucide="credit-card" class="size-4"></i> Paiements</a></li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-primary-50 text-sm text-primary-700 font-medium rounded-lg dark:bg-primary-900/30 dark:text-primary-400"
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
                         href="incidents.html"><i data-lucide="alert-triangle" class="size-4"></i> Signaler un
                         problème</a></li>
                 <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
                         href="notifications.html"><i data-lucide="bell" class="size-4"></i> Notifications <span
                             class="ms-auto inline-flex items-center py-0.5 px-2 rounded-full text-xs font-medium bg-red-100 text-red-600">1</span></a>
                 </li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-primary-50 text-sm text-primary-700 font-medium rounded-lg dark:bg-primary-900/30 dark:text-primary-400"
                         href="archives.html"><i data-lucide="folder-archive" class="size-4"></i> Archives</a></li>
 
                 <li class="hide-for-locataire mt-4 pt-4 border-t border-gray-200 dark:border-neutral-700"><span
@@ -123,6 +126,7 @@
                 <li class="hide-for-locataire"><a
                         class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
                         href="ag.html"><i data-lucide="users" class="size-4"></i> Assemblée Générale</a></li>
+
                 <li class="mt-4 pt-4 border-t border-gray-200 dark:border-neutral-700">
                     <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
                         href="parametres.html"><i data-lucide="settings" class="size-4"></i> Paramètres</a>
@@ -130,53 +134,45 @@
             </ul>
         </nav>
     </div>
+
     <!-- ========== MAIN CONTENT ========== -->
     <main class="w-full pt-6 px-4 sm:px-6 md:px-8 lg:ps-72 pb-12">
         <section class="space-y-6">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Nouveau Signalement</h2>
-            <div id="success-alert"
-                class="hidden bg-green-50 border border-green-200 text-sm text-green-800 rounded-lg p-4 mb-6 dark:bg-green-900/30 dark:border-green-800 dark:text-green-400">
-                <div class="flex"><i data-lucide="check-circle" class="size-4 mt-0.5"></i>
-                    <div class="ms-3">
-                        <h3 class="font-semibold">Signalement envoyé avec succès!</h3>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Mes Documents Archivés</h2>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div
+                    class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 hover:shadow-md transition-shadow cursor-pointer dark:bg-neutral-800 dark:border-neutral-700">
+                    <div class="flex items-start gap-x-4">
+                        <div class="p-3 bg-gray-100 rounded-lg text-gray-500 dark:bg-neutral-700 dark:text-neutral-400">
+                            <i data-lucide="file-text" class="size-6"></i></div>
+                        <div class="grow pt-1 overflow-hidden">
+                            <h3 class="text-sm font-semibold text-gray-800 truncate dark:text-white">Reçu
+                                Paiement_T4_2025.pdf</h3>
+                            <p class="text-xs text-gray-500 mt-1 dark:text-neutral-500">Généré le 05 Jan 2026 • 150 KB
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div
-                class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 max-w-2xl dark:bg-neutral-800 dark:border-neutral-700">
-                <form id="incident-form"
-                    onsubmit="event.preventDefault(); document.getElementById('success-alert').classList.remove('hidden'); this.reset();">
-                    <div class="grid gap-y-5">
-                        <div>
-                            <label class="block text-sm font-medium mb-2 dark:text-white">Type de problème <span
-                                    class="text-red-500">*</span></label>
-                            <select required
-                                class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm bg-white border dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 focus:border-primary-500 focus:ring-primary-500">
-                                <option value="" selected disabled>Sélectionner une catégorie</option>
-                                <option>Plomberie / Fuite</option>
-                                <option>Électricité / Éclairage</option>
-                                <option>Ascenseur en panne</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2 dark:text-white">Description détaillée <span
-                                    class="text-red-500">*</span></label>
-                            <textarea rows="4" required
-                                class="py-3 px-4 block w-full border-gray-200 rounded-lg border text-sm dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 focus:border-primary-500 focus:ring-primary-500"
-                                placeholder="Décrivez le problème..."></textarea>
-                        </div>
-                        <div class="pt-2">
-                            <button type="submit"
-                                class="py-3 px-6 bg-primary-600 text-white rounded-lg text-sm font-semibold hover:bg-primary-700 flex items-center gap-2 transition-colors"><i
-                                    data-lucide="send" class="size-4"></i> Envoyer</button>
+                <div
+                    class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 hover:shadow-md transition-shadow cursor-pointer dark:bg-neutral-800 dark:border-neutral-700">
+                    <div class="flex items-start gap-x-4">
+                        <div class="p-3 bg-gray-100 rounded-lg text-gray-500 dark:bg-neutral-700 dark:text-neutral-400">
+                            <i data-lucide="file-text" class="size-6"></i></div>
+                        <div class="grow pt-1 overflow-hidden">
+                            <h3 class="text-sm font-semibold text-gray-800 truncate dark:text-white">Facture_T4_2025.pdf
+                            </h3>
+                            <p class="text-xs text-gray-500 mt-1 dark:text-neutral-500">Généré le 01 Oct 2025 • 200 KB
+                            </p>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </section>
     </main>
     <!-- ========== END MAIN CONTENT ========== -->
+
     <script>
         lucide.createIcons();
         function switchRole(role) {
