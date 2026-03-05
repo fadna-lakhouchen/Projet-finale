@@ -1,0 +1,132 @@
+classDiagram
+    %% Spatie Laravel Permission Entities (Logical Representation)
+    class Role {
+        +string name
+        +string guard_name
+    }
+    class Permission {
+        +string name
+        +string guard_name
+    }
+
+    %% Core Domain Entities
+    class User {
+        +int id
+        +string nom
+        +string email
+        +string password
+        +string telephone
+        +datetime email_verified_at
+    }
+
+    class Immeuble {
+        +int id
+        +string nom
+        +string adresse
+        +string ville
+        +int nombre_etages
+        +int nombre_appartements
+        +string image
+    }
+
+    class Appartement {
+        +int id
+        +string numero
+        +int etage
+        +float superficie
+        +string type
+    }
+
+    class Charge {
+        +int id
+        +string titre
+        +text description
+        +float montant
+        +date date_echeance
+        +string statut
+    }
+
+    class Paiement {
+        +int id
+        +float montant
+        +date date_paiement
+        +string mode_paiement
+        +string recu_path
+    }
+
+    class Incident {
+        +int id
+        +string titre
+        +text description
+        +string priorite
+        +string statut
+        +string photo
+    }
+
+    class Intervention {
+        +int id
+        +string type
+        +string description
+        +date date_planifiee
+        +date date_realisation
+        +string statut
+        +float cout_estime
+    }
+
+    class Annonce {
+        +int id
+        +string titre
+        +text contenu
+        +date date_publication
+    }
+
+    class Document {
+        +int id
+        +string titre
+        +string fichier_path
+        +string categorie
+    }
+
+    class Notification {
+        +int id
+        +string titre
+        +text message
+        +string type
+        +boolean lu
+        +datetime date_envoi
+    }
+
+    class AuditLog {
+        +int id
+        +string action
+        +string model_type
+        +int model_id
+        +text modifications
+        +datetime created_at
+    }
+
+    %% Relationships
+    User "*" -- "*" Role : has
+    Role "*" -- "*" Permission : has
+    User "*" -- "*" Permission : direct permissions
+    
+    User "1" -- "0..*" Immeuble : manages (Syndic)
+    Immeuble "1" -- "0..*" Appartement : contains
+    User "1" -- "0..1" Appartement : occupies (Resident)
+    
+    Appartement "1" -- "0..*" Charge : assigned to
+    Charge "1" -- "0..1" Paiement : has
+    User "1" -- "0..*" Paiement : makes
+    
+    User "1" -- "0..*" Incident : reports
+    Immeuble "1" -- "0..*" Incident : occurs in
+    Incident "1" -- "0..*" Intervention : resolved by
+    
+    User "1" -- "0..*" Annonce : creates
+    Immeuble "1" -- "0..*" Annonce : displayed for
+    
+    Immeuble "1" -- "0..*" Document : related to
+    Charge "1" -- "0..1" Document : has (invoice/receipt)
+
+    User "1" -- "0..*" Notification : receives
+    User "1" -- "0..*" AuditLog : triggers (recorded actions)

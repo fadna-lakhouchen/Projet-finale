@@ -184,18 +184,6 @@ Le projet vise à digitaliser la gestion du Syndic pour améliorer l’organisat
 
 ---
 
-## 3. Branche Fonctionnelle : Design Thinking
-### 3. IDÉATION
-
-<div class="img-container">
-  <div class="dt-card" style="border-top-color: #f39c12;">
-    <h4>Solutions retenues</h4>
-    
-  </div>
-</div>
-
----
-
 ## 3. Branche Fonctionnelle : Cas d'utilisation
 
 
