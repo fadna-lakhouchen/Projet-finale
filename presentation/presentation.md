@@ -128,7 +128,9 @@ style: |
 
 ## 1. Contexte du projet
 
-Le projet vise à digitaliser la gestion du Syndic pour améliorer l’organisation et le suivi des immeubles résidentiels. Il permet de centraliser les informations, faciliter la gestion des charges et des paiements, et renforcer la communication entre le syndic et les résidents, remplaçant ainsi la gestion manuelle et les documents papier.
+<div class="img-container">
+  <img src="images/contexte.png" class="img-methodo" alt="Design Thinking">
+</div>
 
 ---
 
@@ -210,26 +212,21 @@ Le projet vise à digitaliser la gestion du Syndic pour améliorer l’organisat
 ## 4. Branche Technique : Tech Stack
 <div class="sommaire-grid">
   <div class="dt-card" style="margin-top:0;">
-    <h4>Les technologies à utiliser</h4>
+    <h4>Back-end & Architecture</h4>
     <ul>
-      <li><strong>Base de données:</strong> MySQL </li>
-      <li><strong>Framework:</strong> Laravel 12</li>
-      <li><strong>Architecture:</strong> N-Tiers</li>
-      <strong>Controller:</strong> Requêtes HTTP
-      <strong>Service:</strong> Logique métier
-      <strong>Model:</strong> Base de données
-      <li><strong>Architecture:</strong> MVC</li>
-      <li><strong> Blade :</strong>Templates réutilisables (components, layouts).</li>
+      <li><strong>Framework :</strong> PHP 8 / Laravel 12</li>
+      <li><strong>Database :</strong> MySQL / Eloquent</li>
+      <li><strong>Architecture :</strong> MVC / 3-Tiers</li>
+      <li><strong>Sécurité :</strong> Spatie (Rôles)</li>
     </ul>
   </div>
   <div class="dt-card" style="margin-top:0; border-top-color: #27ae60;">
+    <h4>Front-end & Outils</h4>
     <ul>
-      <li><strong> AJAX :</strong> Interactions dynamiques (ex: Modales) sans rechargement de page.</li>
-      <li><strong>Alpine.js :</strong>  Librairie JavaScript pour les interactions dynamiques.</li>
-      <li><strong>Spatie :</strong> Librairie pour la gestion des permissions et rôles.</li>
-      <li><strong>Vite :</strong>   Outil de build rapide.</li>
-      <li><strong>Lucide :</strong> Librairie d'icônes.</li>
-      <li><strong>Tailwind CSS :</strong>Développement rapide, responsive.</li>
+      <li><strong>Styling :</strong> Blade / Tailwind CSS</li>
+      <li><strong>UI / Icons :</strong> Preline UI / Lucide</li>
+      <li><strong>Dynamic :</strong> JavaScript / Alpine.js</li>
+      <li><strong>Build :</strong> Vite</li>
     </ul>
   </div>
 </div>
@@ -243,32 +240,8 @@ Le projet vise à digitaliser la gestion du Syndic pour améliorer l’organisat
  <h3>Modélisation des données (MLD)</h3>
 <div class="img-container">
  
-  <img src="../images/diagramme-class.png" style="width: 100%;" alt="Diagramme de classe">
+  <img src="images/diagramme-class.png" style="width: 100%;" alt="Diagramme de classe">
 </div>
-
----
-
-## 5. Démonstration : Environnement & Outils
-
-<div class="sommaire-grid">
-  <div class="dt-card" style="margin-top:0;">
-    <h4>Environnement de Développement</h4>
-    <ul>
-      <li><strong>IDE :</strong> VS Code & Antigravity </li>
-      <li><strong>Monitoring DB :</strong> Workbench Sql</li>
-    </ul>
-  </div>
-  <div class="dt-card" style="margin-top:0; border-top-color: #27ae60;">
-    <h4>Gestion & Déploiement</h4>
-    <ul>
-      <li><strong>Modelisation UML :</strong>Mermaid/PlantUML</li>
-      <li><strong>Gestion de version :</strong> Git (GitHub)</li>
-      <li><strong>Navigateur :</strong> Chrome DevTools</li>
-    </ul>
-  </div>
-</div>
-
-<br>
 
 ---
 ## 6. Conclusion
