@@ -204,7 +204,7 @@ style: |
 
 ## Branche Fonctionnelle : Cas d'utilisation
 
-### Diagramme de cas d'utilisation global : Partie Administrateur 
+### Diagramme de cas d'utilisation global : Partie Admin
 ### Espace Admin
 <div class="img-container">
   <img src="images/use_case_global_admin.png" class="img-methodo" alt="Use Case Admin">
@@ -215,7 +215,7 @@ style: |
 
 ## Branche Fonctionnelle : Cas d'utilisation
 
-### Diagramme de cas d'utilisation global : Partie Syndic
+### Diagramme de cas d'utilisation global : Partie Admin
 ### Espace Syndic
 <div class="img-container">
   <img src="images/use_case_global_syndic.png" class="img-methodo" alt="Use Case Syndic">
@@ -225,7 +225,7 @@ style: |
 
 ## Branche Fonctionnelle : Cas d'utilisation
 
-### Diagramme de cas d'utilisation global : Partie Résident
+### Diagramme de cas d'utilisation global : Partie Admin
 ### Espace Résident
 <div class="img-container">
   <img src="images/use_case_global_resident.png" class="img-methodo" alt="Use Case Resident">
