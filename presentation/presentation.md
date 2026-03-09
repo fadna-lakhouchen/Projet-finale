@@ -164,15 +164,42 @@ style: |
 
 ---
 ## 3. Branche Fonctionnelle : Design Thinking
-### 1. EMPATHIE
+### 1. EMPATHIE : Résident (Hassan)
 
 <div class="img-container">
-  <img src="images/carte-d-empathie.PNG" class="img-methodo" alt="Carte d'Empathie">
+  <img src="images/empathie_hassan.png" class="img-methodo" alt="Empathie Hassan">
 </div>
 
 ---
 
-## 3. Branche Fonctionnelle : Design Thinking
+## Branche Fonctionnelle : Design Thinking
+### 1. EMPATHIE : Résidente & Copropriétaire (Hasnae)
+
+<div class="img-container">
+  <img src="images/empathie_hasnae.png" class="img-methodo" alt="Empathie Hasnae">
+</div>
+
+---
+
+## Branche Fonctionnelle : Design Thinking
+### 1. EMPATHIE : Syndic (Youssef)
+
+<div class="img-container">
+  <img src="images/empathie_youssef.png" class="img-methodo" alt="Empathie Youssef">
+</div>
+
+---
+
+## Branche Fonctionnelle : Design Thinking
+### 1. EMPATHIE : Administrateur (Mohamed)
+
+<div class="img-container">
+  <img src="images/empathie_mohamed.png" class="img-methodo" alt="Empathie Mohamed">
+</div>
+
+---
+
+## Branche Fonctionnelle : Design Thinking
 ### 2. DÉFINITION
 
 <div class="img-container">
@@ -186,24 +213,95 @@ style: |
 
 ---
 
-## 3. Branche Fonctionnelle : Cas d'utilisation
+## Branche Fonctionnelle : Cas d'utilisation
 
-
-
+### Diagramme de cas d'utilisation global : Partie Administrateur 
+### Espace Admin
 <div class="img-container">
-  <h3>Interaction Utilisateur (UML)</h3>
-  <img src="../images/use-case.png" class="img-methodo" alt="Use Case">
+  <img src="images/use_case_global_admin.png" class="img-methodo" alt="Use Case Admin">
+  
 </div>
 
 ---
-## 3. Branche Fonctionnelle : Maquettes (UI/UX)
+
+## Branche Fonctionnelle : Cas d'utilisation
+
+### Diagramme de cas d'utilisation global : Partie Syndic
+### Espace Syndic
+<div class="img-container">
+  <img src="images/use_case_global_syndic.png" class="img-methodo" alt="Use Case Syndic">
+</div>
+
+---
+
+## Branche Fonctionnelle : Cas d'utilisation
+
+### Diagramme de cas d'utilisation global : Partie Résident
+### Espace Résident
+<div class="img-container">
+  <img src="images/use_case_global_resident.png" class="img-methodo" alt="Use Case Resident">
+</div>
+
+---
+
+## Branche Fonctionnelle : Cas d'utilisation
+
+### Diagramme de cas d'utilisation global : Partie Mobile
+
+<div class="img-container">
+  <img src="images/use_case_global_mobile.png" class="img-methodo" alt="Use Case Mobile">
+  
+</div>
+
+---
+
+## Branche Fonctionnelle : Cas d'utilisation - Sprint 1
 
 
+<div class="img-container">
+  <img src="images/use_case_mvp.png" class="img-methodo" alt="Use Case Sprint 1">
+</div>
 
+---
+
+## Branche Fonctionnelle : Cas d'utilisation - Sprint 2 
+
+<div class="img-container">
+  <img src="images/use_case_avance.png" class="img-methodo" alt="Use Case Sprint 2">
+</div>
+
+---
+## Branche Fonctionnelle : Maquettes (UI/UX)
+
+
+<p style="font-size: 0.3rem; color: #666;">Interface Administration</p>
 <div class="maquette-grid">
   <div style="text-align: center;">
-    <img src="../images/maquette.png" class="img-methodo" style="height: 360px; width: auto;" alt="Maquette Desktop">
-    <p style="font-size: 0.3rem; color: #666;">Interface Administration</p>
+    <img src="images/dashbord_admin.png" class="img-methodo" style="height: 360px; width: auto;" alt="Maquette Desktop">
+    
+  </div>
+</div>
+
+---
+## Branche Fonctionnelle : Maquettes (UI/UX)
+
+
+<p style="font-size: 0.3rem; color: #666;">Interface Syndic</p>
+<div class="maquette-grid">
+  <div style="text-align: center;">
+    <img src="images/dashboard_syndic.png" class="img-methodo" style="height: 360px; width: auto;" alt="Maquette Desktop">
+  </div>
+</div>
+
+---
+## Branche Fonctionnelle : Maquettes (UI/UX)
+
+
+<p style="font-size: 0.3rem; color: #666;">Interface Résident</p>
+<div class="maquette-grid">
+  <div style="text-align: center;">
+    <img src="images/dashboard_resident.png" class="img-methodo" style="height: 360px; width: auto;" alt="Maquette Desktop">
+    
   </div>
 </div>
 
@@ -246,9 +344,5 @@ style: |
 ---
 ## 6. Conclusion
 
-- **Objectifs atteints** : 
-- **Compétences** : 
-- **Perspectives** : 
-<br>
 
 ### Merci pour votre attention !

@@ -41,8 +41,21 @@
 
 ## Liste des figures
 
-
-
+- **Figure 1** : Méthodologie Scrum
+- **Figure 2** : Processus 2TUP
+- **Figure 3** : Méthodologie Design Thinking
+- **Figure 4** : Carte d’empathie - Hassan (Résident)
+- **Figure 5** : Carte d’empathie - Hasnae (Copropriétaire)
+- **Figure 6** : Carte d’empathie - Youssef (Syndic)
+- **Figure 7** : Carte d’empathie - Mohamed (Admin)
+- **Figure 8** : Cas d'utilisation Global - Administrateur
+- **Figure 9** : Cas d'utilisation Global - Syndic
+- **Figure 10** : Cas d'utilisation Global - Résident
+- **Figure 11** : Cas d'utilisation Global - Mobile
+- **Figure 12** : Cas d'utilisation - Sprint 1 (MVP)
+- **Figure 13** : Cas d'utilisation - Sprint 2 (Avancé)
+- **Figure 14** : Diagramme de classe (Conception)
+- **Figure 15** : Maquette de l'interface Dashboard
 ---
 
 ## Remerciement
@@ -259,20 +272,56 @@ La méthodologie **2TUP (Two-Tracks Unified Process)** est un processus de déve
 
 ### Carte d’empathie
 
-<img src="images/carte-d-empathie.PNG" class="img-methodo" alt="Carte d'Empathie">
+L'analyse de l'empathie nous a permis de comprendre en profondeur les besoins et les frustrations des différents acteurs. Quatre cartes d'empathie ont été réalisées pour les personas principaux :
+
+**1. Hassan (Résident)**
+<img src="images/empathie_hassan.png" class="img-methodo" alt="Empathie Hassan">
+
+**2. Hasnae (Copropriétaire)**
+<img src="images/empathie_hasnae.png" class="img-methodo" alt="Empathie Hasnae">
+
+**3. Youssef (Syndic)**
+<img src="images/empathie_youssef.png" class="img-methodo" alt="Empathie Youssef">
+
+**4. Mohamed (Administrateur)**
+<img src="images/empathie_mohamed.png" class="img-methodo" alt="Empathie Mohamed">
 
 ### Définition de problème
 
 **Problématique centrale :**  
-- Comment pouvons-nous améliorer la gestion des immeubles et des paiements tout en garantissant la transparence, la communication efficace et la réduction des conflits entre résidents et syndic à travers une solution digitale centralisée ?
+- Comment pouvons-nous améliorer la gestion des immeubles et des paiements tout en garantissant la transparence, la communication efficace et la réduction des conflits entre résidents et syndic ?
 
 ### Diagrammes de cas d’utilisation
 
-- **Cas général**  
-- **Sprint 1**  
-- **Sprint 2**  
+Les diagrammes suivants illustrent les interactions entre les acteurs et le système ImmoSyndic.
 
-*(à compléter avec les diagrammes)*
+#### Cas d'utilisation Globaux par rôle
+Ces diagrammes présentent la vision globale des fonctionnalités pour chaque type d'utilisateur sur le portail web.
+
+**Espace Administrateur**
+<img src="images/use_case_global_admin.png" class="img-methodo" alt="Global Admin">
+
+**Espace Syndic**
+<img src="images/use_case_global_syndic.png" class="img-methodo" alt="Global Syndic">
+
+**Espace Résident**
+<img src="images/use_case_global_resident.png" class="img-methodo" alt="Global Resident">
+
+#### Vision Mobile (API)
+Le diagramme suivant présente l'interaction de l'application mobile avec le système via la consommation des API.
+
+<img src="images/use_case_global_mobile.png" class="img-methodo" alt="Global Mobile">
+
+#### Évolutions par Sprints
+Nous avons structuré le développement en deux phases majeures :
+
+**Sprint 1 : MVP (Produit Minimum Viable)**
+Le focus est mis sur l'authentification, la consultation des charges de base et la gestion essentielle des immeubles.
+<img src="images/use_case_mvp.png" class="img-methodo" alt="Use Case Sprint 1">
+
+**Sprint 2 : Évolutions Avancées**
+Ajout de l'archivage, des statistiques, du planning et des notifications avancées.
+<img src="images/use_case_avance.png" class="img-methodo" alt="Use Case Sprint 2">
 
 ---
 
@@ -321,22 +370,31 @@ La méthodologie **2TUP (Two-Tracks Unified Process)** est un processus de déve
 ## Prototype (Fonctionnalités, Classes)
 
 **Partie Administrateur :**  
-- Ajouter, supprimer, modifier des articles  
-- Rechercher et filtrer les articles  
+- Gestion globale des utilisateurs et des rôles (Spatie).  
+- Supervision de tous les immeubles et validation des données.  
+- Consultation des journaux d'activité (Audit).  
 
-**Partie Publique :**  
-- Affichage et consultation des articles  
-- Recherche  
+**Partie Syndic :**  
+- Gestion des résidents et des appartements par immeuble.  
+- Suivi des paiements et génération automatique de reçus.  
+- Planification des interventions techniques.  
 
-**API REST :**  
-- Endpoints pour ajouter et afficher les articles  
+**Espace Résident :**  
+- Consultation du solde des charges.  
+- Signalement de problèmes techniques.  
+- Accès à l'historique des documents.  
 
-**Application Mobile :**  
-- Consultation des articles via API  
-- Interface adaptée au mobile  
+**Application Mobile (API) :**  
+- Consultation mobile du tableau de bord résident via endpoints API.  
+- Réception de notifications.  
 
 **Classes principales :**  
-- 
+- `User` : Gère l'authentification et les rôles (Admin, Syndic, Résident).  
+- `Building` (Immeuble) : Entité centrale de la gestion géographique.  
+- `Apartment` (Appartement) : Liaison entre l'immeuble et le résident.  
+- `Charge` : Modélise les frais mensuels ou exceptionnels.  
+- `Payment` : Enregistre les transactions financières.  
+- `Intervention` : Gestion des tickets de maintenance.  
 ---
 
 ## Conception
@@ -347,31 +405,44 @@ La méthodologie **2TUP (Two-Tracks Unified Process)** est un processus de déve
 
 ### Diagramme de classe
 
-*(à compléter avec le diagramme UML)*
+Le diagramme de classe suivant présente la structure de la base de données et les relations entre les différentes entités du système (Modèle Logique des Données).
+
+<img src="images/diagramme-class.png" class="img-methodo" alt="Diagramme de classe">
 
 ### Maquettes
 
-*(à compléter avec les maquettes des pages)*
+Les maquettes ont été réalisées en suivant la méthodologie **Atomic Design** pour garantir une cohérence visuelle totale.
+ ### dashbord admin
+<img src="images/dashbord_admin.png" class="img-methodo" alt="Maquette Dashboard Admin">
 
-### Charte graphique
+### dashbord syndic
+<img src="images/dashboard_syndic.png" class="img-methodo" alt="Maquette Dashboard Syndic">
 
-*(à compléter avec couleurs, typographies et style visuel)*
+### dashbord resident
+<img src="images/dashboard_resident.png" class="img-methodo" alt="Maquette Dashboard Resident">
 
 ---
 
 ## Réalisation
 
 **Outils de développement :**  
-*(à compléter selon le contenu du rapport)*
+- **IDE** : Visual Studio Code.  
+- **UML** : PlantUML pour les cas d'utilisation et diagrammes de classe.  
+- **VCS** : Git & GitHub pour le suivi de version.  
+- **Web Server** : Serveur PHP Laravel (Artisan).  
+- **Design** : Figma/Canva pour les maquettes initiales.  
 
 ---
 
 ## Interfaces
 
-*(à compléter avec captures d’écran ou description des interfaces)*
-
----
+Le système propose des interfaces spécialisées par rôle :
+1. **Dashboard Admin** : Une vue d'ensemble sur l'état de santé de la plateforme et la gestion des accès.
+2. **Espace Syndic** : Un outil de gestion opérationnelle pour les immeubles et la comptabilité.
+3. **Portail Résident** : Une interface conviviale pour le suivi personnel et les signalements.
 
 ## Conclusion
 
-*(à compléter selon le contenu du rapport)*
+Le projet **ImmoSyndic** a permis de répondre au défi de la transition vers une gestion immobilière digitale et transparente. En utilisant les méthodologies Design Thinking, 2TUP et Scrum, nous avons pu transformer des problèmes vécus (manque de transparence, erreurs manuelles) en une solution logicielle performante.
+
+Ce travail m'a permis de consolider mes compétences en architecture logicielle (MVC), en développement avec Laravel, et en conception UX/UI. Les perspectives d'évolution incluent l'intégration de paiements en ligne Stripe et la gestion de la domotique pour les immeubles intelligents.

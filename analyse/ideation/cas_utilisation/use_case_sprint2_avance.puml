@@ -1,18 +1,18 @@
-@startuml ImmoSyndic_Sprint_2_Avance
+@startuml ImmoSyndic_Sprint2_Web
 left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-' Actors
 actor "Résident" as Resident
 actor "Syndic" as Syndic
 actor "Administrateur" as Admin
+actor "Mobile" as Mobile
 
 ' Hierarchy
 Resident <|-- Syndic
 Syndic <|-- Admin
 
-rectangle "ImmoSyndic - Évolutions Sprint 2 (Avancé) - Web & Mobile" {
+rectangle "ImmoSyndic - Évolutions Sprint 2 (Avancé) - Web" {
 
   package "Authentification" {
     usecase "S'authentifier" as Auth
@@ -52,37 +52,29 @@ rectangle "ImmoSyndic - Évolutions Sprint 2 (Avancé) - Web & Mobile" {
     }
   }
 
-  package "Application Mobile (Viewer Avancé)" {
-    usecase "Consulter archives (Mobile)" as MobileViewArchives
-    usecase "Visualiser stats simplifiées" as MobileViewStats
-    usecase "Voir logs activités" as MobileViewLogs
-
-    MobileViewArchives ..> Auth : <<include>>
-    MobileViewStats ..> Auth : <<include>>
-    MobileViewLogs ..> Auth : <<include>>
+  package "API Mobile" {
+    usecase "Consommer API" as ConsumeAPI
+    
+    ConsumeAPI ..> ViewArchives : <<include>>
+    ConsumeAPI ..> SetAlerts : <<include>>
   }
 }
 
-' Connections Web
-Resident -- Auth
+' Connections
 Resident -- ViewArchives
 Resident -- ExportPDF
 Resident -- SetAlerts
 
-Syndic -- Auth
 Syndic -- ManagePlanning
 Syndic -- ViewStats
 Syndic -- ArchiveDocs
 Syndic -- SendNews
 
-Admin -- Auth
 Admin -- GlobalReports
 Admin -- AuditLogs
 Admin -- MonitorActivity
 
-' Connections Mobile (Consultation Only)
-Resident -- MobileViewArchives
-Syndic -- MobileViewStats
-Admin -- MobileViewLogs
+' Connections Mobile
+Mobile -- ConsumeAPI
 
 @enduml

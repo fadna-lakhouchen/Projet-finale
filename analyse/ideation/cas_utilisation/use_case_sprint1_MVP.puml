@@ -1,24 +1,24 @@
-@startuml ImmoSyndic_Sprint_1_MVP
+@startuml ImmoSyndic_MVP_Web
 left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-' Actors
 actor "Résident" as Resident
 actor "Syndic" as Syndic
 actor "Administrateur" as Admin
+actor "Mobile" as Mobile
 
 ' Hierarchy
 Resident <|-- Syndic
 Syndic <|-- Admin
 
-rectangle "Système ImmoSyndic - Sprint 1 (MVP) - Web & Mobile" {
+rectangle "Système ImmoSyndic - Sprint 1 (MVP) - Web" {
 
   package "Authentification" {
     usecase "S'authentifier" as Auth
   }
 
-  package "Interface Web (Gestion)" {
+  package "Portail Web (Gestion)" {
     package "Espace Résident" {
       usecase "Consulter charges" as ViewCharges
       usecase "Signaler problème" as ReportIssue
@@ -32,7 +32,7 @@ rectangle "Système ImmoSyndic - Sprint 1 (MVP) - Web & Mobile" {
       usecase "Suivre interventions" as TrackInterventions
       usecase "Consulter historique" as ViewHistory
     }
-    package "Espace Admin" {
+    package "Espace Administrateur" {
       usecase "Gérer comptes" as ManageUsers
       usecase "Superviser immeubles" as Supervise
       usecase "Valider données" as ValidateData
@@ -40,34 +40,31 @@ rectangle "Système ImmoSyndic - Sprint 1 (MVP) - Web & Mobile" {
     }
   }
 
-  package "Application Mobile (Viewer)" {
-    usecase "Consulter charges (Viewer)" as MobileViewCharges
-    usecase "Recevoir notifications" as MobileNotifs
+  package "API Mobile" {
+    usecase "Consommer API" as ConsumeAPI
+    
+    ConsumeAPI ..> ViewCharges : <<include>>
   }
 
-  ' Includes Logic (Linking functional use cases to Auth)
+  ' Includes
   ViewCharges ..> Auth : <<include>>
   ReportIssue ..> Auth : <<include>>
-  
   ManageResidents ..> Auth : <<include>>
   ManageBuildings ..> Auth : <<include>>
   TrackPayments ..> Auth : <<include>>
   GenReceipts ..> Auth : <<include>>
   TrackInterventions ..> Auth : <<include>>
   ViewHistory ..> Auth : <<include>>
-
   ManageUsers ..> Auth : <<include>>
   Supervise ..> Auth : <<include>>
   ValidateData ..> Auth : <<include>>
   ManageRoles ..> Auth : <<include>>
 }
 
-' Connections Web
-Resident -- Auth
+' Connections
 Resident -- ViewCharges
 Resident -- ReportIssue
 
-Syndic -- Auth
 Syndic -- Register
 Syndic -- ManageResidents
 Syndic -- ManageBuildings
@@ -76,15 +73,12 @@ Syndic -- GenReceipts
 Syndic -- TrackInterventions
 Syndic -- ViewHistory
 
-Admin -- Auth
 Admin -- ManageUsers
 Admin -- Supervise
 Admin -- ValidateData
 Admin -- ManageRoles
 
-' Connections Mobile (Public/Private split usually happens at Auth)
-Resident -- MobileViewCharges
-Resident -- MobileNotifs
-Syndic -- MobileViewCharges
+' Connections Mobile
+Mobile -- ConsumeAPI
 
 @enduml
