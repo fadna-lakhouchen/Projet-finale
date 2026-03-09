@@ -159,7 +159,7 @@ style: |
 
 
 <div class="img-container">
-  <img src="images/2TUP.PNG" class="img-methodo" alt="2TUP">
+  <img src="images/2TUP.png" class="img-methodo" alt="2TUP">
 </div>
 
 ---
