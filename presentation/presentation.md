@@ -120,8 +120,7 @@ style: |
   <div class="sommaire-item"><div class="sommaire-num">3</div><div class="sommaire-text">Branche Fonctionnelle</div></div>
   <div class="sommaire-item"><div class="sommaire-num">4</div><div class="sommaire-text">Branche Technique</div></div>
   <div class="sommaire-item"><div class="sommaire-num">5</div><div class="sommaire-text">Conception</div></div>
-    <div class="sommaire-item"><div class="sommaire-num">6</div><div class="sommaire-text">Démonstration</div></div>
-  <div class="sommaire-item"><div class="sommaire-num">7</div><div class="sommaire-text">Conclusion</div></div>
+  <div class="sommaire-item"><div class="sommaire-num">6</div><div class="sommaire-text">Conclusion</div></div>
 </div>
 
 ---
@@ -150,16 +149,6 @@ style: |
 
 <div class="img-container">
   <img src="images/scrum.jpg" class="img-methodo" alt="Scrum">
-</div>
-
----
-
-## Méthodologie : Processus 2TUP
-
-
-
-<div class="img-container">
-  <img src="images/2TUP.png" class="img-methodo" alt="2TUP">
 </div>
 
 ---
@@ -335,7 +324,7 @@ style: |
 ## 5. Conception : Diagramme de classe
 
 
- <h3>Modélisation des données (MLD)</h3>
+ <h3>Modélisation des données</h3>
 <div class="img-container">
  
   <img src="images/diagramme-class.png" style="width: 100%;" alt="Diagramme de classe">
