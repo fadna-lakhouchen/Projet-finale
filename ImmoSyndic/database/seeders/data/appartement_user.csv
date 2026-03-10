@@ -1,0 +1,6 @@
+id,user_id,appartement_id,type_resident,date_entree,date_sortie
+1,4,1,Locataire,2024-02-01,
+2,5,2,Propriétaire,2023-06-15,
+3,6,4,Locataire,2024-09-01,
+4,7,5,Locataire,2023-01-10,2025-01-31
+5,8,7,Propriétaire,2022-05-20,

@@ -13,9 +13,12 @@ classDiagram
     class User {
         +int id
         +string nom
+        +string prenom
         +string email
         +string password
         +string telephone
+        +boolean is_active
+        +json preferences_alertes
         +datetime email_verified_at
     }
 
@@ -35,6 +38,12 @@ classDiagram
         +int etage
         +float superficie
         +string type
+    }
+
+    class AppartementUser {
+        +date date_entree
+        +date date_sortie
+        +string type_resident
     }
 
     class Charge {
@@ -71,6 +80,7 @@ classDiagram
         +date date_realisation
         +string statut
         +float cout_estime
+        +string intervenant_nom
     }
 
     class Annonce {
@@ -112,8 +122,8 @@ classDiagram
     
     User "1" -- "0..*" Immeuble : manages (Syndic)
     Immeuble "1" -- "0..*" Appartement : contains
-    User "1" -- "0..1" Appartement : occupies (Resident)
-    
+    User "1" -- "0..*" AppartementUser : occupies
+    Appartement "1" -- "0..*" AppartementUser : belongs to
     Appartement "1" -- "0..*" Charge : assigned to
     Charge "1" -- "0..1" Paiement : has
     User "1" -- "0..*" Paiement : makes

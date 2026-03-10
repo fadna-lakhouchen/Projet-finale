@@ -1,0 +1,5 @@
+id,immeuble_id,user_id,titre,contenu,date_publication
+1,1,2,Coupure d'eau vendredi 14 février,"Nous vous informons qu'il y aura une coupure d'eau vendredi 14 février de 8h à 17h pour travaux sur le réseau.",2025-02-10
+2,1,2,Réunion copropriétaires — Mars 2025,"La réunion annuelle des copropriétaires aura lieu le samedi 22 mars 2025 à 10h dans la salle commune.",2025-02-20
+3,2,2,Entretien ascenseur programmé,"L'ascenseur de la résidence sera en maintenance le mercredi 5 mars de 9h à 12h. Merci de votre compréhension.",2025-02-25
+4,3,3,Nouveau gardien de nuit,"Nous avons le plaisir de vous annoncer l'embauche d'un gardien de nuit à partir du 1er mars 2025.",2025-02-28
