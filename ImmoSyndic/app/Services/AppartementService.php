@@ -11,9 +11,7 @@ class AppartementService extends BaseService
         $this->model = $appartement;
     }
 
-    /**
-     * Assign a resident to an apartment.
-     */
+    
     public function assignResident(int $appartementId, int $userId, array $pivotData)
     {
         $appartement = $this->findOrFail($appartementId);
@@ -23,9 +21,7 @@ class AppartementService extends BaseService
         return $appartement;
     }
 
-    /**
-     * Remove a resident from an apartment.
-     */
+    
     public function removeResident(int $appartementId, int $userId)
     {
         $appartement = $this->findOrFail($appartementId);

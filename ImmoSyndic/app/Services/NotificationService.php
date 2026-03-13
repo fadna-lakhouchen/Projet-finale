@@ -13,9 +13,7 @@ class NotificationService extends BaseService
         $this->model = $notification;
     }
 
-    /**
-     * Send a notification to all residents of a specific building.
-     */
+    
     public function notifyImmeubleResidents(int $immeubleId, string $titre, string $message)
     {
         $immeuble = Immeuble::findOrFail($immeubleId);

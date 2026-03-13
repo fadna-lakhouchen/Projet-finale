@@ -13,9 +13,7 @@ class ChargeService extends BaseService
         $this->model = $charge;
     }
 
-    /**
-     * Generate monthly charges for all apartments in an building.
-     */
+    
     public function generateMonthlyChargesForImmeuble(int $immeubleId, array $chargeData)
     {
         $immeuble = Immeuble::findOrFail($immeubleId);

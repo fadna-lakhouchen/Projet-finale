@@ -14,9 +14,7 @@ class DocumentService extends BaseService
         $this->model = $document;
     }
 
-    /**
-     * Upload a file securely and create a document record.
-     */
+    
     public function uploadDocument(UploadedFile $file, array $data, string $folder = 'documents')
     {
         $path = $file->store($folder, 'public');

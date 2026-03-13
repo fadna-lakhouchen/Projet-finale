@@ -11,9 +11,7 @@ class InterventionService extends BaseService
         $this->model = $intervention;
     }
 
-    /**
-     * Mark intervention as completed and update the related incident.
-     */
+    
     public function finalizeIntervention(int $interventionId, array $data)
     {
         $intervention = $this->findOrFail($interventionId);
@@ -22,7 +20,7 @@ class InterventionService extends BaseService
             'date_realisation' => now(),
         ]));
 
-        // Update incident status to resolved
+        
         if ($intervention->incident) {
             $intervention->incident->update(['statut' => 'resolu']);
         }

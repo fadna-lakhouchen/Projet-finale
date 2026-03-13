@@ -11,9 +11,7 @@ class ImmeubleService extends BaseService
         $this->model = $immeuble;
     }
 
-    /**
-     * Get financial and occupancy statistics for an building.
-     */
+    
     public function getImmeubleStats(int $immeubleId)
     {
         $immeuble = $this->findOrFail($immeubleId);

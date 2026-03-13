@@ -11,9 +11,7 @@ class AuditLogService extends BaseService
         $this->model = $auditLog;
     }
 
-    /**
-     * Log a specific system action.
-     */
+    
     public function logAction(int $userId, string $action, string $modelType, int $modelId, array $modifications = [])
     {
         return $this->create([

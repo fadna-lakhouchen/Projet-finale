@@ -8,9 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 abstract class BaseService
 {
-    /**
-     * @var Model
-     */
+    
     protected $model;
 
     /**
