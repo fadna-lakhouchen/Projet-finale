@@ -9,6 +9,8 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/incidents', [IncidentController::class, 'index']);
+Route::get('/incidents/{id}', [IncidentController::class, 'show']);
+Route::post('/incidents', [IncidentController::class, 'store']);
 
 // New Mobile Consultation API Endpoints
 Route::get('/charges/{userId}', [App\Http\Controllers\Api\ChargeController::class, 'index']);

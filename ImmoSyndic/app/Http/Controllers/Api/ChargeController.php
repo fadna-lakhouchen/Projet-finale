@@ -10,7 +10,7 @@ class ChargeController extends Controller
 {
     public function index(int $userId): JsonResponse
     {
-        $user = User::with('appartements.charges')->findOrFail($userId);
+        $user = User::with('appartements.charges.documents')->findOrFail($userId);
         
         $charges = $user->appartements->flatMap(function ($appartement) {
             return $appartement->charges;
