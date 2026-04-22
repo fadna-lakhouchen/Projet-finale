@@ -84,6 +84,11 @@ class User extends Authenticatable
         return $this->hasMany(Annonce::class);
     }
 
+    public function getNameAttribute()
+    {
+        return "{$this->prenom} {$this->nom}";
+    }
+
     public function auditLogs()
     {
         return $this->hasMany(AuditLog::class);
