@@ -6,11 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -25,6 +26,7 @@ class User extends Authenticatable
         'telephone',
         'is_active',
         'preferences_alertes',
+        'role',
     ];
 
     /**
@@ -92,5 +94,20 @@ class User extends Authenticatable
     public function auditLogs()
     {
         return $this->hasMany(AuditLog::class);
+    }
+
+    public function isAdministrateur()
+    {
+        return $this->hasRole('administrateur') || $this->role === 'administrateur';
+    }
+
+    public function isSyndic()
+    {
+        return $this->hasRole('syndic') || $this->role === 'syndic';
+    }
+
+    public function isResident()
+    {
+        return $this->hasRole('resident') || $this->role === 'resident';
     }
 }

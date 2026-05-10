@@ -26,9 +26,17 @@
                         </a>
                     @endif
                 @else
-                    <a href="{{ route('home') }}" class="inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white transition-all bg-gradient-to-r from-brand-800 to-teal-500 rounded-xl hover:from-brand-900 hover:to-teal-600 shadow-[0_0_20px_rgba(20,184,166,0.3)] hover:shadow-[0_0_25px_rgba(20,184,166,0.5)] hover:-translate-y-1">
-                        Mon Compte
-                    </a>
+                    <div class="flex items-center gap-3">
+                        <a href="{{ route('home') }}" class="inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white transition-all bg-gradient-to-r from-brand-800 to-teal-500 rounded-xl hover:from-brand-900 hover:to-teal-600 shadow-md">
+                            Mon Compte
+                        </a>
+                        <form action="{{ route('logout') }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" class="text-gray-600 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 transition-colors font-medium text-sm">
+                                Déconnexion
+                            </button>
+                        </form>
+                    </div>
                 @endguest
             </div>
 

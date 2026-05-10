@@ -14,17 +14,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            ImmeubleSeeder::class,
-            AppartementSeeder::class,
-            AppartementUserSeeder::class,
-            ChargeSeeder::class,
-            PaiementSeeder::class,
-            IncidentSeeder::class,
-            InterventionSeeder::class,
-            AnnonceSeeder::class,
-            DocumentSeeder::class,
-            NotificationSeeder::class,
-            AuditLogSeeder::class,
         ]);
     }
 }

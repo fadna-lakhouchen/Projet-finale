@@ -25,17 +25,17 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
-    protected function authenticated(\Illuminate\Http\Request $request, $user)
+    /**
+     * The user has logged out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return mixed
+     */
+    protected function loggedOut(\Illuminate\Http\Request $request)
     {
-        if ($user->role === 'admin') {
-            return redirect('/admin/administrateur/dashboard');
-        } elseif ($user->role === 'syndic') {
-            return redirect('/admin/syndic/dashboard');
-        }
-
-        return redirect('/admin/resident/dashboard');
+        return redirect()->route('login');
     }
 
     /**

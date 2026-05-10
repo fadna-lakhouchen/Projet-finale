@@ -1,70 +1,47 @@
 <?php
 
+namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('public.landing');
 });
 
-// Auth Routes (Laravel UI)
 Auth::routes();
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Universal Dashboard Redirect
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+Route::get('/home', [DashboardController::class, 'index'])->middleware('auth')->name('home');
 
-// Role-based Dashboards (Protected by Auth)
 Route::middleware('auth')->group(function () {
     
-    // Parent Admin Folder Organization
-    Route::prefix('admin')->group(function () {
-        
-        // Administrateur Views
-        Route::prefix('administrateur')->group(function () {
-            Route::get('/dashboard', function () {
-                return view('admin.administrateur.dashboard');
-            })->name('admin.dashboard');
-            
-            Route::get('/residents', function () {
-                return view('admin.administrateur.residents');
-            })->name('admin.residents');
+    // Admin Routes
+    Route::group(['prefix' => 'admin', 'middleware' => 'role:administrateur'], function () {
+        Route::get('/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
+        Route::get('/immeubles', [DashboardController::class, 'adminImmeubles'])->name('admin.immeubles');
+        Route::get('/residents', [DashboardController::class, 'adminResidents'])->name('admin.residents');
+        Route::get('/syndics', [DashboardController::class, 'adminSyndics'])->name('admin.syndics');
+        Route::get('/paiements', [DashboardController::class, 'adminPaiements'])->name('admin.paiements');
+        Route::get('/parametres', fn() => view('admin.administrateur.parametres'))->name('admin.parametres');
+    });
 
-            Route::get('/syndics', function () {
-                return view('admin.administrateur.syndics');
-            })->name('admin.syndics');
+    // Syndic Routes
+    Route::group(['prefix' => 'syndic', 'middleware' => 'role:syndic'], function () {
+        Route::get('/dashboard', [DashboardController::class, 'syndicDashboard'])->name('syndic.dashboard');
+        Route::get('/immeubles', [DashboardController::class, 'syndicImmeubles'])->name('syndic.immeubles');
+        Route::get('/residents', [DashboardController::class, 'syndicResidents'])->name('syndic.residents');
+        Route::get('/paiements', [DashboardController::class, 'syndicPaiements'])->name('syndic.paiements');
+        Route::get('/interventions', [DashboardController::class, 'syndicInterventions'])->name('syndic.interventions');
+        Route::get('/parametres', [DashboardController::class, 'syndicParametres'])->name('syndic.parametres');
+    });
 
-            Route::get('/paiements', function () {
-                return view('admin.administrateur.paiements');
-            })->name('admin.paiements');
-
-            Route::get('/signalements', function () {
-                return view('admin.administrateur.signalements');
-            })->name('admin.signalements');
-
-            Route::get('/documents', function () {
-                return view('admin.administrateur.documents');
-            })->name('admin.documents');
-
-            Route::get('/rapports', function () {
-                return view('admin.administrateur.rapports');
-            })->name('admin.rapports');
-
-            Route::get('/parametres', function () {
-                return view('admin.administrateur.parametres');
-            })->name('admin.parametres');
-        });
-
-        // Syndic Views
-        Route::prefix('syndic')->group(function () {
-            Route::get('/dashboard', function () {
-                return view('admin.syndic.dashboard');
-            })->name('syndic.dashboard');
-        });
-
-        // Resident Views
-        Route::prefix('resident')->group(function () {
-            Route::get('/dashboard', function () {
-                return view('admin.resident.dashboard');
-            })->name('resident.dashboard');
-        });
+    // Resident Routes
+    Route::group(['prefix' => 'resident', 'middleware' => 'role:resident'], function () {
+        Route::get('/dashboard', [DashboardController::class, 'residentDashboard'])->name('resident.dashboard');
+        Route::get('/paiements', [DashboardController::class, 'residentPaiements'])->name('resident.paiements');
+        Route::get('/incidents', [DashboardController::class, 'residentIncidents'])->name('resident.incidents');
     });
 });

@@ -9,28 +9,40 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        $file = database_path('seeders/data/users.csv');
-        $rows = array_map('str_getcsv', file($file));
-        $header = array_shift($rows);
+        // Admin
+        User::updateOrCreate(
+            ['email' => 'admin@immosyndic.com'],
+            [
+                'nom' => 'Rifi',
+                'prenom' => 'Mohamed',
+                'telephone' => '0600000001',
+                'role' => 'administrateur',
+                'password' => bcrypt('password'),
+            ]
+        );
 
-        foreach ($rows as $row) {
-            $data = array_combine($header, $row);
-            
-            // Handle JSON and NULLs
-            foreach ($data as $key => $value) {
-                if ($value === '' || $value === 'NULL') {
-                    $data[$key] = null;
-                } elseif (is_string($value) && (str_starts_with($value, '{') || str_starts_with($value, '['))) {
-                    $data[$key] = json_decode($value, true);
-                }
-            }
+        // Syndic
+        User::updateOrCreate(
+            ['email' => 'syndic@immosyndic.com'],
+            [
+                'nom' => 'El Khadir',
+                'prenom' => 'Youssef',
+                'telephone' => '0600000002',
+                'role' => 'syndic',
+                'password' => bcrypt('password'),
+            ]
+        );
 
-            User::unguarded(function () use ($data) {
-                User::firstOrCreate(
-                    ['id' => $data['id']],
-                    $data
-                );
-            });
-        }
+        // Résident
+        User::updateOrCreate(
+            ['email' => 'resident@immosyndic.com'],
+            [
+                'nom' => 'Afaiz',
+                'prenom' => 'Hassan',
+                'telephone' => '0600000003',
+                'role' => 'resident',
+                'password' => bcrypt('password'),
+            ]
+        );
     }
 }
