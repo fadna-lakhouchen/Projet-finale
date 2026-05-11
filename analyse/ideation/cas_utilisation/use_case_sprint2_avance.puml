@@ -1,0 +1,80 @@
+@startuml ImmoSyndic_Sprint2_Web
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor "Résident" as Resident
+actor "Syndic" as Syndic
+actor "Administrateur" as Admin
+actor "Mobile" as Mobile
+
+' Hierarchy
+Resident <|-- Syndic
+Syndic <|-- Admin
+
+rectangle "ImmoSyndic - Évolutions Sprint 2 (Avancé) - Web" {
+
+  package "Authentification" {
+    usecase "S'authentifier" as Auth
+  }
+
+  package "Interface Web (Extensions & Analyse)" {
+    
+    package "Extensions Résident" {
+      usecase "Consulter archives" as ViewArchives
+      usecase "Exporter PDF" as ExportPDF
+      usecase "Personnaliser alertes" as SetAlerts
+
+      ViewArchives ..> Auth : <<include>>
+      SetAlerts ..> Auth : <<include>>
+    }
+
+    package "Extensions Syndic" {
+      usecase "Gérer planning" as ManagePlanning
+      usecase "Analyser statistiques" as ViewStats
+      usecase "Gérer archivage" as ArchiveDocs
+      usecase "Envoyer annonces" as SendNews
+
+      ManagePlanning ..> Auth : <<include>>
+      ViewStats ..> Auth : <<include>>
+      ArchiveDocs ..> Auth : <<include>>
+      SendNews ..> Auth : <<include>>
+    }
+
+    package "Extensions Admin" {
+      usecase "Générer rapports globaux" as GlobalReports
+      usecase "Consulter audit" as AuditLogs
+      usecase "Surveiller activités" as MonitorActivity
+
+      GlobalReports ..> Auth : <<include>>
+      AuditLogs ..> Auth : <<include>>
+      MonitorActivity ..> Auth : <<include>>
+    }
+  }
+
+  package "API Mobile" {
+    usecase "Consommer API" as ConsumeAPI
+    
+    ConsumeAPI ..> ViewArchives : <<include>>
+    ConsumeAPI ..> SetAlerts : <<include>>
+  }
+}
+
+' Connections
+Resident -- ViewArchives
+Resident -- ExportPDF
+Resident -- SetAlerts
+
+Syndic -- ManagePlanning
+Syndic -- ViewStats
+Syndic -- ArchiveDocs
+Syndic -- SendNews
+
+Admin -- GlobalReports
+Admin -- AuditLogs
+Admin -- MonitorActivity
+
+' Connections Mobile
+Mobile -- ConsumeAPI
+
+@enduml

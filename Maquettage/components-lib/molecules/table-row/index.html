@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Molecule: Table Row </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 max-w-4xl dark:bg-neutral-900">
+
+    <h2 class="text-xl font-bold text-gray-800 mb-6 border-b pb-4 dark:text-white">Table Row </h2>
+
+    <div
+        class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl overflow-hidden dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+        <div class="-m-1.5 overflow-x-auto">
+            <div class="p-1.5 min-w-full inline-block align-middle">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                    <thead class="bg-gray-50 dark:bg-neutral-800">
+                        <tr>
+                            <th scope="col"
+                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                                Résident</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                                Contact</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                                Statut</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                                Rôle</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                                Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-neutral-800 transition">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center gap-x-3">
+                                    <img class="size-10 rounded-full"
+                                        src="https://ui-avatars.com/api/?name=Hassan+El+Fassi&background=0D8ABC&color=fff"
+                                        alt="Avatar">
+                                    <div class="grow">
+                                        <span
+                                            class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">Hassan
+                                            El Fassi</span>
+                                        <span class="block text-xs text-gray-500 dark:text-neutral-500">Appartement 14
+                                            (3ème étage)</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-800 dark:text-neutral-200">06 12 34 56 78</div>
+                                <div class="text-xs text-gray-500 dark:text-neutral-500">h.elfassi@email.com</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span
+                                    class="py-1 px-2.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                                    <i data-lucide="check" class="size-3"></i>
+                                    À jour
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-500">
+                                Propriétaire</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                <button type="button"
+                                    class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400">Modifier</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

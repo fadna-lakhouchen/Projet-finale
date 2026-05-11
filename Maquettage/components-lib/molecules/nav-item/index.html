@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Molecule: Nav Item </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 flex flex-col gap-12 max-w-sm dark:bg-neutral-900">
+
+    <!-- Desktop Sidebar Item -->
+    <div
+        class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70 p-4">
+        <h3 class="text-sm font-bold text-gray-800 dark:text-white mb-4">Sidebar Web </h3>
+        <nav class="space-y-1">
+            <!-- Actif -->
+            <a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:bg-neutral-700 dark:text-white"
+                href="#">
+                <i data-lucide="home" class="shrink-0 size-4"></i>
+                Tableau de bord
+            </a>
+
+            <!-- Inactif -->
+            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:text-neutral-300 dark:hover:bg-neutral-800"
+                href="#">
+                <i data-lucide="credit-card" class="shrink-0 size-4"></i>
+                Paiements
+                <span
+                    class="ms-auto py-0.5 px-1.5 inline-flex items-center gap-x-1.5 text-xs font-medium bg-red-100 text-red-800 rounded-full dark:bg-red-800/10 dark:text-red-500">3</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Mobile Navigation Bar -->
+    <div
+        class="bg-white border-t border-gray-200 dark:bg-neutral-900 dark:border-neutral-700 p-2 fixed bottom-0 left-0 right-0">
+        <h3 class="text-center text-[10px] text-gray-400 mb-2 uppercase font-bold tracking-widest">Mobile Tabbar Item
+        </h3>
+        <div class="flex justify-around items-center">
+            <!-- Actif -->
+            <a class="flex flex-col items-center gap-y-1 p-2 text-blue-600" href="#">
+                <i data-lucide="home" class="size-6"></i>
+                <span class="text-[10px] font-medium">Accueil</span>
+            </a>
+
+            <!-- Inactif -->
+            <a class="flex flex-col items-center gap-y-1 p-2 text-gray-500 hover:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500"
+                href="#">
+                <div class="relative">
+                    <i data-lucide="alert-triangle" class="size-6"></i>
+                    <span
+                        class="absolute -top-1 -right-1 size-2.5 bg-red-600 border-2 border-white rounded-full dark:border-neutral-900"></span>
+                </div>
+                <span class="text-[10px] font-medium">Incidents</span>
+            </a>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

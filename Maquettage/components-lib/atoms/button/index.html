@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Atom: Button </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="p-8 bg-gray-50 flex flex-col gap-6 items-start dark:bg-neutral-900">
+
+    <h2 class="text-xl font-bold text-gray-800 border-b pb-4 w-full dark:text-white">Bouton</h2>
+
+    <!-- Solid -->
+    <button type="button"
+        class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+        <i data-lucide="plus" class="size-4"></i>
+        Primary Solid
+    </button>
+
+    <!-- Outline -->
+    <button type="button"
+        class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800">
+        Secondary Outline
+    </button>
+
+    <!-- Soft -->
+    <button type="button"
+        class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400">
+        Soft Blue
+    </button>
+
+    <!-- Destructive -->
+    <button type="button"
+        class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-600 disabled:opacity-50 disabled:pointer-events-none">
+        <i data-lucide="trash-2" class="size-4"></i>
+        Supprimer
+    </button>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

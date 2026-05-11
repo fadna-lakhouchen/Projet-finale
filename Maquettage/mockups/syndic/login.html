@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr" class="light h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImmoSyndic - Syndic Login</title>
+    <!-- Tailwind & Preline -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { primary: { 50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81' } } }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-neutral-900 flex h-full items-center py-16">
+    <main class="w-full max-w-md mx-auto p-6">
+        <div
+            class="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-800 dark:border-neutral-700">
+            <div class="p-4 sm:p-7">
+                <div class="text-center">
+                    <div
+                        class="size-12 bg-primary-600 text-white rounded-lg flex items-center justify-center mx-auto mb-4 shadow-md">
+                        <i data-lucide="building-2" class="size-6"></i>
+                    </div>
+                    <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Portail Syndic</h1>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-neutral-400">
+                        Vous n'avez pas de compte ?
+                        <a class="text-primary-600 decoration-2 hover:underline font-medium dark:text-primary-400"
+                            href="#">
+                            Créer un compte
+                        </a>
+                    </p>
+                </div>
+
+                <div class="mt-5">
+                    <!-- Form -->
+                    <form onsubmit="event.preventDefault(); window.location.href='index.html';">
+                        <div class="grid gap-y-4">
+                            <!-- Form Group -->
+                            <div>
+                                <label for="email" class="block text-sm mb-2 dark:text-white">Adresse email</label>
+                                <div class="relative">
+                                    <input type="email" id="email" name="email"
+                                        class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                        required value="syndic@immosyndic.com">
+                                    <div class="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
+                                        <i data-lucide="alert-circle" class="size-5 text-red-500"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Form Group -->
+
+                            <!-- Form Group -->
+                            <div>
+                                <div class="flex justify-between items-center">
+                                    <label for="password" class="block text-sm mb-2 dark:text-white">Mot de
+                                        passe</label>
+                                    <a class="text-sm text-primary-600 decoration-2 hover:underline font-medium dark:text-primary-400"
+                                        href="#">Mot de passe oublié ?</a>
+                                </div>
+                                <div class="relative">
+                                    <input type="password" id="password" name="password"
+                                        class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                        required value="password123">
+                                </div>
+                            </div>
+                            <!-- End Form Group -->
+
+                            <!-- Checkbox -->
+                            <div class="flex items-center">
+                                <div class="flex">
+                                    <input id="remember-me" name="remember-me" type="checkbox"
+                                        class="shrink-0 mt-0.5 border-gray-200 rounded text-primary-600 focus:ring-primary-500 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-primary-500 dark:checked:border-primary-500 dark:focus:ring-offset-gray-800">
+                                </div>
+                                <div class="ms-3">
+                                    <label for="remember-me" class="text-sm dark:text-white">Se souvenir de moi</label>
+                                </div>
+                            </div>
+                            <!-- End Checkbox -->
+
+                            <button type="submit"
+                                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-600 text-white hover:bg-primary-700 disabled:opacity-50 disabled:pointer-events-none">
+                                Se connecter
+                            </button>
+                        </div>
+                    </form>
+                    <!-- End Form -->
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

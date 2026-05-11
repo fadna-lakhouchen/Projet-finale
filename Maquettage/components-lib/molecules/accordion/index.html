@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Molecule: Accordion </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 max-w-lg dark:bg-neutral-900">
+
+    <h2 class="text-xl font-bold text-gray-800 mb-6 border-b pb-4 dark:text-white">Accordion </h2>
+
+    <div class="hs-accordion-group">
+        <div class="hs-accordion active border -mt-px first:rounded-t-lg last:rounded-b-lg dark:border-neutral-700"
+            id="hs-basic-bordered-heading-one">
+            <button
+                class="hs-accordion-toggle hs-accordion-active:text-blue-600 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 py-4 px-5 hover:text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:outline-none dark:focus:text-neutral-400"
+                aria-expanded="true" aria-controls="hs-basic-bordered-collapse-one">
+                <i data-lucide="info" class="shrink-0 size-4"></i>
+                Qu'est-ce que le fond de roulement ?
+                <i data-lucide="chevron-down"
+                    class="hs-accordion-active:rotate-180 shrink-0 size-4 ms-auto transition"></i>
+            </button>
+            <div id="hs-basic-bordered-collapse-one"
+                class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300" role="region"
+                aria-labelledby="hs-basic-bordered-heading-one">
+                <div class="pb-4 px-5">
+                    <p class="text-sm text-gray-800 dark:text-neutral-200">
+                        Le fond de roulement est une avance de trésorerie destinée à couvrir les dépenses courantes de
+                        la copropriété avant l'appel des charges.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hs-accordion border -mt-px first:rounded-t-lg last:rounded-b-lg dark:border-neutral-700"
+            id="hs-basic-bordered-heading-two">
+            <button
+                class="hs-accordion-toggle hs-accordion-active:text-blue-600 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 py-4 px-5 hover:text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:outline-none dark:focus:text-neutral-400"
+                aria-expanded="false" aria-controls="hs-basic-bordered-collapse-two">
+                <i data-lucide="help-circle" class="shrink-0 size-4"></i>
+                Comment signaler un incident ?
+                <i data-lucide="chevron-down"
+                    class="hs-accordion-active:rotate-180 shrink-0 size-4 ms-auto transition"></i>
+            </button>
+            <div id="hs-basic-bordered-collapse-two"
+                class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
+                role="region" aria-labelledby="hs-basic-bordered-heading-two">
+                <div class="pb-4 px-5">
+                    <p class="text-sm text-gray-800 dark:text-neutral-200">
+                        Vous pouvez signaler un incident directement via le bouton de création d'incident sur votre
+                        tableau de bord. Prenez une photo pour plus de clarté.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImmoSyndic - Accueil Résident</title>
+    <!-- Tailwind & Preline -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        primary: { 50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hide-for-locataire {
+            display: none;
+        }
+
+        body[data-role="proprietaire"] .hide-for-locataire {
+            display: block;
+        }
+
+        body[data-role="proprietaire"] .hide-for-locataire-flex {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-neutral-900" data-role="locataire">
+
+    <!-- ========== HEADER ========== -->
+    <header
+        class="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b border-gray-200 text-sm py-2.5 sm:py-4 lg:ps-64 dark:bg-neutral-800 dark:border-neutral-700 shadow-sm">
+        <nav class="flex basis-full items-center w-full mx-auto px-4 sm:px-6" aria-label="Global">
+            <div class="me-5 lg:me-0 lg:hidden">
+                <a class="flex-none text-xl font-semibold dark:text-white" href="index.html">ImmoSyndic</a>
+            </div>
+            <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3">
+                <div class="hidden sm:flex items-center gap-x-3">
+                    <h1 class="text-lg font-semibold text-gray-800 dark:text-white">Bonjour Hassan</h1>
+                    <span id="role-badge"
+                        class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200">Locataire</span>
+                    <div class="ml-4 flex items-center bg-gray-100 rounded-lg p-1 dark:bg-neutral-700">
+                        <button onclick="switchRole('locataire')" id="btn-locataire"
+                            class="px-2 py-1 text-xs font-medium bg-white shadow-sm rounded-md text-gray-700 dark:bg-neutral-800 dark:text-white transition-colors">Vue
+                            Locataire</button>
+                        <button onclick="switchRole('proprietaire')" id="btn-proprietaire"
+                            class="px-2 py-1 text-xs font-medium rounded-md text-gray-500 hover:text-gray-700 dark:text-neutral-400 dark:hover:text-white transition-colors">Vue
+                            Propriétaire</button>
+                    </div>
+                </div>
+                <!-- Controls -->
+                <div class="flex flex-row items-center justify-end gap-2">
+                    <a href="notifications.html"
+                        class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-neutral-700">
+                        <i data-lucide="bell" class="size-5"></i>
+                        <span
+                            class="absolute top-0 end-0 inline-flex items-center size-2 rounded-full bg-red-600 border-2 border-white dark:border-neutral-800"></span>
+                    </a>
+                    <div class="hs-dropdown [--placement:bottom-right] relative inline-flex">
+                        <button id="hs-dropdown-profile" type="button"
+                            class="w-[38px] h-[38px] inline-flex justify-center items-center rounded-full border border-transparent hover:bg-gray-100">
+                            <img class="inline-block size-[38px] rounded-full ring-2 ring-white"
+                                src="https://ui-avatars.com/api/?name=Hassan+Afaiz&background=4f46e5&color=fff"
+                                alt="Avatar">
+                        </button>
+                        <div class="hs-dropdown-menu transition-[opacity,margin] duration opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg p-2 mt-2"
+                            aria-labelledby="hs-dropdown-profile">
+                            <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg mb-2">
+                                <p class="text-sm text-gray-500">Connecté en tant que</p>
+                                <p class="text-sm font-medium text-gray-800">hassan.afaiz@email.com</p>
+                            </div>
+                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100"
+                                href="parametres.html"><i data-lucide="settings" class="size-4"></i> Paramètres</a>
+                            <hr class="my-2">
+                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-red-50"
+                                href="login.html"><i data-lucide="log-out" class="size-4"></i> Déconnexion</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========== SIDEBAR ========== -->
+    <div
+        class="sticky top-0 start-0 lg:fixed lg:bottom-0 lg:z-[60] size-full w-64 bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block hidden dark:bg-neutral-800 dark:border-neutral-700">
+        <div class="px-6 flex items-center gap-x-3 mb-8">
+            <div class="size-8 bg-primary-600 rounded-lg flex items-center justify-center text-white shadow-md">
+                <i data-lucide="building-2" class="size-5"></i>
+            </div>
+            <a class="flex-none text-xl font-bold dark:text-white" href="index.html">ImmoSyndic</a>
+        </div>
+
+        <nav class="hs-accordion-group p-6 w-full flex flex-col flex-wrap">
+            <ul class="space-y-1.5" id="nav-menu">
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-primary-50 text-sm text-primary-700 font-medium rounded-lg dark:bg-primary-900/30 dark:text-primary-400"
+                        href="index.html"><i data-lucide="layout-dashboard" class="size-4"></i> Vue d'ensemble</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400"
+                        href="charges.html"><i data-lucide="file-invoice" class="size-4"></i> Mes Charges</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400"
+                        href="paiements.html"><i data-lucide="credit-card" class="size-4"></i> Paiements</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400"
+                        href="incidents.html"><i data-lucide="alert-triangle" class="size-4"></i> Signaler un
+                        problème</a></li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400"
+                        href="notifications.html"><i data-lucide="bell" class="size-4"></i> Notifications <span
+                            class="ms-auto inline-flex items-center py-0.5 px-2 rounded-full text-xs font-medium bg-red-100 text-red-600">1</span></a>
+                </li>
+                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400"
+                        href="archives.html"><i data-lucide="folder-archive" class="size-4"></i> Archives</a></li>
+
+                <li class="hide-for-locataire mt-4 pt-4 border-t border-gray-200 dark:border-neutral-700"><span
+                        class="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Espace
+                        Propriétaire</span></li>
+                <li class="hide-for-locataire"><a
+                        class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400"
+                        href="documents.html"><i data-lucide="scale" class="size-4"></i> Documents juridiques</a></li>
+                <li class="hide-for-locataire"><a
+                        class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400"
+                        href="ag.html"><i data-lucide="users" class="size-4"></i> Assemblée Générale</a></li>
+
+                <li class="mt-4 pt-4 border-t border-gray-200 dark:border-neutral-700">
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400"
+                        href="parametres.html"><i data-lucide="settings" class="size-4"></i> Paramètres</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="w-full pt-6 px-4 sm:px-6 md:px-8 lg:ps-72 pb-12">
+        <section class="space-y-6">
+            <div class="flex justify-between items-end mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Vue d'ensemble</h2>
+                    <p class="text-sm text-gray-600 dark:text-neutral-400">Bienvenue dans votre espace résident.</p>
+                </div>
+                <button type="button" data-hs-overlay="#hs-modal-new-signalement-resident"
+                    class="py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-600 text-white hover:bg-primary-700 shadow-sm transition-colors">
+                    <i data-lucide="plus" class="size-4"></i>
+                    Signaler un problème
+                </button>
+            </div>
+
+            <div class="bg-red-50 border border-red-200 p-4 rounded-xl flex items-start gap-4 mb-6">
+                <i data-lucide="alert-circle" class="size-6 text-red-500 mt-0.5"></i>
+                <div class="flex-1">
+                    <h3 class="text-sm font-semibold text-red-800">Action requise : Charges impayées</h3>
+                    <p class="text-sm text-red-700 mt-1">Vous avez un solde de <strong class="font-bold">1,250
+                            MAD</strong> en attente de paiement.</p>
+                </div>
+                <a href="charges.html"
+                    class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors">Régler</a>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                <div class="flex flex-col bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm text-gray-500 font-medium">Charges en cours</p>
+                        <div class="p-2 bg-red-100 text-red-600 rounded-lg"><i data-lucide="file-warning"
+                                class="size-5"></i></div>
+                    </div>
+                    <div class="mt-3">
+                        <h3 class="text-2xl font-bold text-gray-800">1,250 MAD</h3>
+                        <p class="text-sm text-red-500 mt-1 font-medium"><i data-lucide="trending-up"
+                                class="inline size-3 mr-1"></i>À payer ce mois</p>
+                    </div>
+                </div>
+                <div class="flex flex-col bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm text-gray-500 font-medium">Paiements effectués</p>
+                        <div class="p-2 bg-green-100 text-green-600 rounded-lg"><i data-lucide="check-circle-2"
+                                class="size-5"></i></div>
+                    </div>
+                    <div class="mt-3">
+                        <h3 class="text-2xl font-bold text-gray-800">3,750 MAD</h3>
+                        <p class="text-sm text-gray-500 mt-1">Cumul annuel</p>
+                    </div>
+                </div>
+                <div class="flex flex-col bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm text-gray-500 font-medium">Problèmes ouverts</p>
+                        <div class="p-2 bg-orange-100 text-orange-600 rounded-lg"><i data-lucide="alert-triangle"
+                                class="size-5"></i></div>
+                    </div>
+                    <div class="mt-3">
+                        <h3 class="text-2xl font-bold text-gray-800">1</h3>
+                        <p class="text-sm text-gray-500 mt-1">En cours</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hide-for-locataire mt-6">
+                <div
+                    class="bg-primary-600 rounded-xl p-6 text-white shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div>
+                        <h3 class="font-bold text-lg mb-1">Rapport Financier - Exercice 2025</h3>
+                        <p class="text-primary-100 text-sm">Le bilan financier annuel est disponible pour consultation.
+                        </p>
+                    </div>
+                    <button
+                        class="shrink-0 bg-white text-primary-600 px-5 py-2 rounded-lg font-medium text-sm flex items-center gap-2"><i
+                            data-lucide="download" class="size-4"></i> PDF</button>
+                </div>
+            </div>
+
+            <div class="bg-white border border-gray-200 rounded-xl shadow-sm mt-8 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                    <h2 class="text-lg font-semibold text-gray-800">Activité récente</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Date</th>
+                                <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Activité
+                                </th>
+                                <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 text-sm text-gray-800">01 Mars 2026</td>
+                                <td class="px-6 py-4 text-sm text-gray-800">Facture de charges (T1)</td>
+                                <td class="px-6 py-4"><span
+                                        class="inline-flex items-center gap-1.5 py-1 px-2 rounded-md text-xs font-medium bg-red-100 text-red-800">À
+                                        payer</span></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 text-sm text-gray-800">15 Fév 2026</td>
+                                <td class="px-6 py-4 text-sm text-gray-800">Signalement "Ascenseur"</td>
+                                <td class="px-6 py-4"><span
+                                        class="inline-flex items-center gap-1.5 py-1 px-2 rounded-md text-xs font-medium bg-green-100 text-green-800">Résolu</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ========== END MAIN CONTENT ========== -->
+
+    <!-- ========== MODAL NOUVEAU SIGNALEMENT RESIDENT ========== -->
+    <div id="hs-modal-new-signalement-resident"
+        class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none"
+        role="dialog" tabindex="-1" aria-labelledby="hs-modal-new-signalement-resident-label">
+        <div
+            class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
+
+            <div
+                class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
+                    <h3 id="hs-modal-new-signalement-resident-label" class="font-bold text-gray-800 dark:text-white">
+                        Signaler un nouveau problème
+                    </h3>
+                    <button type="button"
+                        class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600"
+                        aria-label="Close" data-hs-overlay="#hs-modal-new-signalement-resident">
+                        <span class="sr-only">Close</span>
+                        <i data-lucide="x" class="size-4"></i>
+                    </button>
+                </div>
+                <div class="p-4 overflow-y-auto">
+                    <form>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2 dark:text-white">Catégorie</label>
+                                <select
+                                    class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                    <option selected>Sélectionnez une catégorie</option>
+                                    <option>Ascenseur</option>
+                                    <option>Plomberie / Fuite</option>
+                                    <option>Éclairage</option>
+                                    <option>Propreté</option>
+                                    <option>Autre</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2 dark:text-white">Brève description</label>
+                                <input type="text"
+                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400"
+                                    placeholder="Ex: Ampoule grillée 2ème étage">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2 dark:text-white">Détails
+                                    supplémentaires</label>
+                                <textarea rows="3"
+                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400"
+                                    placeholder="Plus d'informations sur le problème..."></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
+                    <button type="button"
+                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700"
+                        data-hs-overlay="#hs-modal-new-signalement-resident">
+                        Annuler
+                    </button>
+                    <button type="button"
+                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-primary-600 text-white hover:bg-primary-700"
+                        data-hs-overlay="#hs-modal-new-signalement-resident">
+                        Envoyer le signalement
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- ========== END MODAL ========== -->
+
+    <style>
+        /* Fallback for Preline plugin variants when using Tailwind CDN */
+        .hs-overlay.open {
+            pointer-events: auto !important;
+        }
+
+        .hs-overlay.open>div {
+            opacity: 1 !important;
+            margin-top: 1.75rem !important;
+        }
+    </style>
+
+    <script>
+        lucide.createIcons();
+        function switchRole(role) {
+            document.body.setAttribute('data-role', role);
+            document.getElementById('role-badge').textContent = role === 'locataire' ? 'Locataire' : 'Propriétaire';
+            document.getElementById('btn-locataire').className = role === 'locataire' ? 'px-2 py-1 text-xs font-medium bg-white shadow-sm rounded-md text-gray-700 dark:bg-neutral-800 dark:text-white' : 'px-2 py-1 text-xs font-medium rounded-md text-gray-500 hover:text-gray-700 dark:text-neutral-400 dark:hover:text-white';
+            document.getElementById('btn-proprietaire').className = role === 'proprietaire' ? 'px-2 py-1 text-xs font-medium bg-white shadow-sm rounded-md text-gray-700 dark:bg-neutral-800 dark:text-white' : 'px-2 py-1 text-xs font-medium rounded-md text-gray-500 hover:text-gray-700 dark:text-neutral-400 dark:hover:text-white';
+        }
+    </script>
+</body>
+
+</html>
+```

@@ -1,0 +1,84 @@
+@startuml ImmoSyndic_MVP_Web
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor "Résident" as Resident
+actor "Syndic" as Syndic
+actor "Administrateur" as Admin
+actor "Mobile" as Mobile
+
+' Hierarchy
+Resident <|-- Syndic
+Syndic <|-- Admin
+
+rectangle "Système ImmoSyndic - Sprint 1 (MVP) - Web" {
+
+  package "Authentification" {
+    usecase "S'authentifier" as Auth
+  }
+
+  package "Portail Web (Gestion)" {
+    package "Espace Résident" {
+      usecase "Consulter charges" as ViewCharges
+      usecase "Signaler problème" as ReportIssue
+    }
+    package "Espace Syndic" {
+      usecase "Créer compte" as Register
+      usecase "Gérer Résidents" as ManageResidents
+      usecase "Gérer immeubles" as ManageBuildings
+      usecase "Suivre paiements" as TrackPayments
+      usecase "Générer reçus" as GenReceipts
+      usecase "Suivre interventions" as TrackInterventions
+      usecase "Consulter historique" as ViewHistory
+    }
+    package "Espace Administrateur" {
+      usecase "Gérer comptes" as ManageUsers
+      usecase "Superviser immeubles" as Supervise
+      usecase "Valider données" as ValidateData
+      usecase "Gérer droits" as ManageRoles
+    }
+  }
+
+  package "API Mobile" {
+    usecase "Consommer API" as ConsumeAPI
+    
+    ConsumeAPI ..> ViewCharges : <<include>>
+  }
+
+  ' Includes
+  ViewCharges ..> Auth : <<include>>
+  ReportIssue ..> Auth : <<include>>
+  ManageResidents ..> Auth : <<include>>
+  ManageBuildings ..> Auth : <<include>>
+  TrackPayments ..> Auth : <<include>>
+  GenReceipts ..> Auth : <<include>>
+  TrackInterventions ..> Auth : <<include>>
+  ViewHistory ..> Auth : <<include>>
+  ManageUsers ..> Auth : <<include>>
+  Supervise ..> Auth : <<include>>
+  ValidateData ..> Auth : <<include>>
+  ManageRoles ..> Auth : <<include>>
+}
+
+' Connections
+Resident -- ViewCharges
+Resident -- ReportIssue
+
+Syndic -- Register
+Syndic -- ManageResidents
+Syndic -- ManageBuildings
+Syndic -- TrackPayments
+Syndic -- GenReceipts
+Syndic -- TrackInterventions
+Syndic -- ViewHistory
+
+Admin -- ManageUsers
+Admin -- Supervise
+Admin -- ValidateData
+Admin -- ManageRoles
+
+' Connections Mobile
+Mobile -- ConsumeAPI
+
+@enduml

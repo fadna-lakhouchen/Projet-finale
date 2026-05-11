@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Atom: Tooltip </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-16 bg-gray-50 flex flex-col items-center justify-center dark:bg-neutral-900">
+
+    <h2 class="text-xl font-bold text-gray-800 absolute top-8 left-8 border-b pb-4 dark:text-white">Tooltip </h2>
+
+    <div class="hs-tooltip inline-block [--placement:top]">
+        <button type="button"
+            class="hs-tooltip-toggle inline-flex justify-center items-center size-10 text-sm font-semibold rounded-full border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800">
+            <i data-lucide="info" class="size-4"></i>
+            <span
+                class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-neutral-700"
+                role="tooltip">
+                Plus d'informations
+            </span>
+        </button>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

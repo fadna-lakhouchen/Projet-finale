@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Atom: Radio </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 flex flex-col gap-4 max-w-sm dark:bg-neutral-900">
+
+    <h2 class="text-xl font-bold text-gray-800 mb-4 border-b pb-4 dark:text-white">Radio </h2>
+
+    <div class="flex">
+        <input type="radio" name="hs-radio-group"
+            class="shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+            id="hs-radio-1" checked>
+        <label for="hs-radio-1" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Payer par carte</label>
+    </div>
+
+    <div class="flex">
+        <input type="radio" name="hs-radio-group"
+            class="shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+            id="hs-radio-2">
+        <label for="hs-radio-2" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Payer par virement</label>
+    </div>
+
+    <div class="flex">
+        <input type="radio" name="hs-radio-group"
+            class="shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+            id="hs-radio-3" disabled>
+        <label for="hs-radio-3" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Prélèvement automatique
+            (Indisponible)</label>
+    </div>
+
+</body>
+
+</html>

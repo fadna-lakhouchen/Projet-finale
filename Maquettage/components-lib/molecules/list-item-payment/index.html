@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Molecule: List Item Payment </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 max-w-lg dark:bg-neutral-900">
+
+    <h2 class="text-xl font-bold text-gray-800 mb-6 border-b pb-4 dark:text-white">List Item Payment </h2>
+
+    <div
+        class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+        <div class="p-4 md:p-5">
+            <ul class="flex flex-col divide-y divide-gray-200 dark:divide-neutral-700">
+                <!-- Ligne de paiement success -->
+                <li
+                    class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                    <div class="flex justify-between w-full items-center">
+                        <div class="flex items-center gap-x-3">
+                            <span
+                                class="size-8 flex justify-center items-center rounded-full bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-500">
+                                <i data-lucide="check" class="size-4"></i>
+                            </span>
+                            <div>
+                                <span class="block font-semibold">Charges T1 2026</span>
+                                <span class="block text-xs text-gray-500 dark:text-neutral-500">Prélèvement automatique
+                                    • 01 Jan 2026</span>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <span class="block font-bold">-400 MAD</span>
+                            <span
+                                class="inline-flex items-center gap-x-1.5 py-0.5 px-2 rounded-full text-[10px] font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/20 dark:text-teal-500">Payé</span>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Ligne de paiement attente -->
+                <li
+                    class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white bg-yellow-50/50 dark:bg-yellow-900/10 transition hover:bg-yellow-50 dark:hover:bg-yellow-900/20">
+                    <div class="flex justify-between w-full items-center">
+                        <div class="flex items-center gap-x-3">
+                            <span
+                                class="size-8 flex justify-center items-center rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-500">
+                                <i data-lucide="clock" class="size-4"></i>
+                            </span>
+                            <div>
+                                <span class="block font-semibold">Charges T2 2026</span>
+                                <span class="block text-xs text-gray-500 dark:text-neutral-500">Échéance : 01 Avr
+                                    2026</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-x-4">
+                            <div class="text-end">
+                                <span class="block font-bold text-gray-800 dark:text-neutral-200">400 MAD</span>
+                                <span
+                                    class="inline-flex items-center gap-x-1.5 py-0.5 px-2 rounded-full text-[10px] font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-800/20 dark:text-yellow-500">À
+                                    payer</span>
+                            </div>
+                            <button type="button"
+                                class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                                <i data-lucide="credit-card" class="size-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

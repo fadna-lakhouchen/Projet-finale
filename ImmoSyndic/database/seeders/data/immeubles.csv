@@ -1,0 +1,4 @@
+id,syndic_id,nom,adresse,ville,nombre_etages,nombre_appartements,image
+1,2,Résidence Al Amal,12 Rue Hassan II,Casablanca,5,20,immeubles/amal.jpg
+2,2,Résidence Nour,45 Boulevard Mohammed V,Rabat,4,16,immeubles/nour.jpg
+3,3,Résidence Al Fath,8 Avenue des FAR,Marrakech,6,24,immeubles/fath.jpg

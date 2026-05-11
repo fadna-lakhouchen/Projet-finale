@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Portal ImmoSyndic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            50: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-neutral-900 min-h-screen flex items-center justify-center p-6">
+    <div class="max-w-3xl w-full text-center space-y-8">
+        <!-- Icon/Logo Area -->
+        <div class="relative inline-flex">
+            <div
+                class="size-24 bg-primary-600 rounded-3xl flex items-center justify-center text-white shadow-2xl shadow-primary-500/20 rotate-3 transition-transform hover:rotate-0">
+                <i data-lucide="layout-template" class="size-12"></i>
+            </div>
+            <div
+                class="absolute -bottom-2 -p-2 size-10 bg-teal-500 rounded-xl flex items-center justify-center text-white shadow-lg -rotate-12 border-4 border-gray-50 dark:border-neutral-900">
+                <i data-lucide="check" class="size-6"></i>
+            </div>
+        </div>
+
+        <!-- Welcome Text -->
+        <div class="space-y-4">
+            <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight sm:text-5xl">
+                Bienvenue sur <span class="text-primary-600">ImmoSyndic</span> Portal
+            </h1>
+            <p class="text-lg text-gray-600 dark:text-neutral-400 max-w-xl mx-auto">
+                Explorez l'évolution de notre interface utilisateur. Utilisez la barre latérale pour naviguer entre les
+                mockups fonctionnels et notre bibliothèque de composants atomiques.
+            </p>
+        </div>
+
+        <!-- Quick Tips -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8">
+            <div
+                class="p-5 bg-white border border-gray-200 rounded-2xl dark:bg-neutral-800 dark:border-neutral-700 text-left">
+                <div
+                    class="size-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-3 dark:bg-blue-900/30 dark:text-blue-500">
+                    <i data-lucide="sidebar" class="size-4"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 dark:text-neutral-200">Navigation</h3>
+                <p class="text-sm text-gray-500 dark:text-neutral-500 mt-1">Utilisez l'explorateur à gauche pour charger
+                    les pages.</p>
+            </div>
+            <div
+                class="p-5 bg-white border border-gray-200 rounded-2xl dark:bg-neutral-800 dark:border-neutral-700 text-left">
+                <div
+                    class="size-8 bg-teal-100 rounded-lg flex items-center justify-center text-teal-600 mb-3 dark:bg-teal-900/30 dark:text-teal-500">
+                    <i data-lucide="component" class="size-4"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 dark:text-neutral-200">Composants</h3>
+                <p class="text-sm text-gray-500 dark:text-neutral-500 mt-1">Accédez aux Atomes et Molécules du Design
+                    System.</p>
+            </div>
+            <div
+                class="p-5 bg-white border border-gray-200 rounded-2xl dark:bg-neutral-800 dark:border-neutral-700 text-left">
+                <div
+                    class="size-8 bg-amber-100 rounded-lg flex items-center justify-center text-amber-600 mb-3 dark:bg-amber-900/30 dark:text-amber-500">
+                    <i data-lucide="palette" class="size-4"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 dark:text-neutral-200">Charte</h3>
+                <p class="text-sm text-gray-500 dark:text-neutral-500 mt-1">Consultez les tokens et couleurs via le lien
+                    en haut.</p>
+            </div>
+        </div>
+
+        <div class="pt-10 flex items-center justify-center gap-x-2 text-sm text-gray-400 dark:text-neutral-600">
+            <i data-lucide="mouse-pointer-2" class="size-4"></i>
+            Sélectionnez un élément pour commencer l'exploration
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Atom: Spinner </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+</head>
+
+<body class="p-8 bg-gray-50 flex flex-col gap-6 items-start dark:bg-neutral-900">
+
+    <h2 class="text-xl font-bold text-gray-800 mb-4 border-b pb-4 w-full dark:text-white">Spinner </h2>
+
+    <div class="flex gap-8 items-center">
+        <!-- Base Spinner -->
+        <div class="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500"
+            role="status" aria-label="loading">
+            <span class="sr-only">Loading...</span>
+        </div>
+
+        <!-- Button with Spinner -->
+        <button type="button"
+            class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+            <span
+                class="animate-spin inline-block size-4 border-[3px] border-current border-t-transparent text-white rounded-full"
+                role="status" aria-label="loading">
+                <span class="sr-only">Loading...</span>
+            </span>
+            Chargement
+        </button>
+    </div>
+
+</body>
+
+</html>

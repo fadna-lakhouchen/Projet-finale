@@ -1,0 +1,53 @@
+@startuml ImmoSyndic_Global_Resident
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor "Résident" as Resident
+actor "Mobile" as Mobile
+
+rectangle "Système ImmoSyndic - Global (Vision Résident)" {
+
+  package "Authentification" {
+    usecase "S'authentifier" as Auth
+  }
+
+  package "Portail Web (Consulation & Signalement)" {
+    package "Espace Résident (Web)" {
+      usecase "Consulter charges" as ViewChargesWeb
+      usecase "Signaler problème" as ReportIssueWeb
+      usecase "Recevoir notifications" as GetNotifsWeb
+      usecase "Consulter archives" as ViewArchivesWeb
+      usecase "Exporter PDF" as ExportPDFWeb
+      usecase "Personnaliser alertes" as SetAlertsWeb
+
+      ViewChargesWeb ..> Auth : <<include>>
+      ReportIssueWeb ..> Auth : <<include>>
+      GetNotifsWeb ..> Auth : <<include>>
+      ViewArchivesWeb ..> Auth : <<include>>
+      ExportPDFWeb ..> Auth : <<include>>
+      SetAlertsWeb ..> Auth : <<include>>
+    }
+  }
+
+  package "API Mobile" {
+    usecase "Consommer API" as ConsumeAPI
+    
+    ConsumeAPI ..> ViewChargesWeb : <<include>>
+    ConsumeAPI ..> GetNotifsWeb : <<include>>
+    ConsumeAPI ..> ViewArchivesWeb : <<include>>
+  }
+}
+
+' Web Connections
+Resident -- ViewChargesWeb
+Resident -- ReportIssueWeb
+Resident -- GetNotifsWeb
+Resident -- ViewArchivesWeb
+Resident -- ExportPDFWeb
+Resident -- SetAlertsWeb
+
+' Mobile Connections
+Mobile -- ConsumeAPI
+
+@enduml

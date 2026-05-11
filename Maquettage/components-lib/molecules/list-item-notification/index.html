@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Molecule: List Item Notification </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="p-8 bg-gray-50 max-w-lg dark:bg-neutral-900">
+
+    <h2 class="text-xl font-bold text-gray-800 mb-6 border-b pb-4 dark:text-white">List Item Notification </h2>
+
+    <div
+        class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+        <div class="p-4 md:p-5">
+            <ul class="flex flex-col divide-y divide-gray-200 dark:divide-neutral-700">
+                <!-- Non lue -->
+                <li
+                    class="inline-flex flex-col gap-2 py-3 px-4 bg-blue-50/50 hover:bg-blue-50 transition dark:bg-blue-900/10 dark:hover:bg-blue-900/20">
+                    <div class="flex justify-between">
+                        <div class="flex gap-x-3">
+                            <span
+                                class="size-8 flex justify-center items-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-500">
+                                <i data-lucide="info" class="size-4"></i>
+                            </span>
+                            <div class="grow">
+                                <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">Rappel de
+                                    paiement</span>
+                                <span class="block text-xs text-gray-500 dark:text-neutral-500">N'oubliez pas que
+                                    l'échéance pour les charges du Trimestre 2 approche.</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <span class="size-2 bg-blue-600 rounded-full"></span>
+                            <span class="mt-2 text-[10px] text-gray-400 dark:text-neutral-600">2h</span>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Lue -->
+                <li class="inline-flex flex-col gap-2 py-3 px-4 hover:bg-gray-50 transition dark:hover:bg-neutral-800">
+                    <div class="flex justify-between">
+                        <div class="flex gap-x-3">
+                            <span
+                                class="size-8 flex justify-center items-center rounded-full bg-gray-100 text-gray-500 dark:bg-neutral-800 dark:text-neutral-500">
+                                <i data-lucide="wrench" class="size-4"></i>
+                            </span>
+                            <div class="grow">
+                                <span class="block text-sm font-medium text-gray-800 dark:text-neutral-200">Intervention
+                                    terminée</span>
+                                <span class="block text-xs text-gray-500 dark:text-neutral-500">Le plombier a réparé la
+                                    fuite signalée. Le dossier #INT-202 est clos.</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <span class="text-[10px] text-gray-400 dark:text-neutral-600">Hier</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>
