@@ -152,44 +152,9 @@ style: |
 </div>
 
 ---
-## 3. Branche Fonctionnelle : Design Thinking
-### 1. EMPATHIE : Résident (Hassan)
 
-<div class="img-container">
-  <img src="images/empathie_hassan.png" class="img-methodo" alt="Empathie Hassan">
-</div>
+## Branche Fonctionnelle : DÉFINITION
 
----
-
-## Branche Fonctionnelle : Design Thinking
-### 1. EMPATHIE : Résidente & Copropriétaire (Hasnae)
-
-<div class="img-container">
-  <img src="images/empathie_hasnae.png" class="img-methodo" alt="Empathie Hasnae">
-</div>
-
----
-
-## Branche Fonctionnelle : Design Thinking
-### 1. EMPATHIE : Syndic (Youssef)
-
-<div class="img-container">
-  <img src="images/empathie_youssef.png" class="img-methodo" alt="Empathie Youssef">
-</div>
-
----
-
-## Branche Fonctionnelle : Design Thinking
-### 1. EMPATHIE : Administrateur (Mohamed)
-
-<div class="img-container">
-  <img src="images/empathie_mohamed.png" class="img-methodo" alt="Empathie Mohamed">
-</div>
-
----
-
-## Branche Fonctionnelle : Design Thinking
-### 2. DÉFINITION
 
 <div class="img-container">
   <div class="dt-card" style="border-top-color: #f39c12;">
@@ -260,7 +225,7 @@ style: |
 </div>
 
 ---
-## Branche Fonctionnelle : Maquettes (UI/UX)
+## Branche Fonctionnelle : Maquettes (UI/UX) Web
 
 
 <p style="font-size: 0.3rem; color: #666;">Interface Administration</p>
@@ -272,7 +237,7 @@ style: |
 </div>
 
 ---
-## Branche Fonctionnelle : Maquettes (UI/UX)
+## Branche Fonctionnelle : Maquettes (UI/UX) Web
 
 
 <p style="font-size: 0.3rem; color: #666;">Interface Syndic</p>
@@ -283,7 +248,7 @@ style: |
 </div>
 
 ---
-## Branche Fonctionnelle : Maquettes (UI/UX)
+## Branche Fonctionnelle : Maquettes (UI/UX) Web
 
 
 <p style="font-size: 0.3rem; color: #666;">Interface Résident</p>
@@ -293,6 +258,13 @@ style: |
     
   </div>
 </div>
+
+---
+## Branche Fonctionnelle : Maquettes (UI/UX) Mobile
+
+<div class="maquette-grid">
+  <div style="text-align: center;">
+    <img src="images/dashboard_resident.png" class="img-methodo" style="height: 360px; width: auto;" alt="Maquette Desktop">
 
 ---
 
