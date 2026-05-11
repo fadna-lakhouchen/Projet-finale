@@ -3,8 +3,7 @@
 @push('styles')
 <style>
     .hide-for-locataire { display: none; }
-    body[data-role="proprietaire"] .hide-for-locataire { display: block; }
-    body[data-role="proprietaire"] .hide-for-locataire-flex { display: flex; }
+    body[data-role="proprietaire"] .hide-for-lotaire-flex { display: flex; }
 </style>
 @endpush
 
