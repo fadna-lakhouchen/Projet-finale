@@ -24,6 +24,7 @@ class User extends Authenticatable
         'email',
         'password',
         'telephone',
+        'cin',
         'is_active',
         'preferences_alertes',
         'role',

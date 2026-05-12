@@ -16,15 +16,29 @@ class UserController extends Controller
             'prenom' => 'required|string|max:255',
             'nom' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'telephone' => 'nullable|string|max:20',
+            'cin' => 'nullable|string|max:20',
+            'notes' => 'nullable|string',
+            'type_resident' => 'required|string|in:locataire,propriétaire',
+            'appartement_id' => 'required|exists:appartements,id',
+            'date_entree' => 'required|date',
         ]);
 
         $user = User::create([
             'prenom' => $request->prenom,
             'nom' => $request->nom,
             'email' => $request->email,
+            'telephone' => $request->telephone,
+            'cin' => $request->cin,
+            'notes' => $request->notes,
             'password' => Hash::make('password'), // Mot de passe par défaut
             'role' => 'resident',
             'is_active' => true,
+        ]);
+
+        $user->appartements()->attach($request->appartement_id, [
+            'type_resident' => ucfirst($request->type_resident),
+            'date_entree' => $request->date_entree,
         ]);
 
         return back()->with('success', 'Résident ajouté avec succès.');
@@ -37,9 +51,22 @@ class UserController extends Controller
             'prenom' => 'required|string|max:255',
             'nom' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'telephone' => 'nullable|string|max:20',
+            'cin' => 'nullable|string|max:20',
+            'notes' => 'nullable|string',
+            'type_resident' => 'required|string|in:locataire,propriétaire',
+            'appartement_id' => 'required|exists:appartements,id',
+            'date_entree' => 'required|date',
         ]);
 
-        $user->update($request->only(['prenom', 'nom', 'email']));
+        $user->update($request->only(['prenom', 'nom', 'email', 'telephone', 'cin', 'notes']));
+
+        $user->appartements()->sync([
+            $request->appartement_id => [
+                'type_resident' => ucfirst($request->type_resident),
+                'date_entree' => $request->date_entree,
+            ]
+        ]);
 
         return back()->with('success', 'Résident mis à jour avec succès.');
     }

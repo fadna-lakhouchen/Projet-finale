@@ -8,14 +8,14 @@
     openVille: false,
     openStatut: false,
     isEditing: false,
-    immeubleEnCours: { id: '', nom: '', adresse: '', nb_appartements: '' },
+    immeubleEnCours: { id: '', nom: '', adresse: '', ville: '', nombre_etages: '', nombre_appartements: '' },
     initAjout() {
         this.isEditing = false;
-        this.immeubleEnCours = { id: '', nom: '', adresse: '', nb_appartements: '' };
+        this.immeubleEnCours = { id: '', nom: '', adresse: '', ville: '', nombre_etages: '', nombre_appartements: '' };
     },
-    initEdit(id, nom, adresse, nb) {
+    initEdit(id, nom, adresse, ville, nb_etages, nb_app) {
         this.isEditing = true;
-        this.immeubleEnCours = { id: id, nom: nom, adresse: adresse, nb_appartements: nb };
+        this.immeubleEnCours = { id: id, nom: nom, adresse: adresse, ville: ville, nombre_etages: nb_etages, nombre_appartements: nb_app };
     },
     matches(nom, ville, statut) {
         const matchesSearch = nom.toLowerCase().includes(this.search.toLowerCase());
@@ -74,7 +74,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                             <div class="inline-flex items-center gap-x-2">
-                                <button @click="initEdit('{{ $immeuble->id }}', '{{ addslashes($immeuble->nom) }}', '{{ addslashes($immeuble->adresse) }}', {{ $immeuble->appartements->count() }})" type="button" data-hs-overlay="#hs-modal-add-immeuble" class="py-2 px-2 text-blue-600 hover:bg-gray-100 rounded-lg border border-gray-200" title="Modifier">
+                                <button @click="initEdit('{{ $immeuble->id }}', '{{ addslashes($immeuble->nom) }}', '{{ addslashes($immeuble->adresse) }}', '{{ addslashes($immeuble->ville) }}', {{ $immeuble->nombre_etages }}, {{ $immeuble->nombre_appartements }})" type="button" data-hs-overlay="#hs-modal-add-immeuble" class="py-2 px-2 text-blue-600 hover:bg-gray-100 rounded-lg border border-gray-200" title="Modifier">
                                     <i data-lucide="edit-2" class="size-4"></i>
                                 </button>
                                 <button type="button" class="py-2 px-2 text-red-600 hover:bg-red-50 rounded-lg border border-gray-200" title="Supprimer">
@@ -110,15 +110,27 @@
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-sm font-medium mb-2 dark:text-white">Nom de l'immeuble</label>
-                                <input x-model="immeubleEnCours.nom" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Résidence Al Amal">
+                                <input name="nom" x-model="immeubleEnCours.nom" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Résidence Al Amal" required>
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2 dark:text-white">Adresse complète</label>
-                                <input x-model="immeubleEnCours.adresse" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="14 Rue des Oliviers, Rabat">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 dark:text-white">Ville</label>
+                                    <input name="ville" x-model="immeubleEnCours.ville" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Casablanca" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 dark:text-white">Adresse complète</label>
+                                    <input name="adresse" x-model="immeubleEnCours.adresse" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="14 Rue des Oliviers" required>
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2 dark:text-white">Nombre d'appartements</label>
-                                <input x-model="immeubleEnCours.nb_appartements" type="number" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 dark:text-white">Nombre d'étages</label>
+                                    <input name="nombre_etages" x-model="immeubleEnCours.nombre_etages" type="number" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="0" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 dark:text-white">Nombre d'appartements</label>
+                                    <input name="nombre_appartements" x-model="immeubleEnCours.nombre_appartements" type="number" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="0" required>
+                                </div>
                             </div>
                         </div>
                         <div class="flex justify-end items-center gap-x-2 mt-6">
