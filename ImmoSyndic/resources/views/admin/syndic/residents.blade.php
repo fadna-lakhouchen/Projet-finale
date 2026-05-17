@@ -8,14 +8,23 @@
     openImm: false,
     openStat: false,
     isEditing: false,
-    residentEnCours: { id: '', prenom: '', nom: '', email: '', role: '', immeuble_id: '' },
+    residentEnCours: { id: '', prenom: '', nom: '', email: '', telephone: '', cin: '', notes: '', role: 'resident', type_resident: 'locataire', immeuble_id: '', appartement_id: '', date_entree: '' },
+    init() {
+        this.$watch('residentEnCours.immeuble_id', (value) => {
+            if (!this.isEditing) {
+                this.residentEnCours.appartement_id = '';
+            }
+        });
+    },
     initAjout() {
         this.isEditing = false;
-        this.residentEnCours = { id: '', prenom: '', nom: '', email: '', role: '', immeuble_id: '' };
+        this.residentEnCours = { id: '', prenom: '', nom: '', email: '', telephone: '', cin: '', notes: '', role: 'resident', type_resident: 'locataire', immeuble_id: '', appartement_id: '', date_entree: '' };
+        if (window.editor) window.editor.commands.setContent('');
     },
-    initEdit(id, prenom, nom, email, role, immeuble_id) {
+    initEdit(id, prenom, nom, email, telephone, cin, type, immeuble_id, appt_id, date_e, notes) {
         this.isEditing = true;
-        this.residentEnCours = { id: id, prenom: prenom, nom: nom, email: email, role: role, immeuble_id: immeuble_id };
+        this.residentEnCours = { id: id, prenom: prenom, nom: nom, email: email, telephone: telephone, cin: cin, notes: notes, role: 'resident', type_resident: type, immeuble_id: immeuble_id, appartement_id: appt_id, date_entree: date_e };
+        if (window.editor) window.editor.commands.setContent(notes || '');
     },
     matches(name, immeuble, role) {
         const s = this.search.toLowerCase();
@@ -109,7 +118,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                             <div class="inline-flex items-center gap-x-2">
-                                <button @click="initEdit('{{ $resident->id }}', '{{ addslashes($resident->prenom) }}', '{{ addslashes($resident->nom) }}', '{{ addslashes($resident->email) }}', '{{ $typeResident === 'Propriétaire' ? 'propriétaire' : 'locataire' }}', '{{ $immeubleId }}')" type="button" data-hs-overlay="#hs-modal-add-resident" class="py-2 px-2 text-blue-600 hover:bg-gray-100 rounded-lg border border-gray-200" title="Modifier">
+                                <button @click="initEdit('{{ $resident->id }}', '{{ addslashes($resident->prenom) }}', '{{ addslashes($resident->nom) }}', '{{ addslashes($resident->email) }}', '{{ $resident->telephone }}', '{{ $resident->cin ?? '' }}', '{{ strtolower($typeResident) }}', '{{ $immeubleId }}', '{{ $appt ? $appt->id : '' }}', '{{ $appt ? $appt->pivot->date_entree : '' }}', '{{ addslashes($resident->notes ?? '') }}')" type="button" data-hs-overlay="#hs-modal-add-resident" class="py-2 px-2 text-blue-600 hover:bg-gray-100 rounded-lg border border-gray-200" title="Modifier">
                                     <i data-lucide="edit-2" class="size-4"></i>
                                 </button>
                                 <form action="{{ route('syndic.residents.destroy', $resident->id) }}" method="POST" onsubmit="return confirm('Supprimer ce résident ?');">
@@ -150,34 +159,105 @@
                             <div class="grid sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-medium mb-2 dark:text-white">Prénom</label>
-                                    <input x-model="residentEnCours.prenom" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                    <input name="prenom" x-model="residentEnCours.prenom" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" required>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium mb-2 dark:text-white">Nom</label>
-                                    <input x-model="residentEnCours.nom" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                    <input name="nom" x-model="residentEnCours.nom" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" required>
                                 </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2 dark:text-white">Email</label>
-                                <input x-model="residentEnCours.email" type="email" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
                             </div>
                             <div class="grid sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-medium mb-2 dark:text-white">Rôle</label>
-                                    <select x-model="residentEnCours.role" class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
-                                        <option value="">Sélectionner le rôle</option>
-                                        <option value="propriétaire">Propriétaire</option>
-                                        <option value="locataire">Locataire</option>
-                                    </select>
+                                    <label class="block text-sm font-medium mb-2 dark:text-white">Email</label>
+                                    <input name="email" x-model="residentEnCours.email" type="email" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" required>
                                 </div>
                                 <div>
+                                    <label class="block text-sm font-medium mb-2 dark:text-white">Téléphone</label>
+                                    <input name="telephone" x-model="residentEnCours.telephone" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="0600000000">
+                                </div>
+                            </div>
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 dark:text-white">CIN</label>
+                                    <input name="cin" x-model="residentEnCours.cin" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="AB123456">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 dark:text-white">Type</label>
+                                    <select name="type_resident" x-model="residentEnCours.type_resident" class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                        <option value="locataire">Locataire</option>
+                                        <option value="propriétaire">Propriétaire</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
                                     <label class="block text-sm font-medium mb-2 dark:text-white">Immeuble</label>
-                                    <select x-model="residentEnCours.immeuble_id" class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                    <select name="immeuble_id" x-model="residentEnCours.immeuble_id" class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" required>
                                         <option value="">Sélectionner</option>
                                         @foreach($immeubles as $immeuble)
                                             <option value="{{ $immeuble->id }}">{{ $immeuble->nom }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 dark:text-white">Appartement</label>
+                                    <select name="appartement_id" x-model="residentEnCours.appartement_id" class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" required>
+                                        <option value="">Sélectionner</option>
+                                        @foreach($immeubles as $immeuble)
+                                            @foreach($immeuble->appartements as $appt)
+                                                <option 
+                                                    value="{{ $appt->id }}" 
+                                                    x-show="residentEnCours.immeuble_id == '{{ $immeuble->id }}'"
+                                                    x-bind:disabled="residentEnCours.immeuble_id != '{{ $immeuble->id }}'"
+                                                >
+                                                    N° {{ $appt->numero }} (Étage {{ $appt->etage }})
+                                                </option>
+                                            @endforeach
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2 dark:text-white">Date d'entrée</label>
+                                <input name="date_entree" x-model="residentEnCours.date_entree" type="date" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" required>
+                            </div>
+                            <!-- Tiptap -->
+                            <div>
+                                <label class="block text-sm font-medium mb-2 dark:text-white">Notes</label>
+                                <input type="hidden" name="notes" x-model="residentEnCours.notes" style="display: none !important;">
+                                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden dark:bg-neutral-900 dark:border-neutral-700">
+                                    <div id="hs-editor-tiptap">
+                                        <div class="sticky top-0 bg-white flex align-middle gap-x-0.5 border-b border-gray-200 p-2 dark:bg-neutral-900 dark:border-neutral-700">
+                                            <button class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-800" type="button" data-hs-editor-bold>
+                                                <i data-lucide="bold" class="size-4"></i>
+                                            </button>
+                                            <button class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-800" type="button" data-hs-editor-italic>
+                                                <i data-lucide="italic" class="size-4"></i>
+                                            </button>
+                                            <button class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-800" type="button" data-hs-editor-underline>
+                                                <i data-lucide="underline" class="size-4"></i>
+                                            </button>
+                                            <button class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-800" type="button" data-hs-editor-strike>
+                                                <i data-lucide="strikethrough" class="size-4"></i>
+                                            </button>
+                                            <button class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-800" type="button" data-hs-editor-link>
+                                                <i data-lucide="link" class="size-4"></i>
+                                            </button>
+                                            <button class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-800" type="button" data-hs-editor-ol>
+                                                <i data-lucide="list-ordered" class="size-4"></i>
+                                            </button>
+                                            <button class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-800" type="button" data-hs-editor-ul>
+                                                <i data-lucide="list" class="size-4"></i>
+                                            </button>
+                                            <button class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-800" type="button" data-hs-editor-blockquote>
+                                                <i data-lucide="quote" class="size-4"></i>
+                                            </button>
+                                            <button class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-800" type="button" data-hs-editor-code>
+                                                <i data-lucide="code" class="size-4"></i>
+                                            </button>
+                                        </div>
+                                        <div class="h-40 overflow-auto p-4 focus:outline-none tiptap-content" data-hs-editor-field></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -191,4 +271,72 @@
         </div>
     </div>
 </div>
+@push('styles')
+<style>
+    .tiptap-content .ProseMirror {
+        outline: none;
+        min-height: 100%;
+    }
+    .tiptap-content p.is-editor-empty:first-child::before {
+        content: attr(data-placeholder);
+        float: left;
+        color: #adb5bd;
+        pointer-events: none;
+        height: 0;
+    }
+    /* Style for lists inside editor */
+    .tiptap-content ul { list-style-type: disc; padding-left: 1.5rem; }
+    .tiptap-content ol { list-style-type: decimal; padding-left: 1.5rem; }
+    .tiptap-content blockquote { border-left: 3px solid #ddd; padding-left: 1rem; font-style: italic; }
+    .tiptap-content code { background: #f0f0f0; padding: 0.2rem 0.4rem; border-radius: 4px; }
+</style>
+@endpush
+@push('scripts')
+<script type="module">
+    import { Editor } from 'https://esm.sh/@tiptap/core';
+    import StarterKit from 'https://esm.sh/@tiptap/starter-kit';
+    import Underline from 'https://esm.sh/@tiptap/extension-underline';
+    import Link from 'https://esm.sh/@tiptap/extension-link';
+
+    const editor = new Editor({
+        element: document.querySelector('#hs-editor-tiptap [data-hs-editor-field]'),
+        extensions: [
+            StarterKit,
+            Underline,
+            Link.configure({
+                openOnClick: false,
+            }),
+        ],
+        content: '',
+        onUpdate({ editor }) {
+            const html = editor.getHTML();
+            const el = document.querySelector('[x-data]');
+            const alpineData = Alpine.$data(el);
+            if (alpineData) alpineData.residentEnCours.notes = html;
+        }
+    });
+
+    window.editor = editor;
+
+    const actions = [
+        { id: 'bold', action: () => editor.chain().focus().toggleBold().run() },
+        { id: 'italic', action: () => editor.chain().focus().toggleItalic().run() },
+        { id: 'underline', action: () => editor.chain().focus().toggleUnderline().run() },
+        { id: 'strike', action: () => editor.chain().focus().toggleStrike().run() },
+        { id: 'link', action: () => {
+            const url = window.prompt('URL');
+            if (url) editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+        }},
+        { id: 'ol', action: () => editor.chain().focus().toggleOrderedList().run() },
+        { id: 'ul', action: () => editor.chain().focus().toggleBulletList().run() },
+        { id: 'blockquote', action: () => editor.chain().focus().toggleBlockquote().run() },
+        { id: 'code', action: () => editor.chain().focus().toggleCode().run() },
+    ];
+
+    actions.forEach(({ id, action }) => {
+        const btn = document.querySelector(`[data-hs-editor-${id}]`);
+        if (btn) btn.addEventListener('click', action);
+    });
+</script>
+@endpush
 @endsection

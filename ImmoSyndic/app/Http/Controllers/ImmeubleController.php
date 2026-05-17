@@ -13,9 +13,10 @@ class ImmeubleController extends Controller
         $request->validate([
             'nom' => 'required|string|max:255',
             'adresse' => 'required|string|max:255',
+            'ville' => 'required|string|max:255',
+            'nombre_etages' => 'required|integer|min:0',
+            'nombre_appartements' => 'required|integer|min:0',
             'syndic_id' => 'nullable|exists:users,id',
-            'nombre_etages' => 'nullable|integer',
-            'nombre_appartements' => 'nullable|integer',
         ]);
 
         Immeuble::create($request->all());
@@ -29,6 +30,9 @@ class ImmeubleController extends Controller
         $request->validate([
             'nom' => 'required|string|max:255',
             'adresse' => 'required|string|max:255',
+            'ville' => 'required|string|max:255',
+            'nombre_etages' => 'required|integer|min:0',
+            'nombre_appartements' => 'required|integer|min:0',
             'syndic_id' => 'nullable|exists:users,id',
         ]);
 
