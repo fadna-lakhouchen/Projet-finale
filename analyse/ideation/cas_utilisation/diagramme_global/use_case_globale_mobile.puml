@@ -1,0 +1,42 @@
+@startuml ImmoSyndic_Sprint2_Mobile
+left to right direction
+
+actor "Resident" as Resident
+actor "Backend Web" as Web
+
+rectangle "Application Mobile" {
+  usecase "S'authentifier" as Auth
+  usecase "Consulter mes charges" as ViewCharges
+  usecase "Voir mes notifications" as ViewNotifs
+  usecase "Consulter les archives" as ViewArchives
+  usecase "Payer une charge" as PayCharge
+  usecase "Signaler un incident" as ReportIncident
+  usecase "Telecharger document PDF" as DownloadPDF
+  usecase "Parametrer mon profil" as ManageProfile
+}
+
+ViewCharges ..> Auth : <<include>>
+ViewNotifs ..> Auth : <<include>>
+ViewArchives ..> Auth : <<include>>
+PayCharge ..> Auth : <<include>>
+ReportIncident ..> Auth : <<include>>
+DownloadPDF ..> Auth : <<include>>
+ManageProfile ..> Auth : <<include>>
+
+Resident -- ViewCharges
+Resident -- ViewNotifs
+Resident -- ViewArchives
+Resident -- PayCharge
+Resident -- ReportIncident
+Resident -- DownloadPDF
+Resident -- ManageProfile
+
+ViewCharges -- Web
+ViewNotifs -- Web
+ViewArchives -- Web
+PayCharge -- Web
+ReportIncident -- Web
+DownloadPDF -- Web
+ManageProfile -- Web
+
+@enduml
