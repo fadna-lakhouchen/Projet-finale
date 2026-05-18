@@ -5,15 +5,17 @@
     search: '', 
     filterSyndic: 'all', 
     filterStatut: 'all',
+    showSyndic: false,
+    showStatut: false,
     isEditing: false,
-    immeubleEnCours: { id: '', nom: '', adresse: '', syndic_id: '', nb_etages: '', nb_appartements: '' },
+    immeubleEnCours: { id: '', nom: '', adresse: '', ville: '', syndic_id: '', nb_etages: '', nb_appartements: '' },
     initAjout() {
         this.isEditing = false;
-        this.immeubleEnCours = { id: '', nom: '', adresse: '', syndic_id: '', nb_etages: '', nb_appartements: '' };
+        this.immeubleEnCours = { id: '', nom: '', adresse: '', ville: '', syndic_id: '', nb_etages: '', nb_appartements: '' };
     },
-    initEdit(id, nom, adresse, syndic_id, etages, appts) {
+    initEdit(id, nom, adresse, ville, syndic_id, etages, appts) {
         this.isEditing = true;
-        this.immeubleEnCours = { id: id, nom: nom, adresse: adresse, syndic_id: syndic_id, nb_etages: etages, nb_appartements: appts };
+        this.immeubleEnCours = { id: id, nom: nom, adresse: adresse, ville: ville, syndic_id: syndic_id, nb_etages: etages, nb_appartements: appts };
     },
     matches(name, address, syndic, statut) {
         const matchesSearch = name.toLowerCase().includes(this.search.toLowerCase()) || address.toLowerCase().includes(this.search.toLowerCase());
@@ -34,17 +36,56 @@
         </button>
     </div>
 
+    @if(session('success'))
+    <div class="mb-4 bg-green-50 border border-green-200 text-sm text-green-800 rounded-lg p-4 flex items-center gap-x-2 dark:bg-green-800/10 dark:border-green-900 dark:text-green-500">
+        <i data-lucide="check-circle" class="size-4 shrink-0"></i>
+        {{ session('success') }}
+    </div>
+    @endif
+
     <!-- Table Section -->
     <div class="flex flex-col border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-800 dark:border-neutral-700">
         <!-- Filters -->
-        <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
+        <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 rounded-t-xl">
             <div class="sm:col-span-1 max-w-sm w-full relative">
                 <input x-model="search" type="text" class="py-2 px-3 ps-11 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Nom ou adresse...">
                 <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
                     <i data-lucide="search" class="size-4 text-gray-400"></i>
                 </div>
             </div>
+
+            <div class="sm:col-span-2 md:grow flex justify-end gap-x-2">
+                <!-- Dropdown Syndic -->
+                <div class="relative inline-flex">
+                  <button @click="showSyndic = !showSyndic; showStatut = false" @click.outside="showSyndic = false" type="button" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white">
+                    <span x-text="filterSyndic === 'all' ? 'Syndic' : filterSyndic"></span>
+                    <i data-lucide="chevron-down" :class="showSyndic ? 'rotate-180' : ''" class="size-4 transition-transform text-gray-400"></i>
+                  </button>
+                  <div x-show="showSyndic" class="absolute right-0 top-full z-[100] mt-1 w-56 bg-white border border-gray-200 shadow-xl rounded-lg p-1 dark:bg-neutral-800 dark:border-neutral-700" style="display: none;">
+                    <div @click="filterSyndic = 'all'; showSyndic = false" class="cursor-pointer flex items-center py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">Tous les syndics</div>
+                    @foreach($syndics as $s)
+                        <div @click="filterSyndic = '{{ $s->prenom }} {{ $s->nom }}'; showSyndic = false" class="cursor-pointer flex items-center py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">
+                            {{ $s->prenom }} {{ $s->nom }}
+                        </div>
+                    @endforeach
+                  </div>
+                </div>
+
+                <!-- Dropdown Statut -->
+                <div class="relative inline-flex">
+                  <button @click="showStatut = !showStatut; showSyndic = false" @click.outside="showStatut = false" type="button" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white">
+                    <span x-text="filterStatut === 'all' ? 'Statut' : filterStatut"></span>
+                    <i data-lucide="chevron-down" :class="showStatut ? 'rotate-180' : ''" class="size-4 transition-transform text-gray-400"></i>
+                  </button>
+                  <div x-show="showStatut" class="absolute right-0 top-full z-[100] mt-1 w-44 bg-white border border-gray-200 shadow-xl rounded-lg p-1 dark:bg-neutral-800 dark:border-neutral-700" style="display: none;">
+                    <div @click="filterStatut = 'all'; showStatut = false" class="cursor-pointer flex items-center py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">Tous les statuts</div>
+                    <div @click="filterStatut = 'Sain'; showStatut = false" class="cursor-pointer flex items-center py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">Sain</div>
+                    <div @click="filterStatut = 'En travaux'; showStatut = false" class="cursor-pointer flex items-center py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">En travaux</div>
+                  </div>
+                </div>
+            </div>
         </div>
+
 
         <!-- Table -->
         <div class="overflow-x-auto">
@@ -64,7 +105,9 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="grow">
                                 <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">{{ $immeuble->nom }}</span>
-                                <span class="block text-xs text-gray-500 dark:text-neutral-400">{{ $immeuble->adresse }}</span>
+                                <span class="block text-xs text-gray-500 dark:text-neutral-400">
+                                    @if($immeuble->ville) {{ $immeuble->ville }} • @endif {{ $immeuble->adresse }}
+                                </span>
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -76,7 +119,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                             <div class="inline-flex items-center gap-x-2">
-                                <button @click="initEdit('{{ $immeuble->id }}', '{{ addslashes($immeuble->nom) }}', '{{ addslashes($immeuble->adresse) }}', '{{ $immeuble->syndic_id }}', '{{ $immeuble->nombre_etages }}', '{{ $immeuble->nombre_appartements }}')" type="button" data-hs-overlay="#hs-modal-add-immeuble" class="py-2 px-3 text-gray-800 hover:bg-gray-100 rounded-lg border border-gray-200 dark:text-neutral-300 dark:hover:bg-neutral-800">
+                                <button @click="initEdit('{{ $immeuble->id }}', '{{ addslashes($immeuble->nom) }}', '{{ addslashes($immeuble->adresse) }}', '{{ addslashes($immeuble->ville) }}', '{{ $immeuble->syndic_id }}', '{{ $immeuble->nombre_etages }}', '{{ $immeuble->nombre_appartements }}')" type="button" data-hs-overlay="#hs-modal-add-immeuble" class="py-2 px-3 text-gray-800 hover:bg-gray-100 rounded-lg border border-gray-200 dark:text-neutral-300 dark:hover:bg-neutral-800">
                                     <i data-lucide="edit-2" class="size-4"></i>
                                 </button>
                                 <form action="{{ route('admin.immeubles.destroy', $immeuble->id) }}" method="POST" onsubmit="return confirm('Supprimer cet immeuble ?');">
@@ -116,15 +159,21 @@
                         <div class="grid gap-y-4">
                             <div>
                                 <label class="block text-sm font-medium mb-2 dark:text-white">Nom de l'immeuble</label>
-                                <input x-model="immeubleEnCours.nom" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Ex: Résidence Al Amal">
+                                <input x-model="immeubleEnCours.nom" name="nom" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Ex: Résidence Al Amal">
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2 dark:text-white">Adresse complète</label>
-                                <input x-model="immeubleEnCours.adresse" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Ex: Angle Avenue Mohammed V, Rabat">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 dark:text-white">Adresse complète</label>
+                                    <input x-model="immeubleEnCours.adresse" name="adresse" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Ex: Av. Mohammed V">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 dark:text-white">Ville</label>
+                                    <input x-model="immeubleEnCours.ville" name="ville" type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Ex: Rabat">
+                                </div>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-2 dark:text-white">Assigner un Syndic</label>
-                                <select x-model="immeubleEnCours.syndic_id" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                <select x-model="immeubleEnCours.syndic_id" name="syndic_id" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
                                     <option value="">Choisir un syndic responsable</option>
                                     @foreach($syndics as $s)
                                         <option value="{{ $s->id }}">{{ $s->prenom }} {{ $s->nom }}</option>
@@ -134,11 +183,11 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-medium mb-2 dark:text-white">Nombre d'étages</label>
-                                    <input x-model="immeubleEnCours.nb_etages" type="number" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                    <input x-model="immeubleEnCours.nb_etages" name="nombre_etages" type="number" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium mb-2 dark:text-white">Nombre d'appartements</label>
-                                    <input x-model="immeubleEnCours.nb_appartements" type="number" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                    <input x-model="immeubleEnCours.nb_appartements" name="nombre_appartements" type="number" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
                                 </div>
                             </div>
                         </div>

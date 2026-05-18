@@ -63,7 +63,8 @@ class DashboardController extends Controller
     public function adminSyndics()
     {
         $syndics = User::where('role', 'syndic')->get();
-        return view('admin.administrateur.syndics', compact('syndics'));
+        $immeubles = \App\Models\Immeuble::all();
+        return view('admin.administrateur.syndics', compact('syndics', 'immeubles'));
     }
 
     public function adminPaiements()

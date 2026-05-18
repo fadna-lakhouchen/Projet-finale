@@ -77,16 +77,30 @@ class UserController extends Controller
             'prenom' => 'required|string|max:255',
             'nom' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'telephone' => 'nullable|string|max:20',
+            'cin' => 'nullable|string|max:20',
+            'ville' => 'nullable|string|max:255',
+            'date_entree' => 'nullable|date',
+            'notes' => 'nullable|string',
         ]);
 
-        User::create([
+        $syndic = User::create([
             'prenom' => $request->prenom,
             'nom' => $request->nom,
             'email' => $request->email,
+            'telephone' => $request->telephone,
+            'cin' => $request->cin,
+            'ville' => $request->ville,
+            'date_entree' => $request->date_entree,
+            'notes' => $request->notes,
             'password' => Hash::make('password'),
             'role' => 'syndic',
             'is_active' => true,
         ]);
+
+        if ($request->has('immeubles') && is_array($request->immeubles)) {
+            \App\Models\Immeuble::whereIn('id', $request->immeubles)->update(['syndic_id' => $syndic->id]);
+        }
 
         return back()->with('success', 'Syndic ajouté avec succès.');
     }
@@ -98,9 +112,23 @@ class UserController extends Controller
             'prenom' => 'required|string|max:255',
             'nom' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'telephone' => 'nullable|string|max:20',
+            'cin' => 'nullable|string|max:20',
+            'ville' => 'nullable|string|max:255',
+            'date_entree' => 'nullable|date',
+            'date_sortie' => 'nullable|date|after_or_equal:date_entree',
+            'notes' => 'nullable|string',
         ]);
 
-        $user->update($request->only(['prenom', 'nom', 'email']));
+        $user->update($request->only(['prenom', 'nom', 'email', 'telephone', 'cin', 'ville', 'date_entree', 'date_sortie', 'notes']));
+
+        // Réinitialiser les immeubles assignés à ce syndic
+        \App\Models\Immeuble::where('syndic_id', $user->id)->update(['syndic_id' => null]);
+        
+        // Assigner les nouveaux immeubles sélectionnés
+        if ($request->has('immeubles') && is_array($request->immeubles)) {
+            \App\Models\Immeuble::whereIn('id', $request->immeubles)->update(['syndic_id' => $user->id]);
+        }
 
         return back()->with('success', 'Syndic mis à jour avec succès.');
     }
