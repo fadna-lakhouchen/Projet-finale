@@ -64,6 +64,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/residents/{id}', [UserController::class, 'destroyUserBySyndic'])->name('syndic.residents.destroy');
 
         Route::get('/paiements', [DashboardController::class, 'syndicPaiements'])->name('syndic.paiements');
+        Route::post('/paiements', [PaiementController::class, 'store'])->name('syndic.paiements.store');
+        Route::get('/paiements/{id}/receipt', [PaiementController::class, 'generateReceipt'])->name('syndic.paiements.receipt');
         
         // Interventions
         Route::get('/interventions', [DashboardController::class, 'syndicInterventions'])->name('syndic.interventions');

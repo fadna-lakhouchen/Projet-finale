@@ -7,6 +7,9 @@
         <p class="text-sm text-gray-600 dark:text-neutral-400">Vérifiez les versements des charges mensuelles des résidents.</p>
     </div>
     <div class="flex gap-2">
+        <button type="button" class="py-2.5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-600 text-white hover:bg-primary-700 focus:outline-none focus:bg-primary-700 disabled:opacity-50 disabled:pointer-events-none" data-hs-overlay="#hs-saisir-paiement-modal">
+            <i data-lucide="plus" class="size-4"></i> Saisir un paiement
+        </button>
         <button type="button" class="py-2.5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800">
             <i data-lucide="external-link" class="size-4"></i> Export CSV
         </button>
@@ -129,10 +132,10 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                                 <div class="inline-flex items-center gap-x-2">
-                                    @if($statut == 'Payé')
-                                        <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800">
-                                            <i data-lucide="download" class="size-4"></i> PDF
-                                        </button>
+                                    @if($statut == 'Payé' || $statut == 'validé')
+                                        <a href="{{ route('syndic.paiements.receipt', $paiement->id) }}" target="_blank" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800">
+                                            <i data-lucide="printer" class="size-4"></i> Reçu
+                                        </a>
                                     @else
                                         <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:bg-red-700 disabled:opacity-50 disabled:pointer-events-none">
                                             <i data-lucide="bell-ring" class="size-4"></i> Rappel
@@ -148,5 +151,68 @@
         </div>
     </div>
 </div>>
+</div>
+</div>
+
+<!-- Modal Saisir Paiement -->
+<div id="hs-saisir-paiement-modal" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none">
+  <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
+    <div class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
+      <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
+        <h3 class="font-bold text-gray-800 dark:text-white">
+          Saisir un paiement
+        </h3>
+        <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700" data-hs-overlay="#hs-saisir-paiement-modal">
+          <span class="sr-only">Fermer</span>
+          <i data-lucide="x" class="size-4"></i>
+        </button>
+      </div>
+      <form action="{{ route('syndic.paiements.store') }}" method="POST">
+        @csrf
+        <div class="p-4 overflow-y-auto">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2 dark:text-white">Sélectionner la Charge</label>
+                    <select name="charge_id" required class="py-2 px-3 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                        <option value="">Sélectionnez...</option>
+                        <!-- Les charges devraient idéalement venir du contrôleur. Pour le MVP on suppose qu'il choisit une charge en attente -->
+                        <!-- A vous de populer ce select dans SyndicPaiements si nécessaire -->
+                        <option value="1">Charge de test (ID:1) - Si existante</option>
+                    </select>
+                    <p class="text-xs text-gray-500 mt-1">Note: Dans le MVP, assurez-vous d'avoir des charges générées pour pouvoir les payer.</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2 dark:text-white">Montant payé (MAD)</label>
+                    <input type="number" step="0.01" name="montant" required class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2 dark:text-white">Méthode de paiement</label>
+                    <select name="methode_paiement" required class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                        <option value="espece">Espèce</option>
+                        <option value="cheque">Chèque</option>
+                        <option value="virement">Virement</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2 dark:text-white">Date de paiement</label>
+                    <input type="date" name="date_paiement" value="{{ date('Y-m-d') }}" required class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2 dark:text-white">Référence (Optionnel)</label>
+                    <input type="text" name="reference" placeholder="Ex: N° Chèque" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
+          <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800" data-hs-overlay="#hs-saisir-paiement-modal">
+            Annuler
+          </button>
+          <button type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-600 text-white hover:bg-primary-700 disabled:opacity-50 disabled:pointer-events-none">
+            Enregistrer le paiement
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 @endsection
