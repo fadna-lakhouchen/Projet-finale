@@ -103,7 +103,7 @@ class User extends Authenticatable
 
     public function isAdministrateur()
     {
-        return $this->hasRole('administrateur') || $this->role === 'administrateur';
+        return $this->hasRole('administrateur') || $this->role === 'administrateur' || $this->role === 'admin';
     }
 
     public function isSyndic()

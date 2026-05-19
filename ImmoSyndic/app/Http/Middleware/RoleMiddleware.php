@@ -20,6 +20,9 @@ class RoleMiddleware
         }
 
         if (!auth()->user()->hasRole($role) && auth()->user()->role !== $role) {
+            if ($role === 'administrateur' && auth()->user()->role === 'admin') {
+                return $next($request);
+            }
             abort(403, 'Accès non autorisé.');
         }
 
