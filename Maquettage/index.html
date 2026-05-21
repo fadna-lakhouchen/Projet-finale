@@ -5,50 +5,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ImmoSyndic - Design System & Mockups</title>
+    
+    <!-- Scripts & Frameworks -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Configuration -->
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                    fontFamily: { 
+                        sans: ['Outfit', 'Plus Jakarta Sans', 'Inter', 'sans-serif'] 
+                    },
+                    colors: { 
+                        primary: { 
+                            50: '#f5f7ff', 
+                            100: '#ebf0fe', 
+                            200: '#ced9fd', 
+                            300: '#b1c2fb', 
+                            400: '#7694f8', 
+                            500: '#3b66f5', 
+                            600: '#2c4db8', 
+                            700: '#1d3278', 
+                            800: '#152559', 
+                            900: '#0e193c' 
+                        },
+                        slate: {
+                            950: '#090D16'
+                        }
+                    },
+                    boxShadow: {
+                        'premium': '0 10px 30px -10px rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.01)',
+                        'premium-hover': '0 20px 40px -15px rgba(59, 102, 245, 0.1), 0 1px 2px rgba(59, 102, 245, 0.02)',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.04)',
+                    }
                 }
             }
         }
     </script>
+    
+    <!-- Visual Polish -->
+    <style>
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.2);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.4);
+        }
+    </style>
 </head>
 
-<body class="bg-gray-50 dark:bg-neutral-900 min-h-screen">
-    <header
-        class="sticky top-0 z-50 flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white border-b border-gray-200 text-sm py-3 px-4 sm:px-6 lg:px-8 dark:bg-neutral-800 dark:border-neutral-700">
+<body class="bg-[#F8FAFC] dark:bg-[#080B11] text-slate-800 dark:text-neutral-200 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-[#0B1224] border-b border-slate-800/60 text-sm py-3.5 px-4 sm:px-6 lg:px-8 shadow-premium">
         <nav class="max-w-[85rem] w-full mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-x-2">
-                <div class="flex-shrink-0 size-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
-                    <i data-lucide="building-2" class="size-5"></i>
+            <div class="flex items-center gap-x-3">
+                <div class="flex-shrink-0 size-9 bg-white p-1.5 rounded-xl shadow-premium flex items-center justify-center">
+                    <i data-lucide="building-2" class="size-5 text-primary-500"></i>
                 </div>
-                <span class="text-xl font-bold text-gray-800 dark:text-white">ImmoSyndic <span class="text-blue-600">UI
-                        Portal</span></span>
+                <span class="text-xl font-extrabold text-white tracking-tight">Immo<span class="text-primary-500">Syndic</span> <span class="text-xs font-bold px-2 py-0.5 rounded-md bg-white/10 text-slate-300 ml-2 uppercase">UI Portal</span></span>
             </div>
             <div class="flex items-center gap-x-3">
-                <a class="font-medium text-gray-600 hover:text-blue-600 dark:text-neutral-400 dark:hover:text-neutral-500 transition-colors"
-                    href="charte-graphique/index.html">Charte Graphique</a>
+                <a class="font-semibold text-slate-300 hover:text-primary-400 transition-colors text-sm" href="charte-graphique/index.html">Charte Graphique</a>
             </div>
         </nav>
     </header>
 
     <div class="flex h-[calc(100vh-64px)] overflow-hidden">
-        <!-- Sidebar: Explorer (Static) -->
-        <aside
-            class="w-80 flex-shrink-0 border-e border-gray-200 bg-white overflow-y-auto dark:bg-neutral-800 dark:border-neutral-700">
-            <div class="p-4 space-y-8">
+        <!-- Sidebar: Explorer -->
+        <aside class="w-80 flex-shrink-0 border-e border-slate-800/60 bg-[#0B1224] text-slate-400 overflow-y-auto">
+            <div class="p-5 space-y-7">
                 <!-- Navigation -->
                 <section>
                     <nav class="space-y-1">
                         <a href="accueil-portal.html" target="viewer"
-                            class="flex items-center gap-x-3 py-2 px-3 text-sm font-medium text-blue-600 rounded-lg bg-blue-50 dark:bg-blue-900/10 dark:text-blue-400 transition-colors">
+                            class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 bg-primary-500/10 border-l-2 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5">
                             <i data-lucide="home" class="size-4"></i> Accueil Portal
                         </a>
                     </nav>
@@ -56,200 +103,117 @@
 
                 <!-- Mockups Section -->
                 <section>
-                    <h2
-                        class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3 flex items-center gap-2">
-                        <i data-lucide="layout" class="size-3"></i> Mockups
+                    <h2 class="px-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <i data-lucide="layout" class="size-3.5"></i> Mockups
                     </h2>
-                    <nav class="space-y-1">
+                    <nav class="space-y-3">
                         <!-- Resident -->
-                        <div>
+                        <div class="space-y-1">
                             <a href="mockups/resident/index.html" target="viewer"
-                                class="flex items-center gap-x-3 py-2 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">
-                                <i data-lucide="user" class="size-4"></i> Resident Space
+                                class="flex items-center gap-x-3 py-2 px-3 text-sm font-semibold rounded-xl text-slate-300 hover:bg-white/5 border-l-2 border-transparent hover:border-slate-800 transition-all duration-300">
+                                <i data-lucide="user" class="size-4 text-slate-400"></i> Resident Space
                             </a>
-                            <div class="ps-8 space-y-1 mt-1">
-                                <a href="mockups/resident/charges.html" target="viewer"
-                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Charges
-                                    & Paiements</a>
-                                <a href="mockups/resident/incidents.html" target="viewer"
-                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Incidents</a>
-                                <a href="mockups/resident/documents.html" target="viewer"
-                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Documents</a>
+                            <div class="ps-8 space-y-1">
+                                <a href="mockups/resident/charges.html" target="viewer" class="block py-1 text-xs font-medium text-slate-500 hover:text-primary-400 transition-colors">Charges & Paiements</a>
+                                <a href="mockups/resident/incidents.html" target="viewer" class="block py-1 text-xs font-medium text-slate-500 hover:text-primary-400 transition-colors">Incidents</a>
+                                <a href="mockups/resident/documents.html" target="viewer" class="block py-1 text-xs font-medium text-slate-500 hover:text-primary-400 transition-colors">Documents</a>
                             </div>
                         </div>
+                        
                         <!-- Syndic -->
-                        <div class="mt-2">
+                        <div class="space-y-1">
                             <a href="mockups/syndic/index.html" target="viewer"
-                                class="flex items-center gap-x-3 py-2 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">
-                                <i data-lucide="shield-check" class="size-4"></i> Syndic Space
+                                class="flex items-center gap-x-3 py-2 px-3 text-sm font-semibold rounded-xl text-slate-300 hover:bg-white/5 border-l-2 border-transparent hover:border-slate-800 transition-all duration-300">
+                                <i data-lucide="shield-check" class="size-4 text-slate-400"></i> Syndic Space
                             </a>
-                            <div class="ps-8 space-y-1 mt-1">
-                                <a href="mockups/syndic/buildings.html" target="viewer"
-                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Gestion
-                                    Immeubles</a>
-                                <a href="mockups/syndic/finances.html" target="viewer"
-                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Finances</a>
-                                <a href="mockups/syndic/interventions.html" target="viewer"
-                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Interventions</a>
-                                <a href="mockups/syndic/annonces.html" target="viewer"
-                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Annonces</a>
+                            <div class="ps-8 space-y-1">
+                                <a href="mockups/syndic/buildings.html" target="viewer" class="block py-1 text-xs font-medium text-slate-500 hover:text-primary-400 transition-colors">Gestion Immeubles</a>
+                                <a href="mockups/syndic/finances.html" target="viewer" class="block py-1 text-xs font-medium text-slate-500 hover:text-primary-400 transition-colors">Finances</a>
+                                <a href="mockups/syndic/interventions.html" target="viewer" class="block py-1 text-xs font-medium text-slate-500 hover:text-primary-400 transition-colors">Interventions</a>
+                                <a href="mockups/syndic/annonces.html" target="viewer" class="block py-1 text-xs font-medium text-slate-500 hover:text-primary-400 transition-colors">Annonces</a>
                             </div>
                         </div>
+                        
                         <!-- Admin -->
-                        <div class="mt-2">
+                        <div class="space-y-1">
                             <a href="mockups/administrateur/index.html" target="viewer"
-                                class="flex items-center gap-x-3 py-2 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">
-                                <i data-lucide="settings" class="size-4"></i> Admin Panel
+                                class="flex items-center gap-x-3 py-2 px-3 text-sm font-semibold rounded-xl text-slate-300 hover:bg-white/5 border-l-2 border-transparent hover:border-slate-800 transition-all duration-300">
+                                <i data-lucide="settings" class="size-4 text-slate-400"></i> Admin Panel
                             </a>
-                            <div class="ps-8 space-y-1 mt-1">
-                                <a href="mockups/administrateur/users.html" target="viewer"
-                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Utilisateurs</a>
-                                <a href="mockups/administrateur/logs.html" target="viewer"
-                                    class="block py-1 text-xs text-gray-500 hover:text-blue-600 dark:text-neutral-500">Logs
-                                    Système</a>
+                            <div class="ps-8 space-y-1">
+                                <a href="mockups/administrateur/residents.html" target="viewer" class="block py-1 text-xs font-medium text-slate-500 hover:text-primary-400 transition-colors">Utilisateurs</a>
+                                <a href="mockups/administrateur/syndics.html" target="viewer" class="block py-1 text-xs font-medium text-slate-500 hover:text-primary-400 transition-colors">Gestion Syndics</a>
                             </div>
                         </div>
                     </nav>
                 </section>
 
-                <!-- Atoms Section (Hardcoded) -->
+                <!-- Atoms Section -->
                 <section>
-                    <h2
-                        class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3 flex items-center gap-2">
-                        <i data-lucide="atom" class="size-3"></i> Atoms
+                    <h2 class="px-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <i data-lucide="atom" class="size-3.5"></i> Atoms
                     </h2>
-                    <div class="grid grid-cols-1 gap-1">
-                        <a href="components-lib/atoms/avatar/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Avatar</a>
-                        <a href="components-lib/atoms/badge/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Badge</a>
-                        <a href="components-lib/atoms/button/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Button</a>
-                        <a href="components-lib/atoms/checkbox/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Checkbox</a>
-                        <a href="components-lib/atoms/divider/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Divider</a>
-                        <a href="components-lib/atoms/icon/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Icon</a>
-                        <a href="components-lib/atoms/input-date/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Input
-                            Date</a>
-                        <a href="components-lib/atoms/input-email/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Input
-                            Email</a>
-                        <a href="components-lib/atoms/input-file/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Input
-                            File</a>
-                        <a href="components-lib/atoms/input-number/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Input
-                            Number</a>
-                        <a href="components-lib/atoms/input-password/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Input
-                            Password</a>
-                        <a href="components-lib/atoms/input-text/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Input
-                            Text</a>
-                        <a href="components-lib/atoms/progress-bar/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Progress
-                            Bar</a>
-                        <a href="components-lib/atoms/radio/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Radio</a>
-                        <a href="components-lib/atoms/select/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Select</a>
-                        <a href="components-lib/atoms/spinner/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Spinner</a>
-                        <a href="components-lib/atoms/textarea/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Textarea</a>
-                        <a href="components-lib/atoms/toggle-switch/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Toggle
-                            Switch</a>
-                        <a href="components-lib/atoms/tooltip/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Tooltip</a>
-                        <a href="components-lib/atoms/typography/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Typography</a>
+                    <div class="grid grid-cols-1 gap-1 px-3">
+                        <a href="components-lib/atoms/avatar/index.html" target="viewer" class="block py-1 text-xs font-semibold text-slate-400 hover:text-white transition-colors">Avatar</a>
+                        <a href="components-lib/atoms/badge/index.html" target="viewer" class="block py-1 text-xs font-semibold text-slate-400 hover:text-white transition-colors">Badge</a>
+                        <a href="components-lib/atoms/button/index.html" target="viewer" class="block py-1 text-xs font-semibold text-slate-400 hover:text-white transition-colors">Button</a>
+                        <a href="components-lib/atoms/checkbox/index.html" target="viewer" class="block py-1 text-xs font-semibold text-slate-400 hover:text-white transition-colors">Checkbox</a>
+                        <a href="components-lib/atoms/input-text/index.html" target="viewer" class="block py-1 text-xs font-semibold text-slate-400 hover:text-white transition-colors">Inputs</a>
+                        <a href="components-lib/atoms/tooltip/index.html" target="viewer" class="block py-1 text-xs font-semibold text-slate-400 hover:text-white transition-colors">Tooltip</a>
                     </div>
                 </section>
 
-                <!-- Molecules Section (Hardcoded) -->
+                <!-- Molecules Section -->
                 <section>
-                    <h2
-                        class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3 flex items-center gap-2">
-                        <i data-lucide="component" class="size-3"></i> Molecules
+                    <h2 class="px-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <i data-lucide="component" class="size-3.5"></i> Molecules
                     </h2>
-                    <div class="grid grid-cols-1 gap-1">
-                        <a href="components-lib/molecules/accordion/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Accordion</a>
-                        <a href="components-lib/molecules/alert-message/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Alert
-                            Message</a>
-                        <a href="components-lib/molecules/breadcrumb/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Breadcrumb</a>
-                        <a href="components-lib/molecules/card-building/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Card
-                            Building</a>
-                        <a href="components-lib/molecules/card-charge/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Card
-                            Charge</a>
-                        <a href="components-lib/molecules/card-document/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Card
-                            Document</a>
-                        <a href="components-lib/molecules/card-intervention/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Card
-                            Intervention</a>
-                        <a href="components-lib/molecules/card-stat/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Card
-                            Stat</a>
-                        <a href="components-lib/molecules/empty-state/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Empty
-                            State</a>
-                        <a href="components-lib/molecules/form-group/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Form
-                            Group</a>
-                        <a href="components-lib/molecules/list-item-notification/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">List
-                            Item Notification</a>
-                        <a href="components-lib/molecules/list-item-payment/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">List
-                            Item Payment</a>
-                        <a href="components-lib/molecules/modal-dialog/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Modal
-                            Dialog</a>
-                        <a href="components-lib/molecules/nav-item/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Nav
-                            Item</a>
-                        <a href="components-lib/molecules/pagination/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Pagination</a>
-                        <a href="components-lib/molecules/search-bar/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Search
-                            Bar</a>
-                        <a href="components-lib/molecules/steps/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Steps</a>
-                        <a href="components-lib/molecules/table-row/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Table
-                            Row</a>
-                        <a href="components-lib/molecules/tabs/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Tabs</a>
-                        <a href="components-lib/molecules/timeline/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Timeline</a>
-                        <a href="components-lib/molecules/toast-notification/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">Toast
-                            Notification</a>
-                        <a href="components-lib/molecules/user-profile-badge/index.html" target="viewer"
-                            class="flex items-center py-1.5 px-3 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400">User
-                            Profile Badge</a>
+                    <div class="grid grid-cols-1 gap-1 px-3">
+                        <a href="components-lib/molecules/accordion/index.html" target="viewer" class="block py-1 text-xs font-semibold text-slate-400 hover:text-white transition-colors">Accordion</a>
+                        <a href="components-lib/molecules/breadcrumb/index.html" target="viewer" class="block py-1 text-xs font-semibold text-slate-400 hover:text-white transition-colors">Breadcrumb</a>
+                        <a href="components-lib/molecules/card-stat/index.html" target="viewer" class="block py-1 text-xs font-semibold text-slate-400 hover:text-white transition-colors">Card Stat</a>
+                        <a href="components-lib/molecules/modal-dialog/index.html" target="viewer" class="block py-1 text-xs font-semibold text-slate-400 hover:text-white transition-colors">Modal Dialog</a>
+                        <a href="components-lib/molecules/pagination/index.html" target="viewer" class="block py-1 text-xs font-semibold text-slate-400 hover:text-white transition-colors">Pagination</a>
                     </div>
                 </section>
             </div>
         </aside>
 
-        <!-- Main Content (Pure Iframe) -->
-        <main class="flex-grow bg-gray-100 dark:bg-black/20">
+        <!-- Main Content -->
+        <main class="flex-grow bg-[#F8FAFC] dark:bg-[#080B11]">
             <iframe name="viewer" class="w-full h-full border-none" src="accueil-portal.html"></iframe>
         </main>
     </div>
 
     <!-- Lucide for icons -->
-    <script>lucide.createIcons();</script>
+    <script>
+        lucide.createIcons();
+        
+        // Simple active status navigation styling
+        document.querySelectorAll('aside nav a, aside div.ps-8 a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelectorAll('aside nav a').forEach(item => {
+                    item.className = "flex items-center gap-x-3 py-2 px-3 text-sm font-semibold rounded-xl text-slate-300 hover:bg-white/5 border-l-2 border-transparent hover:border-slate-800 transition-all duration-300";
+                });
+                document.querySelectorAll('aside div.ps-8 a').forEach(item => {
+                    item.className = "block py-1 text-xs font-medium text-slate-500 hover:text-primary-400 transition-colors";
+                });
+                
+                if (this.tagName === 'A' && this.href.includes('accueil-portal')) {
+                    this.className = "flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 bg-primary-500/10 border-l-2 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5";
+                } else if (this.tagName === 'A' && this.closest('div.ps-8')) {
+                    this.className = "block py-1 text-xs font-semibold text-primary-400 transition-colors";
+                    // highlight parent category
+                    let parentCategory = this.closest('div.space-y-1').querySelector('a');
+                    if (parentCategory) {
+                        parentCategory.className = "flex items-center gap-x-3 py-2 px-3 text-sm font-semibold rounded-xl text-white bg-white/5 border-l-2 border-primary-500 transition-all duration-300";
+                    }
+                } else {
+                    this.className = "flex items-center gap-x-3 py-2 px-3 text-sm font-semibold rounded-xl text-white bg-white/5 border-l-2 border-primary-500 transition-all duration-300";
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
