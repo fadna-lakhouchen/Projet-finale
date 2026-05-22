@@ -5,37 +5,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ImmoSyndic - Inscription Résident</title>
+    
+    <!-- Tailwind & Preline -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Configuration -->
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: {
-                        primary: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            200: '#c7d2fe',
-                            300: '#a5b4fc',
-                            400: '#818cf8',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            800: '#3730a3',
-                            900: '#312e81',
+                    fontFamily: { 
+                        sans: ['Outfit', 'Plus Jakarta Sans', 'Inter', 'sans-serif'] 
+                    },
+                    colors: { 
+                        primary: { 
+                            50: '#f5f7ff', 
+                            100: '#ebf0fe', 
+                            200: '#ced9fd', 
+                            300: '#b1c2fb', 
+                            400: '#7694f8', 
+                            500: '#3b66f5', 
+                            600: '#2c4db8', 
+                            700: '#1d3278', 
+                            800: '#152559', 
+                            900: '#0e193c' 
+                        },
+                        slate: {
+                            950: '#090D16'
                         }
+                    },
+                    boxShadow: {
+                        'premium': '0 10px 30px -10px rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.01)',
+                        'premium-hover': '0 20px 40px -15px rgba(59, 102, 245, 0.1), 0 1px 2px rgba(59, 102, 245, 0.02)',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.04)',
                     }
                 }
             }
         }
     </script>
+    
+    <!-- Custom Visual Polish (Zwaq) -->
+    <style>
+        .logo-transparent { mix-blend-mode: multiply; }
+        [x-cloak] { display: none !important; }
+        
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .dark .glass-panel {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Fine Scrollbars */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.25);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.45);
+        }
+        
+        /* Animated Ring/Glow transitions */
+        .glow-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glow-hover:hover {
+            box-shadow: 0 0 20px 2px rgba(59, 102, 245, 0.15);
+            transform: translateY(-1px);
+        }
+        
+        /* Fallback for Preline overlays */
+        .hs-overlay.open { pointer-events: auto !important; }
+        .hs-overlay.open>div { opacity: 1 !important; margin-top: 1.75rem !important; }
+        
+    </style>
+
 </head>
 
-<body class="bg-gray-50 dark:bg-neutral-900 flex min-h-screen items-center justify-center p-4">
+<body class="bg-[#F8FAFC] text-slate-800 dark:bg-[#080B11] dark:text-neutral-200 min-h-screen transition-colors duration-300 flex min-h-screen items-center justify-center p-4">
     <main class="w-full max-w-xl mx-auto my-8">
         <!-- Card -->
         <div class="bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-900 dark:border-neutral-700">
@@ -161,7 +231,14 @@
         <!-- End Card -->
     </main>
 
-    <script>lucide.createIcons();</script>
+        <script>
+        lucide.createIcons();
+        window.addEventListener('load', () => {
+            if (window.HSStaticMethods) {
+                window.HSStaticMethods.autoInit();
+            }
+        });
+    </script>
 </body>
 
 </html>
