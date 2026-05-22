@@ -25,4 +25,19 @@ class IncidentService extends BaseService
             'statut' => 'planifie',
         ]));
     }
+
+    public function getUserIncidents($user, $limit = 5)
+    {
+        return $this->model->where('user_id', $user->id)
+            ->latest()
+            ->take($limit)
+            ->get();
+    }
+
+    public function getAllUserIncidents($user)
+    {
+        return $this->model->where('user_id', $user->id)
+            ->latest()
+            ->get();
+    }
 }
