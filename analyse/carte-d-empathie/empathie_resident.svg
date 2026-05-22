@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Dot pattern background -->
+    <pattern id="dotGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#e2e8f0" />
+    </pattern>
+    <!-- Soft shadow for cards -->
+    <filter id="card-shadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.04" />
+    </filter>
+  </defs>
+
+  <style>
+    .bg-rect { fill: #ffffff; }
+    .grid-rect { fill: url(#dotGrid); }
+    .center-circle-outer { fill: none; stroke: #4f46e5; stroke-width: 1.5; stroke-dasharray: 4 4; }
+    .center-circle-inner { fill: #e0e7ff; stroke: #4f46e5; stroke-width: 3; }
+    .center-txt { font-family: system-ui, -apple-system, sans-serif; font-size: 10px; font-weight: 800; fill: #4f46e5; letter-spacing: 0.5px; }
+    .branch-line { stroke: #4f46e5; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 5 5; opacity: 0.7; }
+    .card-border { fill: #ffffff; stroke: #e2e8f0; stroke-width: 1.5; rx: 16px; filter: url(#card-shadow); }
+    .badge-rect { fill: #4f46e5; rx: 12px; }
+    .badge-txt { font-family: system-ui, -apple-system, sans-serif; font-size: 11px; font-weight: 800; fill: #ffffff; letter-spacing: 1.5px; text-anchor: middle; }
+    .bullet-txt { font-family: system-ui, -apple-system, sans-serif; font-size: 11.5px; font-weight: 500; fill: #334155; }
+    .bullet-marker { fill: #4f46e5; }
+    .line-dot { fill: #4f46e5; }
+  </style>
+
+  <!-- Background -->
+  <rect width="800" height="500" class="bg-rect" />
+  <rect width="800" height="500" class="grid-rect" />
+
+  <!-- ==================== CENTRAL ROADMAP CIRCLE ==================== -->
+  <circle cx="400" cy="250" r="58" class="center-circle-outer" />
+  <circle cx="400" cy="250" r="50" class="center-circle-inner" />
+    <!-- Icon: Home -->
+  <g transform="translate(383, 218) scale(1.4)" stroke="#4f46e5" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+    <path d="M9 22V12h6v10"/>
+  </g>
+  <text x="400" y="280" class="center-txt" text-anchor="middle">RÉSIDENT</text>
+
+  <!-- ==================== ROADMAP CONNECTIONS ==================== -->
+  <!-- Top-Left connection -->
+  <line x1="320" y1="170" x2="359" y2="209" class="branch-line" />
+  <circle cx="320" cy="170" r="4.5" class="line-dot" />
+
+  <!-- Top-Right connection -->
+  <line x1="480" y1="170" x2="441" y2="209" class="branch-line" />
+  <circle cx="480" cy="170" r="4.5" class="line-dot" />
+
+  <!-- Bottom-Left connection -->
+  <line x1="320" y1="330" x2="359" y2="291" class="branch-line" />
+  <circle cx="320" cy="330" r="4.5" class="line-dot" />
+
+  <!-- Bottom-Right connection -->
+  <line x1="480" y1="330" x2="441" y2="291" class="branch-line" />
+  <circle cx="480" cy="330" r="4.5" class="line-dot" />
+
+  <!-- ==================== CARD 1 : ENTEND (Top-Left) ==================== -->
+  <g transform="translate(30, 40)">
+    <rect width="290" height="130" class="card-border" />
+    <rect x="97.5" y="-12" width="95" height="24" class="badge-rect" />
+    <text x="145" y="0" class="badge-txt" dominant-baseline="middle">ENTEND</text>
+    
+    <circle cx="28" cy="48" r="3.5" class="bullet-marker" />
+    <text x="42" y="48" class="bullet-txt" dominant-baseline="middle">Charges en hausse sans explication.</text>
+    
+    <circle cx="28" cy="88" r="3.5" class="bullet-marker" />
+    <text x="42" y="88" class="bullet-txt" dominant-baseline="middle">Rappels de paiement contradictoires.</text>
+  </g>
+
+  <!-- ==================== CARD 2 : VOIT (Top-Right) ==================== -->
+  <g transform="translate(480, 40)">
+    <rect width="290" height="130" class="card-border" />
+    <rect x="97.5" y="-12" width="95" height="24" class="badge-rect" />
+    <text x="145" y="0" class="badge-txt" dominant-baseline="middle">VOIT</text>
+    
+    <circle cx="28" cy="48" r="3.5" class="bullet-marker" />
+    <text x="42" y="48" class="bullet-txt" dominant-baseline="middle">Manque de transparence financière.</text>
+    
+    <circle cx="28" cy="88" r="3.5" class="bullet-marker" />
+    <text x="42" y="88" class="bullet-txt" dominant-baseline="middle">Pannes non résolues rapidement.</text>
+  </g>
+
+  <!-- ==================== CARD 3 : DIT (Bottom-Left) ==================== -->
+  <g transform="translate(30, 330)">
+    <rect width="290" height="130" class="card-border" />
+    <rect x="97.5" y="-12" width="95" height="24" class="badge-rect" />
+    <text x="145" y="0" class="badge-txt" dominant-baseline="middle">DIT</text>
+    
+    <circle cx="28" cy="48" r="3.5" class="bullet-marker" />
+    <text x="42" y="48" class="bullet-txt" dominant-baseline="middle">« Où va l'argent de nos cotisations ? »</text>
+    
+    <circle cx="28" cy="88" r="3.5" class="bullet-marker" />
+    <text x="42" y="88" class="bullet-txt" dominant-baseline="middle">Souhaite un paiement simple en ligne.</text>
+  </g>
+
+  <!-- ==================== CARD 4 : FAIT (Bottom-Right) ==================== -->
+  <g transform="translate(480, 330)">
+    <rect width="290" height="130" class="card-border" />
+    <rect x="97.5" y="-12" width="95" height="24" class="badge-rect" />
+    <text x="145" y="0" class="badge-txt" dominant-baseline="middle">FAIT</text>
+    
+    <circle cx="28" cy="48" r="3.5" class="bullet-marker" />
+    <text x="42" y="48" class="bullet-txt" dominant-baseline="middle">Se déplace pour obtenir ses reçus.</text>
+    
+    <circle cx="28" cy="88" r="3.5" class="bullet-marker" />
+    <text x="42" y="88" class="bullet-txt" dominant-baseline="middle">Signale les incidents sur WhatsApp.</text>
+  </g>
+</svg>
