@@ -10,7 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    @vite(['resources/js/app.js'])
     
     <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -148,9 +148,28 @@
             }
         });
 
-        // Re-create Lucide icons after Alpine renders new content
-        const observer = new MutationObserver(() => {
-            lucide.createIcons();
+        // Re-create Lucide icons after Alpine renders new content without infinite recursion
+        const observer = new MutationObserver((mutations) => {
+            let hasNewIcons = false;
+            for (const mutation of mutations) {
+                if (mutation.addedNodes.length > 0) {
+                    for (const node of mutation.addedNodes) {
+                        if (node.nodeType === 1) { // Element node
+                            if (node.hasAttribute('data-lucide') || node.querySelector('[data-lucide]')) {
+                                hasNewIcons = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (hasNewIcons) break;
+            }
+
+            if (hasNewIcons) {
+                observer.disconnect();
+                lucide.createIcons();
+                observer.observe(document.body, { childList: true, subtree: true });
+            }
         });
         observer.observe(document.body, { childList: true, subtree: true });
     </script>

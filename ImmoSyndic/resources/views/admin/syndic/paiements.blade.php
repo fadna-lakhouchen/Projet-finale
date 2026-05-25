@@ -18,23 +18,7 @@
 </div>
 
 <!-- Table Section -->
-<div x-data="{
-    search: '',
-    moisSelectionne: 'all',
-    immeubleSelectionne: 'all',
-    statutSelectionne: 'all',
-    openMois: false,
-    openImm: false,
-    openStat: false,
-    matches(name, mois, immeuble, statut) {
-        const s = this.search.toLowerCase();
-        const matchSearch = name.toLowerCase().includes(s) || immeuble.toLowerCase().includes(s);
-        const matchMois = this.moisSelectionne === 'all' || mois === this.moisSelectionne;
-        const matchImmeuble = this.immeubleSelectionne === 'all' || immeuble === this.immeubleSelectionne;
-        const matchStatut = this.statutSelectionne === 'all' || statut === this.statutSelectionne;
-        return matchSearch && matchMois && matchImmeuble && matchStatut;
-    }
-}" class="flex flex-col bg-white/80 dark:bg-[#0D121F]/90 border border-gray-200/60 dark:border-slate-800/60 rounded-2xl shadow-premium backdrop-blur-md overflow-hidden">
+<div x-data="syndicPaiements" class="flex flex-col bg-white/80 dark:bg-[#0D121F]/90 border border-gray-200/60 dark:border-slate-800/60 rounded-2xl shadow-premium backdrop-blur-md overflow-hidden">
 
     <!-- Header / Filters -->
     <div class="px-6 py-5 grid gap-4 md:flex md:justify-between md:items-center border-b border-gray-200/60 dark:border-slate-800/60 bg-white/40 dark:bg-[#0D121F]/40">

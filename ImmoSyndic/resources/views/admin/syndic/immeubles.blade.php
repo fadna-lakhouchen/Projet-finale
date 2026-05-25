@@ -1,29 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div x-data="{ 
-    search: '', 
-    filterVille: 'all',
-    filterStatut: 'all',
-    openVille: false,
-    openStatut: false,
-    isEditing: false,
-    immeubleEnCours: { id: '', nom: '', adresse: '', ville: '', nombre_etages: '', nombre_appartements: '' },
-    initAjout() {
-        this.isEditing = false;
-        this.immeubleEnCours = { id: '', nom: '', adresse: '', ville: '', nombre_etages: '', nombre_appartements: '' };
-    },
-    initEdit(id, nom, adresse, ville, nb_etages, nb_app) {
-        this.isEditing = true;
-        this.immeubleEnCours = { id: id, nom: nom, adresse: adresse, ville: ville, nombre_etages: nb_etages, nombre_appartements: nb_app };
-    },
-    matches(nom, ville, statut) {
-        const matchesSearch = nom.toLowerCase().includes(this.search.toLowerCase());
-        const matchesVille = this.filterVille === 'all' || ville === this.filterVille;
-        const matchesStatut = this.filterStatut === 'all' || statut === this.filterStatut;
-        return matchesSearch && matchesVille && matchesStatut;
-    }
-}">
+<div x-data="syndicImmeubles">
     <!-- Page Header -->
     <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -62,7 +40,7 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200/60 dark:divide-slate-800/60">
                     @foreach($immeubles as $immeuble)
-                    <tr x-show="matches('{{ $immeuble->nom }}', '{{ $immeuble->ville }}', 'Actif')" class="hover:bg-slate-50/50 dark:hover:bg-slate-900/30 transition-colors">
+                    <tr x-show="matches('{{ addslashes($immeuble->nom) }}', '{{ addslashes($immeuble->ville) }}', 'Actif')" class="hover:bg-slate-50/50 dark:hover:bg-slate-900/30 transition-colors">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ $immeuble->nom }}</span>
                         </td>

@@ -1,29 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div x-data="{ 
-    search: '', 
-    filterSyndic: 'all', 
-    filterStatut: 'all',
-    showSyndic: false,
-    showStatut: false,
-    isEditing: false,
-    immeubleEnCours: { id: '', nom: '', adresse: '', ville: '', syndic_id: '', nb_etages: '', nb_appartements: '' },
-    initAjout() {
-        this.isEditing = false;
-        this.immeubleEnCours = { id: '', nom: '', adresse: '', ville: '', syndic_id: '', nb_etages: '', nb_appartements: '' };
-    },
-    initEdit(id, nom, adresse, ville, syndic_id, etages, appts) {
-        this.isEditing = true;
-        this.immeubleEnCours = { id: id, nom: nom, adresse: adresse, ville: ville, syndic_id: syndic_id, nb_etages: etages, nb_appartements: appts };
-    },
-    matches(name, address, syndic, statut) {
-        const matchesSearch = name.toLowerCase().includes(this.search.toLowerCase()) || address.toLowerCase().includes(this.search.toLowerCase());
-        const matchesSyndic = this.filterSyndic === 'all' || syndic === this.filterSyndic;
-        const matchesStatut = this.filterStatut === 'all' || statut === this.filterStatut;
-        return matchesSearch && matchesSyndic && matchesStatut;
-    }
-}">
+<div x-data="adminImmeubles">
     <!-- Page Header -->
     <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -106,7 +84,7 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200/60 dark:divide-slate-800/60">
                     @foreach($immeubles as $immeuble)
-                    <tr x-show="matches('{{ $immeuble->nom }}', '{{ $immeuble->adresse }}', '{{ $immeuble->syndic ? $immeuble->syndic->prenom . ' ' . $immeuble->syndic->nom : 'N/A' }}', 'Sain')" class="hover:bg-slate-50/50 dark:hover:bg-slate-800/10 transition-colors">
+                    <tr x-show="matches('{{ addslashes($immeuble->nom) }}', '{{ addslashes($immeuble->adresse) }}', '{{ addslashes($immeuble->syndic ? $immeuble->syndic->prenom . ' ' . $immeuble->syndic->nom : 'N/A') }}', 'Sain')" class="hover:bg-slate-50/50 dark:hover:bg-slate-800/10 transition-colors">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center gap-x-3">
                                 <div class="size-9 rounded-xl bg-primary-500/10 text-primary-500 flex items-center justify-center shrink-0">
