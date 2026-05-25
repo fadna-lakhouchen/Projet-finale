@@ -123,11 +123,36 @@
     <!-- Global AutoInits -->
     <script>
         lucide.createIcons();
+
+        // Initial Preline auto-init on page load
         window.addEventListener('load', () => {
             if (window.HSStaticMethods) {
                 window.HSStaticMethods.autoInit();
             }
         });
+
+        // Re-init Preline AFTER Alpine.js finishes rendering components
+        document.addEventListener('alpine:init', () => {
+            // Use queueMicrotask to wait for Alpine to finish DOM manipulation
+            queueMicrotask(() => {
+                if (window.HSStaticMethods) {
+                    window.HSStaticMethods.autoInit();
+                }
+            });
+        });
+
+        // Also re-init when Alpine updates the DOM dynamically (navigation, modals, etc.)
+        document.addEventListener('alpine:initialized', () => {
+            if (window.HSStaticMethods) {
+                window.HSStaticMethods.autoInit();
+            }
+        });
+
+        // Re-create Lucide icons after Alpine renders new content
+        const observer = new MutationObserver(() => {
+            lucide.createIcons();
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
     </script>
     @stack('scripts')
 </body>
