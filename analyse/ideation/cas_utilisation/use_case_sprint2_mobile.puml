@@ -1,43 +1,43 @@
-@startuml ImmoSyndic_Sprint2_Mobile
+@startuml ImmoSyndic_Mobile_Resident
 left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
 
 actor "Résident" as Resident
-actor "Web" as Web <<System>>
+actor "web" as web
 
-rectangle "Application Mobile ImmoSyndic (Sprint 2)" {
+rectangle "Sprint 2 - Mobile Immosyndic" {
 
-  package "Session" {
+  package "Authentification" {
     usecase "S'authentifier" as Auth
   }
 
-  package "Services API (Sprint 2)" {
+  package "Espace Résident" {
+
+    usecase "Consulter archives" as ViewArchives
+    usecase "Exporter PDF" as ExportPDF
+    usecase "Exporter Excel" as ExportExcel
+    usecase "Personnaliser alertes" as SetAlerts
+
+   
+    ViewArchives ..> Auth : <<include>>
+    ExportPDF ..> Auth : <<include>>
+    ExportExcel ..> Auth : <<include>>
+    SetAlerts ..> Auth : <<include>>
+  }
+
+  package "API" {
     usecase "Fournir API" as ProvideAPI
-    usecase "API Payer une charge" as APIMobilePayCharge
-    usecase "API Signaler un incident" as APIMobileReportIncident
-    usecase "API Télécharger document PDF" as APIMobileDownloadPDF
-    usecase "API Paramétrer profil" as APIMobileManageProfile
-
-    ProvideAPI ..> APIMobilePayCharge : <<include>>
-    ProvideAPI ..> APIMobileReportIncident : <<include>>
-    ProvideAPI ..> APIMobileDownloadPDF : <<include>>
-    ProvideAPI ..> APIMobileManageProfile : <<include>>
-
-    APIMobilePayCharge ..> Auth : <<include>>
-    APIMobileReportIncident ..> Auth : <<include>>
-    APIMobileDownloadPDF ..> Auth : <<include>>
-    APIMobileManageProfile ..> Auth : <<include>>
   }
 }
 
-' Users Connections
-Resident -- APIMobilePayCharge
-Resident -- APIMobileReportIncident
-Resident -- APIMobileDownloadPDF
-Resident -- APIMobileManageProfile
+' Resident interacts with web system
+Resident -- ViewArchives
+Resident -- ExportPDF
+Resident -- ExportExcel
+Resident -- SetAlerts
 
-' Backend Connections (Data Source)
-Web -- ProvideAPI
+' web consumes web API
+web -- ProvideAPI
 
 @enduml

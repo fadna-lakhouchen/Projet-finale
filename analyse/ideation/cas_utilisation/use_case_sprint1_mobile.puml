@@ -1,39 +1,42 @@
-@startuml ImmoSyndic_Global_Mobile
+@startuml ImmoSyndic_Mobile_Resident
 left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
 
 actor "Résident" as Resident
-actor "Web" as Web <<System>>
+actor "web" as web
 
-rectangle "Application Mobile ImmoSyndic" {
+rectangle "Sprint 1 - Mobile Immosyndic" {
 
-  package "Session" {
+  package "Authentification" {
     usecase "S'authentifier" as Auth
   }
 
-  package "Services API (Consultation)" {
+  package "Espace Résident" {
+
+    usecase "Consulter charges" as ViewCharges
+    usecase "Signaler problème" as ReportIssue
+    usecase "Recevoir notifications" as GetNotifs
+    usecase "Consulter annonces" as ViewNews
+
+    ViewCharges ..> Auth : <<include>>
+    ReportIssue ..> Auth : <<include>>
+    GetNotifs ..> Auth : <<include>>
+    ViewNews ..> Auth : <<include>>
+  }
+
+  package "API" {
     usecase "Fournir API" as ProvideAPI
-    usecase "API Consulter mes charges" as APIMobileViewCharges
-    usecase "API Voir mes notifications" as APIMobileViewNotifs
-    usecase "API Consulter archives" as APIMobileViewArchives
-
-    ProvideAPI ..> APIMobileViewCharges : <<include>>
-    ProvideAPI ..> APIMobileViewNotifs : <<include>>
-    ProvideAPI ..> APIMobileViewArchives : <<include>>
-
-    APIMobileViewCharges ..> Auth : <<include>>
-    APIMobileViewNotifs ..> Auth : <<include>>
-    APIMobileViewArchives ..> Auth : <<include>>
   }
 }
 
-' Users Connections
-Resident -- APIMobileViewCharges
-Resident -- APIMobileViewNotifs
-Resident -- APIMobileViewArchives
+' Resident interacts with web system
+Resident -- ViewCharges
+Resident -- ReportIssue
+Resident -- GetNotifs
+Resident -- ViewNews
 
-' Backend Connections (Data Source)
-Web -- ProvideAPI
+' web consumes web API
+web -- ProvideAPI
 
 @enduml

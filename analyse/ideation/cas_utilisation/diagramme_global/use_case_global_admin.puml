@@ -6,40 +6,41 @@ skinparam shadowing false
 actor "Administrateur" as Admin
 
 
-rectangle "Système ImmoSyndic - Global (Vision Administrateur)" {
+rectangle "Système ImmoSyndic -Espace Administrateur" {
 
   package "Authentification" {
     usecase "S'authentifier" as Auth
   }
-
-  package "Portail Web (Administration)" {
     package "Espace Administrateur (Web)" {
-      usecase "Gérer comptes" as ManageUsers
-      usecase "Superviser immeubles" as Supervise
+      usecase "Gérer comptes syndic" as ManageSyndic
+       usecase "Gérer comptes résidents" as ManageResidents
       usecase "Gérer droits" as ManageRoles
-      usecase "Valider données" as ValidateData
       usecase "Générer rapports" as GlobalReports
-      usecase "Consulter audit" as AuditLogs
+      usecase "Exporter Excel" as ExportExcel
+      usecase "Exporter PDF" as ExportPDF
+      usecase "Consulter logs système" as AuditLogs
       usecase "Surveiller activités" as MonitorActivity
 
-      ManageUsers ..> Auth : <<include>>
-      Supervise ..> Auth : <<include>>
+      ManageSyndic ..> Auth : <<include>>
+      ManageResidents ..> Auth : <<include>>
       ManageRoles ..> Auth : <<include>>
-      ValidateData ..> Auth : <<include>>
       GlobalReports ..> Auth : <<include>>
+      ExportExcel ..> Auth : <<include>>
+      ExportPDF ..> Auth : <<include>>
       AuditLogs ..> Auth : <<include>>
       MonitorActivity ..> Auth : <<include>>
     }
-  }
+  
 
 }
 
 ' Web Connections
-Admin -- ManageUsers
-Admin -- Supervise
+Admin -- ManageSyndic
+Admin -- ManageResidents
 Admin -- ManageRoles
-Admin -- ValidateData
 Admin -- GlobalReports
+Admin -- ExportExcel
+Admin -- ExportPDF
 Admin -- AuditLogs
 Admin -- MonitorActivity
 

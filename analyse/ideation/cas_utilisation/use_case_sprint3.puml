@@ -1,0 +1,58 @@
+@startuml ImmoSyndic_Sprint3_Final
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor "Mobile" as Mobile
+actor "Résident" as Resident
+actor "Syndic" as Syndic
+actor "Administrateur" as Admin
+
+rectangle "Système ImmoSyndic - Sprint 3 Web" {
+
+  ' Auth
+  usecase "S'authentifier" as Auth
+
+  ' API
+  usecase "Consommer API" as ProvideAPI
+
+  ' Résident
+  usecase "Personnaliser alertes" as SetAlerts
+
+  ' Syndic
+  usecase "Consulter statistiques" as ViewStats
+
+  ' Admin
+  usecase "Consulter rapports" as ViewLogs
+  usecase "Surveiller activités" as MonitorActivity
+
+  ' Shared use cases
+  usecase "Exporter Excel" as ExportExcel
+  usecase "Exporter PDF" as ExportPDF
+
+  ' includes (خفيفين)
+  SetAlerts .. Auth
+  ViewStats .. Auth
+  ViewLogs .. Auth
+}
+
+' 🔵 Résident (BLUE)
+Resident -[#3498DB]- SetAlerts
+Resident -[#3498DB]- ExportExcel
+Resident -[#3498DB]- ExportPDF
+
+' 🟢 Syndic (GREEN)
+Syndic -[#2ECC71]- ViewStats
+Syndic -[#2ECC71]- ExportExcel
+Syndic -[#2ECC71]- ExportPDF
+
+' 🟠 Admin (ORANGE)
+Admin -[#E67E22]- ViewLogs
+Admin -[#E67E22]- MonitorActivity
+Admin -[#E67E22]- ExportExcel
+Admin -[#E67E22]- ExportPDF
+
+' ⚫ Mobile (GRAY)
+Mobile -[#7F8C8D]- ProvideAPI
+
+@enduml
