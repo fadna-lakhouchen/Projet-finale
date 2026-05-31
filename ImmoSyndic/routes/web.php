@@ -7,6 +7,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImmeubleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\IncidentController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DepenseController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -21,6 +23,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 Route::get('/home', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('/notifications/read', [DashboardController::class, 'markNotificationsAsRead'])->name('notifications.read');
     
     // Admin Routes
     Route::group(['prefix' => 'admin', 'middleware' => 'role:administrateur'], function () {
@@ -47,6 +50,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/paiements', [DashboardController::class, 'adminPaiements'])->name('admin.paiements');
         Route::get('/signalements', [DashboardController::class, 'adminSignalements'])->name('admin.signalements');
         Route::get('/parametres', fn() => view('admin.administrateur.parametres'))->name('admin.parametres');
+        
+        // Documents
+        Route::get('/documents', [DashboardController::class, 'adminDocuments'])->name('admin.documents');
+        Route::post('/documents', [DocumentController::class, 'storeByAdmin'])->name('admin.documents.store');
+        Route::delete('/documents/{id}', [DocumentController::class, 'destroyByAdmin'])->name('admin.documents.destroy');
+
+        // Dépenses (Charges Immeuble)
+        Route::get('/depenses', [DashboardController::class, 'adminDepenses'])->name('admin.depenses');
+        Route::post('/depenses', [DepenseController::class, 'storeByAdmin'])->name('admin.depenses.store');
+        Route::delete('/depenses/{id}', [DepenseController::class, 'destroyByAdmin'])->name('admin.depenses.destroy');
     });
 
     // Syndic Routes
@@ -68,6 +81,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/paiements', [DashboardController::class, 'syndicPaiements'])->name('syndic.paiements');
         Route::post('/paiements', [PaiementController::class, 'store'])->name('syndic.paiements.store');
         Route::get('/paiements/{id}/receipt', [PaiementController::class, 'generateReceipt'])->name('syndic.paiements.receipt');
+        Route::get('/paiements/export/excel', [PaiementController::class, 'exportExcel'])->name('syndic.paiements.export.excel');
+        Route::get('/paiements/export/pdf', [PaiementController::class, 'exportPdf'])->name('syndic.paiements.export.pdf');
         
         // Interventions
         Route::get('/interventions', [DashboardController::class, 'syndicInterventions'])->name('syndic.interventions');
@@ -76,6 +91,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/interventions/{id}', [IncidentController::class, 'destroy'])->name('syndic.interventions.destroy');
 
         Route::get('/parametres', [DashboardController::class, 'syndicParametres'])->name('syndic.parametres');
+
+        // Annonces
+        Route::get('/annonces', [DashboardController::class, 'syndicAnnonces'])->name('syndic.annonces');
+        Route::post('/annonces', [AnnonceController::class, 'store'])->name('syndic.annonces.store');
+        Route::put('/annonces/{id}', [AnnonceController::class, 'update'])->name('syndic.annonces.update');
+        Route::delete('/annonces/{id}', [AnnonceController::class, 'destroy'])->name('syndic.annonces.destroy');
+
+        // Documents
+        Route::get('/documents', [DashboardController::class, 'syndicDocuments'])->name('syndic.documents');
+        Route::post('/documents', [DocumentController::class, 'storeBySyndic'])->name('syndic.documents.store');
+        Route::delete('/documents/{id}', [DocumentController::class, 'destroyBySyndic'])->name('syndic.documents.destroy');
+
+        // Dépenses (Charges Immeuble)
+        Route::get('/depenses', [DashboardController::class, 'syndicDepenses'])->name('syndic.depenses');
+        Route::post('/depenses', [DepenseController::class, 'storeBySyndic'])->name('syndic.depenses.store');
+        Route::delete('/depenses/{id}', [DepenseController::class, 'destroyBySyndic'])->name('syndic.depenses.destroy');
     });
 
     // Resident Routes
@@ -84,5 +115,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/paiements', [DashboardController::class, 'residentPaiements'])->name('resident.paiements');
         Route::get('/incidents', [DashboardController::class, 'residentIncidents'])->name('resident.incidents');
         Route::post('/incidents', [IncidentController::class, 'storeResidentIncident'])->name('resident.incidents.store');
+        Route::get('/annonces', [DashboardController::class, 'residentAnnonces'])->name('resident.annonces');
+        Route::get('/documents', [DashboardController::class, 'residentDocuments'])->name('resident.documents');
+
+        // Dépenses (Charges Immeuble)
+        Route::get('/depenses', [DashboardController::class, 'residentDepenses'])->name('resident.depenses');
     });
 });

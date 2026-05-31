@@ -11,6 +11,7 @@ use App\Models\AuditLog;
 use Illuminate\Support\Facades\Auth;
 use App\Services\PaiementService;
 use App\Services\IncidentService;
+use App\Models\Annonce;
 
 class DashboardController extends Controller
 {
@@ -335,4 +336,139 @@ class DashboardController extends Controller
         $incidents = $this->incidentService->getAllUserIncidents($user);
         return view('admin.resident.incidents', compact('incidents'));
     }
+
+    public function syndicAnnonces()
+    {
+        $user = Auth::user();
+        $immeubles = Immeuble::where('syndic_id', $user->id)->get();
+        $immeubleIds = $immeubles->pluck('id');
+        
+        $annonces = Annonce::whereIn('immeuble_id', $immeubleIds)
+            ->with(['immeuble', 'syndic'])
+            ->latest()
+            ->get();
+            
+        return view('admin.syndic.annonces', compact('annonces', 'immeubles'));
+    }
+
+    public function residentAnnonces()
+    {
+        $user = Auth::user();
+        $appartement = $user->appartements()->first();
+        $immeuble = $appartement ? $appartement->immeuble : null;
+        
+        $annonces = collect();
+        if ($immeuble) {
+            $annonces = Annonce::where('immeuble_id', $immeuble->id)
+                ->with('syndic')
+                ->latest()
+                ->get();
+        }
+        
+        return view('admin.resident.annonces', compact('annonces', 'immeuble'));
+    }
+
+    public function adminDocuments()
+    {
+        $documents = \App\Models\Document::with('immeuble')->latest()->get();
+        $immeubles = Immeuble::all();
+        
+        // Calculate storage size dynamically from public storage folder
+        $totalSizeBytes = 0;
+        foreach ($documents as $doc) {
+            if ($doc->fichier_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($doc->fichier_path)) {
+                $totalSizeBytes += \Illuminate\Support\Facades\Storage::disk('public')->size($doc->fichier_path);
+            }
+        }
+        
+        // Convert to MB
+        $totalSizeMb = round($totalSizeBytes / (1024 * 1024), 2);
+        // Let's set a maximum virtual quota of 100 MB for demonstration
+        $maxSizeMb = 100; 
+        $percentage = $maxSizeMb > 0 ? min(round(($totalSizeMb / $maxSizeMb) * 100, 1), 100) : 0;
+        
+        $storageInfo = [
+            'used' => $totalSizeMb . ' MB',
+            'max' => $maxSizeMb . ' MB',
+            'percentage' => $percentage
+        ];
+
+        return view('admin.administrateur.documents', compact('documents', 'immeubles', 'storageInfo'));
+    }
+
+    public function syndicDocuments()
+    {
+        $user = Auth::user();
+        $immeubles = Immeuble::where('syndic_id', $user->id)->get();
+        $immeubleIds = $immeubles->pluck('id');
+
+        $documents = \App\Models\Document::whereIn('immeuble_id', $immeubleIds)
+            ->with('immeuble')
+            ->latest()
+            ->get();
+
+        return view('admin.syndic.documents', compact('documents', 'immeubles'));
+    }
+
+    public function residentDocuments()
+    {
+        $user = Auth::user();
+        $appartement = $user->appartements()->first();
+        $immeuble = $appartement ? $appartement->immeuble : null;
+
+        $documents = collect();
+        if ($immeuble) {
+            $documents = \App\Models\Document::where('immeuble_id', $immeuble->id)
+                ->with('immeuble')
+                ->latest()
+                ->get();
+        }
+
+        return view('admin.resident.documents', compact('documents', 'immeuble'));
+    }
+
+    public function adminDepenses()
+    {
+        $depenses = \App\Models\Depense::with('immeuble')->latest()->get();
+        $immeubles = Immeuble::all();
+        return view('admin.administrateur.depenses', compact('depenses', 'immeubles'));
+    }
+
+    public function syndicDepenses()
+    {
+        $user = Auth::user();
+        $immeubles = Immeuble::where('syndic_id', $user->id)->get();
+        $immeubleIds = $immeubles->pluck('id');
+
+        $depenses = \App\Models\Depense::whereIn('immeuble_id', $immeubleIds)
+            ->with('immeuble')
+            ->latest()
+            ->get();
+
+        return view('admin.syndic.depenses', compact('depenses', 'immeubles'));
+    }
+
+    public function residentDepenses()
+    {
+        $user = Auth::user();
+        $appartement = $user->appartements()->first();
+        $immeuble = $appartement ? $appartement->immeuble : null;
+
+        $depenses = collect();
+        if ($immeuble) {
+            $depenses = \App\Models\Depense::where('immeuble_id', $immeuble->id)
+                ->with('immeuble')
+                ->latest()
+                ->get();
+        }
+
+        return view('admin.resident.depenses', compact('depenses', 'immeuble'));
+    }
+
+    public function markNotificationsAsRead()
+    {
+        \App\Models\Notification::where('user_id', auth()->id())->update(['lu' => true]);
+        return back()->with('success', 'Toutes les notifications ont été marquées comme lues.');
+    }
 }
+

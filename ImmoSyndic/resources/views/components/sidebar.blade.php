@@ -53,6 +53,16 @@
                             <i data-lucide="wallet" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Paiements
                         </a>
                     </li>
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('admin.depenses') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('admin.depenses') }}">
+                            <i data-lucide="receipt" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Dépenses
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('admin.documents') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('admin.documents') }}">
+                            <i data-lucide="folder-open" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Documents
+                        </a>
+                    </li>
                     <li class="pt-4 mt-4 border-t border-slate-800">
                         <span class="px-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Configuration</span>
                     </li>
@@ -85,12 +95,27 @@
                     </li>
                     <li>
                         <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('syndic.paiements') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('syndic.paiements') }}">
-                            <i data-lucide="wallet" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Charges & Cotisations
+                            <i data-lucide="wallet" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Paiements
                         </a>
                     </li>
                     <li>
                         <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('syndic.interventions') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('syndic.interventions') }}">
                             <i data-lucide="wrench" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Interventions
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('syndic.annonces') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('syndic.annonces') }}">
+                            <i data-lucide="megaphone" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Annonces
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('syndic.depenses') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('syndic.depenses') }}">
+                            <i data-lucide="receipt" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Dépenses
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('syndic.documents') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('syndic.documents') }}">
+                            <i data-lucide="folder-open" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Documents
                         </a>
                     </li>
                     <li class="pt-4 mt-4 border-t border-slate-800">
@@ -121,6 +146,21 @@
                     <li>
                         <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('resident.incidents') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('resident.incidents') }}">
                             <i data-lucide="alert-circle" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Mes Signalements
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('resident.annonces') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('resident.annonces') }}">
+                            <i data-lucide="megaphone" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Annonces
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('resident.depenses') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('resident.depenses') }}">
+                            <i data-lucide="receipt" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Dépenses
+                        </a>
+                    </li>
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('resident.documents') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('resident.documents') }}">
+                            <i data-lucide="folder-open" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Documents
                         </a>
                     </li>
                 @endif

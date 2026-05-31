@@ -157,7 +157,6 @@
                     <select class="py-2.5 px-3 block w-full border-gray-200/80 rounded-xl text-sm dark:bg-slate-800 dark:border-slate-700 dark:text-neutral-300">
                         <option>Format PDF (.pdf)</option>
                         <option>Format Excel (.xlsx)</option>
-                        <option>Format CSV (.csv)</option>
                     </select>
                 </div>
             </div>

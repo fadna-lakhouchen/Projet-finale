@@ -1,31 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div x-data="adminDocuments" class="space-y-8">
+<div x-data="syndicDocuments" class="space-y-8">
     <!-- Page Header -->
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-            <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight dark:text-white">Coffre-fort Documentaire</h2>
-            <p class="mt-1 text-sm text-gray-500 dark:text-slate-400">Gérez l'ensemble des documents administratifs, financiers et légaux de toutes les copropriétés.</p>
+            <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight dark:text-white">Documents de Copropriété</h2>
+            <p class="mt-1 text-sm text-gray-500 dark:text-slate-400">Gérez le coffre-fort documentaire et partagez des pièces officielles avec vos résidents.</p>
         </div>
-        <button @click="initAjout()" type="button" data-hs-overlay="#hs-modal-upload-document" class="py-2.5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-xl border border-transparent bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-md shadow-primary-500/10 hover:shadow-lg hover:shadow-primary-500/20 transition-all duration-300 transform hover:-translate-y-0.5">
+        <button @click="initAjout()" type="button" data-hs-overlay="#hs-modal-upload-document-syndic" class="py-2.5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-xl border border-transparent bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-md shadow-primary-500/10 hover:shadow-lg hover:shadow-primary-500/20 transition-all duration-300 transform hover:-translate-y-0.5">
             <i data-lucide="upload" class="size-4"></i>
             Déposer un Document
         </button>
-    </div>
-
-    <!-- Storage Usage -->
-    <div class="bg-white/80 dark:bg-[#0D121F]/90 border border-gray-200/60 rounded-2xl shadow-premium p-6 dark:border-slate-800/60 backdrop-blur-md">
-        <div class="flex justify-between items-center mb-3">
-            <h4 class="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-x-2">
-                <i data-lucide="hard-drive" class="size-4 text-primary-500"></i>
-                Espace Disque Utilisé (Coffre-fort global)
-            </h4>
-            <span class="text-xs font-semibold text-slate-500 dark:text-neutral-450">{{ $storageInfo['percentage'] }}% ({{ $storageInfo['used'] }} / {{ $storageInfo['max'] }})</span>
-        </div>
-        <div class="flex w-full h-2.5 bg-gray-150 rounded-full overflow-hidden dark:bg-slate-800 shadow-inner">
-            <div class="flex flex-col justify-center overflow-hidden bg-gradient-to-r from-primary-500 via-purple-500 to-indigo-500 rounded-full transition-all duration-500" role="progressbar" style="width: {{ $storageInfo['percentage'] }}%" aria-valuenow="{{ $storageInfo['percentage'] }}" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
     </div>
 
     <!-- Folders/Categories -->
@@ -94,17 +80,17 @@
     <!-- Table Container -->
     <div class="flex flex-col bg-white/85 dark:bg-[#0D121F]/90 border border-gray-200/60 dark:border-slate-800/60 rounded-2xl shadow-premium backdrop-blur-md overflow-hidden">
         
-        <!-- Table Actions & Filters -->
+        <!-- Filters Bar -->
         <div class="px-6 py-5 grid gap-4 md:flex md:justify-between md:items-center border-b border-gray-200/60 dark:border-slate-800/60 bg-white/40 dark:bg-[#0D121F]/40">
             <!-- Search bar -->
             <div class="sm:col-span-1 max-w-sm w-full relative">
-                <input x-model="search" type="text" class="py-2.5 px-4 ps-11 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 dark:placeholder-neutral-500 transition-all duration-200" placeholder="Rechercher par titre...">
+                <input x-model="search" type="text" class="py-2.5 px-4 ps-11 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 dark:placeholder-neutral-500 transition-all duration-200" placeholder="Rechercher un document...">
                 <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
                     <i data-lucide="search" class="size-4 text-gray-400 dark:text-neutral-500"></i>
                 </div>
             </div>
 
-            <!-- Custom Alpine Dropdowns (No double borders) -->
+            <!-- Select selectors (Alpine custom dropdowns) -->
             <div class="flex flex-wrap items-center gap-3 relative">
                 <!-- Immeuble Filter -->
                 <div class="relative">
@@ -220,7 +206,7 @@
                                 </a>
                                 
                                 <!-- Delete -->
-                                <form action="{{ route('admin.documents.destroy', $doc->id) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer définitivement ce document ?');" class="inline-block">
+                                <form action="{{ route('syndic.documents.destroy', $doc->id) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer définitivement ce document ?');" class="inline-block">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="py-1.5 px-1.5 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-lg border border-gray-200/80 hover:border-rose-300 dark:border-slate-800/80 dark:hover:border-rose-900/30 transition-all duration-200" title="Supprimer">
@@ -235,7 +221,7 @@
                         <td colspan="6" class="px-6 py-12 text-center text-sm text-gray-500 dark:text-slate-400">
                             <div class="flex flex-col items-center justify-center gap-2">
                                 <i data-lucide="folder" class="size-10 text-gray-300 dark:text-slate-700"></i>
-                                <span class="font-medium">Aucun document stocké dans le coffre-fort pour le moment.</span>
+                                <span class="font-medium">Aucun document stocké pour le moment.</span>
                             </div>
                         </td>
                     </tr>
@@ -245,43 +231,43 @@
         </div>
     </div>
 
-    <!-- Modal Form (Upload Document) -->
-    <div id="hs-modal-upload-document" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none bg-slate-950/40 backdrop-blur-sm" role="dialog" tabindex="-1">
+    <!-- Modal Form (Upload Document Syndic) -->
+    <div id="hs-modal-upload-document-syndic" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none bg-slate-950/40 backdrop-blur-sm" role="dialog" tabindex="-1">
         <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
             <div class="w-full flex flex-col bg-white border border-gray-200/60 dark:border-slate-800/60 shadow-premium rounded-2xl pointer-events-auto dark:bg-[#0D121F]">
                 
                 <!-- Modal Header -->
                 <div class="flex justify-between items-center py-4 px-5 border-b border-gray-200/60 dark:border-slate-800/60">
                     <h3 class="font-bold text-gray-800 dark:text-white text-lg">Déposer un Document</h3>
-                    <button type="button" class="size-8 inline-flex justify-center items-center rounded-xl bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-slate-800 dark:text-neutral-400 dark:hover:bg-slate-700 transition-colors" data-hs-overlay="#hs-modal-upload-document">
+                    <button type="button" class="size-8 inline-flex justify-center items-center rounded-xl bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-slate-800 dark:text-neutral-400 dark:hover:bg-slate-700 transition-colors" data-hs-overlay="#hs-modal-upload-document-syndic">
                         <i data-lucide="x" class="size-4"></i>
                     </button>
                 </div>
                 
                 <!-- Modal Body -->
                 <div class="p-6">
-                    <form action="{{ route('admin.documents.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('syndic.documents.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         
                         <div class="grid gap-y-4">
                             <!-- Titre -->
                             <div>
                                 <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Titre du document</label>
-                                <input name="titre" x-model="documentEnCours.titre" type="text" class="py-2.5 px-4 block w-full border border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/85 dark:text-neutral-300 transition-all duration-200" placeholder="Ex: Devis Nettoyage Façade..." required>
+                                <input name="titre" x-model="documentEnCours.titre" type="text" class="py-2.5 px-4 block w-full border border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/85 dark:text-neutral-300 transition-all duration-200" placeholder="Ex: Contrat d'entretien Ascenseur..." required>
                             </div>
 
                             <!-- Immeuble Selector (Custom Alpine Dropdown button) -->
                             <div>
                                 <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Immeuble</label>
-                                <div class="relative" x-data="{ open: false }">
-                                    <button @click="open = !open" @click.outside="open = false" type="button" class="py-2.5 px-4 flex justify-between items-center w-full border border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/85 dark:text-neutral-300 transition-all duration-200 text-left">
+                                <div class="relative">
+                                    <button @click="openFormImm = !openFormImm" @click.outside="openFormImm = false" type="button" class="py-2.5 px-4 flex justify-between items-center w-full border border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/85 dark:text-neutral-300 transition-all duration-200 text-left">
                                         <span x-text="documentEnCours.immeuble_id ? ({ @foreach($immeubles as $imm) '{{ $imm->id }}': '{{ addslashes($imm->nom) }}', @endforeach }[documentEnCours.immeuble_id] || 'Sélectionner l\'immeuble') : 'Sélectionner l\'immeuble'"></span>
-                                        <i data-lucide="chevron-down" class="size-4 text-gray-400 transition-transform duration-200" :class="{'rotate-180': open}"></i>
+                                        <i data-lucide="chevron-down" class="size-4 text-gray-400 transition-transform duration-200" :class="{'rotate-180': openFormImm}"></i>
                                     </button>
                                     <input type="hidden" name="immeuble_id" :value="documentEnCours.immeuble_id" required>
-                                    <div x-show="open" x-cloak class="absolute left-0 top-full z-[100] mt-2 w-full max-h-60 overflow-y-auto bg-white dark:bg-[#0D121F] border border-gray-200/60 dark:border-slate-800/60 shadow-xl rounded-xl p-1.5 backdrop-blur-md" style="display: none;">
+                                    <div x-show="openFormImm" x-cloak class="absolute left-0 top-full z-[100] mt-2 w-full max-h-60 overflow-y-auto bg-white dark:bg-[#0D121F] border border-gray-200/60 dark:border-slate-800/60 shadow-xl rounded-xl p-1.5 backdrop-blur-md" style="display: none;">
                                         @foreach($immeubles as $immeuble)
-                                            <div @click="documentEnCours.immeuble_id = '{{ $immeuble->id }}'; open = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">{{ $immeuble->nom }}</div>
+                                            <div @click="documentEnCours.immeuble_id = '{{ $immeuble->id }}'; openFormImm = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">{{ $immeuble->nom }}</div>
                                         @endforeach
                                     </div>
                                 </div>
@@ -290,17 +276,17 @@
                             <!-- Catégorie Selector (Custom Alpine Dropdown button) -->
                             <div>
                                 <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Catégorie</label>
-                                <div class="relative" x-data="{ open: false }">
-                                    <button @click="open = !open" @click.outside="open = false" type="button" class="py-2.5 px-4 flex justify-between items-center w-full border border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/85 dark:text-neutral-300 transition-all duration-200 text-left">
+                                <div class="relative">
+                                    <button @click="openFormCat = !openFormCat" @click.outside="openFormCat = false" type="button" class="py-2.5 px-4 flex justify-between items-center w-full border border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/85 dark:text-neutral-300 transition-all duration-200 text-left">
                                         <span x-text="documentEnCours.categorie ? (documentEnCours.categorie === 'PV' ? 'PV (Procès-Verbal)' : documentEnCours.categorie) : 'Sélectionner une catégorie'"></span>
-                                        <i data-lucide="chevron-down" class="size-4 text-gray-400 transition-transform duration-200" :class="{'rotate-180': open}"></i>
+                                        <i data-lucide="chevron-down" class="size-4 text-gray-400 transition-transform duration-200" :class="{'rotate-180': openFormCat}"></i>
                                     </button>
                                     <input type="hidden" name="categorie" :value="documentEnCours.categorie" required>
-                                    <div x-show="open" x-cloak class="absolute left-0 top-full z-[100] mt-2 w-full bg-white dark:bg-[#0D121F] border border-gray-200/60 dark:border-slate-800/60 shadow-xl rounded-xl p-1.5 backdrop-blur-md" style="display: none;">
-                                        <div @click="documentEnCours.categorie = 'Facture'; open = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Facture</div>
-                                        <div @click="documentEnCours.categorie = 'Contrat'; open = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Contrat & Devis</div>
-                                        <div @click="documentEnCours.categorie = 'PV'; open = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">PV (Procès-Verbal)</div>
-                                        <div @click="documentEnCours.categorie = 'Autre'; open = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Autre</div>
+                                    <div x-show="openFormCat" x-cloak class="absolute left-0 top-full z-[100] mt-2 w-full bg-white dark:bg-[#0D121F] border border-gray-200/60 dark:border-slate-800/60 shadow-xl rounded-xl p-1.5 backdrop-blur-md" style="display: none;">
+                                        <div @click="documentEnCours.categorie = 'Facture'; openFormCat = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Facture</div>
+                                        <div @click="documentEnCours.categorie = 'Contrat'; openFormCat = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Contrat & Devis</div>
+                                        <div @click="documentEnCours.categorie = 'PV'; openFormCat = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">PV (Procès-Verbal)</div>
+                                        <div @click="documentEnCours.categorie = 'Autre'; openFormCat = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Autre</div>
                                     </div>
                                 </div>
                             </div>
@@ -314,14 +300,14 @@
                                             <i data-lucide="file-up" class="size-10 text-primary-500"></i>
                                         </div>
                                         <div class="flex text-sm text-gray-600 dark:text-slate-400 justify-center">
-                                            <label for="file-upload" class="relative cursor-pointer rounded-md font-semibold text-primary-600 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500">
+                                            <label for="file-upload-syndic" class="relative cursor-pointer rounded-md font-semibold text-primary-600 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500">
                                                 <span>Télécharger un fichier</span>
-                                                <input id="file-upload" name="fichier" type="file" class="sr-only" required onchange="document.getElementById('fileNameSpan').innerText = this.files[0] ? this.files[0].name : 'Aucun fichier sélectionné'">
+                                                <input id="file-upload-syndic" name="fichier" type="file" class="sr-only" required onchange="document.getElementById('fileNameSpanSyndic').innerText = this.files[0] ? this.files[0].name : 'Aucun fichier sélectionné'">
                                             </label>
                                         </div>
                                         <p class="text-xs text-gray-500 dark:text-slate-500">PDF, PNG, JPG, DOC, XLS jusqu'à 20 Mo</p>
-                                        <div id="fileNameDisplay" class="mt-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20 py-1 px-2 rounded-lg inline-block">
-                                            <span id="fileNameSpan">Aucun fichier sélectionné</span>
+                                        <div id="fileNameDisplaySyndic" class="mt-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20 py-1 px-2 rounded-lg inline-block">
+                                            <span id="fileNameSpanSyndic">Aucun fichier sélectionné</span>
                                         </div>
                                     </div>
                                 </div>
@@ -330,7 +316,7 @@
 
                         <!-- Modal Footer -->
                         <div class="flex justify-end items-center gap-x-3 mt-6 border-t border-gray-100 dark:border-slate-800/60 pt-4">
-                            <button type="button" class="py-2 px-4 text-sm font-medium border border-gray-200 dark:border-slate-800 dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-slate-900 rounded-xl transition-colors duration-150" data-hs-overlay="#hs-modal-upload-document">Annuler</button>
+                            <button type="button" class="py-2 px-4 text-sm font-medium border border-gray-200 dark:border-slate-800 dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-slate-900 rounded-xl transition-colors duration-150" data-hs-overlay="#hs-modal-upload-document-syndic">Annuler</button>
                             <button type="submit" class="py-2 px-4 text-sm font-semibold bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white rounded-xl shadow-md shadow-primary-500/10 transition-all duration-300">Valider & Déposer</button>
                         </div>
                     </form>

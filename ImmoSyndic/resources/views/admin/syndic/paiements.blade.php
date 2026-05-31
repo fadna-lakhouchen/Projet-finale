@@ -11,9 +11,12 @@
         <button type="button" class="py-2.5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-xl border border-transparent bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-md shadow-primary-500/10 hover:shadow-lg hover:shadow-primary-500/20 transition-all duration-300 transform hover:-translate-y-0.5" data-hs-overlay="#hs-saisir-paiement-modal">
             <i data-lucide="plus" class="size-4"></i> Saisir un paiement
         </button>
-        <button type="button" class="py-2.5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200/80 bg-white/50 hover:bg-gray-50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-white dark:hover:bg-slate-900/50 shadow-sm transition-all duration-200">
-            <i data-lucide="external-link" class="size-4"></i> Export CSV
-        </button>
+        <a href="{{ route('syndic.paiements.export.excel') }}" class="py-2.5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-xl border border-transparent bg-emerald-600 text-white hover:bg-emerald-700 shadow-md shadow-emerald-500/10 hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-300 transform hover:-translate-y-0.5">
+            <i data-lucide="file-spreadsheet" class="size-4"></i> Export Excel
+        </a>
+        <a href="{{ route('syndic.paiements.export.pdf') }}" target="_blank" class="py-2.5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-xl border border-transparent bg-rose-600 text-white hover:bg-rose-700 shadow-md shadow-rose-500/10 hover:shadow-lg hover:shadow-rose-500/20 transition-all duration-300 transform hover:-translate-y-0.5">
+            <i data-lucide="file-text" class="size-4"></i> Export PDF
+        </a>
     </div>
 </div>
 

@@ -8,22 +8,22 @@
     showImm: false,
     showStat: false,
     isEditing: false,
-    residentEnCours: { id: '', prenom: '', nom: '', email: '', telephone: '', cin: '', notes: '', role: 'resident', type_resident: 'locataire', immeuble_id: '', appartement_id: '', date_entree: '' },
+    residentEnCours: { id: '', prenom: '', nom: '', email: '', telephone: '', cin: '', notes: '', role: 'resident', type_resident: 'locataire', immeuble_id: '', numero_appartement: '', date_entree: '' },
     init() {
         this.$watch('residentEnCours.immeuble_id', (value) => {
             if (!this.isEditing) {
-                this.residentEnCours.appartement_id = '';
+                this.residentEnCours.numero_appartement = '';
             }
         });
     },
     initAjout() {
         this.isEditing = false;
-        this.residentEnCours = { id: '', prenom: '', nom: '', email: '', telephone: '', cin: '', notes: '', role: 'resident', type_resident: 'locataire', immeuble_id: '', appartement_id: '', date_entree: '' };
+        this.residentEnCours = { id: '', prenom: '', nom: '', email: '', telephone: '', cin: '', notes: '', role: 'resident', type_resident: 'locataire', immeuble_id: '', numero_appartement: '', date_entree: '' };
         if (window.editor) window.editor.commands.setContent('');
     },
-    initEdit(id, prenom, nom, email, telephone, cin, type, immeuble_id, appt_id, date_e, notes) {
+    initEdit(id, prenom, nom, email, telephone, cin, type, immeuble_id, numero_appt, date_e, notes) {
         this.isEditing = true;
-        this.residentEnCours = { id: id, prenom: prenom, nom: nom, email: email, telephone: telephone, cin: cin, notes: notes, role: 'resident', type_resident: type, immeuble_id: immeuble_id, appartement_id: appt_id, date_entree: date_e };
+        this.residentEnCours = { id: id, prenom: prenom, nom: nom, email: email, telephone: telephone, cin: cin, notes: notes, role: 'resident', type_resident: type, immeuble_id: immeuble_id, numero_appartement: numero_appt, date_entree: date_e };
         if (window.editor) window.editor.commands.setContent(notes || '');
     },
     matches(name, immeuble, role) {
@@ -158,7 +158,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                             <div class="inline-flex items-center gap-x-2">
-                                <button @click="initEdit('{{ $resident->id }}', '{{ addslashes($resident->prenom) }}', '{{ addslashes($resident->nom) }}', '{{ addslashes($resident->email) }}', '{{ $resident->telephone }}', '{{ $resident->cin ?? '' }}', '{{ strtolower($typeResident) }}', '{{ $immeubleId }}', '{{ $appt ? $appt->id : '' }}', '{{ $appt ? $appt->pivot->date_entree : '' }}', '{{ addslashes($resident->notes ?? '') }}')" type="button" data-hs-overlay="#hs-modal-add-resident" class="p-2 inline-flex items-center justify-center gap-x-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 dark:bg-slate-800/40 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-slate-800 transition-all">
+                                <button @click="initEdit('{{ $resident->id }}', '{{ addslashes($resident->prenom) }}', '{{ addslashes($resident->nom) }}', '{{ addslashes($resident->email) }}', '{{ $resident->telephone }}', '{{ $resident->cin ?? '' }}', '{{ strtolower($typeResident) }}', '{{ $immeubleId }}', '{{ $appt ? $appt->numero : '' }}', '{{ $appt ? $appt->pivot->date_entree : '' }}', '{{ addslashes($resident->notes ?? '') }}')" type="button" data-hs-overlay="#hs-modal-add-resident" class="p-2 inline-flex items-center justify-center gap-x-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 dark:bg-slate-800/40 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-slate-800 transition-all">
                                     <i data-lucide="edit-2" class="size-4"></i>
                                 </button>
                                 <form action="{{ route('admin.residents.destroy', $resident->id) }}" method="POST" onsubmit="return confirm('Confirmer la suppression définitive de ce résident ?');">
@@ -223,60 +223,43 @@
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold mb-2 dark:text-white">Type Résident</label>
-                                    <select name="type_resident" x-model="residentEnCours.type_resident" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500">
-                                        <option value="locataire">Locataire</option>
-                                        <option value="propriétaire">Propriétaire</option>
-                                    </select>
+                                    <div class="relative" x-data="{ open: false }">
+                                        <button @click="open = !open" @click.outside="open = false" type="button" class="py-2.5 px-4 flex justify-between items-center w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 text-left">
+                                            <span x-text="residentEnCours.type_resident ? (residentEnCours.type_resident === 'propriétaire' ? 'Propriétaire' : 'Locataire') : 'Sélectionner le type'"></span>
+                                            <i data-lucide="chevron-down" class="size-4 text-gray-400 transition-transform duration-200" :class="{'rotate-180': open}"></i>
+                                        </button>
+                                        <input type="hidden" name="type_resident" :value="residentEnCours.type_resident">
+                                        <div x-show="open" x-cloak class="absolute left-0 top-full z-[100] mt-2 w-full bg-white dark:bg-[#0D121F] border border-gray-200/60 dark:border-slate-800/60 shadow-xl rounded-xl p-1.5 backdrop-blur-md" style="display: none;">
+                                            <div @click="residentEnCours.type_resident = 'locataire'; open = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Locataire</div>
+                                            <div @click="residentEnCours.type_resident = 'propriétaire'; open = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Propriétaire</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="grid sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-semibold mb-2 dark:text-white">Immeuble</label>
-                                    <select name="immeuble_id" x-model="residentEnCours.immeuble_id" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" required>
-                                        <option value="">Sélectionner l'immeuble</option>
-                                        @foreach($immeubles as $immeuble)
-                                            <option value="{{ $immeuble->id }}">{{ $immeuble->nom }}</option>
-                                        @endforeach
-                                    </select>
+                                    <div class="relative" x-data="{ open: false }">
+                                        <button @click="open = !open" @click.outside="open = false" type="button" class="py-2.5 px-4 flex justify-between items-center w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 text-left">
+                                            <span x-text="residentEnCours.immeuble_id ? ({ @foreach($immeubles as $imm) '{{ $imm->id }}': '{{ addslashes($imm->nom) }}', @endforeach }[residentEnCours.immeuble_id] || 'Sélectionner l\'immeuble') : 'Sélectionner l\'immeuble'"></span>
+                                            <i data-lucide="chevron-down" class="size-4 text-gray-400 transition-transform duration-200" :class="{'rotate-180': open}"></i>
+                                        </button>
+                                        <input type="hidden" name="immeuble_id" :value="residentEnCours.immeuble_id">
+                                        <div x-show="open" x-cloak class="absolute left-0 top-full z-[100] mt-2 w-full max-h-60 overflow-y-auto bg-white dark:bg-[#0D121F] border border-gray-200/60 dark:border-slate-800/60 shadow-xl rounded-xl p-1.5 backdrop-blur-md" style="display: none;">
+                                            @foreach($immeubles as $immeuble)
+                                                <div @click="residentEnCours.immeuble_id = '{{ $immeuble->id }}'; open = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">{{ $immeuble->nom }}</div>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold mb-2 dark:text-white">Appartement</label>
-                                    <select name="appartement_id" x-model="residentEnCours.appartement_id" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" required>
-                                        <option value="">Sélectionner le numéro</option>
-                                        @foreach($immeubles as $immeuble)
-                                            @foreach($immeuble->appartements as $appt)
-                                                <option 
-                                                    value="{{ $appt->id }}" 
-                                                    x-show="residentEnCours.immeuble_id == '{{ $immeuble->id }}'"
-                                                    x-bind:disabled="residentEnCours.immeuble_id != '{{ $immeuble->id }}'"
-                                                >
-                                                    N° {{ $appt->numero }} (Étage {{ $appt->etage }})
-                                                </option>
-                                            @endforeach
-                                        @endforeach
-                                    </select>
+                                    <label class="block text-sm font-semibold mb-2 dark:text-white">Numéro d'appartement</label>
+                                    <input name="numero_appartement" x-model="residentEnCours.numero_appartement" type="text" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" placeholder="Ex: 5, 12B..." required>
                                 </div>
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold mb-2 dark:text-white">Date d'entrée</label>
                                 <input name="date_entree" x-model="residentEnCours.date_entree" type="date" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" required>
-                            </div>
-                            <!-- Tiptap Notes (Premium glass panel) -->
-                            <div>
-                                <label class="block text-sm font-semibold mb-2 dark:text-white">Observations / Notes</label>
-                                <input type="hidden" name="notes" x-model="residentEnCours.notes" style="display: none !important;">
-                                <div class="bg-slate-50/50 border border-gray-200 rounded-2xl overflow-hidden dark:bg-[#080B11] dark:border-slate-850">
-                                    <div id="hs-editor-tiptap">
-                                        <div class="sticky top-0 bg-white flex align-middle gap-x-0.5 border-b border-gray-200 p-2 dark:bg-[#0D121F] dark:border-slate-850">
-                                            <button class="size-8 inline-flex justify-center items-center rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none dark:text-white dark:hover:bg-slate-800" type="button" data-hs-editor-bold><i data-lucide="bold" class="size-4"></i></button>
-                                            <button class="size-8 inline-flex justify-center items-center rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none dark:text-white dark:hover:bg-slate-800" type="button" data-hs-editor-italic><i data-lucide="italic" class="size-4"></i></button>
-                                            <button class="size-8 inline-flex justify-center items-center rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none dark:text-white dark:hover:bg-slate-800" type="button" data-hs-editor-underline><i data-lucide="underline" class="size-4"></i></button>
-                                            <button class="size-8 inline-flex justify-center items-center rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none dark:text-white dark:hover:bg-slate-800" type="button" data-hs-editor-ol><i data-lucide="list-ordered" class="size-4"></i></button>
-                                            <button class="size-8 inline-flex justify-center items-center rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none dark:text-white dark:hover:bg-slate-800" type="button" data-hs-editor-ul><i data-lucide="list" class="size-4"></i></button>
-                                        </div>
-                                        <div class="h-32 overflow-auto p-4 focus:outline-none tiptap-content text-sm text-slate-800 dark:text-slate-200" data-hs-editor-field></div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="flex justify-end items-center gap-x-3 mt-8 border-t border-slate-100 dark:border-slate-800 pt-5">
@@ -290,44 +273,3 @@
     </div>
 </div>
 @endsection
-
-@push('styles')
-<style>
-    .tiptap-content .ProseMirror { outline: none; min-height: 100%; }
-    .tiptap-content ul { list-style-type: disc; padding-left: 1.5rem; }
-    .tiptap-content ol { list-style-type: decimal; padding-left: 1.5rem; }
-</style>
-@endpush
-
-@push('scripts')
-<script type="module">
-    import { Editor } from 'https://esm.sh/@tiptap/core';
-    import StarterKit from 'https://esm.sh/@tiptap/starter-kit';
-    import Underline from 'https://esm.sh/@tiptap/extension-underline';
-
-    const editor = new Editor({
-        element: document.querySelector('#hs-editor-tiptap [data-hs-editor-field]'),
-        extensions: [StarterKit, Underline],
-        content: '',
-        onUpdate({ editor }) {
-            const html = editor.getHTML();
-            const el = document.querySelector('[x-data]');
-            const alpineData = Alpine.$data(el);
-            if (alpineData) alpineData.residentEnCours.notes = html;
-        }
-    });
-    window.editor = editor;
-
-    const actions = [
-        { id: 'bold', action: () => editor.chain().focus().toggleBold().run() },
-        { id: 'italic', action: () => editor.chain().focus().toggleItalic().run() },
-        { id: 'underline', action: () => editor.chain().focus().toggleUnderline().run() },
-        { id: 'ol', action: () => editor.chain().focus().toggleOrderedList().run() },
-        { id: 'ul', action: () => editor.chain().focus().toggleBulletList().run() },
-    ];
-    actions.forEach(({ id, action }) => {
-        const btn = document.querySelector(`[data-hs-editor-${id}]`);
-        if (btn) btn.addEventListener('click', action);
-    });
-</script>
-@endpush

@@ -65,4 +65,39 @@ class PaiementController extends Controller
 
         return view('admin.syndic.receipt', compact('paiement'));
     }
+
+    /**
+     * Export payments list to Excel spreadsheet (vnd.ms-excel format).
+     */
+    public function exportExcel()
+    {
+        $user = Auth::user();
+        $immeubleIds = \App\Models\Immeuble::where('syndic_id', $user->id)->pluck('id');
+        
+        $chargesList = \App\Models\Charge::whereHas('appartement', function($q) use ($immeubleIds) {
+            $q->whereIn('immeuble_id', $immeubleIds);
+        })->with(['appartement.immeuble', 'appartement.residents', 'paiements'])->latest()->get();
+
+        $filename = "Rapport_Paiements_" . date('Y-m-d') . ".xls";
+        
+        header("Content-Type: application/vnd.ms-excel; charset=utf-8");
+        header("Content-Disposition: attachment; filename=\"$filename\"");
+        
+        return view('exports.paiements_excel', compact('chargesList'));
+    }
+
+    /**
+     * Export payments list to print-ready PDF layout.
+     */
+    public function exportPdf()
+    {
+        $user = Auth::user();
+        $immeubleIds = \App\Models\Immeuble::where('syndic_id', $user->id)->pluck('id');
+        
+        $chargesList = \App\Models\Charge::whereHas('appartement', function($q) use ($immeubleIds) {
+            $q->whereIn('immeuble_id', $immeubleIds);
+        })->with(['appartement.immeuble', 'appartement.residents', 'paiements'])->latest()->get();
+
+        return view('exports.paiements_pdf', compact('chargesList'));
+    }
 }

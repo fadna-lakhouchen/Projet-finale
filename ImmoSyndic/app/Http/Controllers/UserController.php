@@ -20,9 +20,23 @@ class UserController extends Controller
             'cin' => 'nullable|string|max:20',
             'notes' => 'nullable|string',
             'type_resident' => 'required|string|in:locataire,propriétaire',
-            'appartement_id' => 'required|exists:appartements,id',
+            'immeuble_id' => 'required|exists:immeubles,id',
+            'numero_appartement' => 'required|string|max:255',
             'date_entree' => 'required|date',
         ]);
+
+        $appt = \App\Models\Appartement::firstOrCreate(
+            [
+                'immeuble_id' => $request->immeuble_id,
+                'numero' => $request->numero_appartement,
+            ],
+            [
+                'etage' => 1,
+                'superficie' => 80.00,
+                'type' => 'F3',
+                'statut' => 'occupé',
+            ]
+        );
 
         $user = User::create([
             'prenom' => $request->prenom,
@@ -36,7 +50,7 @@ class UserController extends Controller
             'is_active' => true,
         ]);
 
-        $user->appartements()->attach($request->appartement_id, [
+        $user->appartements()->attach($appt->id, [
             'type_resident' => ucfirst($request->type_resident),
             'date_entree' => $request->date_entree,
         ]);
@@ -55,14 +69,28 @@ class UserController extends Controller
             'cin' => 'nullable|string|max:20',
             'notes' => 'nullable|string',
             'type_resident' => 'required|string|in:locataire,propriétaire',
-            'appartement_id' => 'required|exists:appartements,id',
+            'immeuble_id' => 'required|exists:immeubles,id',
+            'numero_appartement' => 'required|string|max:255',
             'date_entree' => 'required|date',
         ]);
+
+        $appt = \App\Models\Appartement::firstOrCreate(
+            [
+                'immeuble_id' => $request->immeuble_id,
+                'numero' => $request->numero_appartement,
+            ],
+            [
+                'etage' => 1,
+                'superficie' => 80.00,
+                'type' => 'F3',
+                'statut' => 'occupé',
+            ]
+        );
 
         $user->update($request->only(['prenom', 'nom', 'email', 'telephone', 'cin', 'notes']));
 
         $user->appartements()->sync([
-            $request->appartement_id => [
+            $appt->id => [
                 'type_resident' => ucfirst($request->type_resident),
                 'date_entree' => $request->date_entree,
             ]
