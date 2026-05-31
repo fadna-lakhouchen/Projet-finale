@@ -38,7 +38,7 @@ class DashboardController extends Controller
         $stats = [
             'total_residents'          => User::where('role', 'resident')->count(),
             'total_immeubles'          => Immeuble::count(),
-            'incidents_ouverts'        => Incident::where('statut', '!=', 'Résolu')->count(),
+            'incidents_ouverts'        => Incident::whereNotIn('statut', ['Résolu', 'résolu'])->count(),
             'paiements_retard'         => Paiement::where('statut', 'en retard')->count(),
             'total_paiements_attendus' => Paiement::count(),
         ];
@@ -82,6 +82,19 @@ class DashboardController extends Controller
         return view('admin.administrateur.paiements', compact('paiements', 'immeubles', 'stats'));
     }
 
+    public function adminSignalements()
+    {
+        $incidents = Incident::with(['immeuble', 'user'])->latest()->get();
+
+        $stats = [
+            'ouverts'   => $incidents->whereIn('statut', ['Ouvert', 'ouvert', 'nouveau', 'Nouveau', 'à traiter'])->count(),
+            'en_cours'  => $incidents->whereIn('statut', ['En cours', 'en cours'])->count(),
+            'resolus'   => $incidents->whereIn('statut', ['Résolu', 'résolu', 'Terminé', 'terminé'])->count(),
+        ];
+
+        return view('admin.administrateur.signalements', compact('incidents', 'stats'));
+    }
+
     public function syndicDashboard()
     {
         $user = Auth::user();
@@ -93,13 +106,72 @@ class DashboardController extends Controller
                 $q->whereIn('immeuble_id', $immeubleIds);
             })->count(),
             'total_appartements' => $immeubles->sum(fn($i) => $i->appartements->count()),
-            'incidents_ouverts' => Incident::whereIn('immeuble_id', $immeubleIds)->where('statut', '!=', 'Résolu')->count(),
+            'incidents_ouverts' => Incident::whereIn('immeuble_id', $immeubleIds)->whereNotIn('statut', ['Résolu', 'résolu'])->count(),
             'paiements_ce_mois' => Paiement::whereHas('charge.appartement', function($q) use ($immeubleIds) {
                 $q->whereIn('immeuble_id', $immeubleIds);
             })->whereMonth('date_paiement', now()->month)->sum('montant'),
         ];
 
-        return view('admin.syndic.dashboard', compact('stats', 'immeubles'));
+        // 1. Get the latest open incident for the banner alert
+        $urgentIncident = Incident::whereIn('immeuble_id', $immeubleIds)
+            ->where('statut', '!=', 'Résolu')
+            ->with(['immeuble', 'user'])
+            ->latest()
+            ->first();
+
+        // 2. Fetch unified recent activities (Paiements + Incidents)
+        $activites = collect();
+
+        // Fetch recent payments
+        $paiements = Paiement::whereHas('charge.appartement', function($q) use ($immeubleIds) {
+            $q->whereIn('immeuble_id', $immeubleIds);
+        })->with(['charge.appartement.immeuble', 'user'])->latest()->take(5)->get();
+
+        foreach ($paiements as $p) {
+            $appartement = $p->charge->appartement ?? null;
+            $immeubleNom = $appartement && $appartement->immeuble ? $appartement->immeuble->nom : 'N/A';
+            $apptNum = $appartement ? "Appt " . $appartement->numero : '';
+            $userName = $p->user ? $p->user->name : 'Résident';
+            
+            $activites->push([
+                'type' => 'Paiement',
+                'evenement' => 'Paiement reçu',
+                'concerne' => "$immeubleNom - $apptNum",
+                'details' => number_format($p->montant, 2) . " DH (Par " . $userName . ")",
+                'date' => $p->created_at,
+                'icon' => 'check',
+                'color' => 'emerald',
+                'bg_row' => ''
+            ]);
+        }
+
+        // Fetch recent incidents
+        $incidents = Incident::whereIn('immeuble_id', $immeubleIds)
+            ->with(['immeuble', 'user'])
+            ->latest()
+            ->take(5)
+            ->get();
+
+        foreach ($incidents as $i) {
+            $immeubleNom = $i->immeuble ? $i->immeuble->nom : 'N/A';
+            $userName = $i->user ? $i->user->name : 'Syndic (Admin)';
+            
+            $activites->push([
+                'type' => 'Signalement',
+                'evenement' => $i->cree_par_admin ? 'Signalement (Admin)' : 'Signalement Résident',
+                'concerne' => $i->appartement_id ? "$immeubleNom - Appt " . ($i->appartement->numero ?? '') : $immeubleNom,
+                'details' => $i->titre . " (Par " . $userName . ")",
+                'date' => $i->created_at,
+                'icon' => $i->cree_par_admin ? 'alert-triangle' : 'info',
+                'color' => $i->cree_par_admin ? 'rose' : 'primary',
+                'bg_row' => $i->cree_par_admin ? 'bg-rose-50/[0.02]' : ''
+            ]);
+        }
+
+        // Sort by date latest and take 5
+        $activites = $activites->sortByDesc('date')->take(5)->values();
+
+        return view('admin.syndic.dashboard', compact('stats', 'immeubles', 'urgentIncident', 'activites'));
     }
 
     public function syndicResidents()
@@ -121,7 +193,8 @@ class DashboardController extends Controller
         $user = Auth::user();
         $immeubles = Immeuble::where('syndic_id', $user->id)->with('appartements')->get();
         $villes = $immeubles->pluck('ville')->unique()->filter()->values();
-        return view('admin.syndic.immeubles', compact('immeubles', 'villes'));
+        $syndics = User::where('role', 'syndic')->get();
+        return view('admin.syndic.immeubles', compact('immeubles', 'villes', 'syndics'));
     }
 
     public function syndicPaiements()
@@ -129,23 +202,37 @@ class DashboardController extends Controller
         $user = Auth::user();
         $immeubleIds = Immeuble::where('syndic_id', $user->id)->pluck('id');
         
-        $paiements = Paiement::whereHas('charge.appartement', function($q) use ($immeubleIds) {
+        // Fetch all validated and pending payments for the stats
+        $allPaiements = Paiement::whereHas('charge.appartement', function($q) use ($immeubleIds) {
             $q->whereIn('immeuble_id', $immeubleIds);
-        })->with(['charge.appartement.immeuble', 'user'])->latest()->get();
+        })->get();
 
         $stats = [
-            'totalCollecte' => $paiements->where('statut', 'validé')->sum('montant'),
-            'totalAttente' => $paiements->where('statut', 'en attente')->sum('montant'),
-            'nbPaiements' => $paiements->count(),
+            'totalCollecte' => $allPaiements->where('statut', 'validé')->sum('montant'),
+            'totalAttente' => $allPaiements->where('statut', 'en attente')->sum('montant'),
+            'nbPaiements' => $allPaiements->count(),
         ];
         
         $immeubles = Immeuble::whereIn('id', $immeubleIds)->get();
 
-        $moisDisponibles = $paiements->map(function($p) {
-            return ucfirst(\Carbon\Carbon::parse($p->date_paiement)->translatedFormat('F Y'));
+        // Fetch all charges (including paid, partial, unpaid) for the main dashboard list
+        $chargesList = \App\Models\Charge::whereHas('appartement', function($q) use ($immeubleIds) {
+            $q->whereIn('immeuble_id', $immeubleIds);
+        })->with(['appartement.immeuble', 'appartement.residents', 'paiements'])
+          ->latest()
+          ->get();
+
+        // Available months from all generated charges
+        $moisDisponibles = $chargesList->map(function($c) {
+            return ucfirst(\Carbon\Carbon::parse($c->date_echeance)->translatedFormat('F Y'));
         })->unique()->values();
 
-        return view('admin.syndic.paiements', compact('paiements', 'immeubles', 'stats', 'moisDisponibles'));
+        // Unpaid or partially paid charges for the "Saisir un paiement" select dropdown
+        $charges = $chargesList->filter(function($c) {
+            return strtolower($c->statut) !== 'payé';
+        })->values();
+
+        return view('admin.syndic.paiements', compact('immeubles', 'stats', 'moisDisponibles', 'charges', 'chargesList'));
     }
 
     public function syndicInterventions()
@@ -180,7 +267,7 @@ class DashboardController extends Controller
         
         // Ajout du nombre d'incidents ouverts
         $stats['incidents_ouverts'] = Incident::where('user_id', $user->id)
-            ->where('statut', '!=', 'résolu')
+            ->whereNotIn('statut', ['résolu', 'Résolu'])
             ->count();
 
         // Récupération des activités via les services
@@ -193,23 +280,41 @@ class DashboardController extends Controller
                 'type' => 'Paiement',
                 'description' => "Règlement de charge REF-" . str_pad($p->id, 6, '0', STR_PAD_LEFT),
                 'statut' => $p->statut,
-                'color' => $p->statut === 'Payé' ? 'green' : 'red'
+                'color' => in_array(strtolower($p->statut), ['payé', 'validé']) ? 'green' : 'red'
             ]);
         }
 
         $mesIncidents = $this->incidentService->getUserIncidents($user, 5);
         foreach ($mesIncidents as $i) {
+            $statusLower = strtolower($i->statut);
             $activites->push([
                 'date' => $i->created_at,
                 'type' => 'Signalement',
                 'description' => $i->titre,
                 'statut' => $i->statut,
-                'color' => $i->statut === 'nouveau' ? 'blue' : ($i->statut === 'en cours' ? 'orange' : 'green')
+                'color' => in_array($statusLower, ['nouveau', 'ouvert', 'à traiter']) ? 'blue' : (in_array($statusLower, ['en cours']) ? 'orange' : 'green')
             ]);
         }
         $activites = $activites->sortByDesc('date')->take(5);
         
-        return view('admin.resident.dashboard', compact('user', 'appartement', 'immeuble', 'stats', 'activites'));
+        // Fetch building transparency charges (only charges belonging to their same building)
+        $transparenceCharges = collect();
+        if ($immeuble) {
+            $transparenceCharges = \App\Models\Charge::whereHas('appartement', function($q) use ($immeuble) {
+                $q->where('immeuble_id', $immeuble->id);
+            })
+            ->with(['appartement.residents', 'paiements'])
+            ->get()
+            ->sortBy(function($c) {
+                $status = strtolower($c->statut);
+                if ($status === 'impayé') return 1;
+                if ($status === 'partiel') return 2;
+                return 3;
+            })
+            ->values();
+        }
+        
+        return view('admin.resident.dashboard', compact('user', 'appartement', 'immeuble', 'stats', 'activites', 'transparenceCharges'));
     }
 
     public function residentPaiements()

@@ -5,8 +5,8 @@
     <div class="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-800 dark:border-neutral-700">
         <div class="p-4 sm:p-7">
             <div class="text-center">
-                <div class="size-12 bg-primary-600 text-white rounded-lg flex items-center justify-center mx-auto mb-4 shadow-md">
-                    <img src="{{ asset('logo.png') }}" alt="Logo" class="size-8 logo-transparent object-contain" style="mix-blend-mode: multiply; filter: brightness(0) invert(1);">
+                <div class="flex justify-center mb-5">
+                    <img src="{{ asset('logo.png') }}" alt="Logo ImmoSyndic" class="h-20 w-auto object-contain">
                 </div>
                 <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Portail ImmoSyndic</h1>
                 <p class="mt-2 text-sm text-gray-600 dark:text-neutral-400">

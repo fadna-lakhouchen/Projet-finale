@@ -1,11 +1,11 @@
 export default () => ({
     statutSelectionne: 'all',
     isEditing: false,
-    interventionEnCours: { id: '', titre: '', description: '', immeuble_id: '', statut: '' },
+    interventionEnCours: { id: '', titre: '', description: '', immeuble_id: '', statut: 'Ouvert' },
     
     initAjout() {
         this.isEditing = false;
-        this.interventionEnCours = { id: '', titre: '', description: '', immeuble_id: '', statut: '' };
+        this.interventionEnCours = { id: '', titre: '', description: '', immeuble_id: '', statut: 'Ouvert' };
     },
     
     initEdit(id, titre, desc, imm_id, stat) {
@@ -15,9 +15,10 @@ export default () => ({
     
     matches(statut) {
         if (this.statutSelectionne === 'all') return true;
-        if (this.statutSelectionne === 'à traiter' && statut === 'Ouvert') return true;
-        if (this.statutSelectionne === 'en cours' && statut === 'En cours') return true;
-        if (this.statutSelectionne === 'terminé' && statut === 'Résolu') return true;
+        const norm = statut ? statut.toLowerCase() : '';
+        if (this.statutSelectionne === 'à traiter' && (norm === 'ouvert' || norm === 'nouveau')) return true;
+        if (this.statutSelectionne === 'en cours' && norm === 'en cours') return true;
+        if (this.statutSelectionne === 'terminé' && (norm === 'résolu' || norm === 'résolue' || norm === 'terminé')) return true;
         return false;
     }
 });

@@ -16,6 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \App\Http\Middleware\RoleMiddleware::class,
         ]);
     })
+    ->withSchedule(function (\Illuminate\Console\Scheduling\Schedule $schedule) {
+        // Générer automatiquement les charges le 1er du mois à minuit
+        $schedule->command('app:generate-charges')->monthlyOn(1, '00:00');
+    })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();

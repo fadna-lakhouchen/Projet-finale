@@ -28,9 +28,14 @@ class PaiementService extends BaseService
     {
         $appartementIds = $user->appartements()->pluck('appartements.id');
         
-        $a_payer_mois = \App\Models\Charge::whereIn('appartement_id', $appartementIds)
-            ->whereIn('statut', ['non payé', 'en retard'])
-            ->sum('montant');
+        $charges = \App\Models\Charge::whereIn('appartement_id', $appartementIds)
+            ->where('statut', '!=', 'payé')
+            ->with('paiements')
+            ->get();
+            
+        $a_payer_mois = $charges->sum(function($c) {
+            return $c->reste_a_payer;
+        });
             
         $total_paye_annee = $this->model->where('user_id', $user->id)
             ->where('statut', 'validé')

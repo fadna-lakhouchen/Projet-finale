@@ -34,4 +34,22 @@ class Charge extends Model
     {
         return $this->hasMany(Document::class);
     }
+
+    /**
+     * Get the remaining balance to pay for this charge.
+     */
+    public function getResteAPayerAttribute()
+    {
+        $totalPaye = $this->paiements->where('statut', 'validé')->sum('montant');
+        return $this->montant - $totalPaye;
+    }
+
+    /**
+     * Get the full name of the first resident assigned to the apartment.
+     */
+    public function getResidentNomAttribute()
+    {
+        $resident = $this->appartement ? $this->appartement->residents->first() : null;
+        return $resident ? "{$resident->prenom} {$resident->nom}" : 'Non assigné';
+    }
 }

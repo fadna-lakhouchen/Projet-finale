@@ -87,20 +87,28 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200/60 dark:divide-slate-800/60">
-                @foreach($paiements as $paiement)
+                @foreach($chargesList as $item)
                 @php
-                    $dateFr = \Carbon\Carbon::parse($paiement->date_paiement)->translatedFormat('F Y');
+                    $dateFr = \Carbon\Carbon::parse($item->date_echeance)->translatedFormat('F Y');
                     $dateFr = ucfirst($dateFr);
-                    $statut = $paiement->statut;
-                    $appt = $paiement->user->appartements->first();
+                    $statutDb = strtolower($item->statut);
+                    
+                    // Map database charge status to view statuses: 'Payé' or 'En retard'
+                    $viewStatut = $statutDb === 'payé' ? 'Payé' : 'En retard';
+                    
+                    $appt = $item->appartement;
                     $immeubleName = $appt ? $appt->immeuble->nom : 'N/A';
                     $apptNumero = $appt ? $appt->numero : 'N/A';
-                    $fullName = $paiement->user->prenom . ' ' . $paiement->user->nom;
+                    $resident = $appt ? $appt->residents->first() : null;
+                    $fullName = $resident ? $resident->prenom . ' ' . $resident->nom : 'Non assigné';
+                    
+                    $validatedPaymentsSum = $item->paiements->where('statut', 'validé')->sum('montant');
+                    $lastPayment = $item->paiements->sortByDesc('created_at')->first();
                 @endphp
-                <tr x-show="matches('{{ addslashes($fullName) }}', '{{ $dateFr }}', '{{ addslashes($immeubleName) }}', '{{ $statut }}')" class="hover:bg-gray-50/50 dark:hover:bg-slate-900/30 transition-colors duration-150 {{ $statut == 'En retard' ? 'bg-rose-50/5 dark:bg-rose-950/5' : '' }}">
+                <tr x-show="matches('{{ addslashes($fullName) }}', '{{ $dateFr }}', '{{ addslashes($immeubleName) }}', '{{ $viewStatut }}')" class="hover:bg-gray-50/50 dark:hover:bg-slate-900/30 transition-colors duration-150 {{ $statutDb == 'impayé' ? 'bg-rose-50/[0.02]' : '' }}">
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center gap-x-3">
-                            <img class="size-9 rounded-xl shadow-sm border border-gray-200/30" src="https://ui-avatars.com/api/?name={{ urlencode($paiement->user->prenom . '+' . $paiement->user->nom) }}&background=6366F1&color=fff&bold=true">
+                            <img class="size-9 rounded-xl shadow-sm border border-gray-200/30" src="https://ui-avatars.com/api/?name={{ urlencode($fullName) }}&background=6366F1&color=fff&bold=true">
                             <div class="grow">
                                 <span class="block text-sm font-semibold text-gray-800 dark:text-slate-200">{{ $fullName }}</span>
                                 <span class="block text-xs text-gray-500 dark:text-slate-400">{{ $immeubleName }} - Appt {{ $apptNumero }}</span>
@@ -108,29 +116,47 @@
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap"><span class="block text-sm font-medium text-gray-800 dark:text-slate-300">{{ $dateFr }}</span></td>
-                    <td class="px-6 py-4 whitespace-nowrap"><span class="block text-sm font-semibold text-gray-800 dark:text-slate-200">{{ number_format($paiement->montant, 2) }} MAD</span></td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="block text-sm font-semibold text-gray-800 dark:text-slate-200">{{ number_format($item->montant, 2) }} MAD</span>
+                        @if($statutDb === 'partiel')
+                            <span class="block text-xs text-amber-500 font-medium">Payé: {{ number_format($validatedPaymentsSum, 2) }} MAD</span>
+                        @endif
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        @if($statut == 'Payé')
+                        @if($statutDb === 'payé')
                             <span class="inline-flex items-center gap-x-1.5 py-1 px-3.5 rounded-full text-xs font-semibold bg-emerald-50/80 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30">
                                 <span class="size-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400"></span>
                                 Payé
                             </span>
+                        @elseif($statutDb === 'partiel')
+                            <span class="inline-flex items-center gap-x-1.5 py-1 px-3.5 rounded-full text-xs font-semibold bg-amber-50/80 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-100 dark:border-amber-900/30">
+                                <span class="size-1.5 rounded-full bg-amber-600 dark:bg-amber-400"></span>
+                                Partiel
+                            </span>
                         @else
                             <span class="inline-flex items-center gap-x-1.5 py-1 px-3.5 rounded-full text-xs font-semibold bg-rose-50/80 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400 border border-rose-100 dark:border-rose-900/30">
                                 <span class="size-1.5 rounded-full bg-rose-600 dark:bg-rose-400"></span>
-                                En retard
+                                Impayé
                             </span>
                         @endif
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                         <div class="inline-flex items-center gap-x-2">
-                            @if($statut == 'Payé' || $statut == 'validé')
-                                <a href="{{ route('syndic.paiements.receipt', $paiement->id) }}" target="_blank" class="py-1.5 px-3 inline-flex items-center gap-x-2 text-xs font-semibold rounded-xl border border-gray-200/80 hover:border-blue-300 bg-white/50 hover:bg-blue-50/50 text-gray-800 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-slate-300 dark:hover:bg-slate-900 dark:hover:text-white transition-all duration-200">
+                            @if($lastPayment && $lastPayment->recu_path)
+                                <a href="{{ asset('storage/' . $lastPayment->recu_path) }}" target="_blank" class="py-1.5 px-3 inline-flex items-center gap-x-2 text-xs font-semibold rounded-xl border border-emerald-250/80 hover:border-emerald-350 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-450 dark:border-emerald-900/30 dark:hover:bg-emerald-950/20 transition-all duration-200" title="Voir la pièce jointe / preuve de virement">
+                                    <i data-lucide="paperclip" class="size-3.5"></i> Justificatif
+                                </a>
+                            @endif
+                            
+                            @if($validatedPaymentsSum > 0 && $lastPayment)
+                                <a href="{{ route('syndic.paiements.receipt', $lastPayment->id) }}" target="_blank" class="py-1.5 px-3 inline-flex items-center gap-x-2 text-xs font-semibold rounded-xl border border-gray-200/80 hover:border-blue-300 bg-white/50 hover:bg-blue-50/50 text-gray-800 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-slate-300 dark:hover:bg-slate-900 dark:hover:text-white transition-all duration-200">
                                     <i data-lucide="printer" class="size-3.5"></i> Reçu
                                 </a>
-                            @else
-                                <button type="button" class="py-1.5 px-3 inline-flex items-center gap-x-2 text-xs font-semibold rounded-xl border border-transparent bg-rose-600 text-white hover:bg-rose-700 shadow-md shadow-rose-500/10 hover:shadow-lg hover:shadow-rose-500/20 transition-all duration-200">
-                                    <i data-lucide="bell-ring" class="size-3.5"></i> Rappel
+                            @endif
+                            
+                            @if($statutDb !== 'payé')
+                                <button type="button" @click="document.getElementsByName('charge_id')[0].value = '{{ $item->id }}'; document.getElementsByName('montant')[0].value = '{{ $item->reste_a_payer }}'; HSOverlay.open('#hs-saisir-paiement-modal')" class="py-1.5 px-3 inline-flex items-center gap-x-2 text-xs font-semibold rounded-xl border border-transparent bg-primary-600 text-white hover:bg-primary-700 shadow-md shadow-primary-500/10 hover:shadow-lg hover:shadow-primary-500/20 transition-all duration-200" title="Saisir un paiement pour cette charge">
+                                    <i data-lucide="plus" class="size-3.5"></i> Saisir
                                 </button>
                             @endif
                         </div>
@@ -154,7 +180,7 @@
           <i data-lucide="x" class="size-4"></i>
         </button>
       </div>
-      <form action="{{ route('syndic.paiements.store') }}" method="POST">
+      <form action="{{ route('syndic.paiements.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="p-6 overflow-y-auto">
             <div class="space-y-4">
@@ -162,29 +188,27 @@
                     <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Sélectionner la Charge</label>
                     <select name="charge_id" required class="py-2.5 px-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200">
                         <option value="">Sélectionnez...</option>
-                        <option value="1">Charge de test (ID:1) - Si existante</option>
+                        @forelse($charges as $c)
+                            <option value="{{ $c->id }}">
+                                {{ $c->titre }} (Reste: {{ number_format($c->reste_a_payer, 2) }} DH) - Résident: {{ $c->resident_nom }} ({{ $c->appartement->immeuble->nom }} - Appt {{ $c->appartement->numero }})
+                            </option>
+                        @empty
+                            <option value="" disabled>Aucune charge impayée en attente</option>
+                        @endforelse
                     </select>
-                    <p class="text-xs text-gray-400 dark:text-slate-500 mt-1.5">Note: Assurez-vous d'avoir des charges générées pour pouvoir les imputer.</p>
+                    <p class="text-xs text-gray-400 dark:text-slate-500 mt-1.5">Note: Les résidents doivent avoir des charges impayées pour pouvoir saisir un règlement.</p>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Montant payé (MAD)</label>
                     <input type="number" step="0.01" name="montant" required class="py-2.5 px-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200">
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Méthode de paiement</label>
-                    <select name="methode_paiement" required class="py-2.5 px-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200">
-                        <option value="espece">Espèce</option>
-                        <option value="cheque">Chèque</option>
-                        <option value="virement">Virement</option>
-                    </select>
-                </div>
-                <div>
                     <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Date de paiement</label>
                     <input type="date" name="date_paiement" value="{{ date('Y-m-d') }}" required class="py-2.5 px-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200">
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Référence (Optionnel)</label>
-                    <input type="text" name="reference" placeholder="Ex: N° Chèque" class="py-2.5 px-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200">
+                    <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Pièce jointe / Reçu (Optionnel - Image ou PDF)</label>
+                    <input type="file" name="piece_jointe" accept="image/*,application/pdf" class="py-2 px-3 block w-full border border-gray-200/80 dark:border-slate-800/80 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:text-neutral-300 file:bg-gray-100 file:border-0 file:me-4 file:py-1.5 file:px-3 file:rounded-lg file:text-xs file:font-semibold dark:file:bg-slate-800 dark:file:text-neutral-350 transition-all duration-200">
                 </div>
             </div>
         </div>

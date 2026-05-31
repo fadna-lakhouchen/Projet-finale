@@ -3,14 +3,16 @@
 @section('content')
 <div>
     <!-- Alert Banner (Amber glass card) -->
+    @if ($urgentIncident)
     <div class="relative overflow-hidden bg-amber-500/10 border border-amber-500/20 text-sm text-amber-800 dark:text-amber-400 rounded-2xl p-4 mb-6 shadow-sm flex items-start gap-x-3.5" role="alert">
         <div class="size-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0">
             <i data-lucide="alert-circle" class="size-4.5"></i>
         </div>
         <div>
-            <span class="font-bold text-amber-700 dark:text-amber-300">À faire :</span> L'intervention concernant l'ascenseur du bâtiment A (Résidence Al Amal) nécessite une affectation de prestataire d'urgence.
+            <span class="font-bold text-amber-700 dark:text-amber-300">À faire :</span> L'intervention concernant <strong>{{ $urgentIncident->titre }}</strong> ({{ $urgentIncident->immeuble->nom ?? 'N/A' }})@if($urgentIncident->user), signalée par <strong>{{ $urgentIncident->user->name }}</strong>,@endif nécessite votre attention.
         </div>
     </div>
+    @endif
 
     <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -93,45 +95,32 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200/60 dark:divide-slate-800/60">
-                        <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-900/30 transition-colors bg-rose-500/[0.02]">
+                        @forelse ($activites as $act)
+                        <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-900/30 transition-colors {{ $act['bg_row'] }}">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center gap-x-3">
-                                    <div class="size-8 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-600 dark:text-rose-450">
-                                        <i data-lucide="alert-triangle" class="size-4"></i>
+                                    <div class="size-8 rounded-xl bg-{{ $act['color'] }}-500/10 border border-{{ $act['color'] }}-500/20 flex items-center justify-center text-{{ $act['color'] }}-600 dark:text-{{ $act['color'] }}-450">
+                                        <i data-lucide="{{ $act['icon'] }}" class="size-4"></i>
                                     </div>
-                                    <span class="block text-sm font-semibold text-slate-800 dark:text-slate-200">Signalement (Admin)</span>
+                                    <span class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ $act['evenement'] }}</span>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-neutral-400">Résidence Al Amal</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-850 dark:text-white font-medium">Ordre d'intervention: Ascenseur Bât A</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-end text-sm text-slate-500 dark:text-neutral-400">Aujourd'hui, 09:12</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-neutral-400">{{ $act['concerne'] }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-850 dark:text-white font-medium">{{ $act['details'] }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-end text-sm text-slate-500 dark:text-neutral-400">
+                                {{ \Carbon\Carbon::parse($act['date'])->diffForHumans() }}
+                            </td>
                         </tr>
-                        <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-900/30 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center gap-x-3">
-                                    <div class="size-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-450">
-                                        <i data-lucide="check" class="size-4"></i>
-                                    </div>
-                                    <span class="block text-sm font-semibold text-slate-800 dark:text-slate-200">Paiement reçu</span>
+                        @empty
+                        <tr>
+                            <td colspan="4" class="px-6 py-8 text-center text-sm text-slate-450 dark:text-neutral-500">
+                                <div class="flex flex-col items-center justify-center py-4">
+                                    <i data-lucide="calendar" class="size-8 text-slate-300 dark:text-neutral-600 mb-2"></i>
+                                    <span>Aucune activité récente pour le moment.</span>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-neutral-400">Tour Hassan - Appt 12</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-850 dark:text-white font-medium">850 MAD (Charges Mars)</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-end text-sm text-slate-500 dark:text-neutral-400">Hier, 18:30</td>
                         </tr>
-                        <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-900/30 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center gap-x-3">
-                                    <div class="size-8 rounded-xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center text-primary-600 dark:text-primary-450">
-                                        <i data-lucide="info" class="size-4"></i>
-                                    </div>
-                                    <span class="block text-sm font-semibold text-slate-800 dark:text-slate-200">Signalement Résident</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-neutral-400">Résidence Al Amal - Appt 4</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-850 dark:text-white font-medium">Ampoule couloir grillée</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-end text-sm text-slate-500 dark:text-neutral-400">10 Mars 2026</td>
-                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

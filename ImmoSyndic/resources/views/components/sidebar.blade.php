@@ -11,12 +11,11 @@
         <!-- Logo Brand -->
         <div class="px-6 flex items-center gap-x-3 mb-8">
             <a class="flex items-center gap-x-3 group" href="{{ route('dashboard') }}">
-                <div class="size-9 bg-white p-1.5 rounded-xl shadow-premium border border-slate-200/20 flex items-center justify-center shrink-0">
-                    <img src="{{ asset('logo.png') }}" alt="Logo" class="size-full object-contain" style="mix-blend-mode: multiply;">
+                <div class="size-12 flex items-center justify-center shrink-0">
+                    <img src="{{ asset('logo.png') }}" alt="Logo" class="size-full object-contain">
                 </div>
-                <div class="flex flex-col">
-                    <span class="text-lg font-extrabold text-white tracking-tight leading-none group-hover:text-primary-400 transition-colors">Immo<span class="text-primary-500">Syndic</span></span>
-                    <span class="text-[9px] text-slate-400 font-bold tracking-wider uppercase mt-1">Gestion Copropriété</span>
+                <div class="flex flex-col justify-center">
+                    <span class="text-xl font-extrabold text-white tracking-tight leading-none group-hover:text-primary-400 transition-colors">Immo<span class="text-primary-500">Syndic</span></span>
                 </div>
             </a>
         </div>
@@ -111,12 +110,12 @@
                     </li>
                     <li>
                         <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('resident.dashboard') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('resident.dashboard') }}">
-                            <i data-lucide="layout-dashboard" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Vue d'ensemble
+                            <i data-lucide="layout-dashboard" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Dashboard
                         </a>
                     </li>
                     <li>
                         <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('resident.paiements') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('resident.paiements') }}">
-                            <i data-lucide="file-invoice" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Mes Charges
+                            <i data-lucide="credit-card" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Paiements
                         </a>
                     </li>
                     <li>

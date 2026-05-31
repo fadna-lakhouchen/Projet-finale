@@ -14,26 +14,42 @@ class PaiementController extends Controller
         $request->validate([
             'charge_id' => 'required|exists:charges,id',
             'montant' => 'required|numeric|min:0',
-            'methode_paiement' => 'required|string',
             'date_paiement' => 'required|date',
-            'reference' => 'nullable|string'
+            'piece_jointe' => 'nullable|file|mimes:jpeg,png,jpg,gif,pdf|max:4096'
         ]);
 
         $charge = Charge::findOrFail($request->charge_id);
 
+        $recuPath = null;
+        if ($request->hasFile('piece_jointe')) {
+            $file = $request->file('piece_jointe');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $recuPath = $file->storeAs('recus', $filename, 'public');
+        }
+
+        // Link the payment to the actual resident belonging to the apartment
+        $residentId = $charge->appartement->residents()->first()->id ?? Auth::id();
+
         Paiement::create([
             'charge_id' => $charge->id,
-            'user_id' => $charge->appartement->user_id, // The resident who owns the apartment
+            'user_id' => $residentId,
             'montant' => $request->montant,
             'date_paiement' => $request->date_paiement,
-            'methode_paiement' => $request->methode_paiement,
-            'reference_transaction' => $request->reference ?? 'CASH-' . time(),
-            'statut' => 'validé' // Par défaut validé si saisi par le syndic
+            'mode_paiement' => 'Espèces', // Default payment method since we removed the input field
+            'statut' => 'validé', // Par défaut validé si saisi par le syndic
+            'recu_path' => $recuPath,
         ]);
 
-        // Mettre à jour le statut de la charge si le montant correspond
-        // Note: une vraie logique vérifierait le montant total payé vs montant charge
-        $charge->update(['statut' => 'payé']);
+        // Calculate total validated payments for this charge (including this new one)
+        $totalPaye = $charge->paiements()->where('statut', 'validé')->sum('montant');
+
+        // If the total validated payments cover or exceed the charge amount, mark as payé
+        if ($totalPaye >= $charge->montant) {
+            $charge->update(['statut' => 'payé']);
+        } else {
+            // Otherwise, mark as partiel so it remains in the select list for the rest
+            $charge->update(['statut' => 'partiel']);
+        }
 
         return back()->with('success', 'Paiement ajouté avec succès.');
     }

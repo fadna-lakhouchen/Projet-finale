@@ -15,7 +15,9 @@ class DocumentServiceTest extends TestCase
         return array_map(fn($item) => [$item], $data);
     }
 
-    
+    /**
+     * @dataProvider documentDataProvider
+     */
     public function test_it_can_load_document_data_from_csv($data)
     {
         $this->assertArrayHasKey('id', $data);

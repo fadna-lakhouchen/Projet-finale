@@ -13,13 +13,14 @@ Route::get('/', function () {
     return view('public.landing');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
+Route::get('/register/check-email', [\App\Http\Controllers\Auth\RegisterController::class, 'checkEmail'])->name('register.check-email');
 
 // Universal Dashboard Redirect
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
-Route::get('/home', [DashboardController::class, 'index'])->middleware('auth')->name('home');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/home', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     
     // Admin Routes
     Route::group(['prefix' => 'admin', 'middleware' => 'role:administrateur'], function () {
@@ -44,6 +45,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/syndics/{id}', [UserController::class, 'destroyUser'])->name('admin.syndics.destroy');
 
         Route::get('/paiements', [DashboardController::class, 'adminPaiements'])->name('admin.paiements');
+        Route::get('/signalements', [DashboardController::class, 'adminSignalements'])->name('admin.signalements');
         Route::get('/parametres', fn() => view('admin.administrateur.parametres'))->name('admin.parametres');
     });
 
@@ -81,5 +83,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'residentDashboard'])->name('resident.dashboard');
         Route::get('/paiements', [DashboardController::class, 'residentPaiements'])->name('resident.paiements');
         Route::get('/incidents', [DashboardController::class, 'residentIncidents'])->name('resident.incidents');
+        Route::post('/incidents', [IncidentController::class, 'storeResidentIncident'])->name('resident.incidents.store');
     });
 });

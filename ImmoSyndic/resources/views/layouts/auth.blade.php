@@ -9,7 +9,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    @vite(['resources/js/app.js'])
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
     
     <script>
         tailwind.config = {

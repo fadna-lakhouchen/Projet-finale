@@ -14,6 +14,7 @@ class IncidentController extends Controller
             'titre' => 'required|string|max:255',
             'immeuble_id' => 'required|exists:immeubles,id',
             'description' => 'required|string',
+            'statut' => 'nullable|string|in:Ouvert,En cours,Résolu',
         ]);
 
         Incident::create([
@@ -21,7 +22,7 @@ class IncidentController extends Controller
             'immeuble_id' => $request->immeuble_id,
             'description' => $request->description,
             'user_id' => Auth::id(),
-            'statut' => 'Ouvert',
+            'statut' => $request->statut ?? 'Ouvert',
         ]);
 
         return back()->with('success', 'Incident signalé avec succès.');
@@ -45,5 +46,33 @@ class IncidentController extends Controller
         $incident = Incident::findOrFail($id);
         $incident->delete();
         return back()->with('success', 'Incident supprimé avec succès.');
+    }
+
+    public function storeResidentIncident(Request $request)
+    {
+        $request->validate([
+            'titre' => 'required|string|max:255',
+            'priorite' => 'required|string|in:basse,moyenne,haute,urgente',
+            'description' => 'required|string',
+        ]);
+
+        $user = Auth::user();
+        $appartement = $user->appartements()->first();
+        $immeubleId = $appartement ? $appartement->immeuble_id : null;
+
+        if (!$immeubleId) {
+            return back()->with('error', 'Vous devez être assigné à un appartement pour signaler un problème.');
+        }
+
+        Incident::create([
+            'titre' => $request->titre,
+            'immeuble_id' => $immeubleId,
+            'description' => $request->description,
+            'user_id' => $user->id,
+            'statut' => 'Ouvert',
+            'priorite' => $request->priorite,
+        ]);
+
+        return back()->with('success', 'Incident signalé avec succès.');
     }
 }

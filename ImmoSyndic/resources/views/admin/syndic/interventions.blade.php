@@ -26,10 +26,11 @@
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach($incidents as $intervention)
             @php
-                $statutColor = match($intervention->statut) {
-                    'Ouvert' => 'bg-rose-50/80 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400 border border-rose-100 dark:border-rose-900/30',
-                    'En cours' => 'bg-amber-50/80 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-100 dark:border-amber-900/30',
-                    'Résolu' => 'bg-emerald-50/80 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30',
+                $statusNormalized = strtolower($intervention->statut);
+                $statutColor = match($statusNormalized) {
+                    'ouvert', 'nouveau', 'à traiter' => 'bg-rose-50/80 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400 border border-rose-100 dark:border-rose-900/30',
+                    'en cours' => 'bg-amber-50/80 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-100 dark:border-amber-900/30',
+                    'résolu', 'terminé' => 'bg-emerald-50/80 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30',
                     default => 'bg-gray-50/80 text-gray-600 dark:bg-slate-900/40 dark:text-slate-400 border border-gray-100 dark:border-slate-800/30'
                 };
                 $immeubleName = $intervention->immeuble ? $intervention->immeuble->nom : 'N/A';
@@ -40,7 +41,7 @@
                         <div class="flex justify-between items-start mb-4">
                             <span class="inline-flex items-center gap-x-1.5 py-1 px-3 rounded-full text-xs font-semibold {{ $statutColor }} tracking-wider">
                                 <span class="size-1.5 rounded-full bg-current"></span>
-                                {{ $intervention->statut === 'Ouvert' ? 'À traiter' : ($intervention->statut === 'En cours' ? 'En cours' : 'Terminé') }}
+                                {{ in_array($statusNormalized, ['ouvert', 'nouveau', 'à traiter']) ? 'À traiter' : (in_array($statusNormalized, ['en cours']) ? 'En cours' : 'Terminé') }}
                             </span>
                             <button @click="initEdit('{{ $intervention->id }}', '{{ addslashes($intervention->titre) }}', '{{ addslashes($intervention->description) }}', '{{ $intervention->immeuble_id }}', '{{ $intervention->statut }}')" data-hs-overlay="#hs-add-intervention-modal" class="p-1.5 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 rounded-xl border border-gray-200/80 dark:border-slate-800/80 transition-all duration-200" title="Modifier">
                                 <i data-lucide="edit-2" class="size-4"></i>
@@ -48,6 +49,26 @@
                         </div>
                         <h3 class="text-lg font-bold text-gray-900 dark:text-white line-clamp-1 leading-snug">{{ $intervention->titre }}</h3>
                         <p class="mt-2 text-sm text-gray-600 dark:text-slate-400 line-clamp-3 leading-relaxed">{{ $intervention->description }}</p>
+                        
+                        @if($intervention->user)
+                        <div class="mt-4 flex items-center gap-x-2 bg-slate-50 dark:bg-slate-900/50 py-1.5 px-3 rounded-xl w-fit border border-gray-100 dark:border-slate-800/40">
+                            <div class="size-5 rounded-full bg-primary-500/10 border border-primary-500/20 flex items-center justify-center text-primary-600 dark:text-primary-400">
+                                <i data-lucide="user" class="size-3"></i>
+                            </div>
+                            <span class="text-xs font-medium text-gray-650 dark:text-slate-350">
+                                Signalé par: <strong class="text-gray-800 dark:text-slate-200">{{ $intervention->user->name }}</strong>
+                            </span>
+                        </div>
+                        @else
+                        <div class="mt-4 flex items-center gap-x-2 bg-slate-50 dark:bg-slate-900/50 py-1.5 px-3 rounded-xl w-fit border border-gray-100 dark:border-slate-800/40">
+                            <div class="size-5 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                                <i data-lucide="user" class="size-3"></i>
+                            </div>
+                            <span class="text-xs font-medium text-gray-650 dark:text-slate-350">
+                                Signalé par: <strong class="text-gray-800 dark:text-slate-200">Syndic (Admin)</strong>
+                            </span>
+                        </div>
+                        @endif
                     </div>
                     
                     <div class="mt-6 pt-4 border-t border-gray-100 dark:border-slate-800/60 flex justify-between items-center text-xs text-gray-500 dark:text-slate-400">
@@ -90,7 +111,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div x-show="isEditing">
+                            <div>
                                 <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Statut de la demande</label>
                                 <select x-model="interventionEnCours.statut" name="statut" class="py-2.5 px-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200">
                                     <option value="Ouvert">À traiter</option>
