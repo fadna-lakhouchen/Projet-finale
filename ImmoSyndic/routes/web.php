@@ -118,7 +118,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/annonces', [DashboardController::class, 'residentAnnonces'])->name('resident.annonces');
         Route::get('/documents', [DashboardController::class, 'residentDocuments'])->name('resident.documents');
 
-        // Dépenses (Charges Immeuble)
-        Route::get('/depenses', [DashboardController::class, 'residentDepenses'])->name('resident.depenses');
     });
 });

@@ -448,22 +448,6 @@ class DashboardController extends Controller
         return view('admin.syndic.depenses', compact('depenses', 'immeubles'));
     }
 
-    public function residentDepenses()
-    {
-        $user = Auth::user();
-        $appartement = $user->appartements()->first();
-        $immeuble = $appartement ? $appartement->immeuble : null;
-
-        $depenses = collect();
-        if ($immeuble) {
-            $depenses = \App\Models\Depense::where('immeuble_id', $immeuble->id)
-                ->with('immeuble')
-                ->latest()
-                ->get();
-        }
-
-        return view('admin.resident.depenses', compact('depenses', 'immeuble'));
-    }
 
     public function markNotificationsAsRead()
     {

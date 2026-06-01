@@ -55,7 +55,7 @@
                     <i data-lucide="folder-open" class="size-5"></i>
                 </div>
                 <div>
-                    <span class="block text-sm font-bold text-slate-800 dark:text-white">Procès-Verbaux</span>
+                    <span class="block text-sm font-bold text-slate-800 dark:text-white">Rapports de Réunions</span>
                     <span class="block text-xs font-semibold text-slate-400 dark:text-neutral-450 mt-0.5">{{ $documents->where('categorie', 'PV')->count() }} fichier(s)</span>
                 </div>
             </div>
@@ -109,14 +109,14 @@
                 <!-- Categorie Filter -->
                 <div class="relative">
                     <button @click="openCat = !openCat" @click.outside="openCat = false" type="button" class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-xl border border-gray-200 bg-white/50 hover:bg-gray-50 dark:bg-[#090D16]/50 dark:border-slate-800 dark:text-white dark:hover:bg-slate-900/50 shadow-sm transition-all duration-200">
-                        <span x-text="categorieSelectionne === 'all' ? 'Filtrer par Catégorie' : (categorieSelectionne === 'PV' ? 'PV (Procès-Verbal)' : categorieSelectionne)" class="truncate max-w-[150px]"></span>
+                        <span x-text="categorieSelectionne === 'all' ? 'Filtrer par Catégorie' : (categorieSelectionne === 'PV' ? 'Rapport de Réunion (PV)' : categorieSelectionne)" class="truncate max-w-[150px]"></span>
                         <i data-lucide="chevron-down" class="size-4 text-gray-400 transition-transform duration-200" :class="{'rotate-180': openCat}"></i>
                     </button>
                     <div x-show="openCat" x-cloak class="absolute right-0 top-full z-[100] mt-2 w-56 bg-white/95 dark:bg-[#0D121F]/95 border border-gray-200/60 dark:border-slate-800/60 shadow-xl rounded-xl p-1.5 backdrop-blur-md" style="display: none;">
                         <div @click="categorieSelectionne = 'all'; openCat = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Toutes les catégories</div>
                         <div @click="categorieSelectionne = 'Facture'; openCat = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Facture</div>
                         <div @click="categorieSelectionne = 'Contrat'; openCat = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Contrat & Devis</div>
-                        <div @click="categorieSelectionne = 'PV'; openCat = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">PV (Procès-Verbal)</div>
+                        <div @click="categorieSelectionne = 'PV'; openCat = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Rapport de Réunion (PV)</div>
                         <div @click="categorieSelectionne = 'Autre'; openCat = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Autre</div>
                     </div>
                 </div>
@@ -178,7 +178,7 @@
                         <!-- Categorie -->
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="inline-flex items-center gap-x-1.5 py-1 px-2.5 rounded-full text-xs font-semibold bg-{{ $color }}-50 text-{{ $color }}-600 dark:bg-{{ $color }}-950/40 dark:text-{{ $color }}-400 border border-{{ $color }}-100 dark:border-{{ $color }}-900/20">
-                                {{ $doc->categorie === 'PV' ? 'PV (Procès-Verbal)' : $doc->categorie }}
+                                {{ $doc->categorie === 'PV' ? 'Rapport de Réunion (PV)' : $doc->categorie }}
                             </span>
                         </td>
 
@@ -278,14 +278,14 @@
                                 <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Catégorie</label>
                                 <div class="relative">
                                     <button @click="openFormCat = !openFormCat" @click.outside="openFormCat = false" type="button" class="py-2.5 px-4 flex justify-between items-center w-full border border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/85 dark:text-neutral-300 transition-all duration-200 text-left">
-                                        <span x-text="documentEnCours.categorie ? (documentEnCours.categorie === 'PV' ? 'PV (Procès-Verbal)' : documentEnCours.categorie) : 'Sélectionner une catégorie'"></span>
+                                        <span x-text="documentEnCours.categorie ? (documentEnCours.categorie === 'PV' ? 'Rapport de Réunion (PV)' : documentEnCours.categorie) : 'Sélectionner une catégorie'"></span>
                                         <i data-lucide="chevron-down" class="size-4 text-gray-400 transition-transform duration-200" :class="{'rotate-180': openFormCat}"></i>
                                     </button>
                                     <input type="hidden" name="categorie" :value="documentEnCours.categorie" required>
                                     <div x-show="openFormCat" x-cloak class="absolute left-0 top-full z-[100] mt-2 w-full bg-white dark:bg-[#0D121F] border border-gray-200/60 dark:border-slate-800/60 shadow-xl rounded-xl p-1.5 backdrop-blur-md" style="display: none;">
                                         <div @click="documentEnCours.categorie = 'Facture'; openFormCat = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Facture</div>
                                         <div @click="documentEnCours.categorie = 'Contrat'; openFormCat = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Contrat & Devis</div>
-                                        <div @click="documentEnCours.categorie = 'PV'; openFormCat = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">PV (Procès-Verbal)</div>
+                                        <div @click="documentEnCours.categorie = 'PV'; openFormCat = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Rapport de Réunion (PV)</div>
                                         <div @click="documentEnCours.categorie = 'Autre'; openFormCat = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Autre</div>
                                     </div>
                                 </div>

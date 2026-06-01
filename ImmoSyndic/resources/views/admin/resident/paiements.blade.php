@@ -11,13 +11,25 @@
         const s = this.search.toLowerCase();
         const matchSearch = ref.toLowerCase().includes(s);
         const matchMois = this.moisSelectionne === 'all' || mois === this.moisSelectionne;
-        const matchStatut = this.statutSelectionne === 'all' || statut === this.statutSelectionne;
+        
+        const normStatut = statut.toLowerCase();
+        const normSelected = this.statutSelectionne.toLowerCase();
+        
+        let matchStatut = false;
+        if (normSelected === 'all') {
+            matchStatut = true;
+        } else if (normSelected === 'payé') {
+            matchStatut = normStatut === 'payé' || normStatut === 'validé';
+        } else if (normSelected === 'en attente') {
+            matchStatut = normStatut === 'en attente';
+        }
+        
         return matchSearch && matchMois && matchStatut;
     }
 }" class="space-y-6">
     <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Paiements</h2>
 
-    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-neutral-800 dark:border-neutral-700">
+    <div class="bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-800 dark:border-neutral-700">
         <!-- Header / Filters -->
         <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
             <div class="sm:col-span-1 max-w-sm w-full relative">
@@ -52,21 +64,20 @@
                   <div x-show="openStat" x-cloak class="absolute right-0 top-full z-[100] mt-1 w-48 bg-white border border-gray-200 shadow-xl rounded-lg p-1 dark:bg-neutral-800 dark:border-neutral-700">
                     <div @click="statutSelectionne = 'all'; openStat = false" class="cursor-pointer w-full flex items-center py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">Tous les statuts</div>
                     <div @click="statutSelectionne = 'Payé'; openStat = false" class="cursor-pointer w-full flex items-center py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">Payé</div>
-                    <div @click="statutSelectionne = 'En retard'; openStat = false" class="cursor-pointer w-full flex items-center py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">En retard</div>
+                    <div @click="statutSelectionne = 'En attente'; openStat = false" class="cursor-pointer w-full flex items-center py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">En attente</div>
                   </div>
                 </div>
             </div>
         </div>
 
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto rounded-b-xl">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                 <thead class="bg-gray-50 dark:bg-neutral-700">
                     <tr>
                         <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">Date</th>
                         <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">Référence</th>
                         <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">Montant</th>
-                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">Méthode</th>
-                        <th class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">Reçu</th>
+                        <th class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">Statut</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
@@ -81,12 +92,12 @@
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-500 dark:text-neutral-400">{{ $ref }}</td>
                         <td class="px-6 py-4 text-sm font-bold text-gray-800 dark:text-neutral-200">{{ number_format($paiement->montant, 2) }} MAD</td>
-                        <td class="px-6 py-4 text-sm text-gray-500 dark:text-neutral-400">{{ ucfirst($paiement->mode_paiement ?? 'N/A') }}</td>
                         <td class="px-6 py-4 text-end whitespace-nowrap">
                             @if(strtolower($paiement->statut) === 'validé' || strtolower($paiement->statut) === 'payé')
-                            <button class="text-primary-600 hover:text-primary-800 font-semibold text-sm inline-flex items-center gap-1 dark:text-primary-400 dark:hover:text-primary-300 transition-colors">
-                                <i data-lucide="download" class="size-4"></i> Reçu PDF
-                            </button>
+                            <span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                <span class="size-1.5 rounded-full bg-current"></span>
+                                Payé
+                            </span>
                             @elseif(strtolower($paiement->statut) === 'en attente')
                             <span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
                                 <span class="size-1.5 rounded-full bg-current"></span>
@@ -102,7 +113,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5" class="px-6 py-8 text-center text-gray-500 dark:text-neutral-400">Aucun historique de paiement trouvé.</td>
+                        <td colspan="4" class="px-6 py-8 text-center text-gray-500 dark:text-neutral-400">Aucun historique de paiement trouvé.</td>
                     </tr>
                     @endforelse
                 </tbody>

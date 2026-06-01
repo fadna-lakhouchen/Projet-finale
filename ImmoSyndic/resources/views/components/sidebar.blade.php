@@ -153,11 +153,7 @@
                             <i data-lucide="megaphone" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Annonces
                         </a>
                     </li>
-                    <li>
-                        <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('resident.depenses') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('resident.depenses') }}">
-                            <i data-lucide="receipt" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Dépenses
-                        </a>
-                    </li>
+
                     <li>
                         <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('resident.documents') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('resident.documents') }}">
                             <i data-lucide="folder-open" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Documents

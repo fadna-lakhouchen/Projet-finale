@@ -21,7 +21,7 @@
 </div>
 
 <!-- Table Section -->
-<div x-data="syndicPaiements" class="flex flex-col bg-white/80 dark:bg-[#0D121F]/90 border border-gray-200/60 dark:border-slate-800/60 rounded-2xl shadow-premium backdrop-blur-md overflow-hidden">
+<div x-data="syndicPaiements" class="flex flex-col bg-white/80 dark:bg-[#0D121F]/90 border border-gray-200/60 dark:border-slate-800/60 rounded-2xl shadow-premium backdrop-blur-md">
 
     <!-- Header / Filters -->
     <div class="px-6 py-5 grid gap-4 md:flex md:justify-between md:items-center border-b border-gray-200/60 dark:border-slate-800/60 bg-white/40 dark:bg-[#0D121F]/40">
@@ -78,7 +78,7 @@
     </div>
 
     <!-- Table -->
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto rounded-b-2xl">
         <table class="min-w-full divide-y divide-gray-200/60 dark:divide-slate-800/60">
             <thead class="bg-gray-50/50 dark:bg-[#090D16]/40">
                 <tr>
