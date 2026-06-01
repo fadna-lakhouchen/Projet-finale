@@ -133,7 +133,7 @@
                             $paramsRoute = match(auth()->user()->role) {
                                 'administrateur' => route('admin.parametres'),
                                 'syndic' => route('syndic.parametres'),
-                                default => '#',
+                                default => route('resident.parametres'),
                             };
                         @endphp
                         @if($paramsRoute !== '#')

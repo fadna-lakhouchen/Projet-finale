@@ -4,6 +4,7 @@ import 'preline';
 import Alpine from 'alpinejs';
 
 // Admin components
+import adminDashboard from './components/admin/adminDashboard.js';
 import adminMenu from './components/admin/adminMenu.js';
 import adminSyndics from './components/admin/adminSyndics.js';
 import adminResidents from './components/admin/adminResidents.js';
@@ -11,6 +12,7 @@ import adminPaiements from './components/admin/adminPaiements.js';
 import adminImmeubles from './components/admin/adminImmeubles.js';
 import adminDocuments from './components/admin/adminDocuments.js';
 import adminDepenses from './components/admin/adminDepenses.js';
+import adminLogs from './components/admin/adminLogs.js';
 
 // Syndic components
 import syndicPanel from './components/syndic/syndicPanel.js';
@@ -34,6 +36,7 @@ import residentDepenses from './components/resident/residentDepenses.js';
 window.Alpine = Alpine;
 
 // Register Admin components f Alpine
+Alpine.data('adminDashboard', adminDashboard);
 Alpine.data('adminMenu', adminMenu);
 Alpine.data('adminSyndics', adminSyndics);
 Alpine.data('adminResidents', adminResidents);
@@ -41,6 +44,7 @@ Alpine.data('adminPaiements', adminPaiements);
 Alpine.data('adminImmeubles', adminImmeubles);
 Alpine.data('adminDocuments', adminDocuments);
 Alpine.data('adminDepenses', adminDepenses);
+Alpine.data('adminLogs', adminLogs);
 
 // Register Syndic components f Alpine
 Alpine.data('syndicPanel', syndicPanel);

@@ -29,7 +29,7 @@
     </script>
 </head>
 
-<body class="bg-gray-50 dark:bg-neutral-900 flex h-full items-center py-16">
+<body class="bg-gray-50 dark:bg-neutral-900 flex items-center justify-center min-h-screen py-4">
     @yield('content')
     
     <script>lucide.createIcons();</script>

@@ -58,6 +58,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Dépenses (Charges Immeuble)
         Route::get('/depenses', [DashboardController::class, 'adminDepenses'])->name('admin.depenses');
+
+        // Logs Système
+        Route::get('/logs', [DashboardController::class, 'adminLogs'])->name('admin.logs');
         Route::post('/depenses', [DepenseController::class, 'storeByAdmin'])->name('admin.depenses.store');
         Route::delete('/depenses/{id}', [DepenseController::class, 'destroyByAdmin'])->name('admin.depenses.destroy');
     });
@@ -117,6 +120,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/incidents', [IncidentController::class, 'storeResidentIncident'])->name('resident.incidents.store');
         Route::get('/annonces', [DashboardController::class, 'residentAnnonces'])->name('resident.annonces');
         Route::get('/documents', [DashboardController::class, 'residentDocuments'])->name('resident.documents');
-
+        Route::get('/parametres', [DashboardController::class, 'residentParametres'])->name('resident.parametres');
     });
 });

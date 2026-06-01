@@ -29,9 +29,14 @@ class Depense extends Model
     {
         if (!$this->justificatif_path) return null;
         
-        $baseUrl = env('APP_URL', 'http://10.0.2.2:8000');
-        if ($baseUrl === 'http://localhost') {
-            $baseUrl = 'http://10.0.2.2:8000';
+        // Use dynamic request host if in web/API context, fallback to APP_URL for console/seeder
+        if (request() && !app()->runningInConsole()) {
+            $baseUrl = request()->getSchemeAndHttpHost();
+        } else {
+            $baseUrl = env('APP_URL', 'http://10.0.2.2:8000');
+            if ($baseUrl === 'http://localhost') {
+                $baseUrl = 'http://10.0.2.2:8000';
+            }
         }
 
         return rtrim($baseUrl, '/') . '/storage/' . ltrim($this->justificatif_path, '/');

@@ -1,14 +1,14 @@
 @extends('layouts.auth')
 
 @section('content')
-<main class="w-full max-w-md mx-auto p-6">
-    <div class="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-800 dark:border-neutral-700">
+<main class="w-full max-w-md mx-auto p-4">
+    <div class="bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-800 dark:border-neutral-700">
         <div class="p-4 sm:p-7">
             <div class="text-center">
                 <div class="flex justify-center mb-5">
                     <img src="{{ asset('logo.png') }}" alt="Logo ImmoSyndic" class="h-20 w-auto object-contain">
                 </div>
-                <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Portail ImmoSyndic</h1>
+                <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Bienvenue chez ImmoSyndic</h1>
                 <p class="mt-2 text-sm text-gray-600 dark:text-neutral-400">
                     Vous n'avez pas de compte ?
                     <a class="text-primary-600 decoration-2 hover:underline font-medium dark:text-primary-400" href="{{ route('register') }}">

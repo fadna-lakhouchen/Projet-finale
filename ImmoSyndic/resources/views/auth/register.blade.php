@@ -1,8 +1,8 @@
 @extends('layouts.auth')
 
 @section('content')
-<main class="w-full max-w-md mx-auto p-6">
-    <div class="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-800 dark:border-neutral-700">
+<main class="w-full max-w-md mx-auto p-4">
+    <div class="bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-800 dark:border-neutral-700">
         <div class="p-4 sm:p-7">
             <div class="text-center">
                 <div class="flex justify-center mb-5">

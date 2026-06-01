@@ -36,15 +36,49 @@ class DashboardController extends Controller
 
     public function adminDashboard()
     {
+        $now = now();
+
         $stats = [
             'total_residents'          => User::where('role', 'resident')->count(),
             'total_immeubles'          => Immeuble::count(),
             'incidents_ouverts'        => Incident::whereNotIn('statut', ['Résolu', 'résolu'])->count(),
             'paiements_retard'         => Paiement::where('statut', 'en retard')->count(),
             'total_paiements_attendus' => Paiement::count(),
+            'logs_today'               => AuditLog::whereDate('created_at', today())->count(),
+            'logs_last_hour'           => AuditLog::where('created_at', '>=', $now->copy()->subHour())->count(),
         ];
-        $recentActivity = AuditLog::with('user')->latest()->take(5)->get();
-        return view('admin.administrateur.dashboard', compact('stats', 'recentActivity'));
+
+        // Activité par jour — 7 derniers jours (pour le graphique barres)
+        $activityByDay = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = $now->copy()->subDays($i);
+            $activityByDay[] = [
+                'label' => $date->format('D'),
+                'date'  => $date->toDateString(),
+                'count' => AuditLog::whereDate('created_at', $date->toDateString())->count(),
+            ];
+        }
+
+        // Top 5 actions les plus fréquentes
+        $topActions = AuditLog::selectRaw('action, COUNT(*) as count')
+            ->groupBy('action')
+            ->orderByDesc('count')
+            ->limit(5)
+            ->get();
+
+        // Top 5 utilisateurs les plus actifs
+        $topUsers = AuditLog::with('user')
+            ->selectRaw('user_id, COUNT(*) as count')
+            ->groupBy('user_id')
+            ->orderByDesc('count')
+            ->limit(5)
+            ->get();
+
+        $recentActivity = AuditLog::with('user')->latest()->take(10)->get();
+
+        return view('admin.administrateur.dashboard', compact(
+            'stats', 'recentActivity', 'activityByDay', 'topActions', 'topUsers'
+        ));
     }
 
     public function adminImmeubles()
@@ -448,6 +482,18 @@ class DashboardController extends Controller
         return view('admin.syndic.depenses', compact('depenses', 'immeubles'));
     }
 
+
+    public function residentParametres()
+    {
+        $user = Auth::user();
+        return view('admin.resident.parametres', compact('user'));
+    }
+
+    public function adminLogs()
+    {
+        $logs = \App\Models\AuditLog::with('user')->latest()->get();
+        return view('admin.administrateur.logs', compact('logs'));
+    }
 
     public function markNotificationsAsRead()
     {
