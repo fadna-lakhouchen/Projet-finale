@@ -23,8 +23,7 @@ rectangle "Système ImmoSyndic - Sprint 3 Web" {
   usecase "Consulter statistiques" as ViewStats
 
   ' Admin
-  usecase "Consulter rapports" as ViewLogs
-  usecase "Surveiller activités" as MonitorActivity
+  usecase "Gérer rapports" as ViewLogs
 
   ' Shared use cases
   usecase "Exporter Excel" as ExportExcel
@@ -38,7 +37,6 @@ rectangle "Système ImmoSyndic - Sprint 3 Web" {
 
 ' 🔵 Résident (BLUE)
 Resident -[#3498DB]- SetAlerts
-Resident -[#3498DB]- ExportExcel
 Resident -[#3498DB]- ExportPDF
 
 ' 🟢 Syndic (GREEN)
@@ -48,7 +46,6 @@ Syndic -[#2ECC71]- ExportPDF
 
 ' 🟠 Admin (ORANGE)
 Admin -[#E67E22]- ViewLogs
-Admin -[#E67E22]- MonitorActivity
 Admin -[#E67E22]- ExportExcel
 Admin -[#E67E22]- ExportPDF
 
