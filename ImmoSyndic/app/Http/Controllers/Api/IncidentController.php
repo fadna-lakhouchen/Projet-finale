@@ -52,7 +52,7 @@ class IncidentController extends Controller
             'description' => 'required|string',
             'immeuble_id' => 'required|exists:immeubles,id',
             'user_id' => 'required|exists:users,id',
-            'priorite' => 'string|in:Basse,Moyenne,Haute',
+            'priorite' => 'required|string|in:basse,moyenne,haute,urgente',
         ]);
 
         $incident = $this->incidentService->create(array_merge($validatedData, [
