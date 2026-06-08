@@ -24,6 +24,7 @@ Route::get('/home', [DashboardController::class, 'index'])->middleware(['auth', 
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/notifications/read', [DashboardController::class, 'markNotificationsAsRead'])->name('notifications.read');
+    Route::post('/notifications/{id}/read', [DashboardController::class, 'markSingleNotificationAsRead'])->name('notifications.read.single');
     
     // Admin Routes
     Route::group(['prefix' => 'admin', 'middleware' => 'role:administrateur'], function () {
@@ -80,9 +81,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/residents', [UserController::class, 'storeResidentBySyndic'])->name('syndic.residents.store');
         Route::put('/residents/{id}', [UserController::class, 'updateResidentBySyndic'])->name('syndic.residents.update');
         Route::delete('/residents/{id}', [UserController::class, 'destroyUserBySyndic'])->name('syndic.residents.destroy');
+        Route::post('/residents/{id}/activate', [UserController::class, 'activateResidentBySyndic'])->name('syndic.residents.activate');
 
         Route::get('/paiements', [DashboardController::class, 'syndicPaiements'])->name('syndic.paiements');
         Route::post('/paiements', [PaiementController::class, 'store'])->name('syndic.paiements.store');
+        Route::put('/paiements/{id}', [PaiementController::class, 'update'])->name('syndic.paiements.update');
+        Route::delete('/paiements/{id}', [PaiementController::class, 'destroy'])->name('syndic.paiements.destroy');
         Route::get('/paiements/{id}/receipt', [PaiementController::class, 'generateReceipt'])->name('syndic.paiements.receipt');
         Route::get('/paiements/export/excel', [PaiementController::class, 'exportExcel'])->name('syndic.paiements.export.excel');
         Route::get('/paiements/export/pdf', [PaiementController::class, 'exportPdf'])->name('syndic.paiements.export.pdf');
@@ -115,6 +119,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Resident Routes
     Route::group(['prefix' => 'resident', 'middleware' => 'role:resident'], function () {
         Route::get('/dashboard', [DashboardController::class, 'residentDashboard'])->name('resident.dashboard');
+        Route::post('/ready-to-pay', [DashboardController::class, 'signalReadyToPay'])->name('resident.ready-to-pay');
         Route::get('/paiements', [DashboardController::class, 'residentPaiements'])->name('resident.paiements');
         Route::get('/incidents', [DashboardController::class, 'residentIncidents'])->name('resident.incidents');
         Route::post('/incidents', [IncidentController::class, 'storeResidentIncident'])->name('resident.incidents.store');

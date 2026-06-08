@@ -1,9 +1,8 @@
 id,appartement_id,titre,description,montant,date_echeance,statut
-1,1,Charges copropriété Janvier 2025,Entretien parties communes ascenseur et nettoyage,850.00,2025-01-31,payé
-2,1,Charges copropriété Février 2025,Entretien parties communes ascenseur et nettoyage,850.00,2025-02-28,payé
-3,1,Charges copropriété Mars 2025,Entretien parties communes ascenseur et nettoyage,850.00,2025-03-31,non payé
-4,2,Charges copropriété Janvier 2025,Entretien parties communes,1100.00,2025-01-31,payé
-5,2,Travaux toiture Janvier 2025,Réparation de la toiture — quote-part Apt A02,600.00,2025-02-15,en retard
-6,4,Charges copropriété Janvier 2025,Entretien parties communes ascenseur,920.00,2025-01-31,payé
-7,5,Charges copropriété Mars 2025,Entretien parties communes,750.00,2025-03-31,non payé
-8,7,Charges copropriété Février 2025,Entretien parties communes gardiennage,980.00,2025-02-28,payé
+1,1,Charges copropriété Janvier 2025,Cotisation mensuelle,850.00,2025-01-31,payé
+2,1,Charges copropriété Février 2025,Cotisation mensuelle,850.00,2025-02-28,payé
+3,1,Charges copropriété Mars 2025,Cotisation mensuelle,850.00,2025-03-31,non payé
+4,2,Charges copropriété Janvier 2025,Cotisation mensuelle,1100.00,2025-01-31,payé
+6,4,Charges copropriété Janvier 2025,Cotisation mensuelle,920.00,2025-01-31,payé
+7,5,Charges copropriété Mars 2025,Cotisation mensuelle,750.00,2025-03-31,non payé
+8,7,Charges copropriété Février 2025,Cotisation mensuelle,980.00,2025-02-28,payé

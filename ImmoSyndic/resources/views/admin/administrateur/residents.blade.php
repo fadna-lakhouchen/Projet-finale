@@ -8,7 +8,7 @@
     showImm: false,
     showStat: false,
     isEditing: false,
-    residentEnCours: { id: '', prenom: '', nom: '', email: '', telephone: '', cin: '', notes: '', role: 'resident', type_resident: 'locataire', immeuble_id: '', numero_appartement: '', date_entree: '' },
+    residentEnCours: { id: '', prenom: '', nom: '', email: '', telephone: '', cin: '', notes: '', role: 'resident', immeuble_id: '', numero_appartement: '', date_entree: '', override_mois_retard: '' },
     init() {
         this.$watch('residentEnCours.immeuble_id', (value) => {
             if (!this.isEditing) {
@@ -18,12 +18,12 @@
     },
     initAjout() {
         this.isEditing = false;
-        this.residentEnCours = { id: '', prenom: '', nom: '', email: '', telephone: '', cin: '', notes: '', role: 'resident', type_resident: 'locataire', immeuble_id: '', numero_appartement: '', date_entree: '' };
+        this.residentEnCours = { id: '', prenom: '', nom: '', email: '', telephone: '', cin: '', notes: '', role: 'resident', immeuble_id: '', numero_appartement: '', date_entree: '', override_mois_retard: '' };
         if (window.editor) window.editor.commands.setContent('');
     },
-    initEdit(id, prenom, nom, email, telephone, cin, type, immeuble_id, numero_appt, date_e, notes) {
+    initEdit(id, prenom, nom, email, telephone, cin, immeuble_id, numero_appt, date_e, notes, override_mois_retard) {
         this.isEditing = true;
-        this.residentEnCours = { id: id, prenom: prenom, nom: nom, email: email, telephone: telephone, cin: cin, notes: notes, role: 'resident', type_resident: type, immeuble_id: immeuble_id, numero_appartement: numero_appt, date_entree: date_e };
+        this.residentEnCours = { id: id, prenom: prenom, nom: nom, email: email, telephone: telephone, cin: cin, notes: notes, role: 'resident', immeuble_id: immeuble_id, numero_appartement: numero_appt, date_entree: date_e, override_mois_retard: override_mois_retard };
         if (window.editor) window.editor.commands.setContent(notes || '');
     },
     matches(name, immeuble, role) {
@@ -75,21 +75,6 @@
                     </div>
                 </div>
 
-                <!-- Dropdown Statuts -->
-                <div class="relative inline-flex">
-                    <button @click="showStat = !showStat; showImm = false" @click.outside="showStat = false" type="button" class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-xl border border-gray-200/80 bg-white/80 hover:bg-white text-slate-800 shadow-sm dark:bg-neutral-800 dark:border-neutral-700 dark:text-white transition-all">
-                        <span x-text="statutSelectionne === 'all' ? 'Type Résident' : statutSelectionne"></span>
-                        <i data-lucide="chevron-down" :class="showStat ? 'rotate-180' : ''" class="size-4 transition-transform text-gray-400"></i>
-                    </button>
-                    <div x-show="showStat" class="absolute right-0 top-full z-[100] mt-2 w-48 bg-white border border-gray-200 shadow-xl rounded-2xl p-1.5 dark:bg-neutral-900 dark:border-neutral-800" style="display: none;"
-                         x-transition:enter="transition ease-out duration-100"
-                         x-transition:enter-start="transform opacity-0 scale-95"
-                         x-transition:enter-end="transform opacity-100 scale-100">
-                        <div @click="statutSelectionne = 'all'; showStat = false" class="cursor-pointer flex items-center py-2 px-3 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-neutral-350 dark:hover:bg-neutral-800/60">Tous les statuts</div>
-                        <div @click="statutSelectionne = 'Locataire'; showStat = false" class="cursor-pointer flex items-center py-2 px-3 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-neutral-350 dark:hover:bg-neutral-800/60">Locataire</div>
-                        <div @click="statutSelectionne = 'Propriétaire'; showStat = false" class="cursor-pointer flex items-center py-2 px-3 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-neutral-350 dark:hover:bg-neutral-800/60">Propriétaire</div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -100,7 +85,6 @@
                     <tr>
                         <th scope="col" class="px-6 py-3.5 text-start text-xs font-bold text-slate-400 uppercase dark:text-neutral-450 tracking-wider">Nom & Contact</th>
                         <th scope="col" class="px-6 py-3.5 text-start text-xs font-bold text-slate-400 uppercase dark:text-neutral-450 tracking-wider">Logement</th>
-                        <th scope="col" class="px-6 py-3.5 text-start text-xs font-bold text-slate-400 uppercase dark:text-neutral-450 tracking-wider">Détails</th>
                         <th scope="col" class="px-6 py-3.5 text-start text-xs font-bold text-slate-400 uppercase dark:text-neutral-450 tracking-wider">État du Compte</th>
                         <th scope="col" class="px-6 py-3.5 text-end text-xs font-bold text-slate-400 uppercase dark:text-neutral-450 tracking-wider">Actions</th>
                     </tr>
@@ -113,9 +97,8 @@
                         $immeubleId = $appt ? $appt->immeuble->id : '';
                         $apptNumero = $appt ? $appt->numero : '';
                         $apptInfo = $appt ? 'Appt ' . $appt->numero . ' • Étage ' . $appt->etage : 'Non assigné';
-                        $typeResident = $appt ? $appt->pivot->type_resident : 'Locataire';
                     @endphp
-                    <tr x-show="matches('{{ $resident->prenom }} {{ $resident->nom }}', '{{ $immeubleName }}', '{{ $typeResident }}')" class="hover:bg-slate-50/50 dark:hover:bg-slate-800/10 transition-colors">
+                    <tr x-show="matches('{{ $resident->prenom }} {{ $resident->nom }}', '{{ $immeubleName }}')" class="hover:bg-slate-50/50 dark:hover:bg-slate-800/10 transition-colors">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center gap-x-3.5">
                                 <img class="size-10 rounded-xl ring-2 ring-primary-500/10 shrink-0 object-cover" src="https://ui-avatars.com/api/?name={{ urlencode($resident->prenom . '+' . $resident->nom) }}&background=3b66f5&color=fff&font-size=0.4" alt="Avatar">
@@ -136,15 +119,8 @@
                             <div class="flex flex-col">
                                 <span class="text-sm font-bold text-slate-700 dark:text-neutral-350">{{ $immeubleName }}</span>
                                 <span class="text-[11px] text-slate-400 dark:text-neutral-500 font-semibold mt-0.5">{{ $apptInfo }}</span>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex flex-col items-start gap-1">
-                                <span class="inline-flex items-center py-1 px-3 rounded-full text-xs font-bold {{ $typeResident === 'Propriétaire' ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20' : 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20' }}">
-                                    {{ $typeResident }}
-                                </span>
                                 @if($appt && $appt->pivot->date_entree)
-                                    <span class="text-[10px] text-slate-400 font-semibold mt-0.5">
+                                    <span class="text-[10px] text-slate-400 dark:text-neutral-500 font-semibold mt-1">
                                         Entrée: {{ \Carbon\Carbon::parse($appt->pivot->date_entree)->format('d/m/Y') }}
                                     </span>
                                 @endif
@@ -158,7 +134,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                             <div class="inline-flex items-center gap-x-2">
-                                <button @click="initEdit('{{ $resident->id }}', '{{ addslashes($resident->prenom) }}', '{{ addslashes($resident->nom) }}', '{{ addslashes($resident->email) }}', '{{ $resident->telephone }}', '{{ $resident->cin ?? '' }}', '{{ strtolower($typeResident) }}', '{{ $immeubleId }}', '{{ $appt ? $appt->numero : '' }}', '{{ $appt ? $appt->pivot->date_entree : '' }}', '{{ addslashes($resident->notes ?? '') }}')" type="button" data-hs-overlay="#hs-modal-add-resident" class="p-2 inline-flex items-center justify-center gap-x-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 dark:bg-slate-800/40 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-slate-800 transition-all">
+                                <button @click="initEdit('{{ $resident->id }}', '{{ addslashes($resident->prenom) }}', '{{ addslashes($resident->nom) }}', '{{ addslashes($resident->email) }}', '{{ $resident->telephone }}', '{{ $resident->cin ?? '' }}', '{{ $immeubleId }}', '{{ $appt ? $appt->numero : '' }}', '{{ $appt ? $appt->pivot->date_entree : '' }}', '{{ addslashes($resident->notes ?? '') }}', '{{ $appt ? $appt->override_mois_retard : '' }}')" type="button" class="p-2 inline-flex items-center justify-center gap-x-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 dark:bg-slate-800/40 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-slate-800 transition-all">
                                     <i data-lucide="edit-2" class="size-4"></i>
                                 </button>
                                 <form action="{{ route('admin.residents.destroy', $resident->id) }}" method="POST" onsubmit="return confirm('Confirmer la suppression définitive de ce résident ?');">
@@ -216,25 +192,9 @@
                                     <input name="telephone" x-model="residentEnCours.telephone" type="text" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" placeholder="Ex: 0600000000">
                                 </div>
                             </div>
-                            <div class="grid sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-semibold mb-2 dark:text-white">CIN</label>
-                                    <input name="cin" x-model="residentEnCours.cin" type="text" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" placeholder="Ex: AB123456">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-semibold mb-2 dark:text-white">Type Résident</label>
-                                    <div class="relative" x-data="{ open: false }">
-                                        <button @click="open = !open" @click.outside="open = false" type="button" class="py-2.5 px-4 flex justify-between items-center w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 text-left">
-                                            <span x-text="residentEnCours.type_resident ? (residentEnCours.type_resident === 'propriétaire' ? 'Propriétaire' : 'Locataire') : 'Sélectionner le type'"></span>
-                                            <i data-lucide="chevron-down" class="size-4 text-gray-400 transition-transform duration-200" :class="{'rotate-180': open}"></i>
-                                        </button>
-                                        <input type="hidden" name="type_resident" :value="residentEnCours.type_resident">
-                                        <div x-show="open" x-cloak class="absolute left-0 top-full z-[100] mt-2 w-full bg-white dark:bg-[#0D121F] border border-gray-200/60 dark:border-slate-800/60 shadow-xl rounded-xl p-1.5 backdrop-blur-md" style="display: none;">
-                                            <div @click="residentEnCours.type_resident = 'locataire'; open = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Locataire</div>
-                                            <div @click="residentEnCours.type_resident = 'propriétaire'; open = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Propriétaire</div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2 dark:text-white">CIN</label>
+                                <input name="cin" x-model="residentEnCours.cin" type="text" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" placeholder="Ex: AB123456">
                             </div>
                             <div class="grid sm:grid-cols-2 gap-4">
                                 <div>
@@ -257,9 +217,15 @@
                                     <input name="numero_appartement" x-model="residentEnCours.numero_appartement" type="text" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" placeholder="Ex: 5, 12B..." required>
                                 </div>
                             </div>
-                            <div>
-                                <label class="block text-sm font-semibold mb-2 dark:text-white">Date d'entrée</label>
-                                <input name="date_entree" x-model="residentEnCours.date_entree" type="date" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" required>
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold mb-2 dark:text-white">Date d'entrée</label>
+                                    <input name="date_entree" x-model="residentEnCours.date_entree" type="date" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold mb-2 dark:text-white">Surcharge mois de retard</label>
+                                    <input name="override_mois_retard" x-model="residentEnCours.override_mois_retard" type="number" min="0" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" placeholder="Automatique (laisser vide)">
+                                </div>
                             </div>
                         </div>
                         <div class="flex justify-end items-center gap-x-3 mt-8 border-t border-slate-100 dark:border-slate-800 pt-5">

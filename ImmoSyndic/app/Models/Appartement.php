@@ -13,6 +13,14 @@ class Appartement extends Model
         'superficie',
         'type',
         'statut',
+        'cotisation_mensuelle',
+        'override_mois_retard',
+    ];
+
+    protected $casts = [
+        'superficie' => 'decimal:2',
+        'cotisation_mensuelle' => 'decimal:2',
+        'override_mois_retard' => 'integer',
     ];
 
     public function immeuble()

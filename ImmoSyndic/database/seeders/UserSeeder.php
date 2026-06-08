@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
                 'telephone' => '0600000001',
                 'role' => 'administrateur',
                 'password' => bcrypt('password'),
+                'email_verified_at' => now(),
             ]
         );
 
@@ -30,6 +31,7 @@ class UserSeeder extends Seeder
                 'telephone' => '0600000002',
                 'role' => 'syndic',
                 'password' => bcrypt('password'),
+                'email_verified_at' => now(),
             ]
         );
 
@@ -42,6 +44,7 @@ class UserSeeder extends Seeder
                 'telephone' => '0600000003',
                 'role' => 'resident',
                 'password' => bcrypt('password'),
+                'email_verified_at' => now(),
             ]
         );
     }

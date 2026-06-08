@@ -59,7 +59,10 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $role = $data['role'] ?? 'syndic';
+
+        $rules = [
+            'role' => ['required', 'in:syndic,resident'],
             'prenom' => ['required', 'string', 'max:255'],
             'nom' => ['required', 'string', 'max:255'],
             'email' => [
@@ -68,22 +71,24 @@ class RegisterController extends Controller
                 'email', 
                 'max:255', 
                 'unique:users',
-                function ($attribute, $value, $fail) {
-                    $parts = explode('@', $value);
-                    $domain = end($parts);
-                    if ($domain && !checkdnsrr($domain, 'MX')) {
-                        $fail('Le domaine de l\'adresse email (' . $domain . ') n\'est pas configuré pour recevoir des emails.');
-                    }
-                }
             ],
+            'telephone' => ['nullable', 'string', 'max:20'],
+            'cin' => ['nullable', 'string', 'max:20'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            
-            // Immeuble inputs
-            'immeuble_type' => ['required', 'in:new,existing'],
-            'immeuble_nom' => ['required_if:immeuble_type,new', 'nullable', 'string', 'max:255'],
-            'immeuble_ville' => ['required_if:immeuble_type,new', 'nullable', 'string', 'max:255'],
-            'immeuble_id' => ['required_if:immeuble_type,existing', 'nullable', 'exists:immeubles,id'],
-        ]);
+        ];
+
+        if ($role === 'resident') {
+            $rules['immeuble_id'] = ['required', 'exists:immeubles,id'];
+            $rules['numero_appartement'] = ['required', 'string', 'max:255'];
+            $rules['date_entree'] = ['required', 'date'];
+        } else {
+            $rules['immeuble_type'] = ['required', 'in:new,existing'];
+            $rules['immeuble_nom'] = ['required_if:immeuble_type,new', 'nullable', 'string', 'max:255'];
+            $rules['immeuble_ville'] = ['required_if:immeuble_type,new', 'nullable', 'string', 'max:255'];
+            $rules['immeuble_id'] = ['required_if:immeuble_type,existing', 'nullable', 'exists:immeubles,id'];
+        }
+
+        return Validator::make($data, $rules);
     }
 
     /**
@@ -93,35 +98,63 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $role = $data['role'] ?? 'syndic';
+
         $user = User::create([
             'prenom' => $data['prenom'],
             'nom' => $data['nom'],
             'email' => $data['email'],
+            'telephone' => $data['telephone'] ?? null,
+            'cin' => $data['cin'] ?? null,
             'password' => Hash::make($data['password']),
-            'role' => 'syndic',
-            'is_active' => true,
+            'role' => $role,
+            'is_active' => true, // Everyone is active immediately upon registration
         ]);
 
         // Assign spatie role if enabled
         if (method_exists($user, 'assignRole')) {
-            $user->assignRole('syndic');
+            $user->assignRole($role);
         }
 
-        // Handle Immeuble
-        if ($data['immeuble_type'] === 'new') {
-            Immeuble::create([
-                'nom' => $data['immeuble_nom'],
-                'ville' => $data['immeuble_ville'],
-                'syndic_id' => $user->id,
-                'adresse' => 'Adresse non spécifiée',
-                'nombre_etages' => 0,
-                'nombre_appartements' => 0,
+        if ($role === 'resident') {
+            // Find or create the apartment
+            $appt = \App\Models\Appartement::firstOrCreate(
+                [
+                    'immeuble_id' => $data['immeuble_id'],
+                    'numero' => $data['numero_appartement'],
+                ],
+                [
+                    'etage' => 1,
+                    'superficie' => 80.00,
+                    'type' => 'F3',
+                    'statut' => 'occupé',
+                ]
+            );
+
+            // Link the resident to the apartment
+            $user->appartements()->attach($appt->id, [
+                'date_entree' => $data['date_entree'],
             ]);
+
+            // Generate initial monthly charge for the new apartment
+            \App\Models\Charge::generateCurrentMonthCharge($appt->id);
         } else {
-            $immeuble = Immeuble::findOrFail($data['immeuble_id']);
-            $immeuble->update([
-                'syndic_id' => $user->id
-            ]);
+            // Handle Immeuble
+            if ($data['immeuble_type'] === 'new') {
+                \App\Models\Immeuble::create([
+                    'nom' => $data['immeuble_nom'],
+                    'ville' => $data['immeuble_ville'],
+                    'syndic_id' => $user->id,
+                    'adresse' => 'Adresse non spécifiée',
+                    'nombre_etages' => 0,
+                    'nombre_appartements' => 0,
+                ]);
+            } else {
+                $immeuble = \App\Models\Immeuble::findOrFail($data['immeuble_id']);
+                $immeuble->update([
+                    'syndic_id' => $user->id
+                ]);
+            }
         }
 
         return $user;
@@ -153,16 +186,7 @@ class RegisterController extends Controller
             ]);
         }
 
-        $parts = explode('@', $email);
-        $domain = end($parts);
 
-        if ($domain && !checkdnsrr($domain, 'MX')) {
-            return response()->json([
-                'valid' => false,
-                'exists' => false,
-                'message' => 'Le domaine de cette adresse email (' . $domain . ') n\'est pas configuré pour recevoir des emails.'
-            ]);
-        }
 
         $exists = User::where('email', $email)->exists();
 

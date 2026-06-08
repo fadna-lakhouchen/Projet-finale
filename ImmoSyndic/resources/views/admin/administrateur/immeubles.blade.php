@@ -168,7 +168,7 @@
                                 <label class="block text-sm font-semibold mb-2 dark:text-white">Nom de l'immeuble</label>
                                 <input x-model="immeubleEnCours.nom" name="nom" type="text" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" placeholder="Ex: Résidence Al Amal" required>
                             </div>
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-semibold mb-2 dark:text-white">Adresse complète</label>
                                     <input x-model="immeubleEnCours.adresse" name="adresse" type="text" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" placeholder="Ex: Av. Mohammed V" required>
@@ -187,7 +187,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-semibold mb-2 dark:text-white">Nombre d'étages</label>
                                     <input x-model="immeubleEnCours.nb_etages" name="nombre_etages" type="number" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" required>

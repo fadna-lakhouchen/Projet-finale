@@ -1,4 +1,5 @@
-﻿export default () => ({
+export default () => ({
+    search: '',
     paid: false,
     processing: false,
     done: false,

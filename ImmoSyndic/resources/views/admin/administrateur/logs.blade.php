@@ -205,7 +205,7 @@
             <div class="p-6 overflow-y-auto space-y-4">
                 
                 <!-- Quick Info Header -->
-                <div class="grid grid-cols-2 gap-4 p-4 bg-gray-50 border border-gray-150 rounded-xl dark:bg-neutral-900/50 dark:border-neutral-800/60">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-gray-50 border border-gray-150 rounded-xl dark:bg-neutral-900/50 dark:border-neutral-800/60">
                     <div>
                         <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Acteur</span>
                         <span class="text-sm font-semibold text-slate-800 dark:text-white mt-1 block" x-text="selectedLog ? selectedLog.user_name : ''"></span>

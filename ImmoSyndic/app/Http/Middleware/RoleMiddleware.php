@@ -19,8 +19,25 @@ class RoleMiddleware
             return redirect('login');
         }
 
-        if (!auth()->user()->hasRole($role) && auth()->user()->role !== $role) {
-            if ($role === 'administrateur' && auth()->user()->role === 'admin') {
+        $user = auth()->user();
+
+        if (!$user->is_active) {
+            if ($user->role === 'resident') {
+                // Allow only the resident dashboard page
+                if ($request->is('resident/dashboard') || $request->is('dashboard') || $request->is('home')) {
+                    return $next($request);
+                }
+                return redirect()->route('resident.dashboard');
+            }
+
+            auth()->logout();
+            return redirect()->route('login')->withErrors([
+                'email' => 'Votre compte est inactif ou en attente d\'approbation.',
+            ]);
+        }
+
+        if (!$user->hasRole($role) && $user->role !== $role) {
+            if ($role === 'administrateur' && $user->role === 'admin') {
                 return $next($request);
             }
             abort(403, 'Accès non autorisé.');

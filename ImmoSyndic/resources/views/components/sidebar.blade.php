@@ -6,7 +6,12 @@
     };
 @endphp
 
-<div id="docs-sidebar" class="hs-overlay [--auto-close:lg] hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform fixed top-0 start-0 bottom-0 z-[60] w-64 bg-[#0B1224] border-e border-slate-800/60 pt-7 pb-10 overflow-y-auto lg:translate-x-0 lg:end-auto lg:bottom-0 scrollbar-none flex flex-col justify-between">
+<div id="docs-sidebar" 
+     {{-- RESPONSIVE : Glisse le menu sur mobile en fonction de l'état Alpine.js (translate-x-0 = affiché, -translate-x-full = masqué) --}}
+     :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+     {{-- RESPONSIVE : Ferme automatiquement le menu mobile en cas de clic en dehors de la sidebar --}}
+     @click.outside="sidebarOpen = false"
+     class="hs-overlay [--auto-close:lg] hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform fixed top-0 start-0 bottom-0 z-[60] w-64 bg-[#0B1224] border-e border-slate-800/60 pt-7 pb-10 overflow-y-auto lg:translate-x-0 lg:end-auto lg:bottom-0 scrollbar-none flex flex-col justify-between">
     <div>
         <!-- Logo Brand -->
         <div class="px-6 flex items-center gap-x-3 mb-8">

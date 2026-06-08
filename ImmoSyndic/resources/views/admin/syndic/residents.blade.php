@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div x-data="syndicResidents">
+<div x-data="syndicResidents({ items: [ @foreach($residents as $resident) { id: '{{ $resident->id }}', name: '{{ addslashes($resident->prenom) }} {{ addslashes($resident->nom) }}', immeuble: '{{ addslashes($resident->appartements->first() ? $resident->appartements->first()->immeuble->nom : 'N/A') }}' }, @endforeach ] })">
     <!-- Header -->
     <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -45,7 +45,6 @@
                 <thead class="bg-gray-50/50 dark:bg-[#090D16]/40">
                     <tr>
                         <th class="px-6 py-4 text-start text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-slate-400">Nom complet</th>
-                        <th class="px-6 py-4 text-start text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-slate-400">Rôle</th>
                         <th class="px-6 py-4 text-start text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-slate-400">Immeuble & Appt</th>
                         <th class="px-6 py-4 text-start text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-slate-400">Statut Charges</th>
                         <th class="px-6 py-4 text-end text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-slate-400">Action</th>
@@ -58,9 +57,8 @@
                         $immeubleName = $appt ? $appt->immeuble->nom : 'N/A';
                         $immeubleId = $appt ? $appt->immeuble->id : '';
                         $apptInfo = $appt ? 'Appt ' . $appt->numero : 'Non assigné';
-                        $typeResident = $appt ? $appt->pivot->type_resident : 'Locataire';
                     @endphp
-                    <tr x-show="matches('{{ $resident->prenom }} {{ $resident->nom }}', '{{ $immeubleName }}', '{{ $typeResident }}')" class="hover:bg-gray-50/50 dark:hover:bg-slate-900/30 transition-colors duration-150">
+                    <tr x-show="isRowVisible('{{ $resident->id }}', '{{ $resident->prenom }} {{ $resident->nom }}', '{{ $immeubleName }}')" class="hover:bg-gray-50/50 dark:hover:bg-slate-900/30 transition-colors duration-150">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center gap-x-3.5">
                                 <img class="size-10 rounded-xl shadow-sm border border-gray-200/30" src="https://ui-avatars.com/api/?name={{ urlencode($resident->prenom . '+' . $resident->nom) }}&background=6366F1&color=fff&bold=true">
@@ -69,19 +67,6 @@
                                     <span class="block text-xs text-gray-500 dark:text-slate-400">{{ $resident->email }}</span>
                                 </div>
                             </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            @if(strtolower($typeResident) === 'propriétaire')
-                                <span class="inline-flex items-center gap-x-1.5 py-1 px-3.5 rounded-full text-xs font-medium bg-purple-50/80 text-purple-600 dark:bg-purple-950/40 dark:text-purple-400 border border-purple-100 dark:border-purple-900/30">
-                                    <span class="size-1.5 rounded-full bg-purple-600 dark:bg-purple-400"></span>
-                                    {{ $typeResident }}
-                                </span>
-                            @else
-                                <span class="inline-flex items-center gap-x-1.5 py-1 px-3.5 rounded-full text-xs font-medium bg-blue-50/80 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400 border border-blue-100 dark:border-blue-900/30">
-                                    <span class="size-1.5 rounded-full bg-blue-600 dark:bg-blue-400"></span>
-                                    {{ $typeResident }}
-                                </span>
-                            @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="block text-sm font-medium text-gray-800 dark:text-slate-200">{{ $immeubleName }}</span>
@@ -94,15 +79,24 @@
                                     À jour
                                 </span>
                             @else
-                                <span class="inline-flex items-center gap-x-1.5 py-1 px-3 rounded-full text-xs font-medium bg-rose-50/80 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400 border border-rose-100 dark:border-rose-900/30">
-                                    <span class="size-1.5 rounded-full bg-rose-600 dark:bg-rose-400"></span>
-                                    En retard
+                                <span class="inline-flex items-center gap-x-1.5 py-1 px-3 rounded-full text-xs font-medium bg-amber-50/80 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-100 dark:border-amber-900/30 animate-pulse">
+                                    <span class="size-1.5 rounded-full bg-amber-600 dark:bg-amber-400"></span>
+                                    En attente d'activation
                                 </span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                             <div class="inline-flex items-center gap-x-2">
-                                <button @click="initEdit('{{ $resident->id }}', '{{ addslashes($resident->prenom) }}', '{{ addslashes($resident->nom) }}', '{{ addslashes($resident->email) }}', '{{ $resident->telephone }}', '{{ $resident->cin ?? '' }}', '{{ strtolower($typeResident) }}', '{{ $immeubleId }}', '{{ $appt ? $appt->numero : '' }}', '{{ $appt ? $appt->pivot->date_entree : '' }}', '{{ addslashes($resident->notes ?? '') }}')" type="button" data-hs-overlay="#hs-modal-add-resident" class="py-1.5 px-1.5 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 rounded-lg border border-gray-200/80 hover:border-blue-300 dark:border-slate-800/80 dark:hover:border-blue-900/30 transition-all duration-200" title="Modifier">
+                                @if(!$resident->is_active)
+                                    <form action="{{ route('syndic.residents.activate', $resident->id) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        <button type="submit" class="py-1.5 px-2.5 inline-flex items-center gap-x-1 text-xs font-semibold rounded-lg border border-transparent bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm shadow-emerald-500/10 transition-all duration-150" title="Approuver l'inscription">
+                                            <i data-lucide="check" class="size-3.5"></i>
+                                            <span>Accepter</span>
+                                        </button>
+                                    </form>
+                                @endif
+                                <button @click="initEdit('{{ $resident->id }}', '{{ addslashes($resident->prenom) }}', '{{ addslashes($resident->nom) }}', '{{ addslashes($resident->email) }}', '{{ $resident->telephone }}', '{{ $resident->cin ?? '' }}', '{{ $immeubleId }}', '{{ $appt ? $appt->numero : '' }}', '{{ $appt ? $appt->pivot->date_entree : '' }}', '{{ addslashes($resident->notes ?? '') }}', '{{ $appt ? $appt->override_mois_retard : '' }}')" type="button" data-hs-overlay="#hs-modal-add-resident" class="py-1.5 px-1.5 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 rounded-lg border border-gray-200/80 hover:border-blue-300 dark:border-slate-800/80 dark:hover:border-blue-900/30 transition-all duration-200" title="Modifier">
                                     <i data-lucide="edit-2" class="size-4"></i>
                                 </button>
                                 <form action="{{ route('syndic.residents.destroy', $resident->id) }}" method="POST" onsubmit="return confirm('Supprimer ce résident ?');" class="inline-block">
@@ -118,6 +112,46 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        
+        <!-- Pagination controls -->
+        <div class="px-6 py-4 flex items-center justify-between border-t border-gray-200/60 dark:border-slate-800/60 bg-white/40 dark:bg-[#0D121F]/40">
+            <div class="flex-1 flex justify-between sm:hidden">
+                <button @click="if (currentPage > 1) currentPage--" :disabled="currentPage === 1" class="relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
+                    Précédent
+                </button>
+                <button @click="if (currentPage < Math.ceil(filteredItems.length / perPage)) currentPage++" :disabled="currentPage === Math.ceil(filteredItems.length / perPage) || filteredItems.length === 0" class="relative ml-3 inline-flex items-center px-4 py-2 text-sm font-medium rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
+                    Suivant
+                </button>
+            </div>
+            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                    <p class="text-sm text-gray-500 dark:text-slate-400">
+                        Affichage de <span class="font-semibold text-gray-800 dark:text-white" x-text="filteredItems.length === 0 ? 0 : (currentPage - 1) * perPage + 1"></span> à <span class="font-semibold text-gray-800 dark:text-white" x-text="Math.min(currentPage * perPage, filteredItems.length)"></span> sur <span class="font-semibold text-gray-800 dark:text-white" x-text="filteredItems.length"></span> résultats
+                    </p>
+                </div>
+                <div class="inline-flex gap-x-2">
+                    <button @click="if (currentPage > 1) currentPage--" :disabled="currentPage === 1" class="py-2 px-3 inline-flex items-center gap-x-1.5 text-sm font-medium rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+                        <i data-lucide="chevron-left" class="size-4"></i>
+                        Précédent
+                    </button>
+                    
+                    <div class="flex items-center gap-x-1">
+                        <template x-for="page in Math.ceil(filteredItems.length / perPage)" :key="page">
+                            <button @click="currentPage = page" 
+                                    :class="currentPage === page ? 'bg-primary-600 text-white border-transparent' : 'bg-white dark:bg-slate-900 border-gray-200 dark:border-slate-800 text-gray-800 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800/50'"
+                                    class="size-9 inline-flex justify-center items-center text-sm font-semibold rounded-xl border transition-all duration-200" 
+                                    x-text="page">
+                            </button>
+                        </template>
+                    </div>
+
+                    <button @click="if (currentPage < Math.ceil(filteredItems.length / perPage)) currentPage++" :disabled="currentPage === Math.ceil(filteredItems.length / perPage) || filteredItems.length === 0" class="py-2 px-3 inline-flex items-center gap-x-1.5 text-sm font-medium rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+                        Suivant
+                        <i data-lucide="chevron-right" class="size-4"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -160,25 +194,9 @@
                                     <input name="telephone" x-model="residentEnCours.telephone" type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200" placeholder="0600000000">
                                 </div>
                             </div>
-                            <div class="grid sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">CIN</label>
-                                    <input name="cin" x-model="residentEnCours.cin" type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200" placeholder="AB123456">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Type</label>
-                                    <div class="relative" x-data="{ open: false }">
-                                        <button @click="open = !open" @click.outside="open = false" type="button" class="py-2.5 px-4 flex justify-between items-center w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200 text-left">
-                                            <span x-text="residentEnCours.type_resident ? (residentEnCours.type_resident === 'propriétaire' ? 'Propriétaire' : 'Locataire') : 'Sélectionner le type'"></span>
-                                            <i data-lucide="chevron-down" class="size-4 text-gray-400 transition-transform duration-200" :class="{'rotate-180': open}"></i>
-                                        </button>
-                                        <input type="hidden" name="type_resident" :value="residentEnCours.type_resident">
-                                        <div x-show="open" x-cloak class="absolute left-0 top-full z-[100] mt-2 w-full bg-white dark:bg-[#0D121F] border border-gray-200/60 dark:border-slate-800/60 shadow-xl rounded-xl p-1.5 backdrop-blur-md" style="display: none;">
-                                            <div @click="residentEnCours.type_resident = 'locataire'; open = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Locataire</div>
-                                            <div @click="residentEnCours.type_resident = 'propriétaire'; open = false" class="cursor-pointer py-2 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors">Propriétaire</div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">CIN</label>
+                                <input name="cin" x-model="residentEnCours.cin" type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200" placeholder="AB123456">
                             </div>
                             <div class="grid sm:grid-cols-2 gap-4">
                                 <div>
@@ -201,9 +219,15 @@
                                     <input name="numero_appartement" x-model="residentEnCours.numero_appartement" type="text" class="py-2.5 px-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200" placeholder="Ex: 5, 12B..." required>
                                 </div>
                             </div>
-                            <div>
-                                <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Date d'entrée</label>
-                                <input name="date_entree" x-model="residentEnCours.date_entree" type="date" class="py-2.5 px-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200" required>
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Date d'entrée</label>
+                                    <input name="date_entree" x-model="residentEnCours.date_entree" type="date" class="py-2.5 px-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Surcharge mois de retard</label>
+                                    <input name="override_mois_retard" x-model="residentEnCours.override_mois_retard" type="number" min="0" class="py-2.5 px-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200" placeholder="Automatique (laisser vide)">
+                                </div>
                             </div>
                         </div>
                         <div class="flex justify-end items-center gap-x-3 mt-6 border-t border-gray-100 dark:border-slate-800/60 pt-4">

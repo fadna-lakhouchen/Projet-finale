@@ -14,6 +14,35 @@
     </div>
     @endif
 
+    <!-- Cash collection requests banner (Emerald glass card) -->
+    @if (isset($demandesCollecte) && $demandesCollecte->isNotEmpty())
+    <div class="mb-6 space-y-3">
+        @foreach ($demandesCollecte as $demande)
+            <div class="relative overflow-hidden bg-emerald-500/10 border border-emerald-500/20 text-sm text-emerald-800 dark:text-emerald-400 rounded-2xl p-4 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" role="alert">
+                <div class="flex items-start gap-x-3.5">
+                    <div>
+                        <span class="font-bold text-emerald-700 dark:text-emerald-300">Demande de collecte cash :</span> {{ $demande->message }}
+                        <span class="block text-[11px] text-slate-500 dark:text-neutral-400 mt-1 font-semibold">Signalée {{ $demande->created_at->diffForHumans() }}</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-x-2 shrink-0">
+                    <a href="{{ route('syndic.paiements') }}" class="py-1.5 px-3 inline-flex items-center gap-x-1.5 text-xs font-semibold rounded-xl border border-transparent bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm transition-all">
+                        <i data-lucide="plus" class="size-3.5"></i>
+                        Saisir le paiement
+                    </a>
+                    <form action="{{ route('notifications.read.single', $demande->id) }}" method="POST" class="inline-block">
+                        @csrf
+                        <button type="submit" class="py-1.5 px-3 inline-flex items-center gap-x-1.5 text-xs font-semibold rounded-xl border border-emerald-200/30 hover:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 dark:border-emerald-900/30 transition-all" title="Marquer comme traité et masquer">
+                            <i data-lucide="check" class="size-3.5"></i>
+                            Masquer
+                        </button>
+                    </form>
+                </div>
+            </div>
+        @endforeach
+    </div>
+    @endif
+
     <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
             <h2 class="text-2xl font-bold text-slate-800 dark:text-white">Tableau de Bord Syndic</h2>

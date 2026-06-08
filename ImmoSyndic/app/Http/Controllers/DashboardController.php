@@ -206,7 +206,13 @@ class DashboardController extends Controller
         // Sort by date latest and take 5
         $activites = $activites->sortByDesc('date')->take(5)->values();
 
-        return view('admin.syndic.dashboard', compact('stats', 'immeubles', 'urgentIncident', 'activites'));
+        $demandesCollecte = \App\Models\Notification::where('user_id', $user->id)
+            ->where('type', 'ready_to_pay')
+            ->where('lu', false)
+            ->latest()
+            ->get();
+
+        return view('admin.syndic.dashboard', compact('stats', 'immeubles', 'urgentIncident', 'activites', 'demandesCollecte'));
     }
 
     public function syndicResidents()
@@ -294,6 +300,11 @@ class DashboardController extends Controller
     public function residentDashboard()
     {
         $user = Auth::user();
+
+        if (!$user->is_active) {
+            return view('admin.resident.waiting-approval', compact('user'));
+        }
+
         $appartement = $user->appartements()->first();
         $immeuble = $appartement ? $appartement->immeuble : null;
 
@@ -332,24 +343,72 @@ class DashboardController extends Controller
         }
         $activites = $activites->sortByDesc('date')->take(5);
         
-        // Fetch building transparency charges (only charges belonging to their same building)
-        $transparenceCharges = collect();
+        // Fetch building transparency: Calculate cumulative status for all apartments
+        $appartementsEnRetard = collect();
+        $appartementsEnRegle = collect();
+        
         if ($immeuble) {
-            $transparenceCharges = \App\Models\Charge::whereHas('appartement', function($q) use ($immeuble) {
-                $q->where('immeuble_id', $immeuble->id);
-            })
-            ->with(['appartement.residents', 'paiements'])
-            ->get()
-            ->sortBy(function($c) {
-                $status = strtolower($c->statut);
-                if ($status === 'impayé') return 1;
-                if ($status === 'partiel') return 2;
-                return 3;
-            })
-            ->values();
+            $appartements = \App\Models\Appartement::where('immeuble_id', $immeuble->id)
+                ->with(['residents', 'charges.paiements'])
+                ->get();
+                
+            foreach ($appartements as $apt) {
+                // Filter charges that are not fully paid
+                $unpaidCharges = $apt->charges->filter(function($c) {
+                    return strtolower($c->statut) !== 'payé';
+                });
+                
+                $isMyApt = $apt->residents->contains('id', $user->id);
+                
+                $actualUnpaidCount = $unpaidCharges->count();
+                $displayUnpaidCount = is_null($apt->override_mois_retard) ? $actualUnpaidCount : (int)$apt->override_mois_retard;
+                
+                if ($displayUnpaidCount > 0 && $actualUnpaidCount > 0) {
+                    $totalOwed = $unpaidCharges->sum(function($c) {
+                        return $c->reste_a_payer;
+                    });
+                    
+                    $appartementsEnRetard->push([
+                        'id' => $apt->id,
+                        'numero' => $apt->numero,
+                        'unpaid_count' => $displayUnpaidCount,
+                        'total_owed' => $totalOwed,
+                        'is_my_apt' => $isMyApt,
+                    ]);
+                } else {
+                    $appartementsEnRegle->push([
+                        'id' => $apt->id,
+                        'numero' => $apt->numero,
+                        'is_my_apt' => $isMyApt,
+                    ]);
+                }
+            }
+            
+            // Sort by apartment number numerically
+            $appartementsEnRetard = $appartementsEnRetard->sortBy(function($apt) {
+                return (int)$apt['numero'];
+            })->values();
+            
+            $appartementsEnRegle = $appartementsEnRegle->sortBy(function($apt) {
+                return (int)$apt['numero'];
+            })->values();
         }
         
-        return view('admin.resident.dashboard', compact('user', 'appartement', 'immeuble', 'stats', 'activites', 'transparenceCharges'));
+        $mesChargesImpayees = collect();
+        if ($appartement) {
+            $mesChargesImpayees = $appartement->charges()->where('statut', '!=', 'payé')->get();
+        }
+
+        return view('admin.resident.dashboard', compact(
+            'user', 
+            'appartement', 
+            'immeuble', 
+            'stats', 
+            'activites', 
+            'appartementsEnRetard', 
+            'appartementsEnRegle',
+            'mesChargesImpayees'
+        ));
     }
 
     public function residentPaiements()
@@ -499,6 +558,53 @@ class DashboardController extends Controller
     {
         \App\Models\Notification::where('user_id', auth()->id())->update(['lu' => true]);
         return back()->with('success', 'Toutes les notifications ont été marquées comme lues.');
+    }
+
+    public function signalReadyToPay(Request $request)
+    {
+        $request->validate([
+            'charge_id' => 'required|exists:charges,id',
+            'note' => 'nullable|string|max:500',
+        ]);
+
+        $user = Auth::user();
+        $charge = \App\Models\Charge::with('appartement.immeuble.syndic')->findOrFail($request->charge_id);
+        $appt = $user->appartements()->first();
+
+        if (!$appt || $appt->id !== $charge->appartement_id) {
+            abort(403, 'Accès non autorisé.');
+        }
+
+        $syndic = $appt->immeuble->syndic;
+
+        if ($syndic) {
+            $dateFr = ucfirst(\Carbon\Carbon::parse($charge->date_echeance)->translatedFormat('F Y'));
+            $montant = number_format($charge->reste_a_payer, 2);
+            $message = "Le résident {$user->prenom} {$user->nom} (Appt {$appt->numero}) est prêt à régler sa cotisation de {$dateFr} ({$montant} MAD) en espèces.";
+            if ($request->note) {
+                $message .= " Note: " . $request->note;
+            }
+            
+            \App\Models\Notification::create([
+                'user_id' => $syndic->id,
+                'titre' => '💸 Cotisation prête (Espèces)',
+                'message' => $message,
+                'type' => 'ready_to_pay',
+                'lu' => false,
+                'date_envoi' => now(),
+            ]);
+
+            return back()->with('success', 'Notification envoyée au Syndic. Il passera récupérer le paiement.');
+        }
+
+        return back()->with('error', 'Aucun Syndic n\'est assigné à votre immeuble.');
+    }
+
+    public function markSingleNotificationAsRead($id)
+    {
+        $notif = \App\Models\Notification::where('user_id', auth()->id())->findOrFail($id);
+        $notif->update(['lu' => true]);
+        return back()->with('success', 'Notification marquée comme lue.');
     }
 }
 

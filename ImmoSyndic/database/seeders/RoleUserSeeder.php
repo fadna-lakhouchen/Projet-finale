@@ -14,30 +14,39 @@ class RoleUserSeeder extends Seeder
     public function run(): void
     {
         // Admin
-        User::create([
-            'nom' => 'Rifi',
-            'prenom' => 'Mohamed',
-            'email' => 'admin@immosyndic.ma',
-            'password' => Hash::make('password'),
-            'role' => 'admin',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@immosyndic.ma'],
+            [
+                'nom' => 'Rifi',
+                'prenom' => 'Mohamed',
+                'password' => Hash::make('password'),
+                'role' => 'administrateur',
+                'email_verified_at' => now(),
+            ]
+        );
 
         // Syndic
-        User::create([
-            'nom' => 'Afaiz',
-            'prenom' => 'Hassan',
-            'email' => 'syndic@immosyndic.ma',
-            'password' => Hash::make('password'),
-            'role' => 'syndic',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'syndic@immosyndic.ma'],
+            [
+                'nom' => 'Afaiz',
+                'prenom' => 'Hassan',
+                'password' => Hash::make('password'),
+                'role' => 'syndic',
+                'email_verified_at' => now(),
+            ]
+        );
 
         // Resident
-        User::create([
-            'nom' => 'Chrifi',
-            'prenom' => 'Hassnae',
-            'email' => 'resident@immosyndic.ma',
-            'password' => Hash::make('password'),
-            'role' => 'resident',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'resident@immosyndic.ma'],
+            [
+                'nom' => 'Chrifi',
+                'prenom' => 'Hassnae',
+                'password' => Hash::make('password'),
+                'role' => 'resident',
+                'email_verified_at' => now(),
+            ]
+        );
     }
 }

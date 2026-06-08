@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('appartement_id')->constrained('appartements')->cascadeOnDelete();
-            $table->string('type_resident'); // Locataire, Propriétaire
+            $table->string('type_resident')->nullable(); // Locataire, Propriétaire
             $table->date('date_entree');
             $table->date('date_sortie')->nullable(); // null = habite encore ici
             $table->timestamps();

@@ -7,6 +7,40 @@
     statutSelectionne: 'all',
     openMois: false,
     openStat: false,
+    
+    // Pagination attributes
+    items: [
+        @foreach($paiements as $paiement)
+        {
+            id: '{{ $paiement->id }}',
+            ref: 'REF-{{ str_pad($paiement->id, 6, '0', STR_PAD_LEFT) }}',
+            mois: '{{ ucfirst(\Carbon\Carbon::parse($paiement->date_paiement)->translatedFormat('F Y')) }}',
+            statut: '{{ $paiement->statut }}'
+        },
+        @endforeach
+    ],
+    currentPage: 1,
+    perPage: 10,
+    
+    init() {
+        this.$watch('search', () => this.currentPage = 1);
+        this.$watch('moisSelectionne', () => this.currentPage = 1);
+        this.$watch('statutSelectionne', () => this.currentPage = 1);
+    },
+    
+    get filteredItems() {
+        return this.items.filter(item => this.matches(item.ref, item.mois, item.statut));
+    },
+    
+    isRowVisible(id, ref, mois, statut) {
+        if (!this.matches(ref, mois, statut)) return false;
+        const index = this.filteredItems.findIndex(item => item.id == id);
+        if (index === -1) return false;
+        const start = (this.currentPage - 1) * this.perPage;
+        const end = this.currentPage * this.perPage;
+        return index >= start && index < end;
+    },
+
     matches(ref, mois, statut) {
         const s = this.search.toLowerCase();
         const matchSearch = ref.toLowerCase().includes(s);
@@ -86,7 +120,7 @@
                         $dateMois = ucfirst(\Carbon\Carbon::parse($paiement->date_paiement)->translatedFormat('F Y'));
                         $ref = 'REF-' . str_pad($paiement->id, 6, '0', STR_PAD_LEFT);
                     @endphp
-                    <tr x-show="matches('{{ $ref }}', '{{ $dateMois }}', '{{ $paiement->statut }}')">
+                    <tr x-show="isRowVisible('{{ $paiement->id }}', '{{ $ref }}', '{{ $dateMois }}', '{{ $paiement->statut }}')">
                         <td class="px-6 py-4 text-sm text-gray-800 dark:text-neutral-200 whitespace-nowrap">
                             {{ \Carbon\Carbon::parse($paiement->date_paiement)->translatedFormat('d M Y') }}
                         </td>
@@ -118,6 +152,46 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+        
+        <!-- Pagination controls -->
+        <div class="px-6 py-4 flex items-center justify-between border-t border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
+            <div class="flex-1 flex justify-between sm:hidden">
+                <button @click="if (currentPage > 1) currentPage--" :disabled="currentPage === 1" class="relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400">
+                    Précédent
+                </button>
+                <button @click="if (currentPage < Math.ceil(filteredItems.length / perPage)) currentPage++" :disabled="currentPage === Math.ceil(filteredItems.length / perPage) || filteredItems.length === 0" class="relative ml-3 inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400">
+                    Suivant
+                </button>
+            </div>
+            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                    <p class="text-sm text-gray-500 dark:text-neutral-400">
+                        Affichage de <span class="font-semibold text-gray-800 dark:text-white" x-text="filteredItems.length === 0 ? 0 : (currentPage - 1) * perPage + 1"></span> à <span class="font-semibold text-gray-800 dark:text-white" x-text="Math.min(currentPage * perPage, filteredItems.length)"></span> sur <span class="font-semibold text-gray-800 dark:text-white" x-text="filteredItems.length"></span> résultats
+                    </p>
+                </div>
+                <div class="inline-flex gap-x-2">
+                    <button @click="if (currentPage > 1) currentPage--" :disabled="currentPage === 1" class="py-2 px-3 inline-flex items-center gap-x-1.5 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 dark:bg-neutral-800 dark:border-neutral-700 dark:text-white">
+                        <i data-lucide="chevron-left" class="size-4"></i>
+                        Précédent
+                    </button>
+                    
+                    <div class="flex items-center gap-x-1">
+                        <template x-for="page in Math.ceil(filteredItems.length / perPage)" :key="page">
+                            <button @click="currentPage = page" 
+                                    :class="currentPage === page ? 'bg-primary-600 text-white border-transparent' : 'bg-white dark:bg-neutral-800 border-gray-200 dark:border-neutral-700 text-gray-800 dark:text-neutral-350 hover:bg-gray-50 dark:hover:bg-neutral-700'"
+                                    class="size-9 inline-flex justify-center items-center text-sm font-semibold rounded-lg border transition-all duration-200" 
+                                    x-text="page">
+                            </button>
+                        </template>
+                    </div>
+
+                    <button @click="if (currentPage < Math.ceil(filteredItems.length / perPage)) currentPage++" :disabled="currentPage === Math.ceil(filteredItems.length / perPage) || filteredItems.length === 0" class="py-2 px-3 inline-flex items-center gap-x-1.5 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 dark:bg-neutral-800 dark:border-neutral-700 dark:text-white">
+                        Suivant
+                        <i data-lucide="chevron-right" class="size-4"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

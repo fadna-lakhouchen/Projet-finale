@@ -52,4 +52,33 @@ class Charge extends Model
         $resident = $this->appartement ? $this->appartement->residents->first() : null;
         return $resident ? "{$resident->prenom} {$resident->nom}" : 'Non assigné';
     }
+
+    /**
+     * Generate standard monthly charge for an apartment if it doesn't already exist.
+     */
+    public static function generateCurrentMonthCharge($appartementId)
+    {
+        \Carbon\Carbon::setLocale('fr');
+        
+        $alreadyExists = self::where('appartement_id', $appartementId)
+            ->whereYear('date_echeance', now()->year)
+            ->whereMonth('date_echeance', now()->month)
+            ->exists();
+
+        if (!$alreadyExists) {
+            $appt = Appartement::find($appartementId);
+            if ($appt) {
+                return self::create([
+                    'appartement_id' => $appartementId,
+                    'titre' => "Cotisation de " . ucfirst(now()->translatedFormat('F Y')),
+                    'description' => "Cotisation mensuelle de copropriété pour l'appartement n° " . $appt->numero,
+                    'montant' => $appt->cotisation_mensuelle ?? 850.00,
+                    'date_echeance' => now()->setDate(now()->year, now()->month, 25),
+                    'statut' => 'impayé',
+                ]);
+            }
+        }
+        return null;
+    }
 }
+

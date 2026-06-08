@@ -3,20 +3,23 @@
         
         <!-- Mobile Sidebar Toggle & Brand -->
         <div class="flex items-center gap-x-3 lg:hidden me-5">
-            <button type="button" class="p-2 inline-flex items-center justify-center gap-x-2 rounded-xl border border-gray-200 bg-white/80 text-gray-800 hover:bg-gray-50 focus:outline-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-750" data-hs-overlay="#docs-sidebar" aria-controls="docs-sidebar" aria-label="Toggle navigation">
+            {{-- RESPONSIVE : Le bouton burger bascule l'état "sidebarOpen" d'Alpine.js pour afficher/masquer la sidebar en mobile --}}
+            <button @click.stop="sidebarOpen = !sidebarOpen" type="button" class="p-2 inline-flex items-center justify-center gap-x-2 rounded-xl border border-gray-200 bg-white/80 text-gray-800 hover:bg-gray-50 focus:outline-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-750" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <i data-lucide="menu" class="size-5"></i>
             </button>
             
-            <a class="flex items-center gap-x-2 text-lg font-bold dark:text-white" href="{{ route('dashboard') }}">
+            {{-- RESPONSIVE : Le Logo & Titre ne s'affichent que sur mobile/tablette (<lg) pour ne pas encombrer le menu avec doublons --}}
+            <a class="flex items-center gap-x-2 text-lg font-bold dark:text-white shrink-0" href="{{ route('dashboard') }}">
                 <img src="{{ asset('logo.png') }}" alt="Logo" class="h-6 w-auto object-contain">
                 <span class="bg-gradient-to-r from-primary-500 to-purple-600 bg-clip-text text-transparent">ImmoSyndic</span>
             </a>
         </div>
 
-        <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3">
+        <div class="w-full flex items-center justify-end ms-auto lg:justify-between lg:gap-x-3">
             <!-- Greeting & Role (Desktop) -->
-            <div class="hidden sm:flex items-center gap-x-3">
+            {{-- RESPONSIVE : Le message de bienvenue n'est visible que sur grand écran (hidden lg:flex) pour éviter de se chevaucher avec le logo sur tablette --}}
+            <div class="hidden lg:flex items-center gap-x-3">
                 <h1 class="text-base font-semibold text-slate-800 dark:text-white flex items-center gap-1.5">
                     Bonjour, <span class="bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent font-bold">{{ auth()->user()->prenom }} {{ auth()->user()->nom }}</span>
                 </h1>

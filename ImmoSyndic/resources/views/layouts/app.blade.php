@@ -104,13 +104,16 @@
     @stack('styles')
 </head>
 
-<body class="bg-[#F8FAFC] text-slate-800 dark:bg-[#080B11] dark:text-neutral-200 min-h-screen transition-colors duration-300">
+<body x-data="{ sidebarOpen: false }" {{-- RESPONSIVE : État global Alpine.js pour contrôler l'ouverture/fermeture du menu sur mobile --}} class="bg-[#F8FAFC] text-slate-800 dark:bg-[#080B11] dark:text-neutral-200 min-h-screen transition-colors duration-300">
     <!-- Navbar (Header) -->
     <x-navbar />
 
     <!-- Sidebar -->
     @auth
         <x-sidebar />
+        <!-- Backdrop for mobile -->
+        {{-- RESPONSIVE : Voile d'arrière-plan flouté (glassmorphism) visible uniquement sur mobile/tablette (<lg) lorsque le menu est ouvert. Un clic dessus ferme le menu. --}}
+        <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-[59] lg:hidden" x-cloak></div>
     @endauth
 
     <!-- Main Content Grid -->

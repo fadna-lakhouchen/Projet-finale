@@ -19,10 +19,10 @@ class UserController extends Controller
             'telephone' => 'nullable|string|max:20',
             'cin' => 'nullable|string|max:20',
             'notes' => 'nullable|string',
-            'type_resident' => 'required|string|in:locataire,propriétaire',
             'immeuble_id' => 'required|exists:immeubles,id',
             'numero_appartement' => 'required|string|max:255',
             'date_entree' => 'required|date',
+            'override_mois_retard' => 'nullable|integer|min:0',
         ]);
 
         $appt = \App\Models\Appartement::firstOrCreate(
@@ -37,6 +37,10 @@ class UserController extends Controller
                 'statut' => 'occupé',
             ]
         );
+
+        $appt->update([
+            'override_mois_retard' => $request->override_mois_retard,
+        ]);
 
         $user = User::create([
             'prenom' => $request->prenom,
@@ -51,9 +55,11 @@ class UserController extends Controller
         ]);
 
         $user->appartements()->attach($appt->id, [
-            'type_resident' => ucfirst($request->type_resident),
             'date_entree' => $request->date_entree,
         ]);
+
+        // Generate initial monthly charge for the apartment
+        \App\Models\Charge::generateCurrentMonthCharge($appt->id);
 
         return back()->with('success', 'Résident ajouté avec succès.');
     }
@@ -68,10 +74,10 @@ class UserController extends Controller
             'telephone' => 'nullable|string|max:20',
             'cin' => 'nullable|string|max:20',
             'notes' => 'nullable|string',
-            'type_resident' => 'required|string|in:locataire,propriétaire',
             'immeuble_id' => 'required|exists:immeubles,id',
             'numero_appartement' => 'required|string|max:255',
             'date_entree' => 'required|date',
+            'override_mois_retard' => 'nullable|integer|min:0',
         ]);
 
         $appt = \App\Models\Appartement::firstOrCreate(
@@ -87,14 +93,20 @@ class UserController extends Controller
             ]
         );
 
+        $appt->update([
+            'override_mois_retard' => $request->override_mois_retard,
+        ]);
+
         $user->update($request->only(['prenom', 'nom', 'email', 'telephone', 'cin', 'notes']));
 
         $user->appartements()->sync([
             $appt->id => [
-                'type_resident' => ucfirst($request->type_resident),
                 'date_entree' => $request->date_entree,
             ]
         ]);
+
+        // Generate initial monthly charge for the apartment
+        \App\Models\Charge::generateCurrentMonthCharge($appt->id);
 
         return back()->with('success', 'Résident mis à jour avec succès.');
     }
@@ -184,5 +196,22 @@ class UserController extends Controller
     public function destroyUserBySyndic($id)
     {
         return $this->destroyUser($id);
+    }
+
+    public function activateResidentBySyndic($id)
+    {
+        $user = User::findOrFail($id);
+        
+        // Sécurité : vérifier que le syndic gère l'immeuble du résident
+        $userImmeubleIds = $user->appartements()->pluck('immeuble_id')->toArray();
+        $syndicImmeubleIds = \App\Models\Immeuble::where('syndic_id', auth()->id())->pluck('id')->toArray();
+        
+        if (empty(array_intersect($userImmeubleIds, $syndicImmeubleIds))) {
+            abort(403, 'Accès non autorisé.');
+        }
+
+        $user->update(['is_active' => true]);
+
+        return back()->with('success', 'Résident activé et approuvé avec succès.');
     }
 }

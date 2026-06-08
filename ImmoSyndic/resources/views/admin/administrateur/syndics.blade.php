@@ -189,7 +189,7 @@
                         <input type="hidden" name="id" x-model="syndicEnCours.id">
                         
                         <div class="grid gap-y-5">
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-semibold mb-2 dark:text-white">Prénom</label>
                                     <input name="prenom" x-model="syndicEnCours.prenom" type="text" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" required>
@@ -203,7 +203,7 @@
                                 <label class="block text-sm font-semibold mb-2 dark:text-white">Adresse Email (Connexion)</label>
                                 <input name="email" x-model="syndicEnCours.email" type="email" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" placeholder="youssef.khadir@email.com" required>
                             </div>
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-semibold mb-2 dark:text-white">Téléphone</label>
                                     <input name="telephone" x-model="syndicEnCours.telephone" type="text" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" placeholder="Ex: 0600000000">
@@ -213,7 +213,7 @@
                                     <input name="cin" x-model="syndicEnCours.cin" type="text" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" placeholder="Ex: AB123456">
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-semibold mb-2 dark:text-white">Ville</label>
                                     <input name="ville" x-model="syndicEnCours.ville" type="text" class="py-2.5 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" placeholder="Ex: Casablanca">

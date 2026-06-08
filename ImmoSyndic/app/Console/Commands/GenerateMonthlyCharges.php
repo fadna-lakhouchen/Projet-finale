@@ -47,7 +47,7 @@ class GenerateMonthlyCharges extends Command
                     'appartement_id' => $appt->id,
                     'titre' => "Cotisation de " . ucfirst(now()->translatedFormat('F Y')),
                     'description' => "Cotisation mensuelle de copropriété pour l'appartement n° " . $appt->numero,
-                    'montant' => 850.00, // Tarif standard mensuel
+                    'montant' => $appt->cotisation_mensuelle ?? 850.00,
                     'date_echeance' => now()->setDate(now()->year, now()->month, 25), // Échéance le 25 du mois en cours
                     'statut' => 'impayé',
                 ]);
