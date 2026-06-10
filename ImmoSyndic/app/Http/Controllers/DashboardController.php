@@ -13,16 +13,31 @@ use App\Services\PaiementService;
 use App\Services\IncidentService;
 use App\Models\Annonce;
 
+/**
+ * Contrôleur DashboardController
+ * Centralise la logique d'affichage des tableaux de bord (Dashboards) et des espaces dédiés
+ * pour chaque rôle utilisateur : Administrateur global, Syndic (principal et secondaire), et Résident.
+ */
 class DashboardController extends Controller
 {
+    // Services injectés pour encapsuler la logique métier complexe (Clean Architecture)
     protected $paiementService;
     protected $incidentService;
 
+    /**
+     * Constructeur du contrôleur
+     * Injecte les services nécessaires pour la gestion des paiements et des incidents.
+     */
     public function __construct(PaiementService $paiementService, IncidentService $incidentService)
     {
         $this->paiementService = $paiementService;
         $this->incidentService = $incidentService;
     }
+
+    /**
+     * Point d'entrée principal (/)
+     * Redirige l'utilisateur connecté vers son tableau de bord spécifique en fonction de son rôle.
+     */
     public function index()
     {
         $role = Auth::user()->role;
@@ -30,14 +45,20 @@ class DashboardController extends Controller
             'administrateur' => redirect()->route('admin.dashboard'),
             'syndic' => redirect()->route('syndic.dashboard'),
             'resident' => redirect()->route('resident.dashboard'),
-            default => abort(403),
+            default => abort(403), // Interdit si aucun rôle valide
         };
     }
 
+    /**
+     * Tableau de bord de l'Administrateur
+     * Affiche des statistiques globales de la plateforme, l'activité récente (Audit Logs),
+     * les graphiques d'activité et les utilisateurs les plus actifs.
+     */
     public function adminDashboard()
     {
         $now = now();
 
+        // Récupération des statistiques globales pour les cartes informatives
         $stats = [
             'total_residents'          => User::where('role', 'resident')->count(),
             'total_immeubles'          => Immeuble::count(),
@@ -48,25 +69,25 @@ class DashboardController extends Controller
             'logs_last_hour'           => AuditLog::where('created_at', '>=', $now->copy()->subHour())->count(),
         ];
 
-        // Activité par jour — 7 derniers jours (pour le graphique barres)
+        // Construction des données d'activité sur les 7 derniers jours (pour le graphique à barres)
         $activityByDay = [];
         for ($i = 6; $i >= 0; $i--) {
             $date = $now->copy()->subDays($i);
             $activityByDay[] = [
-                'label' => $date->format('D'),
+                'label' => $date->format('D'), // Abréviation du jour en anglais
                 'date'  => $date->toDateString(),
                 'count' => AuditLog::whereDate('created_at', $date->toDateString())->count(),
             ];
         }
 
-        // Top 5 actions les plus fréquentes
+        // Top 5 des actions les plus fréquentes dans le journal d'audit
         $topActions = AuditLog::selectRaw('action, COUNT(*) as count')
             ->groupBy('action')
             ->orderByDesc('count')
             ->limit(5)
             ->get();
 
-        // Top 5 utilisateurs les plus actifs
+        // Top 5 des utilisateurs les plus actifs (générant le plus de logs d'audit)
         $topUsers = AuditLog::with('user')
             ->selectRaw('user_id, COUNT(*) as count')
             ->groupBy('user_id')
@@ -74,6 +95,7 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
+        // Récupération des 10 dernières lignes de log d'activité globale
         $recentActivity = AuditLog::with('user')->latest()->take(10)->get();
 
         return view('admin.administrateur.dashboard', compact(
@@ -81,6 +103,10 @@ class DashboardController extends Controller
         ));
     }
 
+    /**
+     * Espace Administrateur : Gestion des Immeubles
+     * Liste tous les immeubles avec leurs syndics associés et permet d'affecter un syndic.
+     */
     public function adminImmeubles()
     {
         $immeubles = Immeuble::with('syndic')->get();
@@ -88,6 +114,10 @@ class DashboardController extends Controller
         return view('admin.administrateur.immeubles', compact('immeubles', 'syndics'));
     }
 
+    /**
+     * Espace Administrateur : Gestion des Résidents
+     * Liste tous les résidents avec leurs appartements et immeubles correspondants.
+     */
     public function adminResidents()
     {
         $residents = User::where('role', 'resident')->with('appartements.immeuble')->get();
@@ -95,6 +125,10 @@ class DashboardController extends Controller
         return view('admin.administrateur.residents', compact('residents', 'immeubles'));
     }
 
+    /**
+     * Espace Administrateur : Gestion des Syndics
+     * Liste tous les comptes de syndics créés sur la plateforme.
+     */
     public function adminSyndics()
     {
         $syndics = User::where('role', 'syndic')->get();
@@ -102,11 +136,15 @@ class DashboardController extends Controller
         return view('admin.administrateur.syndics', compact('syndics', 'immeubles'));
     }
 
+    /**
+     * Espace Administrateur : Vue d'ensemble des Paiements
+     * Permet à l'admin de surveiller tous les paiements et d'en voir les indicateurs clés.
+     */
     public function adminPaiements()
     {
         $paiements = Paiement::with(['charge.appartement.immeuble', 'user'])->latest()->get();
         
-        // Calculer les stats dans le Controller (Clean Architecture)
+        // Calcul des totaux clés
         $stats = [
             'totalCollecte' => $paiements->where('statut', 'validé')->sum('montant'),
             'totalAttente' => $paiements->where('statut', 'en attente')->sum('montant'),
@@ -117,10 +155,15 @@ class DashboardController extends Controller
         return view('admin.administrateur.paiements', compact('paiements', 'immeubles', 'stats'));
     }
 
+    /**
+     * Espace Administrateur : Suivi des Incidents / Signalements
+     * Liste l'ensemble des pannes ou problèmes signalés dans tous les immeubles.
+     */
     public function adminSignalements()
     {
         $incidents = Incident::with(['immeuble', 'user'])->latest()->get();
 
+        // Classification par statut
         $stats = [
             'ouverts'   => $incidents->whereIn('statut', ['Ouvert', 'ouvert', 'nouveau', 'Nouveau', 'à traiter'])->count(),
             'en_cours'  => $incidents->whereIn('statut', ['En cours', 'en cours'])->count(),
@@ -130,12 +173,19 @@ class DashboardController extends Controller
         return view('admin.administrateur.signalements', compact('incidents', 'stats'));
     }
 
+    /**
+     * Tableau de bord du Syndic (Principal ou Secondaire)
+     * Calcule et affiche les statistiques spécifiques aux immeubles gérés par ce syndic.
+     * Fournit un flux d'activité unifié (derniers paiements + nouveaux incidents).
+     */
     public function syndicDashboard()
     {
         $user = Auth::user();
-        $immeubles = Immeuble::where('syndic_id', $user->id)->with('appartements')->get();
+        // Récupération des immeubles gérés par ce syndic (via relation managedImmeubles)
+        $immeubles = $user->managedImmeubles()->with('appartements')->get();
         $immeubleIds = $immeubles->pluck('id');
         
+        // Statistiques condensées de son parc immobilier
         $stats = [
             'total_residents' => User::whereHas('appartements', function($q) use ($immeubleIds) {
                 $q->whereIn('immeuble_id', $immeubleIds);
@@ -147,17 +197,17 @@ class DashboardController extends Controller
             })->whereMonth('date_paiement', now()->month)->sum('montant'),
         ];
 
-        // 1. Get the latest open incident for the banner alert
+        // Récupération du dernier incident urgent non résolu pour l'alerte haute visibilité
         $urgentIncident = Incident::whereIn('immeuble_id', $immeubleIds)
             ->where('statut', '!=', 'Résolu')
             ->with(['immeuble', 'user'])
             ->latest()
             ->first();
 
-        // 2. Fetch unified recent activities (Paiements + Incidents)
+        // Récupération et fusion des dernières activités (Paiements + Signalements)
         $activites = collect();
 
-        // Fetch recent payments
+        // Récupération des 5 derniers paiements
         $paiements = Paiement::whereHas('charge.appartement', function($q) use ($immeubleIds) {
             $q->whereIn('immeuble_id', $immeubleIds);
         })->with(['charge.appartement.immeuble', 'user'])->latest()->take(5)->get();
@@ -180,7 +230,7 @@ class DashboardController extends Controller
             ]);
         }
 
-        // Fetch recent incidents
+        // Récupération des 5 derniers incidents
         $incidents = Incident::whereIn('immeuble_id', $immeubleIds)
             ->with(['immeuble', 'user'])
             ->latest()
@@ -203,9 +253,10 @@ class DashboardController extends Controller
             ]);
         }
 
-        // Sort by date latest and take 5
+        // Tri décroissant pour avoir le flux d'activité le plus récent en premier
         $activites = $activites->sortByDesc('date')->take(5)->values();
 
+        // Récupération des demandes de règlement en espèces émises par les résidents
         $demandesCollecte = \App\Models\Notification::where('user_id', $user->id)
             ->where('type', 'ready_to_pay')
             ->where('lu', false)
@@ -215,10 +266,14 @@ class DashboardController extends Controller
         return view('admin.syndic.dashboard', compact('stats', 'immeubles', 'urgentIncident', 'activites', 'demandesCollecte'));
     }
 
+    /**
+     * Espace Syndic : Gestion des Résidents
+     * Liste uniquement les résidents habitant dans les immeubles du syndic connecté.
+     */
     public function syndicResidents()
     {
         $user = Auth::user();
-        $immeubles = Immeuble::where('syndic_id', $user->id)->get();
+        $immeubles = $user->managedImmeubles()->get();
         $immeubleIds = $immeubles->pluck('id');
         
         $residents = User::where('role', 'resident')
@@ -229,21 +284,29 @@ class DashboardController extends Controller
         return view('admin.syndic.residents', compact('residents', 'immeubles'));
     }
 
+    /**
+     * Espace Syndic : Gestion des Immeubles
+     * Affiche les immeubles gérés par ce syndic avec leurs appartements.
+     */
     public function syndicImmeubles()
     {
         $user = Auth::user();
-        $immeubles = Immeuble::where('syndic_id', $user->id)->with('appartements')->get();
+        $immeubles = $user->managedImmeubles()->with('appartements')->get();
         $villes = $immeubles->pluck('ville')->unique()->filter()->values();
         $syndics = User::where('role', 'syndic')->get();
         return view('admin.syndic.immeubles', compact('immeubles', 'villes', 'syndics'));
     }
 
+    /**
+     * Espace Syndic : Gestion financière (Cotisations & Paiements)
+     * Affiche les indicateurs de collecte financière et liste l'ensemble des cotisations mensuelles générées.
+     */
     public function syndicPaiements()
     {
         $user = Auth::user();
-        $immeubleIds = Immeuble::where('syndic_id', $user->id)->pluck('id');
+        $immeubleIds = $user->managedImmeubles()->pluck('id');
         
-        // Fetch all validated and pending payments for the stats
+        // Récupération de tous les paiements liés aux immeubles du syndic pour les stats financières
         $allPaiements = Paiement::whereHas('charge.appartement', function($q) use ($immeubleIds) {
             $q->whereIn('immeuble_id', $immeubleIds);
         })->get();
@@ -256,19 +319,19 @@ class DashboardController extends Controller
         
         $immeubles = Immeuble::whereIn('id', $immeubleIds)->get();
 
-        // Fetch all charges (including paid, partial, unpaid) for the main dashboard list
+        // Récupération de l'ensemble des cotisations mensuelles (charges) avec leurs paiements
         $chargesList = \App\Models\Charge::whereHas('appartement', function($q) use ($immeubleIds) {
             $q->whereIn('immeuble_id', $immeubleIds);
         })->with(['appartement.immeuble', 'appartement.residents', 'paiements'])
           ->latest()
           ->get();
 
-        // Available months from all generated charges
+        // Extraction des mois disponibles (pour le filtre de recherche dans la vue)
         $moisDisponibles = $chargesList->map(function($c) {
             return ucfirst(\Carbon\Carbon::parse($c->date_echeance)->translatedFormat('F Y'));
         })->unique()->values();
 
-        // Unpaid or partially paid charges for the "Saisir un paiement" select dropdown
+        // Récupération des charges impayées ou partielles pour alimenter le sélecteur d'enregistrement de paiement
         $charges = $chargesList->filter(function($c) {
             return strtolower($c->statut) !== 'payé';
         })->values();
@@ -276,10 +339,14 @@ class DashboardController extends Controller
         return view('admin.syndic.paiements', compact('immeubles', 'stats', 'moisDisponibles', 'charges', 'chargesList'));
     }
 
+    /**
+     * Espace Syndic : Gestion des Interventions & Signalements
+     * Permet au syndic de suivre l'état de traitement des pannes déclarées.
+     */
     public function syndicInterventions()
     {
         $user = Auth::user();
-        $immeubleIds = Immeuble::where('syndic_id', $user->id)->pluck('id');
+        $immeubleIds = $user->managedImmeubles()->pluck('id');
         
         $incidents = Incident::whereIn('immeuble_id', $immeubleIds)
             ->with(['immeuble', 'user'])
@@ -291,16 +358,27 @@ class DashboardController extends Controller
         return view('admin.syndic.interventions', compact('incidents', 'immeubles'));
     }
 
+    /**
+     * Espace Syndic : Paramètres & Facturation de l'abonnement
+     * Calcule le montant total dû pour la gestion de ses immeubles (calcul dynamique).
+     */
     public function syndicParametres()
     {
         $user = Auth::user();
-        return view('admin.syndic.parametres', compact('user'));
+        $subscription = $user->calculateTotalSubscription();
+        return view('admin.syndic.parametres', compact('user', 'subscription'));
     }
 
+    /**
+     * Tableau de bord du Résident
+     * Gère également l'affichage de la page d'attente si le résident n'est pas encore approuvé par le syndic.
+     * Inclut le système de transparence financière de l'immeuble.
+     */
     public function residentDashboard()
     {
         $user = Auth::user();
 
+        // Si le résident n'a pas encore été activé/approuvé par le syndic, on le bloque sur un écran d'attente
         if (!$user->is_active) {
             return view('admin.resident.waiting-approval', compact('user'));
         }
@@ -308,15 +386,15 @@ class DashboardController extends Controller
         $appartement = $user->appartements()->first();
         $immeuble = $appartement ? $appartement->immeuble : null;
 
-        // Utilisation du Service pour les statistiques
+        // Appel au PaiementService pour obtenir les stats personnelles (solde, payé, en attente)
         $stats = $this->paiementService->getResidentStats($user);
         
-        // Ajout du nombre d'incidents ouverts
+        // Ajout du nombre d'incidents déclarés par ce résident et en cours de résolution
         $stats['incidents_ouverts'] = Incident::where('user_id', $user->id)
             ->whereNotIn('statut', ['résolu', 'Résolu'])
             ->count();
 
-        // Récupération des activités via les services
+        // Récupération de l'historique d'activité personnelle (5 derniers paiements et incidents)
         $activites = collect();
         
         $mesPaiements = $this->paiementService->getUserPaiements($user)->take(5);
@@ -343,7 +421,7 @@ class DashboardController extends Controller
         }
         $activites = $activites->sortByDesc('date')->take(5);
         
-        // Fetch building transparency: Calculate cumulative status for all apartments
+        // Transparence de l'immeuble : classification des appartements en règle ou en retard de paiement
         $appartementsEnRetard = collect();
         $appartementsEnRegle = collect();
         
@@ -353,13 +431,14 @@ class DashboardController extends Controller
                 ->get();
                 
             foreach ($appartements as $apt) {
-                // Filter charges that are not fully paid
+                // Détermination des charges non réglées
                 $unpaidCharges = $apt->charges->filter(function($c) {
                     return strtolower($c->statut) !== 'payé';
                 });
                 
                 $isMyApt = $apt->residents->contains('id', $user->id);
                 
+                // Prise en compte de la surcharge manuelle du nombre de mois de retard si configurée
                 $actualUnpaidCount = $unpaidCharges->count();
                 $displayUnpaidCount = is_null($apt->override_mois_retard) ? $actualUnpaidCount : (int)$apt->override_mois_retard;
                 
@@ -384,7 +463,7 @@ class DashboardController extends Controller
                 }
             }
             
-            // Sort by apartment number numerically
+            // Tri numérique par numéro d'appartement pour un affichage propre
             $appartementsEnRetard = $appartementsEnRetard->sortBy(function($apt) {
                 return (int)$apt['numero'];
             })->values();
@@ -394,6 +473,7 @@ class DashboardController extends Controller
             })->values();
         }
         
+        // Liste de mes charges personnelles en attente de paiement
         $mesChargesImpayees = collect();
         if ($appartement) {
             $mesChargesImpayees = $appartement->charges()->where('statut', '!=', 'payé')->get();
@@ -411,6 +491,9 @@ class DashboardController extends Controller
         ));
     }
 
+    /**
+     * Espace Résident : Historique des paiements personnels
+     */
     public function residentPaiements()
     {
         $user = Auth::user();
@@ -423,6 +506,9 @@ class DashboardController extends Controller
         return view('admin.resident.paiements', compact('paiements', 'moisDisponibles'));
     }
 
+    /**
+     * Espace Résident : Historique de ses signalements d'incident
+     */
     public function residentIncidents()
     {
         $user = Auth::user();
@@ -430,10 +516,13 @@ class DashboardController extends Controller
         return view('admin.resident.incidents', compact('incidents'));
     }
 
+    /**
+     * Espace Syndic : Liste des annonces diffusées dans ses immeubles
+     */
     public function syndicAnnonces()
     {
         $user = Auth::user();
-        $immeubles = Immeuble::where('syndic_id', $user->id)->get();
+        $immeubles = $user->managedImmeubles()->get();
         $immeubleIds = $immeubles->pluck('id');
         
         $annonces = Annonce::whereIn('immeuble_id', $immeubleIds)
@@ -444,6 +533,9 @@ class DashboardController extends Controller
         return view('admin.syndic.annonces', compact('annonces', 'immeubles'));
     }
 
+    /**
+     * Espace Résident : Liste des annonces publiées par le syndic dans son immeuble
+     */
     public function residentAnnonces()
     {
         $user = Auth::user();
@@ -461,12 +553,16 @@ class DashboardController extends Controller
         return view('admin.resident.annonces', compact('annonces', 'immeuble'));
     }
 
+    /**
+     * Espace Administrateur : Gestion des Documents partagés
+     * Calcule également l'espace de stockage occupé dynamiquement en Mo.
+     */
     public function adminDocuments()
     {
         $documents = \App\Models\Document::with('immeuble')->latest()->get();
         $immeubles = Immeuble::all();
         
-        // Calculate storage size dynamically from public storage folder
+        // Calcul dynamique de l'espace disque consommé par les fichiers d'immeubles
         $totalSizeBytes = 0;
         foreach ($documents as $doc) {
             if ($doc->fichier_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($doc->fichier_path)) {
@@ -474,10 +570,8 @@ class DashboardController extends Controller
             }
         }
         
-        // Convert to MB
         $totalSizeMb = round($totalSizeBytes / (1024 * 1024), 2);
-        // Let's set a maximum virtual quota of 100 MB for demonstration
-        $maxSizeMb = 100; 
+        $maxSizeMb = 100; // Quota virtuel de 100 Mo pour démo
         $percentage = $maxSizeMb > 0 ? min(round(($totalSizeMb / $maxSizeMb) * 100, 1), 100) : 0;
         
         $storageInfo = [
@@ -489,10 +583,13 @@ class DashboardController extends Controller
         return view('admin.administrateur.documents', compact('documents', 'immeubles', 'storageInfo'));
     }
 
+    /**
+     * Espace Syndic : Documents de ses immeubles
+     */
     public function syndicDocuments()
     {
         $user = Auth::user();
-        $immeubles = Immeuble::where('syndic_id', $user->id)->get();
+        $immeubles = $user->managedImmeubles()->get();
         $immeubleIds = $immeubles->pluck('id');
 
         $documents = \App\Models\Document::whereIn('immeuble_id', $immeubleIds)
@@ -503,6 +600,9 @@ class DashboardController extends Controller
         return view('admin.syndic.documents', compact('documents', 'immeubles'));
     }
 
+    /**
+     * Espace Résident : Documents mis à disposition dans son immeuble
+     */
     public function residentDocuments()
     {
         $user = Auth::user();
@@ -520,6 +620,9 @@ class DashboardController extends Controller
         return view('admin.resident.documents', compact('documents', 'immeuble'));
     }
 
+    /**
+     * Espace Administrateur : Suivi des dépenses globales
+     */
     public function adminDepenses()
     {
         $depenses = \App\Models\Depense::with('immeuble')->latest()->get();
@@ -527,6 +630,9 @@ class DashboardController extends Controller
         return view('admin.administrateur.depenses', compact('depenses', 'immeubles'));
     }
 
+    /**
+     * Espace Syndic : Suivi des charges de fonctionnement de ses immeubles (Dépenses)
+     */
     public function syndicDepenses()
     {
         $user = Auth::user();
@@ -541,25 +647,37 @@ class DashboardController extends Controller
         return view('admin.syndic.depenses', compact('depenses', 'immeubles'));
     }
 
-
+    /**
+     * Espace Résident : Paramètres personnels
+     */
     public function residentParametres()
     {
         $user = Auth::user();
         return view('admin.resident.parametres', compact('user'));
     }
 
+    /**
+     * Espace Administrateur : Consultation des journaux d'audit (Logs de sécurité)
+     */
     public function adminLogs()
     {
         $logs = \App\Models\AuditLog::with('user')->latest()->get();
         return view('admin.administrateur.logs', compact('logs'));
     }
 
+    /**
+     * Tout marquer comme lu (Notifications de l'utilisateur connecté)
+     */
     public function markNotificationsAsRead()
     {
         \App\Models\Notification::where('user_id', auth()->id())->update(['lu' => true]);
         return back()->with('success', 'Toutes les notifications ont été marquées comme lues.');
     }
 
+    /**
+     * Signaler une cotisation prête (Résident -> Syndic)
+     * Permet au résident d'informer son syndic qu'il a préparé le montant en espèces.
+     */
     public function signalReadyToPay(Request $request)
     {
         $request->validate([
@@ -571,6 +689,7 @@ class DashboardController extends Controller
         $charge = \App\Models\Charge::with('appartement.immeuble.syndic')->findOrFail($request->charge_id);
         $appt = $user->appartements()->first();
 
+        // Sécurité : Vérifier que cette charge appartient bien à l'appartement du résident
         if (!$appt || $appt->id !== $charge->appartement_id) {
             abort(403, 'Accès non autorisé.');
         }
@@ -585,6 +704,7 @@ class DashboardController extends Controller
                 $message .= " Note: " . $request->note;
             }
             
+            // Création d'une notification pour le syndic principal concerné
             \App\Models\Notification::create([
                 'user_id' => $syndic->id,
                 'titre' => '💸 Cotisation prête (Espèces)',
@@ -600,11 +720,64 @@ class DashboardController extends Controller
         return back()->with('error', 'Aucun Syndic n\'est assigné à votre immeuble.');
     }
 
+    /**
+     * Marquer une notification spécifique comme lue
+     */
     public function markSingleNotificationAsRead($id)
     {
         $notif = \App\Models\Notification::where('user_id', auth()->id())->findOrFail($id);
         $notif->update(['lu' => true]);
         return back()->with('success', 'Notification marquée comme lue.');
     }
+
+    /**
+     * Espace Syndic : Gestion des syndics secondaires associés à ses immeubles
+     */
+    public function syndicSecondarySyndics()
+    {
+        $user = Auth::user();
+        
+        // Immeubles dont cet utilisateur est le syndic principal
+        $immeubles = Immeuble::where('syndic_id', $user->id)->get();
+        $immeubleIds = $immeubles->pluck('id');
+
+        // Récupération de tous les syndics secondaires associés à ces immeubles
+        $secondarySyndics = User::where('role', 'syndic')
+            ->whereHas('secondaryImmeubles', function($q) use ($immeubleIds) {
+                $q->whereIn('immeubles.id', $immeubleIds);
+            })
+            ->with(['secondaryImmeubles' => function($q) use ($immeubleIds) {
+                $q->whereIn('immeubles.id', $immeubleIds);
+            }])
+            ->get();
+
+        return view('admin.syndic.secondary-syndics', compact('secondarySyndics', 'immeubles'));
+    }
+
+    /**
+     * Espace Syndic : Historique d'activité de ses syndics secondaires (Audit Logs)
+     */
+    public function syndicLogs()
+    {
+        $user = Auth::user();
+
+        // Récupération des immeubles dont il est le syndic principal
+        $immeubleIds = Immeuble::where('syndic_id', $user->id)->pluck('id');
+
+        // Récupération des IDs de tous les syndics secondaires liés à ces immeubles
+        $secondarySyndicIds = User::where('role', 'syndic')
+            ->whereHas('secondaryImmeubles', function($q) use ($immeubleIds) {
+                $q->whereIn('immeubles.id', $immeubleIds);
+            })->pluck('id');
+
+        // Affichage des logs d'actions menées par ces syndics secondaires sur son périmètre
+        $logs = AuditLog::whereIn('user_id', $secondarySyndicIds)
+            ->with('user')
+            ->latest()
+            ->get();
+
+        return view('admin.syndic.logs', compact('logs'));
+    }
 }
+
 

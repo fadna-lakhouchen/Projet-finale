@@ -30,9 +30,14 @@ class RoleMiddleware
                 return redirect()->route('resident.dashboard');
             }
 
+            $errorMessage = 'Votre compte est inactif ou en attente d\'approbation.';
+            if ($user->role === 'syndic') {
+                $errorMessage = 'Votre compte Syndic a été suspendu pour défaut de paiement. Veuillez effectuer le virement bancaire mensuel hors-ligne et contacter l\'administrateur pour réactiver votre accès.';
+            }
+
             auth()->logout();
             return redirect()->route('login')->withErrors([
-                'email' => 'Votre compte est inactif ou en attente d\'approbation.',
+                'email' => $errorMessage,
             ]);
         }
 

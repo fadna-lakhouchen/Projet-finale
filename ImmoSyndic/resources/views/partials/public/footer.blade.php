@@ -4,7 +4,7 @@
         <div class="flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="flex items-center gap-2 group cursor-pointer">
                 <img src="{{ asset('logo.png') }}" alt="Logo ImmoSyndic" class="h-8 w-auto object-contain group-hover:rotate-12 transition-transform">
-                <span class="font-heading font-extrabold text-xl text-gray-900 dark:text-white">Immo<span class="text-teal-500">Syndic</span></span>
+                <span class="font-heading font-extrabold text-xl text-gray-900 dark:text-white">Immo<span class="text-brand-900">Syndic</span></span>
             </div>
             <div class="flex gap-6 text-sm font-semibold text-gray-500 dark:text-gray-400">
                 <a href="#" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Mentions légales</a>

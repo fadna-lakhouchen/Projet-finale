@@ -23,6 +23,7 @@ import syndicImmeubles from './components/syndic/syndicImmeubles.js';
 import syndicAnnonces from './components/syndic/syndicAnnonces.js';
 import syndicDocuments from './components/syndic/syndicDocuments.js';
 import syndicDepenses from './components/syndic/syndicDepenses.js';
+import syndicDashboard from './components/syndic/syndicDashboard.js';
 
 // Resident components
 import residentPanel from './components/resident/residentPanel.js';
@@ -55,6 +56,7 @@ Alpine.data('syndicImmeubles', syndicImmeubles);
 Alpine.data('syndicAnnonces', syndicAnnonces);
 Alpine.data('syndicDocuments', syndicDocuments);
 Alpine.data('syndicDepenses', syndicDepenses);
+Alpine.data('syndicDashboard', syndicDashboard);
 
 // Register Resident components f Alpine
 Alpine.data('residentPanel', residentPanel);

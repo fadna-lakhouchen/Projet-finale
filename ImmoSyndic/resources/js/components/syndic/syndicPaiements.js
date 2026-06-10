@@ -1,18 +1,29 @@
+/**
+ * Composant Alpine.js pour la Gestion Financière du Syndic (paiements.blade.php)
+ * Gère le filtrage dynamique des cotisations (mois, immeuble, statut), la pagination locale du tableau,
+ * et les états d'ouverture/sélection des dropdowns personnalisés pour l'enregistrement et l'édition de transactions.
+ */
 export default (config = {}) => ({
-    // Recherche et filtres principaux
-    search: '',
-    moisSelectionne: 'all',
-    immeubleSelectionne: 'all',
-    statutSelectionne: 'all',
+    // --- RECHERCHE ET FILTRES PRINCIPAUX ---
+    search: '',                     // Terme de recherche saisi (nom du résident ou nom de l'immeuble)
+    moisSelectionne: 'all',          // Filtre par mois d'échéance sélectionné
+    immeubleSelectionne: 'all',      // Filtre par immeuble sélectionné
+    statutSelectionne: 'all',        // Filtre par statut de la charge (payé, partiel, impayé, en retard)
+    
+    // États d'ouverture des filtres personnalisés (Dropdowns style Preline)
     openMois: false,
     openImm: false,
     openStat: false,
 
-    // Pagination attributes
-    items: config.items || [],
-    currentPage: 1,
-    perPage: 10,
+    // --- ATTRIBUTS DE PAGINATION ---
+    items: config.items || [],      // Liste brute des cotisations injectée au chargement
+    currentPage: 1,                 // Numéro de page actuelle
+    perPage: 10,                    // Nombre d'éléments par page
 
+    /**
+     * Initialisation du composant
+     * Surveille les filtres pour réinitialiser la page courante à 1 en cas de modification.
+     */
     init() {
         this.$watch('search', () => this.currentPage = 1);
         this.$watch('moisSelectionne', () => this.currentPage = 1);
@@ -20,10 +31,16 @@ export default (config = {}) => ({
         this.$watch('statutSelectionne', () => this.currentPage = 1);
     },
 
+    /**
+     * Retourne la liste des éléments filtrés selon les critères saisis
+     */
     get filteredItems() {
         return this.items.filter(item => this.matches(item.name, item.mois, item.immeuble, item.statut));
     },
 
+    /**
+     * Détermine si une ligne de tableau doit être affichée (visibilité + pagination locale)
+     */
     isRowVisible(id, name, mois, immeuble, statut) {
         if (!this.matches(name, mois, immeuble, statut)) return false;
         const index = this.filteredItems.findIndex(item => item.id == id);
@@ -33,16 +50,16 @@ export default (config = {}) => ({
         return index >= start && index < end;
     },
 
-    // Saisie d'un nouveau paiement
-    selectedChargeId: '',
-    selectedChargeLabel: 'Sélectionnez...',
-    selectedMontant: '',
-    openSelectCharge: false,
+    // --- FORMULAIRE DE NOUVEAU PAIEMENT ---
+    selectedChargeId: '',             // ID de la charge sélectionnée
+    selectedChargeLabel: 'Sélectionnez...', // Libellé à afficher pour l'utilisateur
+    selectedMontant: '',              // Montant du versement saisi
+    openSelectCharge: false,          // État d'affichage de la dropdown de sélection
 
-    // Gestion de la modale des versements d'une cotisation spécifique
-    currentCharge: null,
+    // --- GESTION DE LA MODALE DES PAIEMENTS REÇUS ---
+    currentCharge: null,              // Cotisation actuellement inspectée pour lister ses versements
 
-    // Modification d'un versement spécifique
+    // --- FORMULAIRE DE MODIFICATION D'UN VERSEMENT ---
     editPaiementId: '',
     editChargeId: '',
     editChargeLabel: '',
@@ -51,7 +68,9 @@ export default (config = {}) => ({
     editStatut: '',
     openEditSelectCharge: false,
 
-    // Fonction de filtrage des cotisations dans le tableau principal
+    /**
+     * Applique les filtres de recherche (nom, mois, immeuble, statut)
+     */
     matches(name, mois, immeuble, statut) {
         const s = this.search.toLowerCase();
         const matchSearch = name.toLowerCase().includes(s) || immeuble.toLowerCase().includes(s);
@@ -61,7 +80,9 @@ export default (config = {}) => ({
         return matchSearch && matchMois && matchImmeuble && matchStatut;
     },
 
-    // Formater la date au format standard JJ/MM/AAAA pour l'affichage jury
+    /**
+     * Formate une date système YYYY-MM-DD au format lisible JJ/MM/AAAA
+     */
     formatDate(dateStr) {
         if (!dateStr) return '';
         const datePart = dateStr.split('T')[0];
@@ -72,7 +93,10 @@ export default (config = {}) => ({
         return dateStr;
     },
 
-    // Déclencher la suppression d'un paiement après confirmation
+    /**
+     * Déclencher la suppression d'un paiement individuel
+     * Met à jour dynamiquement l'action du formulaire masqué de suppression avant soumission.
+     */
     deletePaiement(id) {
         if (confirm('Êtes-vous sûr de vouloir supprimer ce paiement ? Le statut de la cotisation sera recalculé.')) {
             const form = document.getElementById('delete-paiement-form');

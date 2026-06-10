@@ -9,17 +9,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Contrôleur DocumentController
+ * Gère le téléversement, le stockage sécurisé et la suppression des documents administratifs
+ * (contrats de maintenance, règlements de copropriété, factures de prestataires, procès-verbaux d'AG)
+ * dans les espaces Administrateur et Syndic.
+ */
 class DocumentController extends Controller
 {
+    // Service injecté pour la logique de gestion documentaire
     protected $documentService;
 
+    /**
+     * Constructeur
+     */
     public function __construct(DocumentService $documentService)
     {
         $this->documentService = $documentService;
     }
 
     /**
-     * Store a document uploaded by Admin.
+     * Ajouter un document par l'Administrateur
+     * - Valide les métadonnées (titre, catégorie d'in: Facture, Contrat, PV, Autre).
+     * - Téléverse le fichier sur le disque de stockage public.
      */
     public function storeByAdmin(Request $request)
     {
@@ -39,18 +51,22 @@ class DocumentController extends Controller
             'charge_id'   => $request->charge_id ?? null,
         ];
 
+        // Délégation du téléchargement physique et de la création de la base de données au service
         $this->documentService->uploadDocument($file, $data);
 
         return back()->with('success', 'Document ajouté avec succès.');
     }
 
     /**
-     * Delete a document by Admin.
+     * Supprimer un document par l'Administrateur
+     * - Supprime le fichier associé sur le disque de stockage.
+     * - Nettoie l'enregistrement en base de données.
      */
     public function destroyByAdmin($id)
     {
         $document = Document::findOrFail($id);
 
+        // Nettoyage physique
         if ($document->fichier_path && Storage::disk('public')->exists($document->fichier_path)) {
             Storage::disk('public')->delete($document->fichier_path);
         }
@@ -61,7 +77,10 @@ class DocumentController extends Controller
     }
 
     /**
-     * Store a document uploaded by Syndic.
+     * Ajouter un document par le Syndic
+     * - Valide les données saisies.
+     * - Vérifie l'habilitation du syndic sur l'immeuble.
+     * - Enregistre l'acte ou la facture d'immeuble.
      */
     public function storeBySyndic(Request $request)
     {
@@ -74,9 +93,9 @@ class DocumentController extends Controller
             'fichier'     => 'required|file|max:20480|mimes:pdf,png,jpg,jpeg,doc,docx,xls,xlsx',
         ]);
 
-        // Verify the syndic manages this building
-        $immeuble = Immeuble::where('id', $request->immeuble_id)
-            ->where('syndic_id', $user->id)
+        // Sécurité : Vérifier que le syndic gère effectivement cet immeuble
+        $immeuble = $user->managedImmeubles()
+            ->where('immeubles.id', $request->immeuble_id)
             ->firstOrFail();
 
         $file = $request->file('fichier');
@@ -94,18 +113,23 @@ class DocumentController extends Controller
     }
 
     /**
-     * Delete a document by Syndic.
+     * Supprimer un document par le Syndic
+     * - Vérifie que le syndic connecté gère l'immeuble lié au document.
+     * - Supprime le fichier physique et l'enregistrement.
      */
     public function destroyBySyndic($id)
     {
         $user = Auth::user();
 
-        // Get document only if it belongs to an immeuble managed by this syndic
-        $document = Document::where('id', $id)
-            ->whereHas('immeuble', function ($q) use ($user) {
-                $q->where('syndic_id', $user->id);
-            })->firstOrFail();
+        // Récupération du document ciblé
+        $document = Document::findOrFail($id);
+        
+        // Sécurité : Le syndic ne peut détruire que les pièces de ses immeubles sous gestion
+        if (!$user->managedImmeubles()->where('immeubles.id', $document->immeuble_id)->exists()) {
+            abort(403, 'Accès non autorisé');
+        }
 
+        // Nettoyage sur le disque de stockage
         if ($document->fichier_path && Storage::disk('public')->exists($document->fichier_path)) {
             Storage::disk('public')->delete($document->fichier_path);
         }
@@ -115,3 +139,4 @@ class DocumentController extends Controller
         return back()->with('success', 'Document supprimé avec succès.');
     }
 }
+

@@ -1,6 +1,8 @@
+{{-- Héritage du layout général de l'application --}}
 @extends('layouts.app')
 
 @section('content')
+{{-- Liaison du scope Alpine.js avec initialisation des données réactives de cotisations --}}
 <div x-data="syndicPaiements({ items: [
     @foreach($chargesList as $item)
     @php
@@ -22,16 +24,19 @@
     },
     @endforeach
 ] })">
-<!-- Header -->
+
+{{-- En-tête de page avec titre et boutons d'export/création --}}
 <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
     <div>
         <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight dark:text-white">Suivi des Paiements</h2>
         <p class="mt-1 text-sm text-gray-500 dark:text-slate-400">Vérifiez les versements des charges mensuelles des résidents.</p>
     </div>
     <div class="flex flex-wrap gap-3">
+        {{-- Bouton ouvrant la modale de saisie de paiement --}}
         <button type="button" class="py-2.5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-xl border border-transparent bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-md shadow-primary-500/10 hover:shadow-lg hover:shadow-primary-500/20 transition-all duration-300 transform hover:-translate-y-0.5" data-hs-overlay="#hs-saisir-paiement-modal">
             <i data-lucide="plus" class="size-4"></i> Saisir un paiement
         </button>
+        {{-- Liens d'exportations de rapports Excel et PDF --}}
         <a href="{{ route('syndic.paiements.export.excel') }}" class="py-2.5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-xl border border-transparent bg-emerald-600 text-white hover:bg-emerald-700 shadow-md shadow-emerald-500/10 hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-300 transform hover:-translate-y-0.5">
             <i data-lucide="file-spreadsheet" class="size-4"></i> Export Excel
         </a>
@@ -41,11 +46,12 @@
     </div>
 </div>
 
-<!-- Table Section -->
+{{-- Panneau financier principal --}}
 <div class="flex flex-col bg-white/80 dark:bg-[#0D121F]/90 border border-gray-200/60 dark:border-slate-800/60 rounded-2xl shadow-premium backdrop-blur-md">
 
-    <!-- Header / Filters -->
+    {{-- Filtres du tableau principal (Recherche, Mois, Immeubles et Statuts) --}}
     <div class="px-6 py-5 grid gap-4 md:flex md:justify-between md:items-center border-b border-gray-200/60 dark:border-slate-800/60 bg-white/40 dark:bg-[#0D121F]/40">
+        {{-- Barre de recherche par résident --}}
         <div class="sm:col-span-1 max-w-sm w-full relative">
             <label for="syndic-paiement-search" class="sr-only">Rechercher</label>
             <input x-model="search" type="text" id="syndic-paiement-search" class="py-2.5 px-4 ps-11 block w-full border-gray-200/80 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 dark:placeholder-neutral-500 transition-all duration-200" placeholder="Rechercher un résident...">
@@ -55,7 +61,7 @@
         </div>
 
         <div class="sm:col-span-2 md:grow flex justify-end gap-x-3 relative">
-            <!-- Dropdown Mois -->
+            <!-- Dropdown Filtre par Mois -->
             <div class="relative inline-flex">
               <button @click="openMois = !openMois" @click.outside="openMois = false" type="button" class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200/80 bg-white/50 hover:bg-gray-50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-white dark:hover:bg-slate-900/50 shadow-sm transition-all duration-200">
                 <span x-text="moisSelectionne === 'all' ? 'Filtrer par Mois' : moisSelectionne" class="truncate max-w-[120px]"></span>
@@ -69,7 +75,7 @@
               </div>
             </div>
 
-            <!-- Dropdown Immeubles -->
+            <!-- Dropdown Filtre par Immeubles -->
             <div class="relative inline-flex">
               <button @click="openImm = !openImm" @click.outside="openImm = false" type="button" class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200/80 bg-white/50 hover:bg-gray-50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-white dark:hover:bg-slate-900/50 shadow-sm transition-all duration-200">
                 <span x-text="immeubleSelectionne === 'all' ? 'Filtrer par Immeuble' : immeubleSelectionne" class="truncate max-w-[150px]"></span>
@@ -83,7 +89,7 @@
               </div>
             </div>
 
-            <!-- Dropdown Statut -->
+            <!-- Dropdown Filtre par Statut -->
             <div class="relative inline-flex">
               <button @click="openStat = !openStat" @click.outside="openStat = false" type="button" class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200/80 bg-white/50 hover:bg-gray-50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-white dark:hover:bg-slate-900/50 shadow-sm transition-all duration-200">
                 <span x-text="statutSelectionne === 'all' ? 'Statuts' : statutSelectionne" class="truncate max-w-[120px]"></span>
@@ -98,7 +104,7 @@
         </div>
     </div>
 
-    <!-- Table -->
+    <!-- Tableau principal de cotisations -->
     <div class="overflow-x-auto rounded-b-2xl">
         <table class="min-w-full divide-y divide-gray-200/60 dark:divide-slate-800/60">
             <thead class="bg-gray-50/50 dark:bg-[#090D16]/40">
@@ -117,7 +123,6 @@
                     $dateFr = ucfirst($dateFr);
                     $statutDb = strtolower($item->statut);
                     
-                    // Map database charge status to view statuses: 'Payé' or 'En retard'
                     $viewStatut = $statutDb === 'payé' ? 'Payé' : 'En retard';
                     
                     $appt = $item->appartement;
@@ -166,7 +171,6 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                         <div class="inline-flex items-center gap-x-2">
-                            {{-- Si la cotisation a déjà des versements associés (validés ou en attente) --}}
                             @if($validatedPaymentsSum > 0 || $item->paiements->count() > 0)
                                 <button type="button" 
                                         @click="
@@ -179,7 +183,6 @@
                                 </button>
                             @endif
                             
-                            {{-- Si la cotisation n'est pas encore totalement réglée --}}
                             @if($statutDb !== 'payé')
                                 <button type="button" @click="selectedChargeId = '{{ $item->id }}'; selectedChargeLabel = '{{ $item->titre }} (Reste: {{ number_format($item->reste_a_payer, 2) }} DH) - {{ $fullName }} ({{ $immeubleName }} - Appt {{ $apptNumero }})'; selectedMontant = '{{ $item->reste_a_payer }}'; HSOverlay.open('#hs-saisir-paiement-modal')" class="py-1.5 px-3 inline-flex items-center gap-x-2 text-xs font-semibold rounded-xl border border-transparent bg-primary-600 text-white hover:bg-primary-700 shadow-md shadow-primary-500/10 hover:shadow-lg hover:shadow-primary-500/20 transition-all duration-200" title="Saisir un versement pour cette charge">
                                     <i data-lucide="plus" class="size-3.5"></i> Régler
@@ -193,7 +196,7 @@
         </table>
     </div>
     
-    <!-- Pagination controls -->
+    {{-- Pagination des résultats --}}
     <div class="px-6 py-4 flex items-center justify-between border-t border-gray-200/60 dark:border-slate-800/60 bg-white/40 dark:bg-[#0D121F]/40">
         <div class="flex-1 flex justify-between sm:hidden">
             <button @click="if (currentPage > 1) currentPage--" :disabled="currentPage === 1" class="relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
@@ -234,7 +237,7 @@
     </div>
 </div>
 
-<!-- Modal Saisir Paiement -->
+{{-- Modale Saisir Paiement --}}
 <div id="hs-saisir-paiement-modal" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none bg-slate-950/40 backdrop-blur-sm">
   <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
     <div class="flex flex-col bg-white border border-gray-200/60 dark:border-slate-800/60 shadow-premium rounded-2xl pointer-events-auto dark:bg-[#0D121F] w-full overflow-hidden">
@@ -310,11 +313,11 @@
   </div>
 </div>
 
-<!-- Modal 1 : Liste et gestion des versements d'une cotisation spécifique -->
+{{-- Modale : Liste et gestion des versements d'une cotisation spécifique --}}
 <div id="hs-gerer-paiements-modal" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none bg-slate-950/40 backdrop-blur-sm">
   <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-xl sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
     <div class="flex flex-col bg-white border border-gray-200/60 dark:border-slate-800/60 shadow-premium rounded-2xl pointer-events-auto dark:bg-[#0D121F] w-full overflow-hidden">
-      <!-- En-tête de la modale -->
+      {{-- En-tête de la modale --}}
       <div class="flex justify-between items-center py-4 px-5 border-b border-gray-200/60 dark:border-slate-800/60">
         <h3 class="font-bold text-gray-800 dark:text-white text-lg">
           Versements enregistrés (Détails)
@@ -324,9 +327,9 @@
         </button>
       </div>
 
-      <!-- Corps de la modale -->
+      {{-- Corps de la modale --}}
       <div class="p-6 overflow-y-auto">
-        <!-- Section récapulative de la cotisation mensuelle (Charge) -->
+        {{-- Section récapulative de la cotisation mensuelle --}}
         <div class="mb-6 p-4 rounded-xl bg-gray-50 dark:bg-slate-900/50 border border-gray-150 dark:border-slate-800">
             <span class="block text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-wider">Cotisation concernée</span>
             <span x-text="currentCharge ? currentCharge.titre : ''" class="block font-bold text-gray-800 dark:text-slate-200 mt-1"></span>
@@ -342,11 +345,11 @@
             </div>
         </div>
 
-        <!-- Liste dynamique des versements individuels (Transactions de Paiement) -->
+        {{-- Liste dynamique des versements --}}
         <h4 class="text-sm font-semibold mb-3 dark:text-neutral-200">Règlements saisis :</h4>
         <div class="space-y-3">
             <template x-for="(p, index) in (currentCharge ? currentCharge.paiements : [])" :key="p.id">
-                <div class="p-4 rounded-xl border border-gray-200/80 dark:border-slate-800/80 bg-white/50 dark:bg-[#090D16]/50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div class="p-4 rounded-xl border border-gray-200/80 dark:border-slate-800/80 bg-white/50 dark:bg-[#0D121F]/50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div class="space-y-1">
                         <div class="flex items-center gap-x-2">
                             <span x-text="parseFloat(p.montant).toFixed(2) + ' MAD'" class="font-bold text-slate-800 dark:text-white"></span>
@@ -361,23 +364,20 @@
                         </div>
                     </div>
                     
-                    <!-- Actions individuelles sur chaque versement -->
+                    {{-- Actions individuelles sur versement --}}
                     <div class="flex items-center gap-2">
-                        <!-- Justificatif / Preuve de virement (si téléversé par le résident) -->
                         <template x-if="p.recu_path">
                             <a :href="'/storage/' + p.recu_path" target="_blank" class="p-2 inline-flex items-center justify-center text-xs font-semibold rounded-lg border border-gray-200 dark:border-slate-800 text-gray-500 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-900" title="Justificatif">
                                 <i data-lucide="paperclip" class="size-4"></i>
                             </a>
                         </template>
 
-                        <!-- Reçu de caisse imprimable (si validé) -->
                         <template x-if="p.statut === 'validé'">
                             <a :href="'/syndic/paiements/' + p.id + '/receipt'" target="_blank" class="p-2 inline-flex items-center justify-center text-xs font-semibold rounded-lg border border-gray-200 dark:border-slate-800 text-gray-500 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-900" title="Imprimer le Reçu">
                                 <i data-lucide="printer" class="size-4"></i>
                             </a>
                         </template>
 
-                        <!-- Modifier (Charge, Montant, Date ou Statut) -->
                         <button type="button" 
                                 @click="
                                     editPaiementId = p.id;
@@ -393,7 +393,6 @@
                             <i data-lucide="pencil" class="size-4"></i>
                         </button>
 
-                        <!-- Supprimer définitivement la transaction -->
                         <button type="button" @click="deletePaiement(p.id)" class="p-2 inline-flex items-center justify-center text-xs font-semibold rounded-lg border border-rose-200/80 text-rose-600 hover:bg-rose-50/50 dark:border-rose-900/30 dark:text-rose-450 dark:hover:bg-rose-950/20" title="Supprimer ce versement">
                             <i data-lucide="trash-2" class="size-4"></i>
                         </button>
@@ -418,11 +417,10 @@
   </div>
 </div>
 
-<!-- Modal 2 : Formulaire de modification d'un versement précis -->
+{{-- Modale : Formulaire de modification --}}
 <div id="hs-modifier-paiement-modal" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none bg-slate-950/40 backdrop-blur-sm">
   <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
     <div class="flex flex-col bg-white border border-gray-200/60 dark:border-slate-800/60 shadow-premium rounded-2xl pointer-events-auto dark:bg-[#0D121F] w-full overflow-hidden">
-      <!-- En-tête -->
       <div class="flex justify-between items-center py-4 px-5 border-b border-gray-200/60 dark:border-slate-800/60">
         <h3 class="font-bold text-gray-800 dark:text-white text-lg">
           Modifier les détails du versement
@@ -432,14 +430,12 @@
         </button>
       </div>
 
-      <!-- Formulaire de soumission PUT -->
       <form :action="'/syndic/paiements/' + editPaiementId" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         
         <div class="p-6 overflow-y-auto">
             <div class="space-y-4">
-                <!-- Sélection de la Cotisation Cible (Raison ou Résident) -->
                 <div>
                     <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Cotisation / Résident Destinataire</label>
                     <div class="relative w-full inline-flex">
@@ -450,7 +446,6 @@
                         
                         <input type="hidden" name="charge_id" :value="editChargeId" required>
                         
-                        <!-- Menu déroulant contenant toutes les charges gérées par le syndic -->
                         <div x-show="openEditSelectCharge" x-cloak class="absolute left-0 top-full z-[100] mt-2 w-full max-h-60 overflow-y-auto bg-white dark:bg-[#0D121F] border border-gray-200/60 dark:border-slate-800/60 shadow-xl rounded-xl p-1.5 backdrop-blur-md">
                             @foreach($chargesList as $c)
                                 @php
@@ -469,22 +464,18 @@
                             @endforeach
                         </div>
                     </div>
-                    <p class="text-xs text-gray-400 dark:text-slate-500 mt-1.5">Permet de réassigner le versement si vous avez sélectionné le mauvais résident ou le mauvais mois par erreur.</p>
                 </div>
 
-                <!-- Montant réglé -->
                 <div>
                     <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Montant versé (MAD)</label>
                     <input type="number" step="0.01" name="montant" x-model="editMontant" required class="py-2.5 px-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200">
                 </div>
 
-                <!-- Date de paiement -->
                 <div>
                     <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Date du versement</label>
                     <input type="date" name="date_paiement" x-model="editDate" required class="py-2.5 px-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-neutral-300 transition-all duration-200">
                 </div>
 
-                <!-- Statut du versement -->
                 <div>
                     <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Statut du Versement</label>
                     <div class="relative w-full inline-flex">
@@ -506,7 +497,6 @@
                     </div>
                 </div>
 
-                <!-- Pièce Jointe / Reçu optionnel -->
                 <div>
                     <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Pièce jointe / Preuve de virement (Optionnel - Image ou PDF)</label>
                     <input type="file" name="piece_jointe" accept="image/*,application/pdf" class="py-2 px-3 block w-full border border-gray-200/80 dark:border-slate-800/80 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 bg-white/50 dark:bg-[#090D16]/50 dark:text-neutral-300 file:bg-gray-100 file:border-0 file:me-4 file:py-1.5 file:px-3 file:rounded-lg file:text-xs file:font-semibold dark:file:bg-slate-800 dark:file:text-neutral-350 transition-all duration-200">
@@ -514,7 +504,6 @@
             </div>
         </div>
 
-        <!-- Boutons de validation -->
         <div class="flex justify-end items-center gap-x-3 border-t border-gray-100 dark:border-slate-800/60 p-4 bg-gray-50/50 dark:bg-slate-900/10">
           <button type="button" class="py-2 px-4 text-sm font-medium border border-gray-200 dark:border-slate-800 dark:text-neutral-350 hover:bg-gray-50 dark:hover:bg-slate-900 rounded-xl" data-hs-overlay="#hs-modifier-paiement-modal">
             Annuler
@@ -528,7 +517,7 @@
   </div>
 </div>
 
-<!-- Formulaire fantôme pour soumettre la requête DELETE de suppression de versement -->
+{{-- Formulaire fantôme pour la suppression --}}
 <form id="delete-paiement-form" method="POST" action="" class="hidden">
     @csrf
     @method('DELETE')

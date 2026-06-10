@@ -1,84 +1,83 @@
 <!-- Solutions / Roles -->
-<section id="solutions" class="py-24 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
+<section id="solutions" class="py-24 bg-slate-50 dark:bg-[#070B16] border-t border-slate-200/60 dark:border-white/5 relative overflow-hidden text-slate-800 dark:text-white">
+    <!-- Glowing background elements -->
+    <div class="absolute right-0 top-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px] pointer-events-none"></div>
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="flex flex-col lg:flex-row items-center gap-16">
-            <!-- Image Side -->
+        <div class="flex flex-col lg:flex-row items-center gap-20">
+            <!-- Left Side: Interactive Mockup Cards -->
             <div class="w-full lg:w-1/2">
                 <div class="relative">
-                    <!-- VIBRANT Abstract deco behind image -->
-                    <div class="absolute -inset-4 bg-gradient-to-tr from-teal-400 to-blue-500 rounded-3xl opacity-30 dark:opacity-50 blur-2xl animate-pulse" style="animation-duration: 4s;"></div>
+                    <div class="absolute -inset-4 bg-gradient-to-tr from-blue-500/10 to-indigo-500/10 rounded-3xl opacity-60 blur-3xl animate-pulse" style="animation-duration: 6s;"></div>
                     
-                    <div class="relative glass-panel rounded-3xl p-8 border border-white/80 dark:border-gray-700 shadow-2xl">
+                    <div class="relative bg-white dark:bg-[#0c1020]/90 border border-slate-200/80 dark:border-white/10 rounded-3xl p-8 shadow-xl backdrop-blur-xl">
                         <div class="space-y-6">
-                            <!-- Mockup Role 1 -->
-                            <div class="group flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 hover:scale-105 transition-transform duration-300 cursor-default">
-                                <div class="size-12 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform"><i data-lucide="user" class="size-6"></i></div>
-                                <div>
-                                    <p class="font-bold text-gray-900 dark:text-white">Ismail - Résident</p>
-                                    <p class="text-xs text-gray-500">A réglé ses cotisations (T2).</p>
+                            <!-- Mockup Role 1: Resident -->
+                            <div class="group flex items-center gap-4.5 p-4.5 bg-slate-50 border border-slate-100 dark:bg-white/5 dark:border-white/5 rounded-2xl shadow-sm hover:bg-slate-100/50 hover:scale-[1.03] transition-all duration-300 cursor-default">
+                                <div class="size-12 rounded-xl bg-blue-100 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i data-lucide="user" class="size-6"></i>
                                 </div>
-                                <div class="ml-auto size-8 bg-green-100 rounded-full flex items-center justify-center">
-                                   <i data-lucide="check" class="size-5 text-green-600"></i>
+                                <div class="grow min-w-0">
+                                    <p class="font-bold text-slate-900 dark:text-white text-sm">Yassine El Alami</p>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 truncate font-medium">Résident - Cotisation payée (Juin 2026)</p>
                                 </div>
-                            </div>
-                            <!-- Mockup Role 2 -->
-                            <div class="group flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 hover:scale-105 transition-transform duration-300 cursor-default translate-x-6">
-                                <div class="size-12 rounded-full bg-brand-100 dark:bg-brand-900/50 flex items-center justify-center text-brand-600 group-hover:scale-110 transition-transform"><i data-lucide="shield-check" class="size-6"></i></div>
-                                <div>
-                                    <p class="font-bold text-gray-900 dark:text-white">Cabinet Immobilier</p>
-                                    <p class="text-xs text-gray-500">A publié un avis d'assemblée.</p>
-                                </div>
-                                <div class="ml-auto size-8 bg-brand-100 rounded-full flex items-center justify-center">
-                                    <i data-lucide="file-text" class="size-4 text-brand-600"></i>
+                                <div class="size-8 rounded-full bg-emerald-100 dark:bg-emerald-500/15 flex items-center justify-center">
+                                   <i data-lucide="check" class="size-5 text-emerald-600 dark:text-emerald-400"></i>
                                 </div>
                             </div>
-                            <!-- Mockup Role 3 -->
-                            <div class="group flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 hover:scale-105 transition-transform duration-300 cursor-default">
-                                <div class="size-12 rounded-full bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center text-purple-600 group-hover:scale-110 transition-transform"><i data-lucide="settings" class="size-6"></i></div>
-                                <div>
-                                    <p class="font-bold text-gray-900 dark:text-white">Administrateur</p>
-                                    <p class="text-xs text-gray-500">Infrastructure Sécurisée.</p>
+                            <!-- Mockup Role 2: Syndic -->
+                            <div class="group flex items-center gap-4.5 p-4.5 bg-slate-50 border border-slate-100 dark:bg-white/5 dark:border-white/10 rounded-2xl shadow-sm hover:bg-slate-100/50 hover:scale-[1.03] transition-all duration-300 cursor-default translate-x-0 sm:translate-x-6">
+                                <div class="size-12 rounded-xl bg-blue-100 text-brand-900 dark:bg-blue-500/10 dark:text-blue-300 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i data-lucide="shield-check" class="size-6"></i>
                                 </div>
-                                <div class="ml-auto size-8 bg-purple-100 rounded-full flex items-center justify-center">
-                                    <i data-lucide="shield" class="size-4 text-purple-600"></i>
+                                <div class="grow min-w-0">
+                                    <p class="font-bold text-slate-900 dark:text-white text-sm">Karim Benzakour</p>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 truncate font-medium">Syndic Principal - Publication du PV d'AG</p>
+                                </div>
+                                <div class="size-8 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
+                                    <i data-lucide="file-text" class="size-4.5 text-blue-600 dark:text-blue-400"></i>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Text Side -->
+            <!-- Right Side: Text Highlights -->
             <div class="w-full lg:w-1/2 space-y-8">
                 <div>
-                    <h2 class="font-heading text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">Conçu pour <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-blue-500 hover:from-blue-500 hover:to-teal-500 transition-all duration-500">tous les acteurs</span>.</h2>
-                    <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-                        La gestion est un effort d'équipe. Notre UX colorée et intuitive s'adapte à vous !
+                    <span class="text-xs font-bold uppercase tracking-widest text-brand-900 bg-blue-50 px-3.5 py-1.5 rounded-full mb-4 inline-block dark:bg-white/5 dark:text-blue-300">Solutions Adaptées</span>
+                    <h2 class="font-heading text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight">
+                        Conçu pour tous les acteurs de la résidence.
+                    </h2>
+                    <p class="text-slate-650 dark:text-slate-400 text-base leading-relaxed mt-4">
+                        La gestion d'un immeuble repose sur la collaboration. Notre plateforme s'adapte dynamiquement selon votre rôle pour offrir les outils adaptés.
                     </p>
                 </div>
 
                 <div class="space-y-6">
-                    <div class="flex gap-4 group cursor-default">
-                        <div class="mt-1 size-10 rounded-xl bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center flex-shrink-0 text-blue-600 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-sm"><i data-lucide="home" class="size-5"></i></div>
+                    <!-- Resident Role -->
+                    <div class="flex gap-4.5 group cursor-default">
+                        <div class="mt-1 size-11 rounded-xl bg-blue-100 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-transform shadow-sm">
+                            <i data-lucide="home" class="size-5.5"></i>
+                        </div>
                         <div>
-                            <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 transition-colors">Espace Résidents</h4>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Consultez vos factures, payez en ligne, et participez à la vie de votre immeuble depuis votre canapé.</p>
+                            <h4 class="text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Espace Résidents</h4>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Suivez vos cotisations de charges, payez vos factures en ligne et signalez les pannes en direct.</p>
                         </div>
                     </div>
-                    <div class="flex gap-4 group cursor-default">
-                        <div class="mt-1 size-10 rounded-xl bg-brand-100 dark:bg-brand-900/40 flex items-center justify-center flex-shrink-0 text-brand-600 group-hover:scale-110 transition-transform shadow-sm"><i data-lucide="briefcase" class="size-5"></i></div>
+                    <!-- Syndic Role -->
+                    <div class="flex gap-4.5 group cursor-default">
+                        <div class="mt-1 size-11 rounded-xl bg-blue-100 text-brand-900 dark:bg-blue-500/10 dark:text-blue-300 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:-rotate-3 transition-transform shadow-sm">
+                            <i data-lucide="briefcase" class="size-5.5"></i>
+                        </div>
                         <div>
-                            <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-brand-600 transition-colors">Portail Syndics</h4>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Tenez la comptabilité, déléguez les tickets d'intervention, et encaissez automatiquement.</p>
+                            <h4 class="text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-brand-900 dark:group-hover:text-blue-300 transition-colors">Portail Syndics</h4>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Tenez la comptabilité, pilotez les chantiers, gérez l'équipe de syndics secondaires et surveillez les journaux d'activité.</p>
                         </div>
                     </div>
-                    <div class="flex gap-4 group cursor-default">
-                        <div class="mt-1 size-10 rounded-xl bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center flex-shrink-0 text-purple-600 group-hover:scale-110 group-hover:-rotate-6 transition-transform shadow-sm"><i data-lucide="terminal" class="size-5"></i></div>
-                        <div>
-                            <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-purple-600 transition-colors">Super Administrateur</h4>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Surveillez l'état du serveur, gérez les abonnements et les permissions en temps réel.</p>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

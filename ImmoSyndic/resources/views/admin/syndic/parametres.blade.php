@@ -79,6 +79,56 @@
 
     <!-- Right col -->
     <div class="lg:col-span-1 space-y-6">
+        <!-- Abonnement & Facturation -->
+        <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-6 dark:bg-neutral-800 dark:border-neutral-700">
+            <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-x-2">
+                <i data-lucide="credit-card" class="size-5 text-primary-500"></i>
+                Abonnement ImmoSyndic
+            </h3>
+            
+            <div class="mb-4 pb-4 border-b border-gray-150 dark:border-neutral-700">
+                <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-1">Montant Mensuel Actuel</div>
+                <div class="text-3xl font-extrabold text-slate-800 dark:text-white">
+                    {{ number_format($subscription['total_price'], 2) }} <span class="text-sm font-semibold text-gray-500">DH/mois</span>
+                </div>
+            </div>
+
+            <!-- Breakdown -->
+            <div class="space-y-3 mb-5 max-h-48 overflow-y-auto pr-1">
+                <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Détail par immeuble</div>
+                @forelse($subscription['breakdown'] as $item)
+                    <div class="bg-slate-50 dark:bg-neutral-900 rounded-xl p-3 border border-gray-150 dark:border-neutral-800/40">
+                        <div class="font-bold text-xs text-slate-800 dark:text-slate-200">{{ $item['immeuble']->nom }}</div>
+                        <div class="flex justify-between text-xs text-slate-500 dark:text-neutral-400 mt-1.5">
+                            <span>{{ $item['calculation']['residents_count'] }} Résidents × 4 DH</span>
+                            <span class="font-semibold text-slate-700 dark:text-slate-300">{{ number_format($item['calculation']['residents_price'], 2) }} DH</span>
+                        </div>
+                        <div class="flex justify-between text-xs text-slate-500 dark:text-neutral-400 mt-1">
+                            <span>{{ $item['calculation']['syndics_count'] }} Syndics × 8 DH</span>
+                            <span class="font-semibold text-slate-700 dark:text-slate-300">{{ number_format($item['calculation']['syndics_price'], 2) }} DH</span>
+                        </div>
+                    </div>
+                @empty
+                    <p class="text-xs text-slate-400 italic">Aucun immeuble géré comme principal.</p>
+                @endforelse
+            </div>
+
+            <!-- Virement Instructions -->
+            <div class="bg-primary-500/[0.03] border border-primary-500/20 rounded-xl p-4">
+                <h4 class="text-[10px] font-bold text-primary-600 dark:text-primary-400 uppercase tracking-wider mb-2">Instructions de Virement</h4>
+                <div class="space-y-1.5 text-xs text-slate-600 dark:text-neutral-400">
+                    <div><span class="font-bold text-slate-700 dark:text-slate-300">Bénéficiaire :</span> ImmoSyndic SARL</div>
+                    <div><span class="font-bold text-slate-700 dark:text-slate-300">Banque :</span> CIH Bank</div>
+                    <div class="bg-white dark:bg-neutral-900 p-2 rounded-lg border border-gray-200/50 dark:border-neutral-700 font-mono text-[11px] select-all cursor-pointer text-center font-bold text-slate-800 dark:text-slate-200" title="Cliquer pour copier">
+                        011 120 0000012345678901 22
+                    </div>
+                    <p class="text-[10px] text-slate-400 leading-normal mt-2">
+                        * Veuillez effectuer le virement avant le 5 de chaque mois et transmettre le justificatif à l'administrateur pour éviter la suspension du service.
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <!-- Notifications Toggle -->
         <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-6 dark:bg-neutral-800 dark:border-neutral-700">
             <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4">Notifications</h3>

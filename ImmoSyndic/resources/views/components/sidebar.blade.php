@@ -128,6 +128,22 @@
                             <i data-lucide="folder-open" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Documents
                         </a>
                     </li>
+                    @if(\App\Models\Immeuble::where('syndic_id', auth()->id())->exists())
+                        <li class="pt-4 mt-4 border-t border-slate-800">
+                            <span class="px-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Supervision</span>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('syndic.secondary-syndics') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('syndic.secondary-syndics') }}">
+                                <i data-lucide="users" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Gestion de l'équipe
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm font-medium transition-all duration-300 group border-l-2 {{ request()->routeIs('syndic.logs') ? 'bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5' : 'text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800' }}" href="{{ route('syndic.logs') }}">
+                                <i data-lucide="scroll-text" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Journal d'Activité
+                            </a>
+                        </li>
+                    @endif
+
                     <li class="pt-4 mt-4 border-t border-slate-800">
                         <span class="px-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Configuration</span>
                     </li>

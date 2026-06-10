@@ -3,7 +3,12 @@ left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-actor "Syndic" as Syndic
+' Acteurs Syndics avec Héritage
+actor "Syndic Secondaire" as SyndicSec
+actor "Syndic Principal" as SyndicPri
+
+' Le Syndic Principal hérite du Syndic Secondaire
+SyndicPri -up-|> SyndicSec
 
 rectangle "Système ImmoSyndic - Espace Syndic" {
 
@@ -16,6 +21,7 @@ rectangle "Système ImmoSyndic - Espace Syndic" {
     usecase "Gérer résidents" as ManageResidents
     usecase "Gérer charges" as ManageCharges
     usecase "Suivre paiements" as TrackPayments
+    usecase "Gérer dépenses" as ManageExpenses
   }
 
   package "Opérations quotidiennes" {
@@ -29,30 +35,53 @@ rectangle "Système ImmoSyndic - Espace Syndic" {
     usecase "Exporter Excel" as ExportExcel
     usecase "Exporter PDF" as ExportPDF
   }
-}
+
+  package "Sécurité & Équipe" {
+    usecase "Gérer les syndics secondaires" as ManageSecondaries
+    usecase "Consulter le journal d'activité (Logs)" as ViewLogs
+  }
+
+  package "Paramètres" {
+    usecase "Gérer son profil" as ManageProfile
+    usecase "Consulter la facturation" as ManageSubscription
+  }
+
   ' Auth relation (global rule)
   ManageBuildings ..> Auth : <<include>>
   ManageResidents ..> Auth : <<include>>
   ManageCharges ..> Auth : <<include>>
   TrackPayments ..> Auth : <<include>>
+  ManageExpenses ..> Auth : <<include>>
   TrackInterventions ..> Auth : <<include>>
   SendNews ..> Auth : <<include>>
   ManageDocs ..> Auth : <<include>>
   ViewStats ..> Auth : <<include>>
   ExportExcel ..> Auth : <<include>>
   ExportPDF ..> Auth : <<include>>
+  ManageSecondaries ..> Auth : <<include>>
+  ViewLogs ..> Auth : <<include>>
+  ManageProfile ..> Auth : <<include>>
+  ManageSubscription ..> Auth : <<include>>
 }
 
 ' Actor connections
-Syndic -- ManageBuildings
-Syndic -- ManageResidents
-Syndic -- ManageCharges
-Syndic -- TrackPayments
-Syndic -- TrackInterventions
-Syndic -- SendNews
-Syndic -- ManageDocs
-Syndic -- ViewStats
-Syndic -- ExportExcel
-Syndic -- ExportPDF
+' Le Syndic Secondaire est lié aux fonctionnalités quotidiennes, de gestion et profil
+SyndicSec -- ManageBuildings
+SyndicSec -- ManageResidents
+SyndicSec -- ManageCharges
+SyndicSec -- TrackPayments
+SyndicSec -- ManageExpenses
+SyndicSec -- TrackInterventions
+SyndicSec -- SendNews
+SyndicSec -- ManageDocs
+SyndicSec -- ViewStats
+SyndicSec -- ExportExcel
+SyndicSec -- ExportPDF
+SyndicSec -- ManageProfile
+
+' Le Syndic Principal est le seul lié aux fonctionnalités d'équipe, de sécurité et abonnement
+SyndicPri -- ManageSecondaries
+SyndicPri -- ViewLogs
+SyndicPri -- ManageSubscription
 
 @enduml

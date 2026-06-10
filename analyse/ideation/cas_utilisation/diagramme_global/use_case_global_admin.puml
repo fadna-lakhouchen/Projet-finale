@@ -5,44 +5,69 @@ skinparam shadowing false
 
 actor "Administrateur" as Admin
 
-
-rectangle "Système ImmoSyndic -Espace Administrateur" {
+rectangle "Système ImmoSyndic - Espace Administrateur" {
 
   package "Authentification" {
     usecase "S'authentifier" as Auth
   }
-    package "Espace Administrateur (Web)" {
-      usecase "Gérer comptes syndic" as ManageSyndic
-       usecase "Gérer comptes résidents" as ManageResidents
-      usecase "Gérer droits" as ManageRoles
-      usecase "Générer rapports" as GlobalReports
-      usecase "Exporter Excel" as ExportExcel
-      usecase "Exporter PDF" as ExportPDF
-      usecase "Consulter logs système" as AuditLogs
-      usecase "Surveiller activités" as MonitorActivity
 
-      ManageSyndic ..> Auth : <<include>>
-      ManageResidents ..> Auth : <<include>>
-      ManageRoles ..> Auth : <<include>>
-      GlobalReports ..> Auth : <<include>>
-      ExportExcel ..> Auth : <<include>>
-      ExportPDF ..> Auth : <<include>>
-      AuditLogs ..> Auth : <<include>>
-      MonitorActivity ..> Auth : <<include>>
-    }
-  
+  package "Gestion des Entités" {
+    usecase "Gérer les immeubles" as ManageBuildings
+    usecase "Gérer les comptes syndic" as ManageSyndic
+    usecase "Activer/Désactiver un compte syndic" as ToggleSyndicStatus
+    usecase "Gérer les comptes résidents" as ManageResidents
+  }
 
+  package "Surveillance Plateforme" {
+    usecase "Suivre les paiements" as TrackPayments
+    usecase "Suivre les dépenses" as TrackExpenses
+    usecase "Suivre les incidents" as TrackIncidents
+    usecase "Gérer les documents partagés" as ManageDocs
+  }
+
+  package "Rapports & Exports" {
+    usecase "Exporter en Excel" as ExportExcel
+    usecase "Exporter en PDF" as ExportPDF
+  }
+
+  package "Sécurité & Audit" {
+    usecase "Consulter les logs système" as AuditLogs
+    usecase "Surveiller l'activité du système" as MonitorActivity
+  }
+
+  package "Paramètres" {
+    usecase "Gérer son profil" as ManageProfile
+  }
+
+  ' Auth relation (global rule)
+  ManageBuildings ..> Auth : <<include>>
+  ManageSyndic ..> Auth : <<include>>
+  ToggleSyndicStatus ..> Auth : <<include>>
+  ManageResidents ..> Auth : <<include>>
+  TrackPayments ..> Auth : <<include>>
+  TrackExpenses ..> Auth : <<include>>
+  TrackIncidents ..> Auth : <<include>>
+  ManageDocs ..> Auth : <<include>>
+  ExportExcel ..> Auth : <<include>>
+  ExportPDF ..> Auth : <<include>>
+  AuditLogs ..> Auth : <<include>>
+  MonitorActivity ..> Auth : <<include>>
+  ManageProfile ..> Auth : <<include>>
 }
 
 ' Web Connections
+Admin -- ManageBuildings
 Admin -- ManageSyndic
+Admin -- ToggleSyndicStatus
 Admin -- ManageResidents
-Admin -- ManageRoles
-Admin -- GlobalReports
+Admin -- TrackPayments
+Admin -- TrackExpenses
+Admin -- TrackIncidents
+Admin -- ManageDocs
 Admin -- ExportExcel
 Admin -- ExportPDF
 Admin -- AuditLogs
 Admin -- MonitorActivity
-
+Admin -- ManageProfile
 
 @enduml

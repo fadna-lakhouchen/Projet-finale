@@ -12,41 +12,50 @@ rectangle "Système ImmoSyndic - Espace Résident" {
     usecase "S'authentifier" as Auth
   }
 
-  package "Espace Résident " {
-
-    usecase "Consulter charges" as ViewCharges
-    usecase "Signaler problème" as ReportIssue
-    usecase "Recevoir notifications" as GetNotifs
-    usecase "Consulter archives" as ViewArchives
-    usecase "Exporter PDF" as ExportPDF
-    usecase "Exporter Excel" as ExportExcel
-    usecase "Personnaliser alertes" as SetAlerts
-    usecase "Consulter annonces" as ViewNews
-
-    ViewCharges ..> Auth : <<include>>
-    ReportIssue ..> Auth : <<include>>
-    GetNotifs ..> Auth : <<include>>
-    ViewArchives ..> Auth : <<include>>
-    ExportPDF ..> Auth : <<include>>
-    ExportExcel ..> Auth : <<include>>
-    SetAlerts ..> Auth : <<include>>
-    ViewNews ..> Auth : <<include>>
+  package "Finances & Cotisations" {
+    usecase "Consulter ses cotisations" as ViewPayments
+    usecase "Déclarer une cotisation prête" as SignalReady
   }
 
-  package "API" {
-    usecase "consommer API" as ProvideAPI
+  package "Incidents & Pannes" {
+    usecase "Signaler un problème" as ReportIssue
   }
+
+  package "Informations & Transparence" {
+    usecase "Consulter la transparence financière" as ViewTransparency
+    usecase "Consulter les annonces" as ViewNews
+    usecase "Gérer les documents" as ViewDocs
+  }
+
+  package "Paramètres" {
+    usecase "Gérer son profil" as ManageProfile
+    usecase "Recevoir des notifications" as GetNotifs
+  }
+
+  package "API Mobile" {
+    usecase "Consommer API" as ProvideAPI
+  }
+
+  ' Auth relation (global rule)
+  ViewPayments ..> Auth : <<include>>
+  SignalReady ..> Auth : <<include>>
+  ReportIssue ..> Auth : <<include>>
+  ViewTransparency ..> Auth : <<include>>
+  ViewNews ..> Auth : <<include>>
+  ViewDocs ..> Auth : <<include>>
+  ManageProfile ..> Auth : <<include>>
+  GetNotifs ..> Auth : <<include>>
 }
 
 ' Résident utilise web
-Resident -- ViewCharges
+Resident -- ViewPayments
+Resident -- SignalReady
 Resident -- ReportIssue
-Resident -- GetNotifs
-Resident -- ViewArchives
-Resident -- ExportPDF
-Resident -- ExportExcel
-Resident -- SetAlerts
+Resident -- ViewTransparency
 Resident -- ViewNews
+Resident -- ViewDocs
+Resident -- ManageProfile
+Resident -- GetNotifs
 
 ' Mobile consomme API
 Mobile -- ProvideAPI

@@ -97,6 +97,7 @@
                         <th scope="col" class="px-6 py-3.5 text-start text-xs font-bold text-slate-400 uppercase dark:text-neutral-450 tracking-wider">Nom & Contact</th>
                         <th scope="col" class="px-6 py-3.5 text-start text-xs font-bold text-slate-400 uppercase dark:text-neutral-450 tracking-wider">Immeuble(s) Assigné(s)</th>
                         <th scope="col" class="px-6 py-3.5 text-start text-xs font-bold text-slate-400 uppercase dark:text-neutral-450 tracking-wider">Détails</th>
+                        <th scope="col" class="px-6 py-3.5 text-start text-xs font-bold text-slate-400 uppercase dark:text-neutral-450 tracking-wider">Abonnement</th>
                         <th scope="col" class="px-6 py-3.5 text-start text-xs font-bold text-slate-400 uppercase dark:text-neutral-450 tracking-wider">Statut</th>
                         <th scope="col" class="px-6 py-3.5 text-end text-xs font-bold text-slate-400 uppercase dark:text-neutral-450 tracking-wider">Actions</th>
                     </tr>
@@ -106,6 +107,7 @@
                     @php
                         $nbImmeubles = $syndic->immeubles->count();
                         $statut = $syndic->is_active ? 'Actif' : 'Inactif';
+                        $subInfo = $syndic->calculateTotalSubscription();
                     @endphp
                     <tr x-show="matches('{{ $syndic->prenom }} {{ $syndic->nom }}', '{{ $syndic->email }}', '{{ $statut }}', {{ $nbImmeubles }})" class="hover:bg-slate-50/50 dark:hover:bg-slate-800/10 transition-colors">
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -143,6 +145,41 @@
                                 @if($syndic->date_entree) Assignation: {{ \Carbon\Carbon::parse($syndic->date_entree)->format('d/m/Y') }} @endif
                             </span>
                         </td>
+                        <td class="px-6 py-4 whitespace-nowrap" x-data="{ open: false }">
+                            <div class="relative inline-block">
+                                <button @click="open = !open" @click.outside="open = false" type="button" class="text-sm font-bold text-slate-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none flex items-center gap-x-1 border-b border-dashed border-slate-400">
+                                    {{ number_format($subInfo['total_price'], 2) }} DH
+                                    <i data-lucide="info" class="size-3.5 text-slate-400"></i>
+                                </button>
+                                
+                                <div x-show="open" style="display: none;" class="absolute left-0 bottom-full z-[120] mb-2 w-64 bg-slate-900 text-xs text-white rounded-xl p-3 shadow-xl dark:bg-neutral-900 border border-slate-800 dark:border-neutral-800"
+                                     x-transition:enter="transition ease-out duration-100"
+                                     x-transition:enter-start="transform opacity-0 scale-95"
+                                     x-transition:enter-end="transform opacity-100 scale-100">
+                                    <div class="font-bold border-b border-slate-800 dark:border-neutral-850 pb-1.5 mb-1.5 flex justify-between items-center">
+                                        <span>Détail Abonnement</span>
+                                        <button @click="open = false" class="text-slate-400 hover:text-white"><i data-lucide="x" class="size-3"></i></button>
+                                    </div>
+                                    <div class="space-y-2 max-h-40 overflow-y-auto pr-1">
+                                        @forelse($subInfo['breakdown'] as $item)
+                                            <div class="border-b border-slate-800 dark:border-neutral-850 pb-2 last:border-0 last:pb-0">
+                                                <div class="font-semibold text-primary-400">{{ $item['immeuble']->nom }}</div>
+                                                <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+                                                    <span>{{ $item['calculation']['residents_count'] }} Résidents × 4 DH</span>
+                                                    <span>{{ number_format($item['calculation']['residents_price'], 2) }} DH</span>
+                                                </div>
+                                                <div class="flex justify-between text-[11px] text-slate-400">
+                                                    <span>{{ $item['calculation']['syndics_count'] }} Syndics × 8 DH</span>
+                                                    <span>{{ number_format($item['calculation']['syndics_price'], 2) }} DH</span>
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="text-slate-400 italic text-[11px]">Aucun immeuble géré comme principal</div>
+                                        @endforelse
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="inline-flex items-center gap-x-1.5 py-1 px-3 rounded-full text-xs font-bold {{ $syndic->is_active ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20' }}">
                                 <span class="size-1.5 inline-block rounded-full bg-current"></span>
@@ -151,6 +188,16 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                             <div class="inline-flex items-center gap-x-2">
+                                <form action="{{ route('admin.syndics.toggle-status', $syndic->id) }}" method="POST" onsubmit="return confirm('{{ $syndic->is_active ? 'Suspendre ce compte syndic ?' : 'Réactiver ce compte syndic ?' }}');">
+                                    @csrf
+                                    <button type="submit" class="p-2 inline-flex items-center justify-center gap-x-2 rounded-xl border {{ $syndic->is_active ? 'border-amber-200/40 bg-amber-50 text-amber-600 hover:bg-amber-100 hover:text-amber-700 dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-950/30 dark:hover:bg-amber-950/40' : 'border-emerald-200/40 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 hover:text-emerald-700 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-950/30 dark:hover:bg-emerald-950/40' }} transition-all" title="{{ $syndic->is_active ? 'Suspendre' : 'Activer' }}">
+                                        @if($syndic->is_active)
+                                            <i data-lucide="ban" class="size-4"></i>
+                                        @else
+                                            <i data-lucide="check-circle" class="size-4"></i>
+                                        @endif
+                                    </button>
+                                </form>
                                 <button @click="initEdit('{{ $syndic->id }}', '{{ addslashes($syndic->prenom) }}', '{{ addslashes($syndic->nom) }}', '{{ addslashes($syndic->email) }}', '{{ addslashes($syndic->telephone) }}', '{{ addslashes($syndic->cin) }}', '{{ addslashes($syndic->ville) }}', '{{ $syndic->date_entree }}', '{{ $syndic->date_sortie }}', '{{ addslashes($syndic->notes ?? '') }}', {{ json_encode($syndic->immeubles->pluck('id')) }})" type="button" data-hs-overlay="#hs-modal-add-syndic" class="p-2 inline-flex items-center justify-center gap-x-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 dark:bg-slate-800/40 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-slate-800 transition-all">
                                     <i data-lucide="edit-2" class="size-4"></i>
                                 </button>

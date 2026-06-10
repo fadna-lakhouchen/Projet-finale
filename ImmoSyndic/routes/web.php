@@ -47,6 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/syndics', [UserController::class, 'storeSyndic'])->name('admin.syndics.store');
         Route::put('/syndics/{id}', [UserController::class, 'updateSyndic'])->name('admin.syndics.update');
         Route::delete('/syndics/{id}', [UserController::class, 'destroyUser'])->name('admin.syndics.destroy');
+        Route::post('/syndics/{id}/toggle-status', [UserController::class, 'toggleSyndicStatus'])->name('admin.syndics.toggle-status');
 
         Route::get('/paiements', [DashboardController::class, 'adminPaiements'])->name('admin.paiements');
         Route::get('/signalements', [DashboardController::class, 'adminSignalements'])->name('admin.signalements');
@@ -114,6 +115,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/depenses', [DashboardController::class, 'syndicDepenses'])->name('syndic.depenses');
         Route::post('/depenses', [DepenseController::class, 'storeBySyndic'])->name('syndic.depenses.store');
         Route::delete('/depenses/{id}', [DepenseController::class, 'destroyBySyndic'])->name('syndic.depenses.destroy');
+
+        // Secondary Syndics Management
+        Route::get('/secondary-syndics', [DashboardController::class, 'syndicSecondarySyndics'])->name('syndic.secondary-syndics');
+        Route::post('/secondary-syndics', [UserController::class, 'storeSecondarySyndicBySyndic'])->name('syndic.secondary-syndics.store');
+        Route::delete('/secondary-syndics/{id}', [UserController::class, 'destroySecondarySyndicBySyndic'])->name('syndic.secondary-syndics.destroy');
+        Route::post('/secondary-syndics/{id}/transfer-primary', [UserController::class, 'transferPrimaryBySyndic'])->name('syndic.secondary-syndics.transfer-primary');
+
+        // Activity Logs for Syndic 1
+        Route::get('/logs', [DashboardController::class, 'syndicLogs'])->name('syndic.logs');
     });
 
     // Resident Routes

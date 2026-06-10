@@ -151,9 +151,13 @@ class RegisterController extends Controller
                 ]);
             } else {
                 $immeuble = \App\Models\Immeuble::findOrFail($data['immeuble_id']);
-                $immeuble->update([
-                    'syndic_id' => $user->id
-                ]);
+                if ($immeuble->syndic_id) {
+                    $immeuble->secondarySyndics()->attach($user->id);
+                } else {
+                    $immeuble->update([
+                        'syndic_id' => $user->id
+                    ]);
+                }
             }
         }
 

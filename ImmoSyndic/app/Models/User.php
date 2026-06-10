@@ -8,36 +8,36 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * Modèle User
+ * Représente tous les utilisateurs du système (Administrateurs, Syndics, Résidents).
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
+     * Attributs autorisés pour le Mass Assignment.
      */
     protected $fillable = [
-        'nom',
-        'prenom',
-        'email',
-        'password',
-        'telephone',
-        'cin',
-        'ville',
-        'date_entree',
-        'date_sortie',
-        'notes',
-        'is_active',
-        'preferences_alertes',
-        'role',
+        'nom',                 // Nom de famille
+        'prenom',              // Prénom
+        'email',               // Adresse de messagerie électronique (sert de login)
+        'password',            // Mot de passe hashé
+        'telephone',           // Numéro de téléphone
+        'cin',                 // Carte d'Identité Nationale (CIN)
+        'ville',               // Ville de résidence
+        'date_entree',         // Date d'entrée dans la copropriété
+        'date_sortie',         // Date de sortie/déménagement
+        'notes',               // Remarques ou notes internes
+        'is_active',           // État du compte : Actif (true) ou Suspendu (false)
+        'preferences_alertes', // Préférences de notifications (JSON)
+        'role',                // Rôle textuel de l'utilisateur (administrateur, syndic, resident)
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
+     * Attributs masqués lors de la sérialisation (Ex: API JSON).
      */
     protected $hidden = [
         'password',
@@ -45,9 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
+     * Caster les types SQL en types PHP natifs.
      */
     protected function casts(): array
     {
@@ -59,11 +57,41 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    /**
+     * Relation avec les immeubles gérés en tant que syndic principal.
+     * Un syndic principal a plusieurs immeubles rattachés (HasMany).
+     */
     public function immeubles()
     {
         return $this->hasMany(Immeuble::class, 'syndic_id');
     }
 
+    /**
+     * Relation avec les immeubles gérés en tant que syndic secondaire.
+     * Relation Many-to-Many via la table pivot 'immeuble_syndic'.
+     */
+    public function secondaryImmeubles()
+    {
+        return $this->belongsToMany(Immeuble::class, 'immeuble_syndic', 'user_id', 'immeuble_id')
+            ->withTimestamps();
+    }
+
+    /**
+     * Requête : Récupérer tous les immeubles gérés (soit comme principal, soit comme secondaire).
+     * Retourne une instance de Query Builder d'Immeuble.
+     */
+    public function managedImmeubles()
+    {
+        return Immeuble::where('syndic_id', $this->id)
+            ->orWhereHas('secondarySyndics', function($q) {
+                $q->where('users.id', $this->id);
+            });
+    }
+
+    /**
+     * Relation avec les appartements habités ou possédés (pour les résidents).
+     * Relation Many-to-Many via la table pivot 'appartement_user'.
+     */
     public function appartements()
     {
         return $this->belongsToMany(Appartement::class, 'appartement_user')
@@ -71,48 +99,106 @@ class User extends Authenticatable implements MustVerifyEmail
             ->withTimestamps();
     }
 
+    /**
+     * Relation avec les paiements de charges effectués par l'utilisateur.
+     * Un utilisateur dispose d'un historique de paiements (HasMany).
+     */
     public function paiements()
     {
         return $this->hasMany(Paiement::class);
     }
 
+    /**
+     * Relation avec les incidents déclarés par l'utilisateur.
+     * Un utilisateur peut déclarer plusieurs pannes/incidents (HasMany).
+     */
     public function incidents()
     {
         return $this->hasMany(Incident::class);
     }
 
+    /**
+     * Relation avec les notifications reçues par l'utilisateur.
+     * Un utilisateur dispose d'une boîte de réception de notifications (HasMany).
+     */
     public function notifications()
     {
         return $this->hasMany(Notification::class);
     }
 
+    /**
+     * Relation avec les annonces publiées (pour les syndics).
+     * Un syndic peut publier plusieurs annonces (HasMany).
+     */
     public function annonces()
     {
         return $this->hasMany(Annonce::class);
     }
 
+    /**
+     * Accessseur (Getter) : Nom complet
+     * Récupère le prénom et le nom concaténés. Accessible via `$user->name`.
+     */
     public function getNameAttribute()
     {
         return "{$this->prenom} {$this->nom}";
     }
 
+    /**
+     * Relation avec les logs d'audit des actions effectuées par cet utilisateur.
+     * Un utilisateur a généré plusieurs entrées de log d'audit (HasMany).
+     */
     public function auditLogs()
     {
         return $this->hasMany(AuditLog::class);
     }
 
+    /**
+     * Helper : Vérifier si l'utilisateur est administrateur.
+     */
     public function isAdministrateur()
     {
         return $this->hasRole('administrateur') || $this->role === 'administrateur' || $this->role === 'admin';
     }
 
+    /**
+     * Helper : Vérifier si l'utilisateur est un syndic.
+     */
     public function isSyndic()
     {
         return $this->hasRole('syndic') || $this->role === 'syndic';
     }
 
+    /**
+     * Helper : Vérifier si l'utilisateur est un résident.
+     */
     public function isResident()
     {
         return $this->hasRole('resident') || $this->role === 'resident';
     }
+
+    /**
+     * Calculer l'abonnement global dû par ce syndic
+     * Additionne l'abonnement mensuel de tous les immeubles dont il est le syndic principal.
+     */
+    public function calculateTotalSubscription()
+    {
+        $total = 0;
+        $breakdown = [];
+
+        foreach ($this->immeubles as $immeuble) {
+            $calc = $immeuble->calculateMonthlySubscription();
+            $total += $calc['total_price'];
+            $breakdown[] = [
+                'immeuble' => $immeuble,
+                'calculation' => $calc,
+            ];
+        }
+
+        return [
+            'total_price' => $total,
+            'breakdown' => $breakdown,
+        ];
+    }
 }
+

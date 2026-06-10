@@ -7,8 +7,21 @@ use App\Models\Paiement;
 use App\Models\Charge;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Contrôleur PaiementController
+ * Gère l'encaissement des cotisations de copropriété, la génération de reçus de paiement en PDF,
+ * l'exportation des rapports financiers (Excel et PDF) et le recalcul automatique des statuts de cotisations
+ * (impayé, partiel, payé) lors des ajouts, modifications ou annulations de paiements.
+ */
 class PaiementController extends Controller
 {
+    /**
+     * Enregistrer un nouveau paiement (Store - Saisi par le syndic)
+     * - Valide les données (cotisation associée, montant, date, justificatif de paiement).
+     * - Associe le paiement au premier résident de l'appartement concerné.
+     * - Enregistre la transaction et génère un log d'audit de sécurité.
+     * - Recalcule dynamiquement le statut de la cotisation (payé, partiel).
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -20,6 +33,7 @@ class PaiementController extends Controller
 
         $charge = Charge::findOrFail($request->charge_id);
 
+        // Enregistrement physique de la pièce jointe (reçu bancaire, chèque) s'il y en a une
         $recuPath = null;
         if ($request->hasFile('piece_jointe')) {
             $file = $request->file('piece_jointe');
@@ -27,39 +41,57 @@ class PaiementController extends Controller
             $recuPath = $file->storeAs('recus', $filename, 'public');
         }
 
-        // Link the payment to the actual resident belonging to the apartment
+        // Associe le paiement au résident officiel rattaché à l'appartement
         $residentId = $charge->appartement->residents()->first()->id ?? Auth::id();
 
-        Paiement::create([
+        $paiement = Paiement::create([
             'charge_id' => $charge->id,
             'user_id' => $residentId,
             'montant' => $request->montant,
             'date_paiement' => $request->date_paiement,
-            'mode_paiement' => 'Espèces', // Default payment method since we removed the input field
+            'mode_paiement' => 'Espèces', // Mode par défaut (Espèces) configuré pour la gestion locale
             'statut' => 'validé', // Par défaut validé si saisi par le syndic
             'recu_path' => $recuPath,
         ]);
 
-        // Calculate total validated payments for this charge (including this new one)
+        // Journalisation de l'action dans le système de logs d'audit
+        if (class_exists(\App\Services\AuditLogService::class)) {
+            try {
+                app(\App\Services\AuditLogService::class)->logAction(
+                    Auth::id(),
+                    'created',
+                    Paiement::class,
+                    $paiement->id,
+                    ['after' => ['montant' => $request->montant, 'charge_id' => $charge->id]]
+                );
+            } catch (\Exception $e) {}
+        }
+
+        // Calcul des paiements validés pour cette cotisation
         $totalPaye = $charge->paiements()->where('statut', 'validé')->sum('montant');
 
-        // If the total validated payments cover or exceed the charge amount, mark as payé
+        // Si le total versé atteint ou dépasse le montant initial de la charge, elle passe en statut "payé"
         if ($totalPaye >= $charge->montant) {
             $charge->update(['statut' => 'payé']);
         } else {
-            // Otherwise, mark as partiel so it remains in the select list for the rest
+            // Sinon, elle est marquée comme "partielle" pour rester dans les sélecteurs de reste à payer
             $charge->update(['statut' => 'partiel']);
         }
 
         return back()->with('success', 'Paiement ajouté avec succès.');
     }
 
+    /**
+     * Générer un reçu de paiement
+     * - Affiche la vue imprimable d'un reçu avec code-barres, tampons et détails de la transaction.
+     * - Sécurité : Le syndic ne peut l'imprimer que s'il gère l'immeuble correspondant.
+     */
     public function generateReceipt($id)
     {
         $paiement = Paiement::with(['charge.appartement.immeuble', 'user'])->findOrFail($id);
         
-        // Vérifier que le paiement appartient à un immeuble géré par ce syndic
-        if (Auth::user()->role === 'syndic' && $paiement->charge->appartement->immeuble->syndic_id !== Auth::id()) {
+        // Sécurité syndic
+        if (Auth::user()->role === 'syndic' && !Auth::user()->managedImmeubles()->where('immeubles.id', $paiement->charge->appartement->immeuble_id)->exists()) {
             abort(403, 'Accès non autorisé');
         }
 
@@ -67,19 +99,21 @@ class PaiementController extends Controller
     }
 
     /**
-     * Export payments list to Excel spreadsheet (vnd.ms-excel format).
+     * Exporter le rapport des paiements au format Excel (vnd.ms-excel)
      */
     public function exportExcel()
     {
         $user = Auth::user();
-        $immeubleIds = \App\Models\Immeuble::where('syndic_id', $user->id)->pluck('id');
+        $immeubleIds = $user->managedImmeubles()->pluck('id');
         
+        // Récupération de l'ensemble des cotisations de ses immeubles
         $chargesList = \App\Models\Charge::whereHas('appartement', function($q) use ($immeubleIds) {
             $q->whereIn('immeuble_id', $immeubleIds);
         })->with(['appartement.immeuble', 'appartement.residents', 'paiements'])->latest()->get();
 
         $filename = "Rapport_Paiements_" . date('Y-m-d') . ".xls";
         
+        // Déclaration des headers HTTP pour forcer le téléchargement du fichier Excel
         header("Content-Type: application/vnd.ms-excel; charset=utf-8");
         header("Content-Disposition: attachment; filename=\"$filename\"");
         
@@ -87,12 +121,12 @@ class PaiementController extends Controller
     }
 
     /**
-     * Export payments list to print-ready PDF layout.
+     * Exporter le rapport des paiements au format PDF imprimable
      */
     public function exportPdf()
     {
         $user = Auth::user();
-        $immeubleIds = \App\Models\Immeuble::where('syndic_id', $user->id)->pluck('id');
+        $immeubleIds = $user->managedImmeubles()->pluck('id');
         
         $chargesList = \App\Models\Charge::whereHas('appartement', function($q) use ($immeubleIds) {
             $q->whereIn('immeuble_id', $immeubleIds);
@@ -102,8 +136,10 @@ class PaiementController extends Controller
     }
 
     /**
-     * Mettre à jour un paiement existant (gestion des erreurs du syndic).
-     * Permet de modifier le montant, la date, le statut ou réassigner le versement à une autre cotisation.
+     * Mettre à jour un paiement existant (gestion des corrections du syndic)
+     * - Permet de corriger le montant, la date, le statut ou de réaffecter la transaction à une autre cotisation.
+     * - Sécurité : Le syndic connecté doit gérer les immeubles d'origine et de destination.
+     * - Recalcule les statuts de paiement des deux charges impliquées (l'ancienne et la nouvelle).
      */
     public function update(Request $request, $id)
     {
@@ -112,7 +148,7 @@ class PaiementController extends Controller
 
         // 2. Vérifier que ce paiement appartient à un immeuble géré par ce syndic
         $user = Auth::user();
-        if ($paiement->charge->appartement->immeuble->syndic_id !== $user->id) {
+        if (!$user->managedImmeubles()->where('immeubles.id', $paiement->charge->appartement->immeuble_id)->exists()) {
             abort(403, 'Accès non autorisé');
         }
 
@@ -129,7 +165,7 @@ class PaiementController extends Controller
         $newCharge = Charge::findOrFail($request->charge_id);
 
         // 4. Vérifier que la nouvelle cotisation sélectionnée appartient bien à un immeuble de ce syndic
-        if ($newCharge->appartement->immeuble->syndic_id !== $user->id) {
+        if (!$user->managedImmeubles()->where('immeubles.id', $newCharge->appartement->immeuble_id)->exists()) {
             abort(403, 'Accès non autorisé');
         }
 
@@ -159,6 +195,18 @@ class PaiementController extends Controller
             'recu_path' => $recuPath,
         ]);
 
+        if (class_exists(\App\Services\AuditLogService::class)) {
+            try {
+                app(\App\Services\AuditLogService::class)->logAction(
+                    Auth::id(),
+                    'updated',
+                    Paiement::class,
+                    $paiement->id,
+                    ['after' => ['montant' => $request->montant, 'charge_id' => $newCharge->id]]
+                );
+            } catch (\Exception $e) {}
+        }
+
         // 8. Recalculer le statut de la nouvelle cotisation
         $totalPayeNew = $newCharge->paiements()->where('statut', 'validé')->sum('montant');
         if ($totalPayeNew >= $newCharge->montant) {
@@ -185,8 +233,9 @@ class PaiementController extends Controller
     }
 
     /**
-     * Supprimer un paiement existant (annulation de transaction).
-     * Remet à jour le statut de la cotisation correspondante en conséquence.
+     * Supprimer un paiement existant (annulation de transaction)
+     * - Supprime la transaction de la base et son justificatif sur le disque.
+     * - Remet à jour et recalcule le statut de la cotisation correspondante en conséquence (payé, partiel, impayé).
      */
     public function destroy($id)
     {
@@ -195,7 +244,7 @@ class PaiementController extends Controller
 
         // 2. Vérifier la sécurité (le syndic connecté doit gérer cet immeuble)
         $user = Auth::user();
-        if ($paiement->charge->appartement->immeuble->syndic_id !== $user->id) {
+        if (!$user->managedImmeubles()->where('immeubles.id', $paiement->charge->appartement->immeuble_id)->exists()) {
             abort(403, 'Accès non autorisé');
         }
 
@@ -206,6 +255,17 @@ class PaiementController extends Controller
 
         // 4. Supprimer le paiement en base de données
         $charge = $paiement->charge;
+        if (class_exists(\App\Services\AuditLogService::class)) {
+            try {
+                app(\App\Services\AuditLogService::class)->logAction(
+                    Auth::id(),
+                    'deleted',
+                    Paiement::class,
+                    $paiement->id,
+                    ['before' => ['montant' => $paiement->montant, 'charge_id' => $paiement->charge_id]]
+                );
+            } catch (\Exception $e) {}
+        }
         $paiement->delete();
 
         // 5. Recalculer et mettre à jour le statut de la cotisation correspondante
@@ -221,3 +281,4 @@ class PaiementController extends Controller
         return back()->with('success', 'Paiement supprimé avec succès.');
     }
 }
+
