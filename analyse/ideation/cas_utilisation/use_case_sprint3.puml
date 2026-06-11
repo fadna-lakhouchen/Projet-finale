@@ -5,8 +5,18 @@ skinparam shadowing false
 
 actor "Mobile" as Mobile
 actor "Résident" as Resident
-actor "Syndic" as Syndic
+actor "Syndic Secondaire" as SyndicSec
+actor "Syndic Principal" as SyndicPri
 actor "Administrateur" as Admin
+
+' Force layout alignment
+Mobile -[hidden]down- Resident
+Resident -[hidden]down- SyndicSec
+SyndicSec -[hidden]down- SyndicPri
+SyndicPri -[hidden]down- Admin
+
+' Le Syndic Principal hérite du Syndic Secondaire
+SyndicPri -up-|> SyndicSec
 
 rectangle "Système ImmoSyndic - Sprint 3 Web" {
 
@@ -21,35 +31,44 @@ rectangle "Système ImmoSyndic - Sprint 3 Web" {
 
   ' Syndic
   usecase "Consulter statistiques" as ViewStats
+  usecase "Gérer les syndics secondaires" as ManageSecondaries
+  usecase "Consulter le journal d'activité (Logs)" as ViewLogs
+  usecase "Consulter la facturation" as ManageSubscription
 
   ' Admin
-  usecase "Gérer rapports" as ViewLogs
+  usecase "Activer/Désactiver un compte syndic\n(selon l'abonnement)" as ToggleSyndicStatus
 
-  ' Shared use cases
+  ' Shared use cases (Exports)
   usecase "Exporter Excel" as ExportExcel
   usecase "Exporter PDF" as ExportPDF
 
-  ' includes (خفيفين)
-  SetAlerts .. Auth
-  ViewStats .. Auth
-  ViewLogs .. Auth
+  ' includes
+  SetAlerts ..> Auth : <<include>>
+  ViewStats ..> Auth : <<include>>
+  ManageSecondaries ..> Auth : <<include>>
+  ViewLogs ..> Auth : <<include>>
+  ManageSubscription ..> Auth : <<include>>
+  ToggleSyndicStatus ..> Auth : <<include>>
+  ExportExcel ..> Auth : <<include>>
+  ExportPDF ..> Auth : <<include>>
 }
 
-' 🔵 Résident (BLUE)
-Resident -[#3498DB]- SetAlerts
-Resident -[#3498DB]- ExportPDF
+' Actors connections
+Mobile -- ProvideAPI
 
-' 🟢 Syndic (GREEN)
-Syndic -[#2ECC71]- ViewStats
-Syndic -[#2ECC71]- ExportExcel
-Syndic -[#2ECC71]- ExportPDF
+Resident -- SetAlerts
+Resident -- ExportPDF
 
-' 🟠 Admin (ORANGE)
-Admin -[#E67E22]- ViewLogs
-Admin -[#E67E22]- ExportExcel
-Admin -[#E67E22]- ExportPDF
+SyndicSec -- ViewStats
+SyndicSec -- ExportExcel
+SyndicSec -- ExportPDF
 
-' ⚫ Mobile (GRAY)
-Mobile -[#7F8C8D]- ProvideAPI
+SyndicPri -- ManageSecondaries
+SyndicPri -- ViewLogs
+SyndicPri -- ManageSubscription
+
+Admin -- ToggleSyndicStatus
+Admin -- ExportExcel
+Admin -- ExportPDF
 
 @enduml

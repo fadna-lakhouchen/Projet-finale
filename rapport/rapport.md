@@ -397,7 +397,7 @@ Une application mobile connectée au système permet :
 - Signaler une intervention de manière rapide avec la possibilité de joindre une photo depuis le smartphone.
 
 **Les classes :**
-- User {id, name, email, password, role}
+- User {id, name, email, password}
 - Immeuble {id, nom, adresse, nombre_etages, syndic_id}
 - Resident {id, user_id, immeuble_id, numero_appartement, telephone}
 - Intervention {id, titre, description, statut, date_creation, resident_id, immeuble_id}

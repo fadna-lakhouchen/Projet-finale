@@ -26,7 +26,6 @@ classDiagram
         +string notes
         +boolean is_active
         +json preferences_alertes
-        +string role
         +datetime email_verified_at
     }
 
@@ -115,33 +114,29 @@ classDiagram
     }
 
     %% Relationships
-    User "*" -- "*" Role : has
-    Role "*" -- "*" Permission : has
-    User "*" -- "*" Permission : direct permissions
+    User "*" -- "*" Role : "has"
+    Role "*" -- "*" Permission : "has"
+    User "*" -- "*" Permission : "direct permissions"
     
-    User "0..1" -- "0..*" Immeuble : manages (Syndic)
-    Immeuble "1" -- "0..*" Appartement : contains
+    User "0..1" -- "0..*" Immeuble : "manages (Syndic)"
+    Immeuble "1" -- "0..*" Appartement : "contains"
     
-    User "1" -- "0..*" AppartementUser : occupies
-    Appartement "1" -- "0..*" AppartementUser : belongs to
+    User "1" -- "0..*" AppartementUser : "occupies"
+    Appartement "1" -- "0..*" AppartementUser : "belongs to"
     
-    Appartement "1" -- "0..*" Charge : assigned to
-    Charge "1" -- "0..*" Paiement : has
-    User "1" -- "0..*" Paiement : makes
+    Appartement "1" -- "0..*" Charge : "assigned to"
+    Charge "1" -- "0..*" Paiement : "has"
+    User "1" -- "0..*" Paiement : "makes"
     
-    User "1" -- "0..*" Incident : reports
-    Immeuble "1" -- "0..*" Incident : occurs in
+    User "1" -- "0..*" Incident : "reports"
+    Immeuble "1" -- "0..*" Incident : "occurs in"
     
-    User "1" -- "0..*" Annonce : creates
-    Immeuble "1" -- "0..*" Annonce : displayed for
+    User "1" -- "0..*" Annonce : "creates"
+    Immeuble "1" -- "0..*" Annonce : "displayed for"
     
-    Immeuble "1" -- "0..*" Document : related to
-    Charge "0..1" -- "0..*" Document : has (invoices/receipts)
-    Immeuble "1" -- "0..*" Depense : incurs
+    Immeuble "1" -- "0..*" Document : "related to"
+    Charge "0..1" -- "0..*" Document : "has (invoices/receipts)"
+    Immeuble "1" -- "0..*" Depense : "incurs"
 
-    User "1" -- "0..*" Notification : receives
-    User "0..1" -- "0..*" AuditLog : triggers (recorded actions)
-    Immeuble "1" -- "0..*" Depense : incurs
-
-    User "1" -- "0..*" Notification : receives
-    User "0..1" -- "0..*" AuditLog : triggers (recorded actions)
+    User "1" -- "0..*" Notification : "receives"
+    User "0..1" -- "0..*" AuditLog : "triggers (recorded actions)"

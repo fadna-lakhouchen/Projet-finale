@@ -1,4 +1,4 @@
-@startuml ImmoSyndic_MVP_Web_Clean
+@startuml ImmoSyndic_Sprint2_Avance
 left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
@@ -12,36 +12,50 @@ rectangle "Système ImmoSyndic - Sprint 2 Web" {
 
   ' Auth central
   usecase "S'authentifier" as Auth
-' API
+  ' API
   usecase "Consommer API" as ProvideAPI
 
   ' Résident
   usecase "Signaler un problème" as ReportIssue
   usecase "Recevoir notifications" as GetNotifs
   usecase "Consulter archives" as ViewArchives
-
+  usecase "Consulter la transparence financière" as ViewTransparency
+  usecase "Déclarer une cotisation prête" as SignalReady
+  usecase "Gérer son profil" as ManageProfile
 
   ' Syndic
   usecase "gerer charges" as ManageCharges
   usecase "suivre interventions" as TrackInterventions
   usecase "gérer documents" as ManageDocuments
   usecase "envoyer annonces" as SendNews
+  usecase "Gérer dépenses" as ManageExpenses
 
   ' Admin
   usecase "consulter logs système" as ViewLogs
   usecase "Surveiller activités" as MonitorActivity
-
+  usecase "Suivre les dépenses" as TrackExpenses
+  usecase "Suivre les incidents" as TrackIncidents
+  usecase "Gérer les documents partagés" as AdminManageDocs
 
   ' includes → كلشي كيمشي ل Auth
   ReportIssue ..> Auth : <<include>>
   GetNotifs ..> Auth : <<include>>
   ViewArchives ..> Auth : <<include>>
+  ViewTransparency ..> Auth : <<include>>
+  SignalReady ..> Auth : <<include>>
+  ManageProfile ..> Auth : <<include>>
+
   ManageCharges ..> Auth : <<include>>
   TrackInterventions ..> Auth : <<include>>
   ManageDocuments ..> Auth : <<include>>
   SendNews ..> Auth : <<include>>
+  ManageExpenses ..> Auth : <<include>>
+
   ViewLogs ..> Auth : <<include>>
   MonitorActivity ..> Auth : <<include>>
+  TrackExpenses ..> Auth : <<include>>
+  TrackIncidents ..> Auth : <<include>>
+  AdminManageDocs ..> Auth : <<include>>
 }
 
 ' Actors connections 
@@ -50,15 +64,22 @@ Mobile -- ProvideAPI
 Resident -- ReportIssue
 Resident -- GetNotifs
 Resident -- ViewArchives
+Resident -- ViewTransparency
+Resident -- SignalReady
+Resident -- ManageProfile
 
 Syndic -- ManageCharges
 Syndic -- TrackInterventions
 Syndic -- ManageDocuments
 Syndic -- SendNews
+Syndic -- ManageExpenses
+Syndic -- ManageProfile
 
 Admin -- ViewLogs
 Admin -- MonitorActivity
-
-
+Admin -- TrackExpenses
+Admin -- TrackIncidents
+Admin -- AdminManageDocs
+Admin -- ManageProfile
 
 @enduml

@@ -79,23 +79,14 @@
                                     À jour
                                 </span>
                             @else
-                                <span class="inline-flex items-center gap-x-1.5 py-1 px-3 rounded-full text-xs font-medium bg-amber-50/80 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-100 dark:border-amber-900/30 animate-pulse">
-                                    <span class="size-1.5 rounded-full bg-amber-600 dark:bg-amber-400"></span>
-                                    En attente d'activation
+                                <span class="inline-flex items-center gap-x-1.5 py-1 px-3 rounded-full text-xs font-medium bg-rose-50/80 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400 border border-rose-100 dark:border-rose-900/30">
+                                    <span class="size-1.5 rounded-full bg-rose-600 dark:bg-rose-400"></span>
+                                    Inactif
                                 </span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                             <div class="inline-flex items-center gap-x-2">
-                                @if(!$resident->is_active)
-                                    <form action="{{ route('syndic.residents.activate', $resident->id) }}" method="POST" class="inline-block">
-                                        @csrf
-                                        <button type="submit" class="py-1.5 px-2.5 inline-flex items-center gap-x-1 text-xs font-semibold rounded-lg border border-transparent bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm shadow-emerald-500/10 transition-all duration-150" title="Approuver l'inscription">
-                                            <i data-lucide="check" class="size-3.5"></i>
-                                            <span>Accepter</span>
-                                        </button>
-                                    </form>
-                                @endif
                                 <button @click="initEdit('{{ $resident->id }}', '{{ addslashes($resident->prenom) }}', '{{ addslashes($resident->nom) }}', '{{ addslashes($resident->email) }}', '{{ $resident->telephone }}', '{{ $resident->cin ?? '' }}', '{{ $immeubleId }}', '{{ $appt ? $appt->numero : '' }}', '{{ $appt ? $appt->pivot->date_entree : '' }}', '{{ addslashes($resident->notes ?? '') }}', '{{ $appt ? $appt->override_mois_retard : '' }}')" type="button" data-hs-overlay="#hs-modal-add-resident" class="py-1.5 px-1.5 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 rounded-lg border border-gray-200/80 hover:border-blue-300 dark:border-slate-800/80 dark:hover:border-blue-900/30 transition-all duration-200" title="Modifier">
                                     <i data-lucide="edit-2" class="size-4"></i>
                                 </button>

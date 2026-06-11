@@ -63,7 +63,7 @@ class RegisterController extends Controller
 
         $rules = [
             'role' => ['required', 'in:syndic,resident'],
-            'prenom' => ['required', 'string', 'max:255'],
+            'prenom' => ['nullable', 'string', 'max:255'],
             'nom' => ['required', 'string', 'max:255'],
             'email' => [
                 'required', 
@@ -80,7 +80,7 @@ class RegisterController extends Controller
         if ($role === 'resident') {
             $rules['immeuble_id'] = ['required', 'exists:immeubles,id'];
             $rules['numero_appartement'] = ['required', 'string', 'max:255'];
-            $rules['date_entree'] = ['required', 'date'];
+            $rules['date_entree'] = ['nullable', 'date'];
         } else {
             $rules['immeuble_type'] = ['required', 'in:new,existing'];
             $rules['immeuble_nom'] = ['required_if:immeuble_type,new', 'nullable', 'string', 'max:255'];
@@ -101,7 +101,7 @@ class RegisterController extends Controller
         $role = $data['role'] ?? 'syndic';
 
         $user = User::create([
-            'prenom' => $data['prenom'],
+            'prenom' => $data['prenom'] ?? '',
             'nom' => $data['nom'],
             'email' => $data['email'],
             'telephone' => $data['telephone'] ?? null,
@@ -133,7 +133,7 @@ class RegisterController extends Controller
 
             // Link the resident to the apartment
             $user->appartements()->attach($appt->id, [
-                'date_entree' => $data['date_entree'],
+                'date_entree' => $data['date_entree'] ?? now()->format('Y-m-d'),
             ]);
 
             // Generate initial monthly charge for the new apartment

@@ -54,7 +54,6 @@ export default (config = {}) => ({
     selectedChargeId: '',             // ID de la charge sélectionnée
     selectedChargeLabel: 'Sélectionnez...', // Libellé à afficher pour l'utilisateur
     selectedMontant: '',              // Montant du versement saisi
-    openSelectCharge: false,          // État d'affichage de la dropdown de sélection
 
     // --- GESTION DE LA MODALE DES PAIEMENTS REÇUS ---
     currentCharge: null,              // Cotisation actuellement inspectée pour lister ses versements

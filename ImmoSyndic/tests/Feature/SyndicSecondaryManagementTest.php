@@ -344,4 +344,54 @@ class SyndicSecondaryManagementTest extends TestCase
             'model_id' => $this->immeuble->id,
         ]);
     }
+
+    /**
+     * Test registering as a syndic without prenom and without cin.
+     */
+    public function test_registering_as_syndic_without_prenom_and_cin_succeeds(): void
+    {
+        $response = $this->post('/register', [
+            'role' => 'syndic',
+            'nom' => 'Alami',
+            'email' => 'amine_new@primary.com',
+            'telephone' => '0634567890',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+            'immeuble_type' => 'new',
+            'immeuble_nom' => 'Résidence Nouvelle A',
+            'immeuble_ville' => 'Rabat',
+        ]);
+
+        $response->assertStatus(302);
+
+        $newUser = User::where('email', 'amine_new@primary.com')->first();
+        $this->assertNotNull($newUser);
+        $this->assertEquals('syndic', $newUser->role);
+        $this->assertEquals('', $newUser->prenom); // Must default to empty string
+        $this->assertNull($newUser->cin);
+        $this->assertEquals('Alami', $newUser->name); // Name accessor should trim
+    }
+
+    /**
+     * Test registering as a resident without prenom succeeds.
+     */
+    public function test_registering_as_resident_without_prenom_succeeds(): void
+    {
+        $response = $this->post('/register', [
+            'role' => 'resident',
+            'nom' => 'Naji',
+            'email' => 'naji_resident@test.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+            'immeuble_id' => $this->immeuble->id,
+            'numero_appartement' => '4B',
+            'date_entree' => '2026-01-01',
+        ]);
+
+        $response->assertStatus(302);
+        
+        $resident = User::where('email', 'naji_resident@test.com')->first();
+        $this->assertNotNull($resident);
+        $this->assertEquals('', $resident->prenom);
+    }
 }

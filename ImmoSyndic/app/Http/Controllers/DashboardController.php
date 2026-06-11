@@ -331,12 +331,7 @@ class DashboardController extends Controller
             return ucfirst(\Carbon\Carbon::parse($c->date_echeance)->translatedFormat('F Y'));
         })->unique()->values();
 
-        // Récupération des charges impayées ou partielles pour alimenter le sélecteur d'enregistrement de paiement
-        $charges = $chargesList->filter(function($c) {
-            return strtolower($c->statut) !== 'payé';
-        })->values();
-
-        return view('admin.syndic.paiements', compact('immeubles', 'stats', 'moisDisponibles', 'charges', 'chargesList'));
+        return view('admin.syndic.paiements', compact('immeubles', 'stats', 'moisDisponibles', 'chargesList'));
     }
 
     /**

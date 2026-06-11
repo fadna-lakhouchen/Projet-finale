@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('immeuble_syndic', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('immeuble_id')->constrained('immeubles')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('immeuble_syndic')) {
+            Schema::create('immeuble_syndic', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('immeuble_id')->constrained('immeubles')->cascadeOnDelete();
+                $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

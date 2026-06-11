@@ -32,10 +32,6 @@
         <p class="mt-1 text-sm text-gray-500 dark:text-slate-400">Vérifiez les versements des charges mensuelles des résidents.</p>
     </div>
     <div class="flex flex-wrap gap-3">
-        {{-- Bouton ouvrant la modale de saisie de paiement --}}
-        <button type="button" class="py-2.5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-xl border border-transparent bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-md shadow-primary-500/10 hover:shadow-lg hover:shadow-primary-500/20 transition-all duration-300 transform hover:-translate-y-0.5" data-hs-overlay="#hs-saisir-paiement-modal">
-            <i data-lucide="plus" class="size-4"></i> Saisir un paiement
-        </button>
         {{-- Liens d'exportations de rapports Excel et PDF --}}
         <a href="{{ route('syndic.paiements.export.excel') }}" class="py-2.5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-xl border border-transparent bg-emerald-600 text-white hover:bg-emerald-700 shadow-md shadow-emerald-500/10 hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-300 transform hover:-translate-y-0.5">
             <i data-lucide="file-spreadsheet" class="size-4"></i> Export Excel
@@ -254,37 +250,13 @@
         <div class="p-6 overflow-y-auto">
             <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Sélectionner la Cotisation Impayée</label>
+                    <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Cotisation Sélectionnée</label>
                     
-                    <div class="relative w-full inline-flex">
-                        <button type="button" @click="openSelectCharge = !openSelectCharge" @click.outside="openSelectCharge = false" class="py-2.5 px-4 w-full inline-flex justify-between items-center gap-x-2 text-sm font-semibold rounded-xl border border-gray-200/80 bg-white/50 hover:bg-white text-slate-800 shadow-sm dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-white dark:hover:bg-slate-900/50 transition-all duration-200">
-                            <span x-text="selectedChargeLabel" class="truncate text-left pr-4"></span>
-                            <i data-lucide="chevron-down" :class="openSelectCharge ? 'rotate-180' : ''" class="size-4 transition-transform duration-200 text-gray-400"></i>
-                        </button>
-                        
-                        <input type="hidden" name="charge_id" :value="selectedChargeId" required>
-                        
-                        <div x-show="openSelectCharge" x-cloak class="absolute left-0 top-full z-[100] mt-2 w-full max-h-60 overflow-y-auto bg-white dark:bg-[#0D121F] border border-gray-200/60 dark:border-slate-800/60 shadow-xl rounded-xl p-1.5 backdrop-blur-md">
-                            @forelse($charges as $c)
-                                <button type="button" 
-                                        @click="
-                                            selectedChargeId = '{{ $c->id }}';
-                                            selectedChargeLabel = '{{ $c->titre }} (Reste: {{ number_format($c->reste_a_payer, 2) }} DH) - {{ $c->resident_nom }}';
-                                            selectedMontant = '{{ $c->reste_a_payer }}';
-                                            openSelectCharge = false;
-                                        " 
-                                        class="w-full text-start flex items-center py-2.5 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-350 hover:bg-gray-150 dark:hover:bg-slate-800/50 transition-colors">
-                                    {{ $c->titre }} (Reste: {{ number_format($c->reste_a_payer, 2) }} DH) - Résident: {{ $c->resident_nom }} ({{ $c->appartement->immeuble->nom }} - Appt {{ $c->appartement->numero }})
-                                </button>
-                            @empty
-                                <button type="button" disabled class="w-full text-start flex items-center py-2 px-3 text-sm text-gray-400 dark:text-slate-650 cursor-not-allowed">
-                                    Aucune cotisation impayée en attente
-                                </button>
-                            @endforelse
-                        </div>
+                    <div class="py-2.5 px-4 w-full block text-sm font-medium rounded-xl border border-gray-200/80 bg-gray-50 dark:bg-slate-900/50 dark:border-slate-800/80 dark:text-neutral-350">
+                        <span x-text="selectedChargeLabel" class="truncate block"></span>
                     </div>
                     
-                    <p class="text-xs text-gray-400 dark:text-slate-500 mt-1.5">Note: Les résidents doivent avoir des cotisations impayées pour pouvoir saisir un règlement.</p>
+                    <input type="hidden" name="charge_id" :value="selectedChargeId" required>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold mb-2 dark:text-neutral-200">Montant payé (MAD)</label>
