@@ -19,7 +19,7 @@ rectangle "Système ImmoSyndic - Espace Syndic" {
   package "Gestion principale" {
     usecase "Gérer immeubles" as ManageBuildings
     usecase "Gérer résidents" as ManageResidents
-    usecase "Gérer charges" as ManageCharges
+    usecase "Gérer cotisations" as ManageCharges
     usecase "Suivre paiements" as TrackPayments
     usecase "Gérer dépenses" as ManageExpenses
   }

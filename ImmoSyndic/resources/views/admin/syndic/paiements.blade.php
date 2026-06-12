@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <div class="sm:col-span-2 md:grow flex justify-end gap-x-3 relative">
+        <div class="sm:col-span-2 md:grow flex flex-wrap items-center justify-start sm:justify-end gap-2 relative">
             <!-- Dropdown Filtre par Mois -->
             <div class="relative inline-flex">
               <button @click="openMois = !openMois" @click.outside="openMois = false" type="button" class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200/80 bg-white/50 hover:bg-gray-50 dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-white dark:hover:bg-slate-900/50 shadow-sm transition-all duration-200">

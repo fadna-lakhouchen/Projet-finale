@@ -30,6 +30,27 @@
         </button>
     </div>
 
+    @if(session('success'))
+    <div class="mb-6 bg-emerald-500/10 border border-emerald-500/20 text-sm text-emerald-600 dark:text-emerald-400 rounded-2xl p-4 flex items-center gap-x-2.5 shadow-sm">
+        <i data-lucide="check-circle" class="size-5 shrink-0 text-emerald-500"></i>
+        <span class="font-semibold">{{ session('success') }}</span>
+    </div>
+    @endif
+
+    @if($errors->any())
+    <div class="mb-6 bg-rose-500/10 border border-rose-500/20 text-sm text-rose-600 dark:text-rose-400 rounded-2xl p-4 flex flex-col gap-y-1 shadow-sm">
+        <div class="flex items-center gap-x-2.5 font-semibold">
+            <i data-lucide="alert-circle" class="size-5 shrink-0 text-rose-500"></i>
+            <span>Veuillez corriger les erreurs suivantes :</span>
+        </div>
+        <ul class="list-disc list-inside ps-7 mt-1.5 space-y-1">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     {{-- Panneau d'affichage contenant la table des copropriétés --}}
     <div class="flex flex-col border border-gray-200/60 dark:border-slate-800/60 rounded-2xl shadow-premium bg-white dark:bg-[#0D121F] overflow-hidden">
         {{-- En-tête avec les filtres de recherche et de sélection de ville --}}
@@ -96,7 +117,7 @@
                                 <button @click="initEdit('{{ $immeuble->id }}', '{{ addslashes($immeuble->nom) }}', '{{ addslashes($immeuble->adresse) }}', '{{ addslashes($immeuble->ville) }}', '{{ $immeuble->syndic_id }}', {{ $immeuble->nombre_etages }}, {{ $immeuble->nombre_appartements }}, {{ json_encode($allVilles) }})" type="button" data-hs-overlay="#hs-modal-add-immeuble" class="size-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-slate-300 flex items-center justify-center transition-all shadow-sm border border-gray-200/40 dark:border-slate-750">
                                     <i data-lucide="edit-2" class="size-3.5"></i>
                                 </button>
-                                <button type="button" class="size-8 rounded-xl bg-rose-500/10 hover:bg-rose-500/25 border border-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center transition-all shadow-sm">
+                                <button @click="supprimerImmeuble('{{ $immeuble->id }}', '{{ addslashes($immeuble->nom) }}')" type="button" class="size-8 rounded-xl bg-rose-500/10 hover:bg-rose-500/25 border border-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center transition-all shadow-sm">
                                     <i data-lucide="trash-2" class="size-3.5"></i>
                                 </button>
                             </div>
@@ -182,7 +203,7 @@
                                     
                                     <!-- Select personnalisé réactif -->
                                     <div x-show="!isAddingCustomVille" class="relative" x-data="{ openFormVille: false }">
-                                        <input type="hidden" name="ville" :value="immeubleEnCours.ville">
+                                        <input type="hidden" name="ville" :value="immeubleEnCours.ville" :disabled="isAddingCustomVille">
                                         
                                         <button @click="openFormVille = !openFormVille" @click.outside="openFormVille = false" type="button"
                                             class="py-2.5 px-4 inline-flex items-center justify-between w-full bg-white/50 dark:bg-[#080B11] text-slate-700 dark:text-slate-300 rounded-xl text-sm transition-all duration-200 hover:bg-gray-50 dark:hover:bg-[#0a0e18] focus:outline-none">
@@ -228,7 +249,7 @@
                                         </button>
                                         <input name="ville" x-model="customVilleInput" @input="immeubleEnCours.ville = customVilleInput" type="text"
                                             class="py-2.5 px-4 ps-10 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500"
-                                            placeholder="Ex: Béni Mellal" :required="isAddingCustomVille">
+                                            placeholder="Ex: Béni Mellal" :required="isAddingCustomVille" :disabled="!isAddingCustomVille">
                                     </div>
                                 </div>
                                 
@@ -262,6 +283,11 @@
             </div>
         </div>
     </div>
+    {{-- Formulaire masqué pour soumettre la suppression --}}
+    <form id="delete-immeuble-form" method="POST" style="display: none;">
+        @csrf
+        @method('DELETE')
+    </form>
 </div>
 @endsection
 

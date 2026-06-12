@@ -93,5 +93,16 @@ export default (config = {}) => ({
         const matchesVille = this.filterVille === 'all' || ville === this.filterVille;
         const matchesStatut = this.filterStatut === 'all' || statut === this.filterStatut;
         return matchesSearch && matchesVille && matchesStatut;
+    },
+
+    /**
+     * Confirmer et soumettre la suppression d'un immeuble
+     */
+    supprimerImmeuble(id, nom) {
+        if (confirm(`Confirmer la suppression définitive de l'immeuble "${nom}" ?`)) {
+            const form = document.getElementById('delete-immeuble-form');
+            form.action = `/syndic/immeubles/${id}`;
+            form.submit();
+        }
     }
 });

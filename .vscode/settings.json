@@ -1,3 +1,7 @@
 {
-    "liveServer.settings.port": 5504
+    "liveServer.settings.port": 5504,
+    "files.associations": {
+        "*.mmd": "mermaid"
+    },
+    "mermaid.vscode.dark": "default"
 }
