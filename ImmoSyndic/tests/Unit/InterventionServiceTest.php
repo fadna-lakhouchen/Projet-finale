@@ -15,7 +15,9 @@ class InterventionServiceTest extends TestCase
         return array_map(fn($item) => [$item], $data);
     }
 
-    
+    /**
+     * @dataProvider interventionDataProvider
+     */
     public function test_it_can_load_intervention_data_from_csv($data)
     {
         $this->assertArrayHasKey('id', $data);

@@ -3,39 +3,158 @@
 @push('styles')
 <style>
     .hide-for-locataire { display: none; }
-    body[data-role="proprietaire"] .hide-for-locataire { display: block; }
-    body[data-role="proprietaire"] .hide-for-locataire-flex { display: flex; }
+    body[data-role="proprietaire"] .hide-for-lotaire-flex { display: flex; }
 </style>
 @endpush
 
 @section('content')
-<div class="w-full pt-6 px-4 sm:px-6 md:px-8 pb-12">
-    <!-- Action Required Banner (Only if unpaid) -->
-    @if($stats['a_payer_mois'] > 0)
-    <div x-data="{ paid: false }" x-show="!paid">
-        <div class="bg-red-50 border border-red-200 p-4 rounded-xl flex items-start gap-4 mb-6">
-            <i data-lucide="alert-circle" class="size-6 text-red-500 mt-0.5"></i>
-            <div class="flex-1">
-                <h3 class="text-sm font-semibold text-red-800">Action requise : Charges impayées</h3>
-                <p class="text-sm text-red-700 mt-1">Vous avez un solde de <strong class="font-bold">{{ number_format($stats['a_payer_mois'], 2) }} MAD</strong> en attente pour ce mois.</p>
+<div class="space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Dashboard</h2>
+            <p class="text-sm text-gray-600 dark:text-neutral-400">Bienvenue, {{ $user->prenom }}. Voici l'état de votre logement à {{ $immeuble->nom ?? 'votre immeuble' }}.</p>
+        </div>
+        <button type="button" data-hs-overlay="#hs-modal-ready-to-pay" class="py-2.5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-bold rounded-xl border border-transparent bg-gradient-to-r from-emerald-600 to-teal-600 text-white hover:from-emerald-700 hover:to-teal-700 shadow-md shadow-emerald-500/10 hover:shadow-lg transition-all duration-200">
+            Prêt à payer
+        </button>
+    </div>
+
+    <!-- Suivi des Règlements de l'Immeuble (Transparency) -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow-sm mt-4 mb-6 overflow-hidden dark:bg-neutral-800 dark:border-neutral-700" 
+         x-data="residentDashboard()">
+        
+        <div class="px-6 py-4 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 dark:border-neutral-700 bg-gray-50/50 dark:bg-neutral-800/50">
+            <div>
+                <h2 class="text-lg font-bold text-gray-800 dark:text-white flex items-center gap-2">
+                    <i data-lucide="users" class="size-5 text-primary-500"></i>
+                    Qui a payé les charges de l'immeuble ?
+                </h2>
+                <p class="text-xs text-gray-500 dark:text-neutral-400 mt-0.5">Suivi de l'état global et transparent pour l'immeuble <strong>{{ $immeuble->nom ?? 'N/A' }}</strong>.</p>
             </div>
-            <button data-hs-overlay="#hs-modal-payment-simulation" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm">Régler maintenant</button>
+            
+            <div class="text-xs font-semibold text-gray-600 dark:text-neutral-400 bg-gray-100 dark:bg-neutral-900 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-neutral-800">
+                État des cotisations cumulées (historique complet)
+            </div>
+        </div>
+
+        <div class="p-6">
+            <!-- Sleek Search Input -->
+            <div class="mb-5 relative">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <i data-lucide="search" class="size-4 text-gray-400"></i>
+                </div>
+                <input type="text" 
+                       x-model="search" 
+                       placeholder="Rechercher un appartement par son numéro... (Ex: 12)" 
+                       class="py-2.5 ps-10 pe-4 block w-full border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-300 bg-gray-50/50">
+            </div>
+
+            <!-- 2 Columns Grid: Non payé vs Payé -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Column 1: Non réglés (Red Column) -->
+                <div class="flex flex-col bg-red-50/20 dark:bg-[#251015] border border-red-100 dark:border-red-900/20 rounded-2xl overflow-hidden shadow">
+                    <div class="px-5 py-4 bg-red-50 dark:bg-[#3d1620] border-b border-red-100 dark:border-red-900/30 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="size-3 rounded-full bg-rose-500 animate-ping"></span>
+                            <span class="text-sm font-black text-red-800 dark:text-red-400 uppercase tracking-wider">Pas à jour ❌</span>
+                        </div>
+                        <span class="text-xs font-black bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300 px-3 py-1 rounded-full shadow-inner">
+                            {{ $appartementsEnRetard->count() }} appartement{{ $appartementsEnRetard->count() > 1 ? 's' : '' }}
+                        </span>
+                    </div>
+                    
+                    <div class="p-5 flex-1 max-h-72 overflow-y-auto pr-1">
+                        @if($appartementsEnRetard->isEmpty())
+                            <div class="flex flex-col items-center justify-center py-12 text-center h-full">
+                                <div class="size-12 bg-emerald-100 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mb-3 shadow">
+                                    <i data-lucide="check" class="size-6"></i>
+                                </div>
+                                <h5 class="text-sm font-black text-gray-800 dark:text-white">Tout le monde est en règle !</h5>
+                                <p class="text-xs text-gray-500 dark:text-neutral-400 mt-1">Aucun retard de paiement dans l'immeuble.</p>
+                            </div>
+                        @else
+                            <div class="flex flex-wrap gap-2">
+                                @foreach($appartementsEnRetard as $apt)
+                                    @php
+                                        $apptNum = $apt['numero'] ?? 'N/A';
+                                        $months = $apt['unpaid_count'];
+                                        $isMyApt = $apt['is_my_apt'];
+                                    @endphp
+                                    <div x-show="!search || '{{ $apptNum }}'.toLowerCase().includes(search.toLowerCase())" 
+                                         x-transition
+                                         class="relative py-2 px-3.5 rounded-xl text-sm font-extrabold bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white shadow-sm border border-red-600/30 flex items-center gap-1.5 transition-all duration-150 hover:scale-105 select-none {{ $isMyApt ? 'ring-4 ring-primary-500 ring-offset-2 dark:ring-offset-neutral-900 z-10' : '' }}">
+                                        <i data-lucide="alert-circle" class="size-4 flex-shrink-0"></i>
+                                        <span>Appt <span class="font-mono">{{ $apptNum }}</span> <span class="opacity-90 font-semibold text-xs">(<span class="font-mono">{{ $months }}</span> {{ $months > 1 ? 'mois' : 'mois' }})</span></span>
+                                        @if($isMyApt)
+                                            <span class="text-[8px] bg-white text-red-600 font-extrabold px-1 rounded">MOI</span>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Column 2: Réglés (Green Column) -->
+                <div class="flex flex-col bg-emerald-50/20 dark:bg-[#0b261b] border border-emerald-100 dark:border-emerald-900/20 rounded-2xl overflow-hidden shadow">
+                    <div class="px-5 py-4 bg-emerald-50 dark:bg-[#113a29] border-b border-emerald-100 dark:border-emerald-900/30 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="size-3 rounded-full bg-emerald-500"></span>
+                            <span class="text-sm font-black text-emerald-800 dark:text-emerald-400 uppercase tracking-wider">En règle ✅</span>
+                        </div>
+                        <span class="text-xs font-black bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300 px-3 py-1 rounded-full shadow-inner">
+                            {{ $appartementsEnRegle->count() }} appartement{{ $appartementsEnRegle->count() > 1 ? 's' : '' }}
+                        </span>
+                    </div>
+                    
+                    <div class="p-5 flex-1 max-h-72 overflow-y-auto pr-1">
+                        @if($appartementsEnRegle->isEmpty())
+                            <div class="flex flex-col items-center justify-center py-12 text-center h-full">
+                                <div class="size-12 bg-gray-100 dark:bg-neutral-800 text-gray-400 dark:text-neutral-500 rounded-full flex items-center justify-center mb-3 shadow">
+                                    <i data-lucide="info" class="size-6"></i>
+                                </div>
+                                <h5 class="text-sm font-black text-gray-800 dark:text-white">Aucun appartement en règle</h5>
+                                <p class="text-xs text-gray-500 dark:text-neutral-400 mt-1">Tous les appartements ont des impayés.</p>
+                            </div>
+                        @else
+                            <div class="flex flex-wrap gap-2">
+                                @foreach($appartementsEnRegle as $apt)
+                                    @php
+                                        $apptNum = $apt['numero'] ?? 'N/A';
+                                        $isMyApt = $apt['is_my_apt'];
+                                    @endphp
+                                    <div x-show="!search || '{{ $apptNum }}'.toLowerCase().includes(search.toLowerCase())" 
+                                         x-transition
+                                         class="relative py-2 px-3.5 rounded-xl text-sm font-extrabold bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white shadow-sm border border-emerald-600/30 flex items-center gap-1.5 transition-all duration-150 hover:scale-105 select-none {{ $isMyApt ? 'ring-4 ring-primary-500 ring-offset-2 dark:ring-offset-neutral-900 z-10' : '' }}">
+                                        <i data-lucide="check" class="size-4 flex-shrink-0"></i>
+                                        <span>Appt <span class="font-mono">{{ $apptNum }}</span></span>
+                                        @if($isMyApt)
+                                            <span class="text-[8px] bg-white text-emerald-600 font-extrabold px-1 rounded">MOI</span>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Required Banner (Moved below transparency section) -->
+    @if($stats['a_payer_mois'] > 0)
+    <div class="mb-6">
+        <div class="bg-[#FFFDF5] border border-amber-200 p-4 rounded-xl flex items-start gap-4 dark:bg-amber-950/10 dark:border-amber-900/30 shadow-sm">
+            <i data-lucide="alert-triangle" class="size-6 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0"></i>
+            <div class="flex-1">
+                <h3 class="text-sm font-bold text-amber-800 dark:text-amber-400">Rappel : Cotisations en attente</h3>
+                <p class="text-sm text-amber-700 dark:text-amber-300 mt-1">Vous avez un solde de <strong class="font-bold">{{ number_format($stats['a_payer_mois'], 2) }} MAD</strong> en attente de règlement pour ce mois. Veuillez régler ce montant auprès de votre Syndic (en espèces ou par virement bancaire sur le compte CIH de la copropriété).</p>
+            </div>
         </div>
     </div>
     @endif
 
-    <div class="flex justify-between items-end mb-6">
-        <div>
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Vue d'ensemble</h2>
-            <p class="text-sm text-gray-600 dark:text-neutral-400">Bienvenue, {{ $user->prenom }}. Voici l'état de votre logement à {{ $immeuble->nom ?? 'votre immeuble' }}.</p>
-        </div>
-        <button type="button" data-hs-overlay="#hs-modal-new-signalement-resident" class="py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-600 text-white hover:bg-primary-700 shadow-sm transition-colors">
-            <i data-lucide="plus" class="size-4"></i>
-            Signaler un problème
-        </button>
-    </div>
-
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
         <!-- Charges Card -->
         <div class="flex flex-col bg-white border border-gray-200 rounded-xl p-5 shadow-sm dark:bg-neutral-800 dark:border-neutral-700">
             <div class="flex items-center justify-between">
@@ -116,126 +235,83 @@
                     </tr>
                     @endforelse
                 </tbody>
+                </tbody>
             </table>
         </div>
     </div>
-</div>
 
-<!-- Modal: Signaler un problème -->
-<div id="hs-modal-new-signalement-resident" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="hs-modal-new-signalement-resident-label">
-    <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
-        <div class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
-            <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
-                <h3 id="hs-modal-new-signalement-resident-label" class="font-bold text-gray-800 dark:text-white">Signaler un nouveau problème</h3>
-                <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400" data-hs-overlay="#hs-modal-new-signalement-resident">
-                    <i data-lucide="x" class="size-4"></i>
-                </button>
-            </div>
-            <div class="p-4 overflow-y-auto">
-                <form action="#" method="POST">
+    <!-- Modal: Prêt à payer -->
+    <div id="hs-modal-ready-to-pay" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none bg-slate-950/40 backdrop-blur-sm" role="dialog" tabindex="-1" aria-labelledby="hs-modal-ready-to-pay-label">
+        <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
+            <div class="w-full flex flex-col bg-white border border-gray-200/60 shadow-premium rounded-2xl pointer-events-auto dark:bg-neutral-900 dark:border-neutral-800">
+                <div class="flex justify-between items-center py-4 px-5 border-b dark:border-neutral-800">
+                    <h3 id="hs-modal-ready-to-pay-label" class="font-bold text-gray-800 dark:text-white text-lg flex items-center gap-2">
+                        Signaler que je suis prêt à payer
+                    </h3>
+                    <button type="button" class="size-8 inline-flex justify-center items-center rounded-xl bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-slate-800 dark:text-neutral-400 dark:hover:bg-slate-700 transition-colors" data-hs-overlay="#hs-modal-ready-to-pay">
+                        <i data-lucide="x" class="size-4"></i>
+                    </button>
+                </div>
+                <form action="{{ route('resident.ready-to-pay') }}" method="POST"
+                      x-data="{
+                          openSelectCharge: false,
+                          selectedChargeId: '',
+                          selectedChargeLabel: '-- Choisir une cotisation impayée --'
+                      }">
                     @csrf
-                    <div class="grid gap-y-4">
+                    <div class="p-6 overflow-y-auto space-y-4">
+                        <p class="text-sm text-gray-500 dark:text-neutral-400">
+                            Indiquez au Syndic que vous disposez du montant en espèces. Il passera récupérer le règlement directement à votre appartement.
+                        </p>
+
                         <div>
-                            <label class="block text-sm font-medium mb-2 dark:text-white">Titre du problème</label>
-                            <input type="text" name="titre" required class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Ex: Fuite d'eau, Panne d'ascenseur...">
+                            <label class="block text-sm font-semibold mb-2 dark:text-white">Sélectionner la cotisation concernée <span class="text-red-500">*</span></label>
+                            
+                            <div class="relative w-full inline-flex">
+                                <button type="button" @click="openSelectCharge = !openSelectCharge" @click.outside="openSelectCharge = false" class="py-2.5 px-4 w-full inline-flex justify-between items-center gap-x-2 text-sm font-semibold rounded-xl border border-gray-200/80 bg-white/50 hover:bg-white text-slate-800 shadow-sm dark:bg-[#090D16]/50 dark:border-slate-800/80 dark:text-white dark:hover:bg-slate-900/50 transition-all duration-200 text-left">
+                                    <span x-text="selectedChargeLabel" class="truncate text-left pr-4"></span>
+                                    <i data-lucide="chevron-down" :class="openSelectCharge ? 'rotate-180' : ''" class="size-4 transition-transform duration-200 text-gray-400"></i>
+                                </button>
+                                
+                                <input type="hidden" name="charge_id" :value="selectedChargeId" required>
+                                
+                                <div x-show="openSelectCharge" x-cloak class="absolute left-0 top-full z-[100] mt-2 w-full max-h-60 overflow-y-auto bg-white dark:bg-[#0D121F] border border-gray-200/60 dark:border-slate-800/60 shadow-xl rounded-xl p-1.5 backdrop-blur-md" style="display: none;">
+                                    @forelse($mesChargesImpayees as $charge)
+                                        @php
+                                            $dateFr = ucfirst(\Carbon\Carbon::parse($charge->date_echeance)->translatedFormat('F Y'));
+                                            $label = "Cotisation " . $dateFr . " - " . number_format($charge->reste_a_payer, 2) . " MAD";
+                                        @endphp
+                                        <button type="button" 
+                                                @click="
+                                                    selectedChargeId = '{{ $charge->id }}';
+                                                    selectedChargeLabel = '{{ $label }}';
+                                                    openSelectCharge = false;
+                                                " 
+                                                class="w-full text-start flex items-center py-2.5 px-3 rounded-lg text-sm text-gray-700 dark:text-slate-350 hover:bg-gray-150 dark:hover:bg-slate-800/50 transition-colors">
+                                            {{ $label }}
+                                        </button>
+                                    @empty
+                                        <button type="button" disabled class="w-full text-start flex items-center py-2 px-3 text-sm text-gray-400 dark:text-slate-650 cursor-not-allowed">
+                                            Aucune cotisation impayée
+                                        </button>
+                                    @endforelse
+                                </div>
+                            </div>
                         </div>
+
                         <div>
-                            <label class="block text-sm font-medium mb-2 dark:text-white">Priorité</label>
-                            <select name="priorite" class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
-                                <option value="basse">Basse</option>
-                                <option value="moyenne" selected>Moyenne</option>
-                                <option value="haute">Haute</option>
-                                <option value="urgente">Urgente</option>
-                            </select>
+                            <label class="block text-sm font-semibold mb-2 dark:text-white">Note de disponibilité</label>
+                            <textarea name="note" rows="3" class="py-3 px-4 block w-full border-gray-200 dark:border-slate-850 dark:bg-[#080B11] dark:text-slate-300 rounded-xl text-sm focus:border-primary-500 focus:ring-primary-500" placeholder="Ex: Disponible ce soir après 18h, appeler au 0600000000 avant de passer..."></textarea>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2 dark:text-white">Description</label>
-                            <textarea name="description" rows="4" required class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Détaillez le problème rencontré..."></textarea>
-                        </div>
+                    </div>
+                    <div class="flex justify-end items-center gap-x-2 py-3 px-5 border-t dark:border-neutral-800 bg-gray-50/50 dark:bg-neutral-900/30 rounded-b-2xl">
+                        <button type="button" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dark:bg-neutral-850 dark:border-neutral-800 dark:text-white dark:hover:bg-neutral-800" data-hs-overlay="#hs-modal-ready-to-pay">Annuler</button>
+                        <button type="submit" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-xl border border-transparent bg-gradient-to-r from-emerald-600 to-teal-600 text-white hover:from-emerald-700 hover:to-teal-700 shadow-md shadow-emerald-500/10 hover:shadow-lg transition-all duration-200" :disabled="!selectedChargeId">
+                            <i data-lucide="send" class="size-4"></i>
+                            Envoyer le signalement
+                        </button>
                     </div>
                 </form>
-            </div>
-            <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
-                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700" data-hs-overlay="#hs-modal-new-signalement-resident">Annuler</button>
-                <button type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-primary-600 text-white hover:bg-primary-700 shadow-sm transition-colors">Envoyer le signalement</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal: Simulation de Paiement -->
-<div id="hs-modal-payment-simulation" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1">
-    <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
-        <div x-data="{ processing: false, done: false }" class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
-            <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
-                <h3 class="font-bold text-gray-800 dark:text-white">Paiement sécurisé</h3>
-                <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none dark:bg-neutral-700 dark:text-neutral-400" data-hs-overlay="#hs-modal-payment-simulation">
-                    <i data-lucide="x" class="size-4"></i>
-                </button>
-            </div>
-            
-            <div class="p-6 overflow-y-auto">
-                <template x-if="!done">
-                    <div class="space-y-4">
-                        <div class="bg-gray-50 p-4 rounded-lg dark:bg-neutral-900 mb-4">
-                            <div class="flex justify-between mb-1">
-                                <span class="text-sm text-gray-600 dark:text-neutral-400">Total à payer</span>
-                                <span class="text-sm font-bold text-gray-800 dark:text-white">{{ number_format($stats['a_payer_mois'], 2) }} MAD</span>
-                            </div>
-                        </div>
-
-                        <div class="space-y-3">
-                            <div>
-                                <label class="block text-sm font-medium mb-1 dark:text-white">Titulaire de la carte</label>
-                                <input type="text" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="{{ $user->fullName }}">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1 dark:text-white">Numéro de carte</label>
-                                <div class="relative">
-                                    <input type="text" class="py-2 px-3 ps-11 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="0000 0000 0000 0000">
-                                    <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
-                                        <i data-lucide="credit-card" class="size-4 text-gray-400"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block text-sm font-medium mb-1 dark:text-white">Expiration</label>
-                                    <input type="text" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="MM/YY">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-1 dark:text-white">CVC</label>
-                                    <input type="password" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="***">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="pt-4">
-                            <button @click="processing = true; setTimeout(() => { processing = false; done = true; }, 2000)" type="button" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-600 text-white hover:bg-primary-700 disabled:opacity-50" :disabled="processing">
-                                <template x-if="!processing">
-                                    <span>Payer {{ number_format($stats['a_payer_mois'], 2) }} MAD</span>
-                                </template>
-                                <template x-if="processing">
-                                    <div class="flex items-center gap-2">
-                                        <span class="animate-spin inline-block size-4 border-[3px] border-current border-t-transparent text-white rounded-full"></span>
-                                        Traitement...
-                                    </div>
-                                </template>
-                            </button>
-                        </div>
-                    </div>
-                </template>
-
-                <template x-if="done">
-                    <div class="text-center py-8">
-                        <div class="size-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-lucide="check" class="size-10"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Paiement réussi !</h4>
-                        <p class="text-gray-600 dark:text-neutral-400 mb-6">Votre transaction a été validée avec succès. Votre reçu sera disponible dans quelques instants.</p>
-                        <button @click="location.reload()" type="button" class="py-2 px-4 bg-gray-100 text-gray-800 rounded-lg text-sm font-medium hover:bg-gray-200 dark:bg-neutral-700 dark:text-white">Fermer</button>
-                    </div>
-                </template>
             </div>
         </div>
     </div>

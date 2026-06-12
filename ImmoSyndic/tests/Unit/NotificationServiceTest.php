@@ -15,7 +15,9 @@ class NotificationServiceTest extends TestCase
         return array_map(fn($item) => [$item], $data);
     }
 
-    
+    /**
+     * @dataProvider notificationDataProvider
+     */
     public function test_it_can_load_notification_data_from_csv($data)
     {
         $this->assertArrayHasKey('id', $data);

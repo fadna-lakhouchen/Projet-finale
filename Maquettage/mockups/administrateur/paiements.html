@@ -5,119 +5,263 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ImmoSyndic - Paiements (Admin)</title>
+    
     <!-- Tailwind & Preline -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Configuration -->
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
-                extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { primary: { 50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81' } } }
+                extend: {
+                    fontFamily: { 
+                        sans: ['Outfit', 'Plus Jakarta Sans', 'Inter', 'sans-serif'] 
+                    },
+                    colors: { 
+                        primary: { 
+                            50: '#f5f7ff', 
+                            100: '#ebf0fe', 
+                            200: '#ced9fd', 
+                            300: '#b1c2fb', 
+                            400: '#7694f8', 
+                            500: '#3b66f5', 
+                            600: '#2c4db8', 
+                            700: '#1d3278', 
+                            800: '#152559', 
+                            900: '#0e193c' 
+                        },
+                        slate: {
+                            950: '#090D16'
+                        }
+                    },
+                    boxShadow: {
+                        'premium': '0 10px 30px -10px rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.01)',
+                        'premium-hover': '0 20px 40px -15px rgba(59, 102, 245, 0.1), 0 1px 2px rgba(59, 102, 245, 0.02)',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.04)',
+                    }
+                }
             }
         }
     </script>
+    
+    <!-- Custom Visual Polish (Zwaq) -->
     <style>
-        /* Fallback for Preline plugin variants when using Tailwind CDN */
-        .hs-overlay.open {
-            pointer-events: auto !important;
+        .logo-transparent { mix-blend-mode: multiply; }
+        [x-cloak] { display: none !important; }
+        
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
-
-        .hs-overlay.open>div {
-            opacity: 1 !important;
-            margin-top: 1.75rem !important;
+        .dark .glass-panel {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
+        
+        /* Fine Scrollbars */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.25);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.45);
+        }
+        
+        /* Animated Ring/Glow transitions */
+        .glow-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glow-hover:hover {
+            box-shadow: 0 0 20px 2px rgba(59, 102, 245, 0.15);
+            transform: translateY(-1px);
+        }
+        
+        /* Fallback for Preline overlays */
+        .hs-overlay.open { pointer-events: auto !important; }
+        .hs-overlay.open>div { opacity: 1 !important; margin-top: 1.75rem !important; }
+        
     </style>
+
 </head>
 
-<body class="bg-gray-50 dark:bg-neutral-900">
+<body class="bg-[#F8FAFC] text-slate-800 dark:bg-[#080B11] dark:text-neutral-200 min-h-screen transition-colors duration-300">
 
     <!-- ========== HEADER ========== -->
-    <header
-        class="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b border-gray-200 text-sm py-2.5 sm:py-4 lg:ps-64 dark:bg-neutral-800 dark:border-neutral-700 shadow-sm">
-        <nav class="flex basis-full items-center w-full mx-auto px-4 sm:px-6" aria-label="Global">
-            <div class="me-5 lg:me-0 lg:hidden">
-                <a class="flex-none text-xl font-semibold dark:text-white" href="index.html">ImmoSyndic</a>
-            </div>
-            <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3">
-                <div class="hidden sm:flex items-center gap-x-3">
-                    <h1 class="text-lg font-semibold text-gray-800 dark:text-white">Bonjour, Mohamed Rifi</h1>
-                    <span
-                        class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-500">
-                        <span class="size-1.5 inline-block bg-red-800 rounded-full dark:bg-red-500"></span> Super Admin
-                    </span>
+<header class="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full glass-panel border-b border-gray-200/40 dark:border-slate-800/40 text-sm py-2.5 sm:py-4 lg:ps-64 shadow-premium shadow-slate-100/10">
+    <nav class="flex basis-full items-center w-full mx-auto px-4 sm:px-6" aria-label="Global">
+        
+        <!-- Mobile Sidebar Toggle & Brand -->
+        <div class="flex items-center gap-x-3 lg:hidden me-5">
+            <button type="button" class="p-2 inline-flex items-center justify-center gap-x-2 rounded-xl border border-gray-200 bg-white/80 text-gray-800 hover:bg-gray-50 focus:outline-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-750" data-hs-overlay="#docs-sidebar" aria-controls="docs-sidebar" aria-label="Toggle navigation">
+                <span class="sr-only">Toggle navigation</span>
+                <i data-lucide="menu" class="size-5"></i>
+            </button>
+            
+            <a class="flex items-center gap-x-2 text-lg font-bold dark:text-white" href="index.html">
+                <div class="size-7 bg-white p-1 rounded-lg border border-slate-200/20 flex items-center justify-center shrink-0">
+                    <i data-lucide="building" class="size-full text-primary-500 shrink-0"></i>
                 </div>
-                <!-- Controls -->
-                <div class="flex flex-row items-center justify-end gap-2">
-                    <a href="incidents.html"
-                        class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-neutral-700">
-                        <i data-lucide="bell" class="size-5"></i>
-                        <span
-                            class="absolute top-0 end-0 inline-flex items-center size-2 rounded-full bg-red-600 border-2 border-white dark:border-neutral-800"></span>
-                    </a>
-                    <div class="hs-dropdown [--placement:bottom-right] relative inline-flex">
-                        <button id="hs-dropdown-profile" type="button"
-                            class="w-[38px] h-[38px] inline-flex justify-center items-center rounded-full border border-transparent hover:bg-gray-100 dark:hover:bg-neutral-700">
-                            <img class="inline-block size-[38px] rounded-full ring-2 ring-white"
-                                src="https://ui-avatars.com/api/?name=Mohamed+Rifi&background=4f46e5&color=fff"
-                                alt="Mohamed Rifi Avatar">
-                        </button>
-                        <div class="hs-dropdown-menu transition-[opacity,margin] duration opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg p-2 mt-2 dark:bg-neutral-800 dark:border dark:border-neutral-700"
-                            aria-labelledby="hs-dropdown-profile">
-                            <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg mb-2 dark:bg-neutral-700">
-                                <p class="text-sm text-gray-500 dark:text-neutral-400">Connecté en tant que</p>
-                                <p class="text-sm font-medium text-gray-800 dark:text-white">mohamed.rifi@email.com</p>
-                            </div>
-                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700"
-                                href="parametres.html"><i data-lucide="settings" class="size-4"></i> Paramètres</a>
-                            <hr class="my-2 border-gray-200 dark:border-neutral-700">
-                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/40"
-                                href="login.html"><i data-lucide="log-out" class="size-4"></i> Déconnexion</a>
+                <span class="bg-gradient-to-r from-primary-500 to-purple-600 bg-clip-text text-transparent">ImmoSyndic</span>
+            </a>
+        </div>
+
+        <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3">
+            <!-- Greeting & Role (Desktop) -->
+            <div class="hidden sm:flex items-center gap-x-3">
+                <h1 class="text-base font-semibold text-slate-800 dark:text-white flex items-center gap-1.5">
+                    Bonjour, <span class="bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent font-bold">Mohamed Rifi</span>
+                </h1>
+                <span class="inline-flex items-center gap-x-1.5 py-1 px-3 rounded-full text-xs font-bold bg-red-500/10 text-red-500 border border-red-500/20"><span class="size-1.5 inline-block bg-current rounded-full animate-pulse"></span> Super Admin</span>
+                
+            </div>
+
+            <!-- Profile & Notifications Controls -->
+            <div class="flex flex-row items-center justify-end gap-2.5">
+                <!-- Notifications button -->
+                <a href="incidents.html" class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-xl border border-gray-200/50 bg-white/40 hover:bg-white text-gray-800 shadow-sm dark:text-white dark:bg-neutral-800/40 dark:border-neutral-700/50 dark:hover:bg-neutral-800 transition-all">
+                    <i data-lucide="bell" class="size-4.5"></i>
+                    <span class="absolute top-1.5 end-1.5 inline-flex items-center size-2 rounded-full bg-red-500 border-2 border-white dark:border-neutral-800 animate-bounce"></span>
+                </a>
+
+                <!-- Profile Dropdown (AlpineJS powered) -->
+                <div x-data="{ open: false }" class="relative inline-flex">
+                    <button @click="open = !open" @click.outside="open = false" id="hs-dropdown-profile" type="button" class="w-[38px] h-[38px] inline-flex justify-center items-center rounded-xl border border-gray-200/60 hover:bg-white/80 bg-white/40 ring-2 ring-primary-500/10 shadow-sm dark:bg-neutral-800/40 dark:border-neutral-700/60 focus:outline-none transition-all">
+                        <img class="inline-block size-[38px] rounded-xl object-cover" src="https://ui-avatars.com/api/?name=Mohamed+Rifi&background=3b66f5&color=fff&font-size=0.4" alt="Avatar">
+                    </button>
+                    
+                    <div x-show="open" 
+                         x-transition:enter="transition ease-out duration-100"
+                         x-transition:enter-start="transform opacity-0 scale-95"
+                         x-transition:enter-end="transform opacity-100 scale-100"
+                         x-transition:leave="transition ease-in duration-75"
+                         x-transition:leave-start="transform opacity-100 scale-100"
+                         x-transition:leave-end="transform opacity-0 scale-95"
+                         class="absolute right-0 top-full z-50 min-w-60 bg-white shadow-xl border border-gray-150 rounded-2xl p-2 mt-2 dark:bg-neutral-900 dark:border-neutral-800" 
+                         style="display: none;">
+                        <div class="py-3 px-5 -m-2 bg-gradient-to-r from-primary-50/50 to-purple-50/30 rounded-t-2xl mb-2 dark:from-neutral-800 dark:to-neutral-800/80 border-b border-gray-100 dark:border-neutral-800">
+                            <p class="text-xs text-slate-400 dark:text-neutral-450 uppercase font-bold tracking-wider mb-0.5">Identifié en tant que</p>
+                            <p class="text-sm font-semibold text-slate-800 dark:text-white truncate">mohamed.rifi@email.com</p>
                         </div>
+                        <a class="flex items-center gap-x-3 py-2 px-3 rounded-xl text-sm text-slate-700 hover:bg-slate-50 dark:text-neutral-350 dark:hover:bg-neutral-800 transition-colors" href="parametres.html">
+                            <i data-lucide="settings" class="size-4 text-slate-400"></i> Paramètres du profil
+                        </a>
+                        <hr class="my-2 border-gray-100 dark:border-neutral-800">
+                        <a class="flex items-center gap-x-3 py-2 px-3 rounded-xl text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors" href="login.html">
+                            <i data-lucide="log-out" class="size-4"></i> Déconnexion
+                        </a>
                     </div>
                 </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
+
 
     <!-- ========== SIDEBAR ========== -->
-    <div
-        class="sticky top-0 start-0 lg:fixed lg:bottom-0 lg:z-[60] size-full w-64 bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block hidden dark:bg-neutral-800 dark:border-neutral-700">
+<div id="docs-sidebar" class="hs-overlay [--auto-close:lg] hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform fixed top-0 start-0 bottom-0 z-[60] w-64 bg-[#0B1224] border-e border-slate-800/60 pt-7 pb-10 overflow-y-auto lg:translate-x-0 lg:end-auto lg:bottom-0 scrollbar-none flex flex-col justify-between">
+    <div>
+        <!-- Logo Brand -->
         <div class="px-6 flex items-center gap-x-3 mb-8">
-            <div class="size-8 bg-primary-600 rounded-lg flex items-center justify-center text-white shadow-md">
-                <i data-lucide="building-2" class="size-5"></i>
-            </div>
-            <a class="flex-none text-xl font-bold dark:text-white" href="index.html">ImmoSyndic</a>
+            <a class="flex items-center gap-x-3 group" href="index.html">
+                <div class="size-9 bg-white p-1.5 rounded-xl shadow-premium border border-slate-200/20 flex items-center justify-center shrink-0">
+                    <i data-lucide="building" class="size-full text-primary-500 shrink-0"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-lg font-extrabold text-white tracking-tight leading-none group-hover:text-primary-400 transition-colors">Immo<span class="text-primary-500">Syndic</span></span>
+                    <span class="text-[9px] text-slate-400 font-bold tracking-wider uppercase mt-1">Gestion Copropriété</span>
+                </div>
+            </a>
         </div>
 
-        <nav class="hs-accordion-group p-6 w-full flex flex-col flex-wrap">
+        <!-- Navigation Links -->
+        <nav class="p-4 w-full flex flex-col flex-wrap">
             <ul class="space-y-1.5" id="nav-menu">
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
-                        href="index.html"><i data-lucide="layout-dashboard" class="size-4"></i> Dashboard</a></li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
-                        href="residents.html"><i data-lucide="users" class="size-4"></i> Gestion Résidents</a></li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
-                        href="syndics.html"><i data-lucide="user-cog" class="size-4"></i> Gestion Syndics</a></li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-primary-50 text-sm text-primary-700 font-medium rounded-lg dark:bg-primary-900/30 dark:text-primary-400"
-                        href="paiements.html"><i data-lucide="credit-card" class="size-4"></i> Paiements</a></li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
-                        href="incidents.html"><i data-lucide="alert-triangle" class="size-4"></i> Signalements <span
-                            class="ms-auto inline-flex items-center py-0.5 px-2 rounded-full text-xs font-medium bg-red-100 text-red-600">3</span></a>
+                <li class="">
+                    <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm transition-all duration-300 group border-l-2 text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800" href="index.html">
+                        <i data-lucide="layout-dashboard" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Dashboard
+                    </a>
                 </li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
-                        href="documents.html"><i data-lucide="folder-archive" class="size-4"></i> Documents /
-                        Archives</a></li>
-                <li><a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
-                        href="rapports.html"><i data-lucide="pie-chart" class="size-4"></i> Rapports financiers</a></li>
-
-                <li class="mt-4 pt-4 border-t border-gray-200 dark:border-neutral-700">
-                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 transition-colors"
-                        href="parametres.html"><i data-lucide="settings" class="size-4"></i> Paramètres</a>
+                <li class="">
+                    <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm transition-all duration-300 group border-l-2 text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800" href="residents.html">
+                        <i data-lucide="users" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Gestion Résidents
+                    </a>
+                </li>
+                <li class="">
+                    <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm transition-all duration-300 group border-l-2 text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800" href="syndics.html">
+                        <i data-lucide="user-cog" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Gestion Syndics
+                    </a>
+                </li>
+                <li class="">
+                    <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm transition-all duration-300 group border-l-2 bg-primary-500/10 border-primary-500 text-primary-400 shadow-sm shadow-primary-500/5 font-semibold" href="paiements.html">
+                        <i data-lucide="wallet" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Paiements
+                    </a>
+                </li>
+                <li class="">
+                    <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm transition-all duration-300 group border-l-2 text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800" href="incidents.html">
+                        <i data-lucide="alert-circle" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Signalements<span class="ms-auto inline-flex items-center py-0.5 px-2 rounded-full text-[10px] font-bold bg-red-500/20 text-red-400">3</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm transition-all duration-300 group border-l-2 text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800" href="documents.html">
+                        <i data-lucide="folder-open" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Documents / Archives
+                    </a>
+                </li>
+                <li class="">
+                    <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm transition-all duration-300 group border-l-2 text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800" href="rapports.html">
+                        <i data-lucide="pie-chart" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Rapports financiers
+                    </a>
+                </li>
+<li class="pt-4 mt-4 border-t border-slate-800"><span class="px-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Configuration</span></li>
+                <li class="">
+                    <a class="flex items-center gap-x-3.5 py-2.5 px-3 rounded-xl text-sm transition-all duration-300 group border-l-2 text-slate-400 hover:text-white hover:bg-white/5 border-transparent hover:border-slate-800" href="parametres.html">
+                        <i data-lucide="settings" class="size-4.5 shrink-0 group-hover:scale-105 transition-transform"></i> Paramètres
+                    </a>
                 </li>
             </ul>
         </nav>
     </div>
+
+    <!-- Bottom Profile Card & Logout -->
+    <div class="px-4">
+        <div class="p-3 bg-white/5 rounded-2xl border border-white/10 flex items-center gap-x-3 mb-4 shadow-sm">
+            <img class="size-10 rounded-xl ring-2 ring-primary-500/20 shrink-0 object-cover" src="https://ui-avatars.com/api/?name=Mohamed+Rifi&background=3b66f5&color=fff&font-size=0.4" alt="Avatar">
+            <div class="grow min-w-0">
+                <span class="block text-sm font-bold text-white truncate leading-none mb-1">Mohamed Rifi</span>
+                <span class="inline-flex items-center gap-x-1.5 py-0.5 px-2 rounded-full text-[9px] font-bold bg-primary-500/20 text-primary-300">
+                    <span class="size-1 inline-block bg-primary-400 rounded-full animate-ping"></span>
+                    Super Admin
+                </span>
+            </div>
+        </div>
+
+        <a href="login.html" class="w-full flex items-center justify-center gap-x-2 py-2.5 px-3 text-sm font-semibold rounded-xl bg-white/5 text-red-400 border border-white/5 hover:bg-red-500/10 hover:text-red-300 hover:border-red-500/20 transition-all duration-300">
+            <i data-lucide="log-out" class="size-4"></i>
+            Déconnexion
+        </a>
+    </div>
+</div>
+
 
     <!-- ========== MAIN CONTENT ========== -->
     <main class="w-full pt-6 px-4 sm:px-6 md:px-8 lg:ps-72 pb-12">
@@ -305,7 +449,7 @@
         <div
             class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
             <div
-                class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                class="w-full flex flex-col bg-white border shadow-premium rounded-2xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
                 <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
                     <h3 id="hs-modal-payment-details-label" class="font-bold text-gray-800 dark:text-white">
                         Détails de la transaction #PAY-9086
@@ -359,8 +503,13 @@
     </div>
     <!-- ========== END MODAL ========== -->
 
-    <script>
+        <script>
         lucide.createIcons();
+        window.addEventListener('load', () => {
+            if (window.HSStaticMethods) {
+                window.HSStaticMethods.autoInit();
+            }
+        });
     </script>
 </body>
 

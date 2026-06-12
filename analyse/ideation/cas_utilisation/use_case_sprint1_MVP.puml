@@ -1,84 +1,60 @@
-@startuml ImmoSyndic_MVP_Web
+@startuml ImmoSyndic_MVP_Web_Clean
 left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
 
+actor "Mobile" as Mobile
 actor "Résident" as Resident
 actor "Syndic" as Syndic
 actor "Administrateur" as Admin
-actor "Mobile" as Mobile
 
-' Hierarchy
-Resident <|-- Syndic
-Syndic <|-- Admin
+rectangle "Système ImmoSyndic - Sprint 1 Web" {
 
-rectangle "Système ImmoSyndic - Sprint 1 (MVP) - Web" {
+  ' Auth central
+  usecase "S'authentifier" as Auth
+' API
+  usecase "Consommer API" as ProvideAPI
 
-  package "Authentification" {
-    usecase "S'authentifier" as Auth
-  }
+  ' Résident
+  usecase "Consulter charges" as ViewCharges
+  usecase "Consulter annonces" as ViewNews
 
-  package "Portail Web (Gestion)" {
-    package "Espace Résident" {
-      usecase "Consulter charges" as ViewCharges
-      usecase "Signaler problème" as ReportIssue
-    }
-    package "Espace Syndic" {
-      usecase "Créer compte" as Register
-      usecase "Gérer Résidents" as ManageResidents
-      usecase "Gérer immeubles" as ManageBuildings
-      usecase "Suivre paiements" as TrackPayments
-      usecase "Générer reçus" as GenReceipts
-      usecase "Suivre interventions" as TrackInterventions
-      usecase "Consulter historique" as ViewHistory
-    }
-    package "Espace Administrateur" {
-      usecase "Gérer comptes" as ManageUsers
-      usecase "Superviser immeubles" as Supervise
-      usecase "Valider données" as ValidateData
-      usecase "Gérer droits" as ManageRoles
-    }
-  }
+  ' Syndic
+  usecase "Gérer résidents" as ManageResidents
+  usecase "Gérer immeubles" as ManageBuildings
+  usecase "Suivre paiements" as TrackPayments
 
-  package "API Mobile" {
-    usecase "Consommer API" as ConsumeAPI
-    
-    ConsumeAPI ..> ViewCharges : <<include>>
-  }
+  ' Admin
+  usecase "Gérer comptes résidents" as ManageUsers
+  usecase "Gérer comptes syndic" as ManageSyndic
+  usecase "Gérer droits" as ManageRoles
 
-  ' Includes
+
+
+  ' includes → كلشي كيمشي ل Auth
   ViewCharges ..> Auth : <<include>>
-  ReportIssue ..> Auth : <<include>>
+  ViewNews ..> Auth : <<include>>
   ManageResidents ..> Auth : <<include>>
   ManageBuildings ..> Auth : <<include>>
   TrackPayments ..> Auth : <<include>>
-  GenReceipts ..> Auth : <<include>>
-  TrackInterventions ..> Auth : <<include>>
-  ViewHistory ..> Auth : <<include>>
   ManageUsers ..> Auth : <<include>>
-  Supervise ..> Auth : <<include>>
-  ValidateData ..> Auth : <<include>>
+  ManageSyndic ..> Auth : <<include>>
   ManageRoles ..> Auth : <<include>>
 }
 
-' Connections
+' Actors connections (مرتبين)
+Mobile -- ProvideAPI
 Resident -- ViewCharges
-Resident -- ReportIssue
+Resident -- ViewNews
 
-Syndic -- Register
 Syndic -- ManageResidents
 Syndic -- ManageBuildings
 Syndic -- TrackPayments
-Syndic -- GenReceipts
-Syndic -- TrackInterventions
-Syndic -- ViewHistory
 
 Admin -- ManageUsers
-Admin -- Supervise
-Admin -- ValidateData
+Admin -- ManageSyndic
 Admin -- ManageRoles
 
-' Connections Mobile
-Mobile -- ConsumeAPI
+
 
 @enduml

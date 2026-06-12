@@ -1,53 +1,87 @@
-@startuml ImmoSyndic_Global_Syndic
+@startuml ImmoSyndic_Final_Syndic
 left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-actor "Syndic" as Syndic
+' Acteurs Syndics avec Héritage
+actor "Syndic Secondaire" as SyndicSec
+actor "Syndic Principal" as SyndicPri
 
-rectangle "Système ImmoSyndic - Global (Vision Syndic)" {
+' Le Syndic Principal hérite du Syndic Secondaire
+SyndicPri -up-|> SyndicSec
+
+rectangle "Système ImmoSyndic - Espace Syndic" {
 
   package "Authentification" {
     usecase "S'authentifier" as Auth
   }
 
-  package "Portail Web (Gestion)" {
-    package "Espace Syndic (Web)" {
-      usecase "Créer compte" as Register
-      usecase "Gérer les Résidents" as ManageResidents
-      usecase "Gérer immeubles" as ManageBuildings
-      usecase "Suivre paiements" as TrackPayments
-      usecase "Générer reçus" as GenReceipts
-      usecase "Suivre interventions" as TrackInterventions
-      usecase "Gérer planning" as ManagePlanning
-      usecase "Analyser statistiques" as ViewStats
-      usecase "Envoyer annonces" as SendNews
-      usecase "Gérer archivage" as ArchiveDocs
-
-      Register ..> Auth : <<include>>
-      ManageResidents ..> Auth : <<include>>
-      ManageBuildings ..> Auth : <<include>>
-      TrackPayments ..> Auth : <<include>>
-      GenReceipts ..> Auth : <<include>>
-      TrackInterventions ..> Auth : <<include>>
-      ManagePlanning ..> Auth : <<include>>
-      ViewStats ..> Auth : <<include>>
-      SendNews ..> Auth : <<include>>
-      ArchiveDocs ..> Auth : <<include>>
-    }
+  package "Gestion principale" {
+    usecase "Gérer immeubles" as ManageBuildings
+    usecase "Gérer résidents" as ManageResidents
+    usecase "Gérer cotisations" as ManageCharges
+    usecase "Suivre paiements" as TrackPayments
+    usecase "Gérer dépenses" as ManageExpenses
   }
+
+  package "Opérations quotidiennes" {
+    usecase "Suivre interventions" as TrackInterventions
+    usecase "Envoyer annonces" as SendNews
+    usecase "Gérer documents" as ManageDocs
+  }
+
+  package "Rapports" {
+    usecase "Consulter statistiques" as ViewStats
+    usecase "Exporter Excel" as ExportExcel
+    usecase "Exporter PDF" as ExportPDF
+  }
+
+  package "Sécurité & Équipe" {
+    usecase "Gérer les syndics secondaires" as ManageSecondaries
+    usecase "Consulter le journal d'activité (Logs)" as ViewLogs
+  }
+
+  package "Paramètres" {
+    usecase "Gérer son profil" as ManageProfile
+    usecase "Consulter la facturation" as ManageSubscription
+  }
+
+  ' Auth relation (global rule)
+  ManageBuildings ..> Auth : <<include>>
+  ManageResidents ..> Auth : <<include>>
+  ManageCharges ..> Auth : <<include>>
+  TrackPayments ..> Auth : <<include>>
+  ManageExpenses ..> Auth : <<include>>
+  TrackInterventions ..> Auth : <<include>>
+  SendNews ..> Auth : <<include>>
+  ManageDocs ..> Auth : <<include>>
+  ViewStats ..> Auth : <<include>>
+  ExportExcel ..> Auth : <<include>>
+  ExportPDF ..> Auth : <<include>>
+  ManageSecondaries ..> Auth : <<include>>
+  ViewLogs ..> Auth : <<include>>
+  ManageProfile ..> Auth : <<include>>
+  ManageSubscription ..> Auth : <<include>>
 }
 
-' Web Connections
-Syndic -- Register
-Syndic -- ManageResidents
-Syndic -- ManageBuildings
-Syndic -- TrackPayments
-Syndic -- GenReceipts
-Syndic -- TrackInterventions
-Syndic -- ManagePlanning
-Syndic -- ViewStats
-Syndic -- SendNews
-Syndic -- ArchiveDocs
+' Actor connections
+' Le Syndic Secondaire est lié aux fonctionnalités quotidiennes, de gestion et profil
+SyndicSec -- ManageBuildings
+SyndicSec -- ManageResidents
+SyndicSec -- ManageCharges
+SyndicSec -- TrackPayments
+SyndicSec -- ManageExpenses
+SyndicSec -- TrackInterventions
+SyndicSec -- SendNews
+SyndicSec -- ManageDocs
+SyndicSec -- ViewStats
+SyndicSec -- ExportExcel
+SyndicSec -- ExportPDF
+SyndicSec -- ManageProfile
+
+' Le Syndic Principal est le seul lié aux fonctionnalités d'équipe, de sécurité et abonnement
+SyndicPri -- ManageSecondaries
+SyndicPri -- ViewLogs
+SyndicPri -- ManageSubscription
 
 @enduml

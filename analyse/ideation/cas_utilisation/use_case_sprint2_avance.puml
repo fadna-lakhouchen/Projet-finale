@@ -1,80 +1,85 @@
-@startuml ImmoSyndic_Sprint2_Web
+@startuml ImmoSyndic_Sprint2_Avance
 left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
 
+actor "Mobile" as Mobile
 actor "Résident" as Resident
 actor "Syndic" as Syndic
 actor "Administrateur" as Admin
-actor "Mobile" as Mobile
 
-' Hierarchy
-Resident <|-- Syndic
-Syndic <|-- Admin
+rectangle "Système ImmoSyndic - Sprint 2 Web" {
 
-rectangle "ImmoSyndic - Évolutions Sprint 2 (Avancé) - Web" {
+  ' Auth central
+  usecase "S'authentifier" as Auth
+  ' API
+  usecase "Consommer API" as ProvideAPI
 
-  package "Authentification" {
-    usecase "S'authentifier" as Auth
-  }
+  ' Résident
+  usecase "Signaler un problème" as ReportIssue
+  usecase "Recevoir notifications" as GetNotifs
+  usecase "Consulter archives" as ViewArchives
+  usecase "Consulter la transparence financière" as ViewTransparency
+  usecase "Déclarer une cotisation prête" as SignalReady
+  usecase "Gérer son profil" as ManageProfile
 
-  package "Interface Web (Extensions & Analyse)" {
-    
-    package "Extensions Résident" {
-      usecase "Consulter archives" as ViewArchives
-      usecase "Exporter PDF" as ExportPDF
-      usecase "Personnaliser alertes" as SetAlerts
+  ' Syndic
+  usecase "gerer charges" as ManageCharges
+  usecase "suivre interventions" as TrackInterventions
+  usecase "gérer documents" as ManageDocuments
+  usecase "envoyer annonces" as SendNews
+  usecase "Gérer dépenses" as ManageExpenses
 
-      ViewArchives ..> Auth : <<include>>
-      SetAlerts ..> Auth : <<include>>
-    }
+  ' Admin
+  usecase "consulter logs système" as ViewLogs
+  usecase "Surveiller activités" as MonitorActivity
+  usecase "Suivre les dépenses" as TrackExpenses
+  usecase "Suivre les incidents" as TrackIncidents
+  usecase "Gérer les documents partagés" as AdminManageDocs
 
-    package "Extensions Syndic" {
-      usecase "Gérer planning" as ManagePlanning
-      usecase "Analyser statistiques" as ViewStats
-      usecase "Gérer archivage" as ArchiveDocs
-      usecase "Envoyer annonces" as SendNews
+  ' includes → كلشي كيمشي ل Auth
+  ReportIssue ..> Auth : <<include>>
+  GetNotifs ..> Auth : <<include>>
+  ViewArchives ..> Auth : <<include>>
+  ViewTransparency ..> Auth : <<include>>
+  SignalReady ..> Auth : <<include>>
+  ManageProfile ..> Auth : <<include>>
 
-      ManagePlanning ..> Auth : <<include>>
-      ViewStats ..> Auth : <<include>>
-      ArchiveDocs ..> Auth : <<include>>
-      SendNews ..> Auth : <<include>>
-    }
+  ManageCharges ..> Auth : <<include>>
+  TrackInterventions ..> Auth : <<include>>
+  ManageDocuments ..> Auth : <<include>>
+  SendNews ..> Auth : <<include>>
+  ManageExpenses ..> Auth : <<include>>
 
-    package "Extensions Admin" {
-      usecase "Générer rapports globaux" as GlobalReports
-      usecase "Consulter audit" as AuditLogs
-      usecase "Surveiller activités" as MonitorActivity
-
-      GlobalReports ..> Auth : <<include>>
-      AuditLogs ..> Auth : <<include>>
-      MonitorActivity ..> Auth : <<include>>
-    }
-  }
-
-  package "API Mobile" {
-    usecase "Consommer API" as ConsumeAPI
-    
-    ConsumeAPI ..> ViewArchives : <<include>>
-    ConsumeAPI ..> SetAlerts : <<include>>
-  }
+  ViewLogs ..> Auth : <<include>>
+  MonitorActivity ..> Auth : <<include>>
+  TrackExpenses ..> Auth : <<include>>
+  TrackIncidents ..> Auth : <<include>>
+  AdminManageDocs ..> Auth : <<include>>
 }
 
-' Connections
+' Actors connections 
+Mobile -- ProvideAPI
+
+Resident -- ReportIssue
+Resident -- GetNotifs
 Resident -- ViewArchives
-Resident -- ExportPDF
-Resident -- SetAlerts
+Resident -- ViewTransparency
+Resident -- SignalReady
+Resident -- ManageProfile
 
-Syndic -- ManagePlanning
-Syndic -- ViewStats
-Syndic -- ArchiveDocs
+Syndic -- ManageCharges
+Syndic -- TrackInterventions
+Syndic -- ManageDocuments
 Syndic -- SendNews
+Syndic -- ManageExpenses
+Syndic -- ManageProfile
 
-Admin -- GlobalReports
-Admin -- AuditLogs
+Admin -- ViewLogs
 Admin -- MonitorActivity
-
-' Connections Mobile
-Mobile -- ConsumeAPI
+Admin -- TrackExpenses
+Admin -- TrackIncidents
+Admin -- AdminManageDocs
+Admin -- ManageProfile
 
 @enduml

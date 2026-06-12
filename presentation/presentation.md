@@ -264,7 +264,7 @@ style: |
 
 <div class="maquette-grid">
   <div style="text-align: center;">
-    <img src="images/dashboard_resident.png" class="img-methodo" style="height: 360px; width: auto;" alt="Maquette Desktop">
+    <img src="images/home_mobile.png" class="img-methodo" style="height: 360px; width: auto;" alt="Maquette Desktop">
 
 ---
 

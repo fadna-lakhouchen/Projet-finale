@@ -1,10 +1,12 @@
 classDiagram
     %% Spatie Laravel Permission Entities (Logical Representation)
     class Role {
+        +int id
         +string name
         +string guard_name
     }
     class Permission {
+        +int id
         +string name
         +string guard_name
     }
@@ -17,8 +19,12 @@ classDiagram
         +string email
         +string password
         +string telephone
+        +string cin
+        +string ville
+        +date date_entree
+        +date date_sortie
+        +string notes
         +boolean is_active
-        +json preferences_alertes
         +datetime email_verified_at
     }
 
@@ -36,20 +42,17 @@ classDiagram
         +int id
         +string numero
         +int etage
-        +float superficie
-        +string type
     }
 
     class AppartementUser {
-        +date date_entree
-        +date date_sortie
+        +int id
         +string type_resident
+        +date date_entree
     }
 
     class Charge {
         +int id
         +string titre
-        +text description
         +float montant
         +date date_echeance
         +string statut
@@ -59,8 +62,17 @@ classDiagram
         +int id
         +float montant
         +date date_paiement
-        +string mode_paiement
+        +string statut
         +string recu_path
+    }
+
+    class Depense {
+        +int id
+        +string titre
+        +text description
+        +float montant
+        +date date_depense
+        +string justificatif_path
     }
 
     class Incident {
@@ -69,25 +81,12 @@ classDiagram
         +text description
         +string priorite
         +string statut
-        +string photo
-    }
-
-    class Intervention {
-        +int id
-        +string type
-        +string description
-        +date date_planifiee
-        +date date_realisation
-        +string statut
-        +float cout_estime
-        +string intervenant_nom
     }
 
     class Annonce {
         +int id
         +string titre
         +text contenu
-        +date date_publication
     }
 
     class Document {
@@ -109,34 +108,33 @@ classDiagram
     class AuditLog {
         +int id
         +string action
-        +string model_type
-        +int model_id
-        +text modifications
-        +datetime created_at
+        +json modifications
     }
 
     %% Relationships
-    User "*" -- "*" Role : has
-    Role "*" -- "*" Permission : has
-    User "*" -- "*" Permission : direct permissions
+    User "*" -- "*" Role : "has"
+    Role "*" -- "*" Permission : "has"
+    User "*" -- "*" Permission : "direct permissions"
     
-    User "1" -- "0..*" Immeuble : manages (Syndic)
-    Immeuble "1" -- "0..*" Appartement : contains
-    User "1" -- "0..*" AppartementUser : occupies
-    Appartement "1" -- "0..*" AppartementUser : belongs to
-    Appartement "1" -- "0..*" Charge : assigned to
-    Charge "1" -- "0..1" Paiement : has
-    User "1" -- "0..*" Paiement : makes
+    User "0..1" -- "0..*" Immeuble : "manages (Syndic)"
+    Immeuble "1" -- "0..*" Appartement : "contains"
     
-    User "1" -- "0..*" Incident : reports
-    Immeuble "1" -- "0..*" Incident : occurs in
-    Incident "1" -- "0..*" Intervention : resolved by
+    User "1" -- "0..*" AppartementUser : "occupies"
+    Appartement "1" -- "0..*" AppartementUser : "belongs to"
     
-    User "1" -- "0..*" Annonce : creates
-    Immeuble "1" -- "0..*" Annonce : displayed for
+    Appartement "1" -- "0..*" Charge : "assigned to"
+    Charge "1" -- "0..*" Paiement : "has"
+    User "1" -- "0..*" Paiement : "makes"
     
-    Immeuble "1" -- "0..*" Document : related to
-    Charge "1" -- "0..1" Document : has (invoice/receipt)
+    User "1" -- "0..*" Incident : "reports"
+    Immeuble "1" -- "0..*" Incident : "occurs in"
+    
+    User "1" -- "0..*" Annonce : "creates"
+    Immeuble "1" -- "0..*" Annonce : "displayed for"
+    
+    Immeuble "1" -- "0..*" Document : "related to"
+    Charge "0..1" -- "0..*" Document : "has (invoices/receipts)"
+    Immeuble "1" -- "0..*" Depense : "incurs"
 
-    User "1" -- "0..*" Notification : receives
-    User "1" -- "0..*" AuditLog : triggers (recorded actions)
+    User "1" -- "0..*" Notification : "receives"
+    User "0..1" -- "0..*" AuditLog : "triggers (recorded actions)"

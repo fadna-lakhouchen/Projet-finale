@@ -11,12 +11,12 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
         
-    --color-brand-50: #e6f0fa;
-    --color-brand-100: #dcf0fa;
-    --color-brand-300: #d2e6f0;
-    --color-brand-500: #3c648c; /* logo mid blue */
-    --color-brand-600: #28466e;
-    --color-brand-700: #1e3c64;
-    --color-brand-800: #1e325a; /* logo main navy */
-    --color-brand-900: #1e285a; /* logo dark navy */
+    --color-brand-50: #f0f6ff;
+    --color-brand-100: #e0edff;
+    --color-brand-300: #b3d4ff;
+    --color-brand-500: #3b82f6;
+    --color-brand-600: #1d4ed8;
+    --color-brand-700: #1e40af;
+    --color-brand-800: #001F74; /* logo main navy - vibrant dark blue */
+    --color-brand-900: #0865FD; /* logo dark navy - vibrant electric blue */
 }

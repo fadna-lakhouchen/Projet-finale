@@ -7,17 +7,63 @@
     statutSelectionne: 'all',
     openMois: false,
     openStat: false,
+    
+    // Pagination attributes
+    items: [
+        @foreach($paiements as $paiement)
+        {
+            id: '{{ $paiement->id }}',
+            ref: 'REF-{{ str_pad($paiement->id, 6, '0', STR_PAD_LEFT) }}',
+            mois: '{{ ucfirst(\Carbon\Carbon::parse($paiement->date_paiement)->translatedFormat('F Y')) }}',
+            statut: '{{ $paiement->statut }}'
+        },
+        @endforeach
+    ],
+    currentPage: 1,
+    perPage: 10,
+    
+    init() {
+        this.$watch('search', () => this.currentPage = 1);
+        this.$watch('moisSelectionne', () => this.currentPage = 1);
+        this.$watch('statutSelectionne', () => this.currentPage = 1);
+    },
+    
+    get filteredItems() {
+        return this.items.filter(item => this.matches(item.ref, item.mois, item.statut));
+    },
+    
+    isRowVisible(id, ref, mois, statut) {
+        if (!this.matches(ref, mois, statut)) return false;
+        const index = this.filteredItems.findIndex(item => item.id == id);
+        if (index === -1) return false;
+        const start = (this.currentPage - 1) * this.perPage;
+        const end = this.currentPage * this.perPage;
+        return index >= start && index < end;
+    },
+
     matches(ref, mois, statut) {
         const s = this.search.toLowerCase();
         const matchSearch = ref.toLowerCase().includes(s);
         const matchMois = this.moisSelectionne === 'all' || mois === this.moisSelectionne;
-        const matchStatut = this.statutSelectionne === 'all' || statut === this.statutSelectionne;
+        
+        const normStatut = statut.toLowerCase();
+        const normSelected = this.statutSelectionne.toLowerCase();
+        
+        let matchStatut = false;
+        if (normSelected === 'all') {
+            matchStatut = true;
+        } else if (normSelected === 'payé') {
+            matchStatut = normStatut === 'payé' || normStatut === 'validé';
+        } else if (normSelected === 'en attente') {
+            matchStatut = normStatut === 'en attente';
+        }
+        
         return matchSearch && matchMois && matchStatut;
     }
 }" class="space-y-6">
-    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Mes Charges</h2>
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Paiements</h2>
 
-    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-neutral-800 dark:border-neutral-700">
+    <div class="bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-800 dark:border-neutral-700">
         <!-- Header / Filters -->
         <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
             <div class="sm:col-span-1 max-w-sm w-full relative">
@@ -52,21 +98,20 @@
                   <div x-show="openStat" x-cloak class="absolute right-0 top-full z-[100] mt-1 w-48 bg-white border border-gray-200 shadow-xl rounded-lg p-1 dark:bg-neutral-800 dark:border-neutral-700">
                     <div @click="statutSelectionne = 'all'; openStat = false" class="cursor-pointer w-full flex items-center py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">Tous les statuts</div>
                     <div @click="statutSelectionne = 'Payé'; openStat = false" class="cursor-pointer w-full flex items-center py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">Payé</div>
-                    <div @click="statutSelectionne = 'En retard'; openStat = false" class="cursor-pointer w-full flex items-center py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">En retard</div>
+                    <div @click="statutSelectionne = 'En attente'; openStat = false" class="cursor-pointer w-full flex items-center py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700">En attente</div>
                   </div>
                 </div>
             </div>
         </div>
 
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto rounded-b-xl">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                 <thead class="bg-gray-50 dark:bg-neutral-700">
                     <tr>
                         <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">Date</th>
                         <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">Référence</th>
                         <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">Montant</th>
-                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">Méthode</th>
-                        <th class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">Reçu</th>
+                        <th class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">Statut</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
@@ -75,107 +120,77 @@
                         $dateMois = ucfirst(\Carbon\Carbon::parse($paiement->date_paiement)->translatedFormat('F Y'));
                         $ref = 'REF-' . str_pad($paiement->id, 6, '0', STR_PAD_LEFT);
                     @endphp
-                    <tr x-show="matches('{{ $ref }}', '{{ $dateMois }}', '{{ $paiement->statut }}')">
+                    <tr x-show="isRowVisible('{{ $paiement->id }}', '{{ $ref }}', '{{ $dateMois }}', '{{ $paiement->statut }}')">
                         <td class="px-6 py-4 text-sm text-gray-800 dark:text-neutral-200 whitespace-nowrap">
                             {{ \Carbon\Carbon::parse($paiement->date_paiement)->translatedFormat('d M Y') }}
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-500 dark:text-neutral-400">{{ $ref }}</td>
                         <td class="px-6 py-4 text-sm font-bold text-gray-800 dark:text-neutral-200">{{ number_format($paiement->montant, 2) }} MAD</td>
-                        <td class="px-6 py-4 text-sm text-gray-500 dark:text-neutral-400">Virement / Autre</td>
-                        <td class="px-6 py-4 text-end">
-                            @if($paiement->statut === 'Payé')
-                            <button class="text-primary-600 hover:text-primary-800 font-medium text-sm inline-flex items-center gap-1 dark:text-primary-400 dark:hover:text-primary-300 transition-colors">
-                                <i data-lucide="download" class="size-4"></i> Reçu PDF
-                            </button>
+                        <td class="px-6 py-4 text-end whitespace-nowrap">
+                            @if(strtolower($paiement->statut) === 'validé' || strtolower($paiement->statut) === 'payé')
+                            <span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                <span class="size-1.5 rounded-full bg-current"></span>
+                                Payé
+                            </span>
+                            @elseif(strtolower($paiement->statut) === 'en attente')
+                            <span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
+                                <span class="size-1.5 rounded-full bg-current"></span>
+                                En attente du Syndic
+                            </span>
                             @else
-                            <button data-hs-overlay="#hs-modal-payment-simulation" class="py-1.5 px-3 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 transition-colors shadow-sm">
-                                <i data-lucide="credit-card" class="size-3"></i> Payer
-                            </button>
+                            <span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-400">
+                                <span class="size-1.5 rounded-full bg-current"></span>
+                                {{ ucfirst($paiement->statut) }}
+                            </span>
                             @endif
                         </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5" class="px-6 py-8 text-center text-gray-500 dark:text-neutral-400">Aucun historique de paiement trouvé.</td>
+                        <td colspan="4" class="px-6 py-8 text-center text-gray-500 dark:text-neutral-400">Aucun historique de paiement trouvé.</td>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
-    </div>
-</div>
-
-<!-- Modal: Simulation de Paiement -->
-<div id="hs-modal-payment-simulation" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1">
-    <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
-        <div x-data="{ processing: false, done: false }" class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
-            <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
-                <h3 class="font-bold text-gray-800 dark:text-white">Paiement sécurisé</h3>
-                <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none dark:bg-neutral-700 dark:text-neutral-400" data-hs-overlay="#hs-modal-payment-simulation">
-                    <i data-lucide="x" class="size-4"></i>
+        
+        <!-- Pagination controls -->
+        <div class="px-6 py-4 flex items-center justify-between border-t border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
+            <div class="flex-1 flex justify-between sm:hidden">
+                <button @click="if (currentPage > 1) currentPage--" :disabled="currentPage === 1" class="relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400">
+                    Précédent
+                </button>
+                <button @click="if (currentPage < Math.ceil(filteredItems.length / perPage)) currentPage++" :disabled="currentPage === Math.ceil(filteredItems.length / perPage) || filteredItems.length === 0" class="relative ml-3 inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400">
+                    Suivant
                 </button>
             </div>
-            
-            <div class="p-6 overflow-y-auto">
-                <template x-if="!done">
-                    <div class="space-y-4">
-                        <div class="bg-gray-50 p-4 rounded-lg dark:bg-neutral-900 mb-4 text-center">
-                            <span class="text-xs uppercase tracking-wider text-gray-500 dark:text-neutral-500 block mb-1">Montant de la charge</span>
-                            <span class="text-xl font-bold text-gray-800 dark:text-white">Simulation de paiement</span>
-                        </div>
-
-                        <div class="space-y-3">
-                            <div>
-                                <label class="block text-sm font-medium mb-1 dark:text-white">Titulaire de la carte</label>
-                                <input type="text" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="{{ auth()->user()->fullName }}">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1 dark:text-white">Numéro de carte</label>
-                                <div class="relative">
-                                    <input type="text" class="py-2 px-3 ps-11 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="0000 0000 0000 0000">
-                                    <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
-                                        <i data-lucide="credit-card" class="size-4 text-gray-400"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block text-sm font-medium mb-1 dark:text-white">Expiration</label>
-                                    <input type="text" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="MM/YY">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-1 dark:text-white">CVC</label>
-                                    <input type="password" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="***">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="pt-4">
-                            <button @click="processing = true; setTimeout(() => { processing = false; done = true; }, 2000)" type="button" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-600 text-white hover:bg-primary-700 disabled:opacity-50" :disabled="processing">
-                                <template x-if="!processing">
-                                    <span>Confirmer le paiement</span>
-                                </template>
-                                <template x-if="processing">
-                                    <div class="flex items-center gap-2">
-                                        <span class="animate-spin inline-block size-4 border-[3px] border-current border-t-transparent text-white rounded-full"></span>
-                                        Traitement...
-                                    </div>
-                                </template>
+            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                    <p class="text-sm text-gray-500 dark:text-neutral-400">
+                        Affichage de <span class="font-semibold text-gray-800 dark:text-white" x-text="filteredItems.length === 0 ? 0 : (currentPage - 1) * perPage + 1"></span> à <span class="font-semibold text-gray-800 dark:text-white" x-text="Math.min(currentPage * perPage, filteredItems.length)"></span> sur <span class="font-semibold text-gray-800 dark:text-white" x-text="filteredItems.length"></span> résultats
+                    </p>
+                </div>
+                <div class="inline-flex gap-x-2">
+                    <button @click="if (currentPage > 1) currentPage--" :disabled="currentPage === 1" class="py-2 px-3 inline-flex items-center gap-x-1.5 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 dark:bg-neutral-800 dark:border-neutral-700 dark:text-white">
+                        <i data-lucide="chevron-left" class="size-4"></i>
+                        Précédent
+                    </button>
+                    
+                    <div class="flex items-center gap-x-1">
+                        <template x-for="page in Math.ceil(filteredItems.length / perPage)" :key="page">
+                            <button @click="currentPage = page" 
+                                    :class="currentPage === page ? 'bg-primary-600 text-white border-transparent' : 'bg-white dark:bg-neutral-800 border-gray-200 dark:border-neutral-700 text-gray-800 dark:text-neutral-350 hover:bg-gray-50 dark:hover:bg-neutral-700'"
+                                    class="size-9 inline-flex justify-center items-center text-sm font-semibold rounded-lg border transition-all duration-200" 
+                                    x-text="page">
                             </button>
-                        </div>
+                        </template>
                     </div>
-                </template>
 
-                <template x-if="done">
-                    <div class="text-center py-8">
-                        <div class="size-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-lucide="check" class="size-10"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Paiement validé !</h4>
-                        <p class="text-gray-600 dark:text-neutral-400 mb-6">Votre compte sera mis à jour d'ici quelques instants.</p>
-                        <button @click="location.reload()" type="button" class="py-2 px-4 bg-gray-100 text-gray-800 rounded-lg text-sm font-medium hover:bg-gray-200 dark:bg-neutral-700 dark:text-white">Terminer</button>
-                    </div>
-                </template>
+                    <button @click="if (currentPage < Math.ceil(filteredItems.length / perPage)) currentPage++" :disabled="currentPage === Math.ceil(filteredItems.length / perPage) || filteredItems.length === 0" class="py-2 px-3 inline-flex items-center gap-x-1.5 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 dark:bg-neutral-800 dark:border-neutral-700 dark:text-white">
+                        Suivant
+                        <i data-lucide="chevron-right" class="size-4"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

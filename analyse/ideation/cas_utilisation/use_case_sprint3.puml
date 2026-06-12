@@ -1,0 +1,74 @@
+@startuml ImmoSyndic_Sprint3_Final
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor "Mobile" as Mobile
+actor "Résident" as Resident
+actor "Syndic Secondaire" as SyndicSec
+actor "Syndic Principal" as SyndicPri
+actor "Administrateur" as Admin
+
+' Force layout alignment
+Mobile -[hidden]down- Resident
+Resident -[hidden]down- SyndicSec
+SyndicSec -[hidden]down- SyndicPri
+SyndicPri -[hidden]down- Admin
+
+' Le Syndic Principal hérite du Syndic Secondaire
+SyndicPri -up-|> SyndicSec
+
+rectangle "Système ImmoSyndic - Sprint 3 Web" {
+
+  ' Auth
+  usecase "S'authentifier" as Auth
+
+  ' API
+  usecase "Consommer API" as ProvideAPI
+
+  ' Résident
+  usecase "Personnaliser alertes" as SetAlerts
+
+  ' Syndic
+  usecase "Consulter statistiques" as ViewStats
+  usecase "Gérer les syndics secondaires" as ManageSecondaries
+  usecase "Consulter le journal d'activité (Logs)" as ViewLogs
+  usecase "Consulter la facturation" as ManageSubscription
+
+  ' Admin
+  usecase "Activer/Désactiver un compte syndic\n(selon l'abonnement)" as ToggleSyndicStatus
+
+  ' Shared use cases (Exports)
+  usecase "Exporter Excel" as ExportExcel
+  usecase "Exporter PDF" as ExportPDF
+
+  ' includes
+  SetAlerts ..> Auth : <<include>>
+  ViewStats ..> Auth : <<include>>
+  ManageSecondaries ..> Auth : <<include>>
+  ViewLogs ..> Auth : <<include>>
+  ManageSubscription ..> Auth : <<include>>
+  ToggleSyndicStatus ..> Auth : <<include>>
+  ExportExcel ..> Auth : <<include>>
+  ExportPDF ..> Auth : <<include>>
+}
+
+' Actors connections
+Mobile -- ProvideAPI
+
+Resident -- SetAlerts
+Resident -- ExportPDF
+
+SyndicSec -- ViewStats
+SyndicSec -- ExportExcel
+SyndicSec -- ExportPDF
+
+SyndicPri -- ManageSecondaries
+SyndicPri -- ViewLogs
+SyndicPri -- ManageSubscription
+
+Admin -- ToggleSyndicStatus
+Admin -- ExportExcel
+Admin -- ExportPDF
+
+@enduml

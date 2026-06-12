@@ -16,7 +16,9 @@ class AppartementServiceTest extends TestCase
         return array_map(fn($item) => [$item], $data);
     }
 
-    
+    /**
+     * @dataProvider appartementDataProvider
+     */
     public function test_it_can_load_appartement_data_from_csv($data)
     {
         $this->assertArrayHasKey('id', $data);

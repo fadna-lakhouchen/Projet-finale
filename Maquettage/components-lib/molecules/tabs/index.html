@@ -3,13 +3,73 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Molecule: Tabs</title>
+    
+    <!-- Tailwind & Preline -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Outfit', 'Plus Jakarta Sans', 'Inter', 'sans-serif'] 
+                    },
+                    colors: { 
+                        primary: { 
+                            50: '#f5f7ff', 
+                            100: '#ebf0fe', 
+                            200: '#ced9fd', 
+                            300: '#b1c2fb', 
+                            400: '#7694f8', 
+                            500: '#3b66f5', 
+                            600: '#2c4db8', 
+                            700: '#1d3278', 
+                            800: '#152559', 
+                            900: '#0e193c' 
+                        },
+                        slate: {
+                            950: '#090D16'
+                        }
+                    },
+                    boxShadow: {
+                        'premium': '0 10px 30px -10px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.05)',
+                        'premium-hover': '0 20px 40px -15px rgba(59, 102, 245, 0.25), 0 1px 2px rgba(59, 102, 245, 0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.15);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.35);
+        }
+    </style>
+
 </head>
 
-<body class="p-8 bg-gray-50 max-w-2xl">
+<body class="p-8 bg-[#080B11] text-slate-200 min-h-screen font-sans max-w-2xl">
 
     <h2 class="text-xl font-semibold mb-6 border-b pb-2">Molecule: Tabs (Onglets internes)</h2>
 
@@ -18,7 +78,7 @@
 
             <!-- Actif -->
             <a href="#"
-                class="border-blue-500 text-blue-600 flex whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium"
+                class="border-blue-500 text-primary-500 flex whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium"
                 aria-current="page">
                 <i data-lucide="list" class="w-5 h-5 mr-2"></i>
                 Historique paiements
@@ -41,7 +101,14 @@
         </nav>
     </div>
 
-    <script>lucide.createIcons();</script>
+        <script>
+        lucide.createIcons();
+        window.addEventListener('load', () => {
+            if (window.HSStaticMethods) {
+                window.HSStaticMethods.autoInit();
+            }
+        });
+    </script>
 </body>
 
 </html>

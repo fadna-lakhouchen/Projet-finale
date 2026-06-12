@@ -4,32 +4,102 @@
 <section class="space-y-6">
     <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Nouveau Signalement</h2>
     
-    <div id="success-alert" class="hidden bg-green-50 border border-green-200 text-sm text-green-800 rounded-lg p-4 mb-6 dark:bg-green-900/30 dark:border-green-800 dark:text-green-400">
+    @if(session('success'))
+    <div class="bg-green-50 border border-green-200 text-sm text-green-800 rounded-lg p-4 mb-6 dark:bg-green-900/30 dark:border-green-800 dark:text-green-400">
         <div class="flex">
             <i data-lucide="check-circle" class="size-4 mt-0.5"></i>
             <div class="ms-3">
-                <h3 class="font-semibold">Signalement envoyé avec succès!</h3>
+                <h3 class="font-semibold">{{ session('success') }}</h3>
             </div>
         </div>
     </div>
+    @endif
+
+    @if(session('error'))
+    <div class="bg-red-50 border border-red-200 text-sm text-red-800 rounded-lg p-4 mb-6 dark:bg-red-900/30 dark:border-red-850 dark:text-red-400">
+        <div class="flex">
+            <i data-lucide="alert-circle" class="size-4 mt-0.5"></i>
+            <div class="ms-3">
+                <h3 class="font-semibold">{{ session('error') }}</h3>
+            </div>
+        </div>
+    </div>
+    @endif
 
     <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 max-w-2xl dark:bg-neutral-800 dark:border-neutral-700">
-        <form id="incident-form" onsubmit="event.preventDefault(); document.getElementById('success-alert').classList.remove('hidden'); this.reset();">
+        <form id="incident-form" action="{{ route('resident.incidents.store') }}" method="POST"
+            x-data="{
+                priorite: 'moyenne',
+                openPrio: false,
+                prioLabel: 'Moyenne',
+                prioColor: 'blue',
+                setPrio(val, label, color) {
+                    this.priorite = val;
+                    this.prioLabel = label;
+                    this.prioColor = color;
+                    this.openPrio = false;
+                }
+            }">
+            @csrf
             <div class="grid gap-y-5">
-                <div>
-                    <label class="block text-sm font-medium mb-2 dark:text-white">Type de problème <span class="text-red-500">*</span></label>
-                    <select required class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm bg-white border dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 focus:border-primary-500 focus:ring-primary-500">
-                        <option value="" selected disabled>Sélectionner une catégorie</option>
-                        <option>Plomberie / Fuite</option>
-                        <option>Électricité / Éclairage</option>
-                        <option>Ascenseur en panne</option>
-                        <option>Problème de voisinage</option>
-                        <option>Autre</option>
-                    </select>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 dark:text-white">Titre du problème <span class="text-red-500">*</span></label>
+                        <input type="text" name="titre" required
+                            class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm border dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 focus:border-primary-500 focus:ring-primary-500"
+                            placeholder="Ex: Fuite d'eau, Ascenseur en panne...">
+                    </div>
+
+                    {{-- Priorité — Preline-style dropdown --}}
+                    <div>
+                        <label class="block text-sm font-medium mb-2 dark:text-white">Priorité <span class="text-red-500">*</span></label>
+                        <input type="hidden" name="priorite" :value="priorite">
+                        <div class="relative">
+                            <button type="button"
+                                @click="openPrio = !openPrio"
+                                @click.outside="openPrio = false"
+                                class="w-full py-3 px-4 inline-flex items-center justify-between gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-200 shadow-sm hover:bg-gray-50 dark:hover:bg-neutral-700/60 transition-all duration-200">
+                                <span class="flex items-center gap-2">
+                                    <span class="size-2 rounded-full inline-block"
+                                        :class="{
+                                            'bg-gray-400': prioColor === 'gray',
+                                            'bg-blue-500': prioColor === 'blue',
+                                            'bg-orange-500': prioColor === 'orange',
+                                            'bg-red-500': prioColor === 'red'
+                                        }"></span>
+                                    <span x-text="prioLabel"></span>
+                                </span>
+                                <i data-lucide="chevron-down" class="size-4 text-gray-400 transition-transform duration-200" :class="openPrio ? 'rotate-180' : ''"></i>
+                            </button>
+                            <div x-show="openPrio" x-cloak
+                                class="absolute left-0 top-full z-[100] mt-1 w-full bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 shadow-xl rounded-lg p-1.5">
+                                <div @click="setPrio('basse', 'Basse', 'gray')"
+                                    class="cursor-pointer flex items-center gap-2.5 py-2 px-3 rounded-md text-sm text-gray-700 dark:text-neutral-300 hover:bg-gray-100 dark:hover:bg-neutral-700/50 transition-colors">
+                                    <span class="size-2 rounded-full bg-gray-400 flex-shrink-0"></span>
+                                    Basse
+                                </div>
+                                <div @click="setPrio('moyenne', 'Moyenne', 'blue')"
+                                    class="cursor-pointer flex items-center gap-2.5 py-2 px-3 rounded-md text-sm text-gray-700 dark:text-neutral-300 hover:bg-gray-100 dark:hover:bg-neutral-700/50 transition-colors">
+                                    <span class="size-2 rounded-full bg-blue-500 flex-shrink-0"></span>
+                                    Moyenne
+                                </div>
+                                <div @click="setPrio('haute', 'Haute', 'orange')"
+                                    class="cursor-pointer flex items-center gap-2.5 py-2 px-3 rounded-md text-sm text-gray-700 dark:text-neutral-300 hover:bg-gray-100 dark:hover:bg-neutral-700/50 transition-colors">
+                                    <span class="size-2 rounded-full bg-orange-500 flex-shrink-0"></span>
+                                    Haute
+                                </div>
+                                <div @click="setPrio('urgente', 'Urgente', 'red')"
+                                    class="cursor-pointer flex items-center gap-2.5 py-2 px-3 rounded-md text-sm text-gray-700 dark:text-neutral-300 hover:bg-gray-100 dark:hover:bg-neutral-700/50 transition-colors">
+                                    <span class="size-2 rounded-full bg-red-500 flex-shrink-0"></span>
+                                    Urgente
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-2 dark:text-white">Description détaillée <span class="text-red-500">*</span></label>
-                    <textarea rows="4" required class="py-3 px-4 block w-full border-gray-200 rounded-lg border text-sm dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 focus:border-primary-500 focus:ring-primary-500" placeholder="Décrivez le problème..."></textarea>
+                    <textarea name="description" rows="4" required class="py-3 px-4 block w-full border-gray-200 rounded-lg border text-sm dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 focus:border-primary-500 focus:ring-primary-500" placeholder="Décrivez le problème..."></textarea>
                 </div>
                 <div class="pt-2">
                     <button type="submit" class="py-3 px-6 bg-primary-600 text-white rounded-lg text-sm font-semibold hover:bg-primary-700 flex items-center gap-2 transition-colors">
@@ -39,6 +109,7 @@
             </div>
         </form>
     </div>
+
     <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6 mt-12">Historique de mes signalements</h2>
 
     <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-neutral-800 dark:border-neutral-700">
@@ -77,10 +148,10 @@
                         </td>
                         <td class="px-6 py-4">
                             @php
-                                $statutColor = match($incident->statut) {
-                                    'nouveau' => 'blue',
+                                $statutColor = match(strtolower($incident->statut)) {
+                                    'nouveau', 'ouvert', 'à traiter' => 'blue',
                                     'en cours' => 'orange',
-                                    'résolu' => 'green',
+                                    'résolu', 'terminé' => 'green',
                                     default => 'gray'
                                 };
                             @endphp

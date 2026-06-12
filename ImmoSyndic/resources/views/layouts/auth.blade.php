@@ -9,7 +9,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    @vite(['resources/js/app.js'])
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
     
     <script>
         tailwind.config = {
@@ -24,7 +29,7 @@
     </script>
 </head>
 
-<body class="bg-gray-50 dark:bg-neutral-900 flex h-full items-center py-16">
+<body class="bg-gray-50 dark:bg-neutral-900 flex items-center justify-center min-h-screen py-4">
     @yield('content')
     
     <script>lucide.createIcons();</script>

@@ -25,7 +25,7 @@ class HomeController extends Controller
     {
         $user = auth()->user();
         
-        if ($user->role === 'admin') {
+        if ($user->role === 'admin' || $user->role === 'administrateur') {
             return redirect()->route('admin.dashboard');
         } elseif ($user->role === 'syndic') {
             return redirect()->route('syndic.dashboard');

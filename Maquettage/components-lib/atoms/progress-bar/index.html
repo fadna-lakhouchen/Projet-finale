@@ -1,15 +1,75 @@
 <!DOCTYPE html>
-<html lang="fr" class="light">
+<html lang="fr" class="dark">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atom: Progress Bar </title>
+    
+    <!-- Tailwind & Preline -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Outfit', 'Plus Jakarta Sans', 'Inter', 'sans-serif'] 
+                    },
+                    colors: { 
+                        primary: { 
+                            50: '#f5f7ff', 
+                            100: '#ebf0fe', 
+                            200: '#ced9fd', 
+                            300: '#b1c2fb', 
+                            400: '#7694f8', 
+                            500: '#3b66f5', 
+                            600: '#2c4db8', 
+                            700: '#1d3278', 
+                            800: '#152559', 
+                            900: '#0e193c' 
+                        },
+                        slate: {
+                            950: '#090D16'
+                        }
+                    },
+                    boxShadow: {
+                        'premium': '0 10px 30px -10px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.05)',
+                        'premium-hover': '0 20px 40px -15px rgba(59, 102, 245, 0.25), 0 1px 2px rgba(59, 102, 245, 0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.15);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.35);
+        }
+    </style>
+
 </head>
 
-<body class="p-8 bg-gray-50 flex flex-col gap-6 max-w-sm dark:bg-neutral-900">
+<body class="p-8 bg-[#080B11] text-slate-200 min-h-screen font-sans flex flex-col gap-6 max-w-sm dark:bg-neutral-900">
 
     <h2 class="text-xl font-bold text-gray-800 mb-4 border-b pb-4 dark:text-white">Progress Bar </h2>
 
@@ -21,7 +81,7 @@
         </div>
         <div class="flex w-full h-2 bg-gray-200 rounded-full overflow-hidden dark:bg-neutral-700" role="progressbar"
             aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
-            <div class="flex flex-col justify-center overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-blue-500"
+            <div class="flex flex-col justify-center overflow-hidden bg-primary-500 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-primary-500/100"
                 style="width: 45%"></div>
         </div>
     </div>

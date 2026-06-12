@@ -1,75 +1,192 @@
 <!-- Hero Section -->
-<section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex items-center min-h-[90vh]">
-    <!-- VIBRANT Background decorative blobs -->
-    <div class="absolute top-0 right-0 -mr-20 -mt-20 w-[30rem] h-[30rem] bg-teal-400/30 rounded-full blur-3xl mix-blend-multiply dark:mix-blend-lighten animate-blob"></div>
-    <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-[30rem] h-[30rem] bg-brand-500/30 rounded-full blur-3xl mix-blend-multiply dark:mix-blend-lighten animate-blob" style="animation-delay: 2s;"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[20rem] bg-cyan-300/20 rounded-full blur-3xl mix-blend-multiply dark:mix-blend-lighten animate-blob" style="animation-delay: 4s;"></div>
-    
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-4xl mx-auto animate-[fadeInUp_0.8s_ease-out]">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel text-sm font-bold text-teal-700 dark:text-teal-300 mb-8 border border-teal-500/30 shadow-lg shadow-teal-500/10">
-                <span class="flex h-2.5 w-2.5 rounded-full bg-teal-500 relative">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+<section class="relative pt-32 pb-24 lg:pt-48 lg:pb-36 overflow-hidden min-h-[92vh] flex items-center bg-slate-50 dark:bg-gray-950 text-slate-850 dark:text-white">
+    <!-- Premium SVG Grid Pattern (Light Slate by default, very subtle) -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#0f172a05_1px,transparent_1px),linear-gradient(to_bottom,#0f172a05_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_80%,transparent_100%)] dark:bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] pointer-events-none"></div>
+
+    <!-- Glowing Blob Overlays (Electric Blue and Navy) -->
+    <div class="absolute top-0 right-1/4 w-[35rem] h-[35rem] bg-blue-500/10 rounded-full blur-[120px] animate-pulse pointer-events-none" style="animation-duration: 8s;"></div>
+    <div class="absolute bottom-0 left-1/4 w-[35rem] h-[35rem] bg-indigo-500/10 rounded-full blur-[120px] animate-pulse pointer-events-none" style="animation-duration: 6s; animation-delay: 2s;"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
+        <div class="text-center max-w-4xl mx-auto mb-16 animate-fade-in-up">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-blue-50 border border-blue-150/40 text-sm font-semibold text-brand-800 dark:bg-white/5 dark:border-white/10 dark:text-blue-300 mb-8 shadow-sm">
+                <span class="flex h-2 w-2 rounded-full bg-blue-600 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span>
                 </span>
-                Gestion de nouvelle génération au Maroc
+                La gestion de copropriété réinventée au Maroc
             </div>
             
-            <h1 class="font-heading text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-[1.1] mb-8">
-                Gérez votre <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-800 via-brand-600 to-teal-500 filter drop-shadow-sm">copropriété</span> avec une fluidité absolue.
+            <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.05] mb-8">
+                Gérez votre <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-800 to-brand-900">copropriété</span><br class="hidden sm:inline"> avec une fluidité absolue.
             </h1>
             
-            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Une plateforme vivante et hyper-connectée. Fini la paperasse, place à l'instantanéité. Réunissez Syndics et Résidents autour d'une interface qu'ils vont adorer utiliser.
+            <p class="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Une plateforme intuitive, moderne et connectée. Syndics et Résidents réunis dans un espace transparent pour simplifier le quotidien de votre copropriété.
             </p>
             
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="/login" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white transition-all duration-300 bg-gradient-to-r from-brand-900 to-brand-800 rounded-xl hover:shadow-[0_15px_30px_-5px_rgba(30,50,90,0.4)] hover:scale-105">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4.5">
+                <a href="/login" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white transition-all duration-300 bg-brand-900 hover:bg-brand-800 rounded-xl hover:shadow-[0_10px_25px_rgba(8,101,253,0.35)] hover:scale-105">
                     Découvrir la plateforme
+                    <i data-lucide="arrow-right" class="ml-2 size-5"></i>
                 </a>
-                <a href="#features" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold text-brand-800 dark:text-white transition-all duration-300 bg-white dark:bg-gray-800 border-2 border-brand-100 dark:border-gray-700 rounded-xl hover:bg-brand-50 dark:hover:bg-gray-700 hover:border-brand-200 hover:shadow-lg group">
-                    Voir les fonctionnalités 
-                    <i data-lucide="arrow-down" class="ml-2 size-5 text-teal-500 group-hover:translate-y-1 transition-transform"></i>
+                <a href="#features" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold text-slate-700 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 dark:text-white rounded-xl hover:bg-slate-50 dark:hover:bg-white/10 hover:shadow-md transition-all duration-200 group">
+                    Voir les fonctionnalités
+                    <i data-lucide="chevron-down" class="ml-2 size-5 text-brand-900 dark:text-blue-400 group-hover:translate-y-1 transition-transform"></i>
                 </a>
             </div>
         </div>
 
-        <!-- Hero Dashboard Mockup Abstract -->
-        <div class="mt-20 relative mx-auto max-w-5xl animate-[fadeInUp_1.2s_ease-out] group">
-            <div class="absolute -inset-1 bg-gradient-to-r from-teal-400 to-brand-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-            <div class="relative rounded-2xl glass-panel shadow-2xl overflow-hidden aspect-[16/9] md:aspect-[21/9] flex flex-col bg-white/60 dark:bg-gray-900/60 transition-transform duration-500 group-hover:scale-[1.01]">
-                <!-- Window Controls -->
-                <div class="bg-gray-100/80 dark:bg-gray-800/80 px-4 py-3 border-b border-gray-200 dark:border-gray-700/50 flex items-center gap-2">
-                    <div class="flex gap-1.5">
-                        <div class="size-3 rounded-full bg-red-400 shadow-sm"></div>
-                        <div class="size-3 rounded-full bg-amber-400 shadow-sm"></div>
-                        <div class="size-3 rounded-full bg-green-400 shadow-sm"></div>
+        <!-- High-Fidelity Mockup Container (Clean Light/Dark Hybrid Dashboard) -->
+        <div class="relative mx-auto max-w-5xl group animate-fade-in-up" style="animation-delay: 0.2s;">
+            <!-- Outer Glow -->
+            <div class="absolute -inset-1.5 bg-gradient-to-r from-brand-900 to-brand-800 rounded-[2rem] blur opacity-15 group-hover:opacity-25 transition duration-1000"></div>
+            
+            <!-- Window Container -->
+            <div class="relative rounded-[1.8rem] border border-slate-200/80 dark:border-white/10 bg-white dark:bg-gray-900 shadow-2xl overflow-hidden">
+                <!-- Browser bar (Header) -->
+                <div class="bg-slate-100 dark:bg-gray-950 px-5 py-4 border-b border-slate-200 dark:border-white/5 flex items-center justify-between">
+                    <div class="flex gap-2">
+                        <div class="size-3 rounded-full bg-slate-300 dark:bg-rose-500/90 shadow-inner"></div>
+                        <div class="size-3 rounded-full bg-slate-300 dark:bg-amber-500/90 shadow-inner"></div>
+                        <div class="size-3 rounded-full bg-slate-300 dark:bg-emerald-500/90 shadow-inner"></div>
+                    </div>
+                    <div class="bg-slate-200/60 dark:bg-white/5 border border-slate-200/40 dark:border-white/5 text-[11px] text-slate-550 dark:text-slate-450 px-8 py-1 rounded-lg select-none hidden sm:block tracking-wide">
+                        dashboard.immosyndic.ma/syndic
+                    </div>
+                    <div class="size-4 text-slate-400 dark:text-slate-500">
+                        <i data-lucide="help-circle" class="size-full"></i>
                     </div>
                 </div>
-                <!-- Mockup Content -->
-                <div class="flex-1 p-6 flex gap-6">
-                    <div class="w-1/4 hidden md:flex flex-col gap-3 border-r border-gray-200 dark:border-gray-700/50 pr-6">
-                        <div class="h-8 w-2/3 bg-brand-100 dark:bg-gray-700 rounded-md"></div>
-                        <div class="mt-6 h-6 w-full bg-gray-200 dark:bg-gray-800 rounded-md"></div>
-                        <div class="h-6 w-4/5 bg-gray-200 dark:bg-gray-800 rounded-md"></div>
-                        <div class="h-6 w-full bg-teal-100 dark:bg-teal-900/30 rounded-md border border-teal-200 dark:border-teal-800"></div>
-                    </div>
-                    <div class="flex-1 flex flex-col gap-6">
-                        <div class="flex justify-between items-center">
-                            <div class="h-8 w-1/3 bg-gray-200 dark:bg-gray-800 rounded-md"></div>
-                            <div class="size-10 bg-teal-500 rounded-full shadow-lg shadow-teal-500/40"></div>
+
+                <!-- Dashboard Layout -->
+                <div class="flex min-h-[440px]">
+                    <!-- Sidebar Mockup (Matches App Sidebar Style) -->
+                    <aside class="w-56 border-e border-slate-200/85 dark:border-white/5 bg-[#0B1224] text-white p-5 hidden md:flex flex-col justify-between">
+                        <div class="space-y-6">
+                            <div class="h-6 w-24 bg-white/10 rounded-lg"></div>
+                            <nav class="space-y-2.5">
+                                <div class="flex items-center gap-3 py-2 px-3 bg-white/5 text-blue-400 rounded-xl border-l-2 border-blue-500 text-xs font-semibold">
+                                    <i data-lucide="layout-dashboard" class="size-4 shrink-0"></i> Dashboard
+                                </div>
+                                <div class="flex items-center gap-3 py-2 px-3 text-slate-400 text-xs font-medium">
+                                    <i data-lucide="building" class="size-4 shrink-0"></i> Mes Immeubles
+                                </div>
+                                <div class="flex items-center gap-3 py-2 px-3 text-slate-400 text-xs font-medium">
+                                    <i data-lucide="users" class="size-4 shrink-0"></i> Mes Résidents
+                                </div>
+                                <div class="flex items-center gap-3 py-2 px-3 text-slate-400 text-xs font-medium">
+                                    <i data-lucide="wallet" class="size-4 shrink-0"></i> Paiements
+                                </div>
+                                <div class="flex items-center gap-3 py-2 px-3 text-slate-400 text-xs font-medium">
+                                    <i data-lucide="wrench" class="size-4 shrink-0"></i> Interventions
+                                </div>
+                            </nav>
                         </div>
-                        <div class="flex gap-4">
-                            <div class="h-32 flex-1 bg-gradient-to-br from-brand-50 to-white dark:from-brand-900 dark:to-gray-800 border border-brand-100 dark:border-gray-700 rounded-xl relative overflow-hidden group-hover:-translate-y-1 transition-transform duration-500">
-                                 <div class="absolute bottom-4 left-4 h-4 w-1/2 bg-brand-500/20 rounded"></div>
-                                 <div class="absolute top-4 right-4 size-8 bg-brand-500/10 rounded-full"></div>
+                        <div class="h-10 bg-white/5 rounded-xl border border-white/5"></div>
+                    </aside>
+
+                    <!-- Main Dashboard Content -->
+                    <main class="flex-1 p-6 sm:p-8 space-y-6 bg-slate-50 dark:bg-gray-900/60">
+                        <!-- Top header bar -->
+                        <div class="flex justify-between items-center pb-4 border-b border-slate-200/70 dark:border-white/5">
+                            <div>
+                                <h3 class="text-base font-bold text-slate-800 dark:text-white tracking-tight">Résidence Atlas</h3>
+                                <p class="text-[11px] text-slate-500">Marrakech, Maroc</p>
                             </div>
-                            <div class="h-32 flex-1 bg-gradient-to-br from-teal-50 to-white dark:from-teal-900/30 dark:to-gray-800 border border-teal-100 dark:border-gray-700 rounded-xl relative overflow-hidden group-hover:-translate-y-1 transition-transform duration-500 delay-100">
-                                <div class="absolute bottom-4 left-4 h-4 w-2/3 bg-teal-500/30 rounded"></div>
-                                <div class="absolute top-4 right-4 size-8 bg-teal-500/20 rounded-full"></div>
+                            <div class="flex items-center gap-3.5">
+                                <div class="size-8.5 rounded-xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/5 flex items-center justify-center text-slate-600 dark:text-blue-400 relative shadow-sm">
+                                    <i data-lucide="bell" class="size-4"></i>
+                                    <span class="absolute top-1.5 right-2 size-1.5 bg-rose-500 rounded-full"></span>
+                                </div>
+                                <img class="size-8.5 rounded-xl object-cover ring-2 ring-slate-100 dark:ring-blue-500/20" src="https://ui-avatars.com/api/?name=Karim+Benzakour&background=0865FD&color=fff&bold=true" alt="Avatar">
                             </div>
                         </div>
-                        <div class="flex-1 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700"></div>
-                    </div>
+
+                        <!-- Stats grid -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <!-- Stat Card 1 -->
+                            <div class="p-4 bg-white dark:bg-[#0c1020] border border-slate-200/70 dark:border-white/5 rounded-2xl flex flex-col gap-1 shadow-sm">
+                                <span class="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Caisse Commune</span>
+                                <div class="flex items-baseline gap-2">
+                                    <span class="text-lg font-extrabold text-slate-900 dark:text-white">142,500 DH</span>
+                                    <span class="text-[9px] text-emerald-600 font-bold bg-emerald-50 px-1.5 py-0.5 rounded-md dark:bg-emerald-500/10 dark:text-emerald-400">+12%</span>
+                                </div>
+                            </div>
+                            <!-- Stat Card 2 -->
+                            <div class="p-4 bg-white dark:bg-[#0c1020] border border-slate-200/70 dark:border-white/5 rounded-2xl flex flex-col gap-1 shadow-sm">
+                                <span class="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Incidents Actifs</span>
+                                <div class="flex items-baseline gap-2">
+                                    <span class="text-lg font-extrabold text-slate-900 dark:text-white">2 Ouverts</span>
+                                    <span class="text-[9px] text-amber-600 font-bold bg-amber-50 px-1.5 py-0.5 rounded-md dark:bg-amber-500/10 dark:text-amber-400">À traiter</span>
+                                </div>
+                            </div>
+                            <!-- Stat Card 3 -->
+                            <div class="p-4 bg-white dark:bg-[#0c1020] border border-slate-200/70 dark:border-white/5 rounded-2xl flex flex-col gap-1 shadow-sm">
+                                <span class="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Recouvrement</span>
+                                <div class="flex items-baseline gap-2">
+                                    <span class="text-lg font-extrabold text-slate-900 dark:text-white">94.2%</span>
+                                    <span class="text-[9px] text-brand-900 font-bold bg-blue-50 px-1.5 py-0.5 rounded-md dark:bg-blue-500/10 dark:text-blue-300">Optimal</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Split Layout -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                            <!-- Visual Chart Simulation -->
+                            <div class="p-5 bg-white dark:bg-[#0c1020] border border-slate-200/70 dark:border-white/5 rounded-2xl space-y-4 shadow-sm">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs font-bold text-slate-800 dark:text-white tracking-tight">Flux de Cotisation</span>
+                                    <span class="text-[10px] text-slate-400">6 Derniers Mois</span>
+                                </div>
+                                <div class="h-32 flex items-end justify-between gap-3 pt-4 relative">
+                                    <svg class="absolute inset-x-0 bottom-4 h-20 w-full overflow-visible" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                        <defs>
+                                            <linearGradient id="gradient-chart" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stop-color="#0865FD" stop-opacity="0.25"></stop>
+                                                <stop offset="100%" stop-color="#0865FD" stop-opacity="0"></stop>
+                                            </linearGradient>
+                                        </defs>
+                                        <path d="M 0 80 Q 20 60 40 40 T 80 20 T 100 30 L 100 100 L 0 100 Z" fill="url(#gradient-chart)"></path>
+                                        <path d="M 0 80 Q 20 60 40 40 T 80 20 T 100 30" fill="none" stroke="#0865FD" stroke-width="3" stroke-linecap="round"></path>
+                                    </svg>
+                                    <div class="w-full h-full bg-slate-100/50 dark:bg-white/2 rounded-md"></div>
+                                    <div class="w-full h-full bg-slate-100/50 dark:bg-white/2 rounded-md"></div>
+                                    <div class="w-full h-full bg-slate-100/50 dark:bg-white/2 rounded-md"></div>
+                                    <div class="w-full h-full bg-slate-100/50 dark:bg-white/2 rounded-md"></div>
+                                    <div class="w-full h-full bg-slate-100/50 dark:bg-white/2 rounded-md"></div>
+                                    <div class="w-full h-full bg-slate-100/50 dark:bg-white/2 rounded-md"></div>
+                                </div>
+                            </div>
+
+                            <!-- Recent Payments Simulation -->
+                            <div class="p-5 bg-white dark:bg-[#0c1020] border border-slate-200/70 dark:border-white/5 rounded-2xl space-y-3 shadow-sm">
+                                <span class="block text-xs font-bold text-slate-800 dark:text-white tracking-tight mb-1">Dernières Opérations</span>
+                                <div class="space-y-2.5">
+                                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-white/2 border border-slate-100 dark:border-white/2 text-xs">
+                                        <div class="flex items-center gap-3">
+                                            <div class="size-6 bg-blue-100 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400 rounded-lg flex items-center justify-center font-bold">K</div>
+                                            <div>
+                                                <span class="block font-bold text-slate-800 dark:text-white">Karim Benzakour</span>
+                                                <span class="block text-[10px] text-slate-500">Appt 4</span>
+                                            </div>
+                                        </div>
+                                        <span class="font-bold text-blue-600 dark:text-blue-400">800.00 DH</span>
+                                    </div>
+                                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-white/2 border border-slate-100 dark:border-white/2 text-xs">
+                                        <div class="flex items-center gap-3">
+                                            <div class="size-6 bg-blue-100 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400 rounded-lg flex items-center justify-center font-bold">S</div>
+                                            <div>
+                                                <span class="block font-bold text-slate-800 dark:text-white">Said El Fassi</span>
+                                                <span class="block text-[10px] text-slate-500">Appt 12</span>
+                                            </div>
+                                        </div>
+                                        <span class="font-bold text-blue-600 dark:text-blue-400">500.00 DH</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
                 </div>
             </div>
         </div>

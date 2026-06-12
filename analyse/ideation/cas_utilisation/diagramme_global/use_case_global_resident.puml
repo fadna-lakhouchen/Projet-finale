@@ -6,48 +6,58 @@ skinparam shadowing false
 actor "Résident" as Resident
 actor "Mobile" as Mobile
 
-rectangle "Système ImmoSyndic - Global (Vision Résident)" {
+rectangle "Système ImmoSyndic - Espace Résident" {
 
   package "Authentification" {
     usecase "S'authentifier" as Auth
   }
 
-  package "Portail Web (Consulation & Signalement)" {
-    package "Espace Résident (Web)" {
-      usecase "Consulter charges" as ViewChargesWeb
-      usecase "Signaler problème" as ReportIssueWeb
-      usecase "Recevoir notifications" as GetNotifsWeb
-      usecase "Consulter archives" as ViewArchivesWeb
-      usecase "Exporter PDF" as ExportPDFWeb
-      usecase "Personnaliser alertes" as SetAlertsWeb
+  package "Finances & Cotisations" {
+    usecase "Consulter ses cotisations" as ViewPayments
+    usecase "Déclarer une cotisation prête" as SignalReady
+  }
 
-      ViewChargesWeb ..> Auth : <<include>>
-      ReportIssueWeb ..> Auth : <<include>>
-      GetNotifsWeb ..> Auth : <<include>>
-      ViewArchivesWeb ..> Auth : <<include>>
-      ExportPDFWeb ..> Auth : <<include>>
-      SetAlertsWeb ..> Auth : <<include>>
-    }
+  package "Incidents & Pannes" {
+    usecase "Signaler un problème" as ReportIssue
+  }
+
+  package "Informations & Transparence" {
+    usecase "Consulter la transparence financière" as ViewTransparency
+    usecase "Consulter les annonces" as ViewNews
+    usecase "Gérer les documents" as ViewDocs
+  }
+
+  package "Paramètres" {
+    usecase "Gérer son profil" as ManageProfile
+    usecase "Recevoir des notifications" as GetNotifs
   }
 
   package "API Mobile" {
-    usecase "Consommer API" as ConsumeAPI
-    
-    ConsumeAPI ..> ViewChargesWeb : <<include>>
-    ConsumeAPI ..> GetNotifsWeb : <<include>>
-    ConsumeAPI ..> ViewArchivesWeb : <<include>>
+    usecase "Consommer API" as ProvideAPI
   }
+
+  ' Auth relation (global rule)
+  ViewPayments ..> Auth : <<include>>
+  SignalReady ..> Auth : <<include>>
+  ReportIssue ..> Auth : <<include>>
+  ViewTransparency ..> Auth : <<include>>
+  ViewNews ..> Auth : <<include>>
+  ViewDocs ..> Auth : <<include>>
+  ManageProfile ..> Auth : <<include>>
+  GetNotifs ..> Auth : <<include>>
 }
 
-' Web Connections
-Resident -- ViewChargesWeb
-Resident -- ReportIssueWeb
-Resident -- GetNotifsWeb
-Resident -- ViewArchivesWeb
-Resident -- ExportPDFWeb
-Resident -- SetAlertsWeb
+' Résident utilise web
+Resident -- ViewPayments
+Resident -- SignalReady
+Resident -- ReportIssue
+Resident -- ViewTransparency
+Resident -- ViewNews
+Resident -- ViewDocs
+Resident -- ManageProfile
+Resident -- GetNotifs
 
-' Mobile Connections
-Mobile -- ConsumeAPI
+' Mobile consomme API
+Mobile -- ProvideAPI
 
 @enduml

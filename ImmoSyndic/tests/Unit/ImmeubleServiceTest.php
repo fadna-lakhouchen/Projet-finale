@@ -15,7 +15,9 @@ class ImmeubleServiceTest extends TestCase
         return array_map(fn($item) => [$item], $data);
     }
 
-    
+    /**
+     * @dataProvider immeubleDataProvider
+     */
     public function test_it_can_load_immeuble_data_from_csv($data)
     {
         $this->assertArrayHasKey('id', $data);

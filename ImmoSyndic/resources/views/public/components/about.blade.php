@@ -1,63 +1,59 @@
-<!-- About Section (Two-Column Elegant) -->
-<section id="about" class="py-24 bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800 relative overflow-hidden">
-    <div class="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-brand-500/5 dark:bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
-    
+<!-- About Section -->
+<section id="about" class="py-24 bg-white dark:bg-gray-950 border-t border-slate-200/60 dark:border-white/5 relative overflow-hidden text-slate-800 dark:text-white">
+    <!-- Background glowing effect -->
+    <div class="absolute left-0 bottom-0 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px] pointer-events-none"></div>
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="flex flex-col lg:flex-row gap-16 items-center">
-            <!-- Text Content (Left) -->
-            <div class="w-full lg:w-3/5">
-                <span class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-teal-500 text-white shadow-md shadow-teal-500/30 text-sm font-extrabold mb-6 tracking-widest uppercase">
-                    <i data-lucide="info" class="size-4"></i> À Propos d'ImmoSyndic
-                </span>
-                <h2 class="font-heading text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-8 leading-tight">
-                    Le centre <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-brand-500">névralgique</span> de votre résidence.
+        <div class="flex flex-col lg:flex-row gap-20 items-center">
+            <!-- Left Side: Vision and Mission -->
+            <div class="w-full lg:w-3/5 animate-fade-in-up">
+                <span class="text-xs font-bold uppercase tracking-widest text-brand-900 bg-blue-50 px-3.5 py-1.5 rounded-full mb-6 inline-block dark:bg-white/5 dark:text-blue-300">Notre Mission</span>
+                <h2 class="font-heading text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight mb-8">
+                    Le centre névralgique de votre résidence.
                 </h2>
                 
-                <div class="relative pl-6 border-l-4 border-teal-500/30 dark:border-teal-500/20 space-y-6 text-lg text-gray-600 dark:text-gray-400 leading-relaxed text-justify md:text-left">
+                <div class="pl-6 border-l-2 border-brand-900/35 space-y-6 text-slate-650 dark:text-slate-400 text-base sm:text-lg leading-relaxed">
                     <p>
-                        <strong>ImmoSyndic</strong> est une solution logicielle innovante dédiée à la gestion des petites et grandes copropriétés. Notre mission est simple : éliminer les frustrations liées à la paperasse et au manque de communication.
+                        <strong>ImmoSyndic</strong> est une solution logicielle innovante conçue spécifiquement pour la gestion des copropriétés au Maroc. Notre objectif est d'éliminer le gaspillage de papier, le manque de transparence et les retards de paiement de charges.
                     </p>
                     <p>
-                        Nous unifions tous les acteurs du bâtiment (gestionnaires, syndics, propriétaires et locataires) dans un espace numérique unique. Que ce soit pour recouvrir les charges, organiser une assemblée, ou déclarer une fuite d'eau, tout passe désormais par un canal clair, auditable et extrêmement réactif.
+                        Nous connectons les résidents, syndics (principaux et secondaires) et l'administration au sein d'une même plateforme. Du recouvrement automatique des cotisations au suivi des interventions de plomberie ou d'ascenseur, chaque tâche devient claire, immédiate et traçable.
                     </p>
                 </div>
             </div>
 
-            <!-- Stats/Highlights (Right) -->
-            <div class="w-full lg:w-2/5 flex flex-col gap-5">
-                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="flex items-center gap-4">
-                        <div class="size-14 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-brand-600 dark:text-brand-400 shadow-sm">
-                            <i data-lucide="eye" class="size-6"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-extrabold text-gray-900 dark:text-white mb-1">100% Transparence</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Toutes les finances sont claires et accessibles.</p>
-                        </div>
+            <!-- Right Side: Key Metrics/Highlights -->
+            <div class="w-full lg:w-2/5 flex flex-col gap-6">
+                <!-- Highlight 1 -->
+                <div class="bg-slate-50 dark:bg-gray-900 p-6 rounded-2xl border border-slate-200/60 dark:border-white/5 shadow-sm flex items-center gap-4.5 group hover:border-brand-900/30 transition-all duration-300">
+                    <div class="size-14 rounded-xl bg-white dark:bg-white/5 flex items-center justify-center text-brand-900 dark:text-blue-400 shadow-sm group-hover:scale-105 transition-transform">
+                        <i data-lucide="eye" class="size-7"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">100% Transparence</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Toutes les finances et bilans sont clairs et traçables par les résidents.</p>
                     </div>
                 </div>
                 
-                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow ml-0 lg:-ml-8">
-                    <div class="flex items-center gap-4">
-                        <div class="size-14 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-teal-500 shadow-sm">
-                            <i data-lucide="clock" class="size-6"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-extrabold text-gray-900 dark:text-white mb-1">Impact Immédiat</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Temps de réactivité divisé par 3 sur les incidents.</p>
-                        </div>
+                <!-- Highlight 2 -->
+                <div class="bg-slate-50 dark:bg-gray-900 p-6 rounded-2xl border border-slate-200/60 dark:border-white/5 shadow-sm flex items-center gap-4.5 group hover:border-brand-900/30 transition-all duration-300 translate-x-0 sm:-translate-x-6">
+                    <div class="size-14 rounded-xl bg-white dark:bg-white/5 flex items-center justify-center text-emerald-600 dark:text-emerald-450 shadow-sm group-hover:scale-105 transition-transform">
+                        <i data-lucide="clock" class="size-7"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">Traitement Instantané</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Les incidents sont notifiés et résolus en un temps record.</p>
                     </div>
                 </div>
                 
-                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="flex items-center gap-4">
-                        <div class="size-14 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-blue-500 shadow-sm">
-                            <i data-lucide="users" class="size-6"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-extrabold text-gray-900 dark:text-white mb-1">Pure Collaboration</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Renforcez les liens de voisinage au quotidien.</p>
-                        </div>
+                <!-- Highlight 3 -->
+                <div class="bg-slate-50 dark:bg-gray-900 p-6 rounded-2xl border border-slate-200/60 dark:border-white/5 shadow-sm flex items-center gap-4.5 group hover:border-brand-900/30 transition-all duration-300">
+                    <div class="size-14 rounded-xl bg-white dark:bg-white/5 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm group-hover:scale-105 transition-transform">
+                        <i data-lucide="users" class="size-7"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">Synergie d'Équipe</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Liez syndics principaux et secondaires pour un suivi rigoureux.</p>
                     </div>
                 </div>
             </div>

@@ -15,7 +15,9 @@ class ChargeServiceTest extends TestCase
         return array_map(fn($item) => [$item], $data);
     }
 
-    
+    /**
+     * @dataProvider chargeDataProvider
+     */
     public function test_it_can_load_charge_data_from_csv($data)
     {
         $this->assertArrayHasKey('id', $data);

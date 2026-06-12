@@ -1,0 +1,42 @@
+@startuml ImmoSyndic_Mobile_Resident
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor "Résident" as Resident
+actor "web" as web
+
+rectangle "Sprint 1 - Mobile Immosyndic" {
+
+  package "Authentification" {
+    usecase "S'authentifier" as Auth
+  }
+
+  package "Espace Résident" {
+
+    usecase "Consulter charges" as ViewCharges
+    usecase "Signaler problème" as ReportIssue
+    usecase "Recevoir notifications" as GetNotifs
+    usecase "Consulter annonces" as ViewNews
+
+    ViewCharges ..> Auth : <<include>>
+    ReportIssue ..> Auth : <<include>>
+    GetNotifs ..> Auth : <<include>>
+    ViewNews ..> Auth : <<include>>
+  }
+
+  package "API" {
+    usecase "Fournir API" as ProvideAPI
+  }
+}
+
+' Resident interacts with web system
+Resident -- ViewCharges
+Resident -- ReportIssue
+Resident -- GetNotifs
+Resident -- ViewNews
+
+' web consumes web API
+web -- ProvideAPI
+
+@enduml
