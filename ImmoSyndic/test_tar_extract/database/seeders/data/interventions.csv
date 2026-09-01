@@ -1,0 +1,5 @@
+id,incident_id,type,description,date_planifiee,date_realisation,statut,cout_estime,intervenant_nom
+1,1,Plomberie,Réparation de la canalisation fuyante au 2ème étage cage B,2025-02-05,2025-02-06,terminée,350.00,Hassan Plomberie Casablanca
+2,2,Électromécanique,Diagnostic et réparation de l'ascenseur,2025-02-10,,planifiée,1200.00,AscenseurPro SARL
+3,4,Électricité,Remplacement de l'interphone principal,2025-02-12,2025-02-13,terminée,180.00,ElecService Marrakech
+4,5,Maçonnerie,Traitement des infiltrations d'eau en cave,2025-02-15,,planifiée,950.00,BatiSol Casablanca

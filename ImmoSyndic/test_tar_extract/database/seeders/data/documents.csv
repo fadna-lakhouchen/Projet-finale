@@ -1,0 +1,7 @@
+id,immeuble_id,charge_id,titre,fichier_path,categorie
+1,1,1,Facture charges Janvier 2025 — Apt A01,documents/facture_jan2025_A01.pdf,Facture
+2,1,2,Facture charges Février 2025 — Apt A01,documents/facture_fev2025_A01.pdf,Facture
+3,1,,Contrat syndic 2025,documents/contrat_syndic_2025.pdf,Contrat
+4,1,,PV assemblée générale 2024,documents/pv_ag_2024.pdf,PV
+5,2,4,Facture charges Janvier 2025 — Apt A01,documents/facture_jan2025_res2_A01.pdf,Facture
+6,3,,Règlement intérieur Résidence Al Fath,documents/reglement_fath.pdf,Autre

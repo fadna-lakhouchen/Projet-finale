@@ -1,0 +1,6 @@
+id,user_id,immeuble_id,titre,description,priorite,statut,photo
+1,4,1,Fuite d'eau escalier,Il y a une fuite d'eau au niveau du 2ème étage cage B depuis 3 jours.,haute,en cours,incidents/fuite_eau.jpg
+2,5,1,Ascenseur en panne,L'ascenseur de l'immeuble est bloqué au 3ème étage depuis ce matin.,haute,nouveau,
+3,6,1,Ampoule couloir éteinte,L'ampoule du couloir du 2ème étage est grillée.,basse,résolu,
+4,8,3,Problème interphone,L'interphone de l'entrée principale ne fonctionne plus.,moyenne,nouveau,incidents/interphone.jpg
+5,4,1,Dégât des eaux cave,Infiltration d'eau dans la cave suite aux pluies.,haute,en cours,incidents/cave.jpg

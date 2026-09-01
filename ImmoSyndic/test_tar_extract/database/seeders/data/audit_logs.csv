@@ -1,0 +1,9 @@
+id,user_id,action,model_type,model_id,modifications,created_at
+1,2,created,App\Models\Charge,1,"{""after"":{""titre"":""Charges copropriété Janvier 2025"",""montant"":850,""statut"":""non payé""}}",2025-01-05 10:00:00
+2,4,created,App\Models\Paiement,1,"{""after"":{""montant"":850,""mode_paiement"":""Virement"",""statut"":""validé""}}",2025-01-20 14:30:00
+3,2,updated,App\Models\Charge,1,"{""before"":{""statut"":""non payé""},""after"":{""statut"":""payé""}}",2025-01-20 14:31:00
+4,5,created,App\Models\Incident,2,"{""after"":{""titre"":""Ascenseur en panne"",""priorite"":""haute"",""statut"":""nouveau""}}",2025-02-08 10:15:00
+5,2,updated,App\Models\Incident,1,"{""before"":{""statut"":""nouveau""},""after"":{""statut"":""en cours""}}",2025-02-05 09:00:00
+6,2,created,App\Models\Annonce,1,"{""after"":{""titre"":""Coupure d'eau vendredi 14 février""}}",2025-02-10 09:00:00
+7,1,updated,App\Models\User,7,"{""before"":{""is_active"":true},""after"":{""is_active"":false}}",2025-02-15 11:00:00
+8,2,created,App\Models\Intervention,1,"{""after"":{""type"":""Plomberie"",""statut"":""planifiée"",""cout_estime"":350}}",2025-02-04 14:00:00

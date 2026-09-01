@@ -1,0 +1,9 @@
+id,user_id,titre,message,type,lu,date_envoi
+1,4,Paiement reçu,Votre paiement de 850.00 MAD pour les charges de Janvier 2025 a été validé.,paiement,1,2025-01-20 14:30:00
+2,4,Nouvelle annonce,Une nouvelle annonce a été publiée : Coupure d'eau vendredi 14 février.,info,1,2025-02-10 09:00:00
+3,4,Rappel charge en attente,Votre charge de Mars 2025 (850.00 MAD) est due avant le 31/03/2025.,alerte,0,2025-03-01 08:00:00
+4,5,Paiement reçu,Votre paiement de 1100.00 MAD pour les charges de Janvier 2025 a été validé.,paiement,1,2025-01-22 11:00:00
+5,5,Incident signalé,L'incident sur l'ascenseur a bien été enregistré. Le syndic a été notifié.,info,0,2025-02-08 10:15:00
+6,6,Paiement reçu,Votre paiement de 920.00 MAD pour les charges de Janvier 2025 a été validé.,paiement,1,2025-01-25 16:00:00
+7,8,Paiement reçu,Votre paiement de 980.00 MAD pour les charges de Février 2025 a été validé.,paiement,0,2025-02-20 13:45:00
+8,2,Nouvelle fuite d'eau signalée,Un résident a signalé une fuite d'eau au niveau du 2ème étage cage B (Résidence Al Amal).,alerte,1,2025-02-01 09:35:00

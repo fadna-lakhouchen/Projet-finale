@@ -1,0 +1,9 @@
+id,nom,prenom,email,password,telephone,is_active,preferences_alertes,email_verified_at
+1,Alaoui,Mohamed,admin@immosyndic.ma,$2y$12$hash_admin,0661000001,1,"{""email"":true,""sms"":false,""push"":true}",2025-01-01 09:00:00
+2,Benali,Youssef,syndic1@immosyndic.ma,$2y$12$hash_syndic1,0662000001,1,"{""email"":true,""sms"":true,""push"":false}",2025-01-02 09:00:00
+3,Chraibi,Karim,syndic2@immosyndic.ma,$2y$12$hash_syndic2,0662000002,1,"{""email"":true,""sms"":false,""push"":true}",2025-01-03 09:00:00
+4,Tazi,Fatima,resident1@immosyndic.ma,$2y$12$hash_res1,0663000001,1,"{""email"":true,""sms"":false,""push"":false}",2025-01-05 10:00:00
+5,Lahlou,Ahmed,resident2@immosyndic.ma,$2y$12$hash_res2,0663000002,1,"{""email"":false,""sms"":true,""push"":true}",2025-01-06 10:00:00
+6,Mernissi,Sara,resident3@immosyndic.ma,$2y$12$hash_res3,0663000003,1,"{""email"":true,""sms"":true,""push"":false}",2025-01-07 10:00:00
+7,Bakkali,Omar,resident4@immosyndic.ma,$2y$12$hash_res4,0663000004,1,"{""email"":false,""sms"":false,""push"":false}",2025-01-08 10:00:00
+8,Fassi,Nadia,resident5@immosyndic.ma,$2y$12$hash_res5,0663000005,1,"{""email"":true,""sms"":false,""push"":true}",2025-01-09 10:00:00
